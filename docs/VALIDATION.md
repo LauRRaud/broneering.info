@@ -43,3 +43,6 @@ Avalikus demos läbiti Chromiumiga broneerimine: Meeste lõikus, Mari, 7. septem
 
 ## Peatükk 06 — 07.09.2026
 Kõik 59 rakenduse testi, tüübikontroll ja kohalik tootmisbuild läbisid. Kaksteist uut testi katavad hinnakirja õigusi, pärimist, erisusi, ajaloo säilitamist, versioone, broneeringu samaaegsust, hierarhiat ja RLS-i. Brauseris läbiti ajutise MFA omaniku grupi/alamgrupi, teenuse, töötaja ja seose loomine ning kontrolliti avalikku hinda ja profiili. Testandmed eemaldati. Serveri commit f51fd68, migratsioonid 005/006 ja HTTPS kontrollid on [CHAPTER-06](CHAPTER-06.md).
+
+## Peatükk 07 — 07.09.2026
+Kõik 74 rakenduse testi ning kohalik ja serveri tootmisbuild läbisid. Uued kontrollid katavad nädalagraafikuid, erandeid, õigusi, versioone, olemasolevate broneeringute konflikte, samaaegset kinnitamist ning reeglite ja tühistamistähtaja hetkeseisu. Kohalikus MFA omaniku ja kliendi brauserivoos kontrolliti graafiku muutmist, reeglimuutuse järel uuesti valimist koos kontaktandmete säilimisega, broneeringu kinnitamist ning puhkuse konflikti ja edukat sulgemist. Ajutised testandmed eemaldati. Serveris avaldati commit 1751646 ja migratsioon 007 pärast varukoopiat; välised tervise-, kataloogi-, saadavuse- ja autentimata halduse HTTPS kontrollid läbisid. Täpne tõendus ja piirid on [CHAPTER-07](CHAPTER-07.md).

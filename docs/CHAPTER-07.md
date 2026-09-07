@@ -33,7 +33,9 @@ Kohaliku ajutise MFA omaniku brauserikatse:
 - Selle päeva puhkuseks sulgemine sai konfliktiteate sama broneeringu viitega. Järgmise päeva puhkus salvestus ning avalik saadavus tagastas null pakkumist.
 - Brauseris leitud graafiku- ja hinnakirjakomponendi võtmete konflikt parandati; korduvat vormivaadet enam ei esinenud.
 
-Ajutine kohalik testettevõte, MFA konto, testkirjad, graafikud ja proovibroneering eemaldati pärast kontrolli. Serveri avaldamise tulemus lisatakse pärast paigaldamist.
+Ajutine kohalik testettevõte, MFA konto, testkirjad, graafikud ja proovibroneering eemaldati pärast kontrolli.
+
+Serveris avaldati commit `1751646`: tootmisbuild läbis, migratsioon `007_schedule_management.sql` rakendus ja veebikonteiner käivitati uuesti. Enne migratsiooni tehti andmebaasist `backups/before-chapter07.dump` varukoopia õigustega 600. Välised HTTPS kontrollid tagastasid 200: tervisekontroll oli korras, demo kataloog näitas `rulesVersion: 1` ja senist nelja teenust, Meeste lõikuse 08.09.2026 saadavus tagastas 56 pakkumist ning autentimata halduse olek tagastas `user: null` ja tühja liikmesuste loendi. Serverisse selle kontrolliga proovibroneeringuid ei loodud.
 
 ## Piirid ja järgnev töö
 
