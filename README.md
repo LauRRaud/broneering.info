@@ -6,11 +6,13 @@ Reacti, Next.js-i ja TypeScripti baasil isemajutatava broneerimisplatvormi esime
 
 Dokumendi 30 peatüki täitmise seis, puuduvad tööd ja peatüki 01 tulemuste võrdlus: [arendusplaani register](docs/PROGRESS.md).
 
-Avalik leht, demod ja halduse arendusseisu leht kasutavad brauseri vaikimisi HTML-elemente. Esialgne kujundus on omaniku soovil eemaldatud; uus kujundussuund lepitakse enne teostamist kokku.
+Avalik leht, demod ja haldus kasutavad brauseri vaikimisi HTML-elemente. Esialgne kujundus on omaniku soovil eemaldatud; uus kujundussuund lepitakse enne teostamist kokku.
 
 Olemas on avalik teenuse veebileht, kaks kohalikku demokeskkonda, teenuste ja sobivate töötajate valik, päris andmebaasi põhine saadavus, broneeringu kinnitamine ja ICS-allalaadimine. Testitud on ettevõtete eraldatus, samaaegsed kinnitused, korduspäringud, pausid, puhvrid, erandpäevad ja kellakeeramise ajad.
 
-See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, sisselogimine/MFA, halduskalender, teenuste ja graafikute muutmise kasutajaliides, broneeringu muutmine/tühistamine, e-kirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Haldusaadress näitab ausat arendusseisu. E-kirja ülesanne salvestatakse koos broneeringuga, aga saatjat veel pole.
+Peatüki 04 teostus lisab kutsega konto loomise, kinnitatud e-posti, sisselogimise, TOTP ja varukoodid, liikmesused, rollid, üksikload, kutsete/ligipääsu tühistamise ja omaniku üleandmise. Täpne vastuvõtt ja piirid on [peatüki 04 registris](docs/CHAPTER-04.md). Kontode kirjade SMTP liides on olemas, kuid avaliku serveri saatmine vajab veel seadistamist; kohalikud testkirjad salvestatakse privaatsesse kausta.
+
+See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, halduskalender, teenuste ja graafikute muutmise kasutajaliides, broneeringu muutmine/tühistamine, broneeringukirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Broneeringu e-kirja ülesanne salvestatakse koos broneeringuga, aga selle saatjat veel pole.
 
 ## Avaldatud tehniline demo
 
@@ -19,7 +21,7 @@ See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, sisselog
 - [Avalik veebileht](https://broneering.info)
 - [Ilutegu näidisandmetega demo](https://demo.broneering.info)
 - [Stuudio Kask demo](https://demo2.broneering.info)
-- [Halduskeskkonna arendusseis](https://haldus.broneering.info)
+- [Halduskeskkond](https://haldus.broneering.info)
 
 Demo ei tee päris salongi broneeringuid ega saada e-kirju. `ilutegu.ee` ja selle olemasolev broneerimislink jäid muutmata. Serveri aadressid ning käsitsi uuendamine on kirjeldatud [serverijuhendis](docs/SERVER.md). GitHubi push ei avalda muudatusi automaatselt.
 

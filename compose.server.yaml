@@ -33,6 +33,15 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql://booking_app:${DB_APP_PASSWORD:?Set DB_APP_PASSWORD}@db:5432/booking
+      AUTH_BASE_URL: https://haldus.broneering.info
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET}
+      AUTH_MAIL_MODE: ${AUTH_MAIL_MODE:-disabled}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-no-reply@broneering.info}
     ports:
       - "127.0.0.1:${WEB_PORT:-3107}:3000"
     depends_on:

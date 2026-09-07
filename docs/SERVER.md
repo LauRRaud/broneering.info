@@ -54,9 +54,11 @@ Klooni privaatne repo sobivasse uude projektikataloogi. Loo kohapeal `.env.serve
 DB_OWNER_PASSWORD=asenda_esimese_juhusliku_hex_vaartusega
 DB_APP_PASSWORD=asenda_teise_juhusliku_hex_vaartusega
 WEB_PORT=3107
+AUTH_SECRET=asenda_kolmanda_juhusliku_hex_vaartusega
+AUTH_MAIL_MODE=disabled
 ```
 
-Fail on `.gitignore` ja `.dockerignore` järgi välja jäetud. Paroolide muutmine failis ei muuda juba loodud PostgreSQL-i rollide paroole; hilisem vahetamine on eraldi kontrollitud toiming.
+Fail on `.gitignore` ja `.dockerignore` järgi välja jäetud. Paroolide muutmine failis ei muuda juba loodud PostgreSQL-i rollide paroole; hilisem vahetamine on eraldi kontrollitud toiming. `AUTH_SECRET` peab olema vähemalt 32 märki ja püsima taaskäivituste vahel samana. Selle vahetamine mõjutab sessioone ning krüpteeritud MFA saladuste loetavust. Kontokirjade lubamiseks sea `AUTH_MAIL_MODE=smtp` ja `.env.example` SMTP muutujad; ainult domeeni e-posti edasisuunamine ei anna saatmiseks SMTP ligipääsu.
 
 ```bash
 docker compose --env-file .env.server -f compose.server.yaml up -d db

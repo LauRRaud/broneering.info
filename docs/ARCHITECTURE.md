@@ -15,7 +15,17 @@ Lähteplaan on kasutaja kaustas olev `Broneerimisplatvorm_arendusplaan_v1_0.docx
 
 Next.js App Router serveerib hostinime järgi veebilehe või ettevõtte broneerimisvaate. Serveri route handler'id kutsuvad eraldi äriloogika mooduleid; brauser ei kinnita lõplikku saadavust ega hinda. PostgreSQL käib kohalikus Dockeris ja hiljem eraldi konteineris samas omaniku kontrollitavas serveris.
 
-Esimese tehnilise katse teadlik lihtsustus võrreldes dokumendi tehnoloogiaettepanekuga: eraldi NestJS-serverit ja Drizzle-kihti ei lisatud. Next.js-i serveriliidesed, `pg` ja versioonitud SQL-migratsioonid tõendavad põhireegleid väiksema taristuga. Mooduleid saab vajadusel eraldi serverisse viia. Autentimine, Better Authi sobivus ja SMTP-taustatöö jäävad järgmisse etappi.
+Esimese tehnilise katse teadlik lihtsustus võrreldes dokumendi tehnoloogiaettepanekuga: eraldi NestJS-serverit ja Drizzle-kihti ei lisatud. Next.js-i serveriliidesed, `pg` ja versioonitud SQL-migratsioonid tõendavad põhireegleid väiksema taristuga. Mooduleid saab vajadusel eraldi serverisse viia. Peatükk 04 kasutab Better Authi oma PostgreSQL-is; selle adapter kasutab Kyselyt. Broneeringute SMTP-taustatöö jääb peatükki 17.
+
+## Kontod ja õigused
+
+`/api/auth/*` ja `/api/admin/*` töötavad ainult `AUTH_BASE_URL` täpsel hostil. Autentimise küpsis on hostipõhine, tootmises Secure/HttpOnly; teiste ettevõtete alamdomeenidele seda ei jagata. Sessioon loetakse andmebaasist. MFA-ga kasutaja sessioon vajab kinnitatud teise teguri märget; MFA lubamine ja ligipääsu sulgemine tühistavad varasemaid sessioone.
+
+Better Auth hoiab parooliräsi, kinnitusi, sessioone ja krüpteeritud TOTP saladusi `auth_*` tabelites. Registreerumine vajab kehtivat sama e-posti kutset. `memberships` eristab kontot avalikust töötajaprofiilist ja lubab mitut ettevõtet. Ettevõtte õigused loetakse igal toimingul uuesti; omaniku ning platvormihalduri privileegid nõuavad MFA-d. Töötaja tööde õigus vajab kontrollitud töötajaseost. Hilisemad kalendri- ja graafiku API-d peavad neid kontrolle kasutama samas tehingus tööandmete päringuga.
+
+Kutsetabelis hoitakse tunnuse SHA-256 räsi, vastuvõtt on ühekordne ja aeguv. Omaniku toimingud lukustavad ettevõtte, et liikmesuse tühistamine ja üleandmine ei põrkuks. Liikmesustel, kutsetel, toeõigustel ja auditil on RLS; auditit rakenduse roll muuta ega kustutada ei saa. Platvormihaldur näeb vaikimisi ettevõtte üldandmeid. Põhjendatud toeõigus aegub 30 minutiga ja on ainult lugemiseks mõeldud alus; kliendiregistri või kalendri tugivaade kuulub hilisemate vaadete juurde.
+
+Kontokirjade režiimid on `disabled`, `smtp` ning ainult arenduses privaatne `capture`. Tootmises ei kinnitata kirja saatmist, kui saatja puudub. See liides ei asenda broneeringu outbox'i korduskatsete ja meeldetuletuste teostust. Algse omaniku kutse luuakse eraldi migratsioonikontot nõudva CLI-ga; avalik omanikuks muutumise API puudub. Täpne seadistus: [peatükk 04](CHAPTER-04.md).
 
 ## Domeenid ja ettevõtete eraldus
 

@@ -14,8 +14,11 @@
     "licenses": "node --import tsx scripts/licenses.ts"
   },
   "dependencies": {
+    "better-auth": "1.7.3",
+    "kysely": "0.29.5",
     "luxon": "3.7.2",
     "next": "16.3.4",
+    "nodemailer": "10.0.1",
     "pg": "8.23.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -24,11 +27,12 @@
   "devDependencies": {
     "@types/luxon": "3.7.1",
     "@types/node": "24.10.1",
+    "@types/nodemailer": "8.0.1",
     "@types/pg": "8.15.6",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "tsx": "4.23.13",
     "typescript": "5.9.3",
-    "vitest": "5.0.0"
+    "vitest": "4.1.11"
   }
 }

@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import BookingFlow from '@/components/booking-flow';
+import AdminApp from '@/components/admin-app';
 import { hostnameFromHost,tenantForHost } from '@/lib/tenants';
 import { catalogFor } from '@/lib/availability';
 import { AppError } from '@/lib/errors';
@@ -19,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: { title: page.title, description: page.description, url: page.url, siteName: 'broneering.info', locale: 'et_EE', type: 'website' },
   };
 }
-export default async function Page() {
+export default async function Page({searchParams}: {searchParams: Promise<Record<string, string | string[] | undefined>>}) {
   const host=(await headers()).get('host')??'';
   const hostname=hostnameFromHost(host);
   const local=['localhost','127.0.0.1'].includes(hostname)||hostname.endsWith('.localhost');
@@ -33,9 +34,16 @@ export default async function Page() {
         <li><a href={local?`http://ilutegu.localhost${port}`:'https://demo.broneering.info'}>Ilutegu demo</a></li>
         <li><a href={local?`http://teine.localhost${port}`:'https://demo2.broneering.info'}>Teine demo</a></li>
       </ul>
+      <p><a href={local?`http://haldus.localhost${port}`:'https://haldus.broneering.info'}>Ettevõtte haldus</a></p>
     </main>
   );
-  if(['haldus.broneering.info','haldus.localhost'].includes(hostname)) return <main><p>broneering.info / haldus</p><h1>Ettevõtte töölaud on valmimas.</h1><p>Siia tulevad teenuste ja töötajate haldus, töögraafikud ning broneeringute kalender. Kontode loomine ja sisselogimine pole selles tehnilises katses veel avatud.</p><a href={local?`http://localhost${port}`:'https://broneering.info'}>Tagasi avalehele</a></main>;
+  if(['haldus.broneering.info','haldus.localhost'].includes(hostname)) {
+    const query = await searchParams;
+    const invitationToken = typeof query.invitation === 'string' && query.invitation.length <= 256 ? query.invitation : undefined;
+    const resetToken = typeof query.token === 'string' && query.token.length <= 512 ? query.token : undefined;
+    const authError = typeof query.error === 'string' ? 'Link on vigane või aegunud. Proovi toimingut uuesti.' : undefined;
+    return <AdminApp invitationToken={invitationToken} resetToken={resetToken} authError={authError} initialLogin={query.login === '1'} />;
+  }
   try { return <BookingFlow catalog={await catalogFor(await tenantForHost(host))} />; }
   catch(error) { if(error instanceof AppError && error.status===404) notFound(); throw error; }
 }

@@ -8,7 +8,7 @@ Lihtne avaleht, kaks ettevõttedemot, PostgreSQL-i skeem ja migratsioon, päris 
 
 ## 1. Kontod ja ettevõtte loomine
 
-E-posti kinnitamine, turvalised sessioonid, parooli taastamine ja kutsete voog. Omanikule MFA. Iga sisselogija ettevõtteliikmesus ja roll. `haldus.broneering.info` hostipõhine küpsis. Ettevõtte loomise vorm lisab ettevõtte, omaniku liikmesuse ja kordumatu reserveerimata alamdomeeni ühes kontrollitud töövoos. Kasutatud aadresse ei anta teisele ettevõttele.
+Kontode, sessioonide, kutsete, rollide ja MFA tehniline alus on lisatud; täpne seis ja SMTP sõltuvus on [peatükis 04](CHAPTER-04.md). Ettevõtte loomise vorm peab hiljem lisama ettevõtte, omaniku liikmesuse ja kordumatu reserveerimata alamdomeeni ühes kontrollitud töövoos. Kasutatud aadresse ei anta teisele ettevõttele.
 
 ## 2. Ettevõtte töölaud
 

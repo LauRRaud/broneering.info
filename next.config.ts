@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 const config: NextConfig = {
   output: 'standalone',
   poweredByHeader: false,
-  allowedDevOrigins: ['ilutegu.localhost', 'teine.localhost'],
+  allowedDevOrigins: ['ilutegu.localhost', 'teine.localhost', 'haldus.localhost'],
   async headers() {
     return [{ source: '/:path*', headers: [
       { key: 'X-Content-Type-Options', value: 'nosniff' },

@@ -8,6 +8,6 @@ playwright-report/
 *.tsbuildinfo
 *.log
 .DS_Store
-output/playwright/
+output/
 .playwright-cli/
 backups/
