@@ -10,6 +10,8 @@ import os
 import re
 import socket
 import subprocess
+import time
+import urllib.error
 import urllib.request
 import uuid
 from pathlib import Path
@@ -150,9 +152,17 @@ def provision(args):
                 available.write_text(previous)
             raise
         # Default TLS verification checks the actual certificate before enabling application routing.
-        with urllib.request.urlopen(f'https://{host}/api/health', timeout=15) as response:
-            if response.status != 200:
-                raise ValueError('The HTTPS application health check failed.')
+        # Reload returns before old Nginx workers finish; retry with TLS verification intact.
+        for attempt in range(10):
+            try:
+                with urllib.request.urlopen(f'https://{host}/api/health', timeout=15) as response:
+                    if response.status != 200:
+                        raise ValueError('The HTTPS application health check failed.')
+                break
+            except (urllib.error.URLError, OSError):
+                if attempt == 9:
+                    raise
+                time.sleep(1)
         sql(f'UPDATE tenant_domains SET ready=true WHERE hostname={literal(host)} AND tenant_id={literal(new_id)};')
         print(json.dumps({'host': host, 'tenantId': new_id, 'ready': True, 'certificate': cert}))
 
