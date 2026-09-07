@@ -4,6 +4,8 @@ Reacti, Next.js-i ja TypeScripti baasil isemajutatava broneerimisplatvormi esime
 
 ## Praegune seis
 
+Dokumendi 30 peatüki täitmise seis, puuduvad tööd ja peatüki 01 tulemuste võrdlus: [arendusplaani register](docs/PROGRESS.md).
+
 Avalik leht, demod ja halduse arendusseisu leht kasutavad brauseri vaikimisi HTML-elemente. Esialgne kujundus on omaniku soovil eemaldatud; uus kujundussuund lepitakse enne teostamist kokku.
 
 Olemas on avalik teenuse veebileht, kaks kohalikku demokeskkonda, teenuste ja sobivate töötajate valik, päris andmebaasi põhine saadavus, broneeringu kinnitamine ja ICS-allalaadimine. Testitud on ettevõtete eraldatus, samaaegsed kinnitused, korduspäringud, pausid, puhvrid, erandpäevad ja kellakeeramise ajad.

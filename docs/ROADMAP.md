@@ -1,5 +1,7 @@
 # Järgmised arendusetapid
 
+Arendusplaani peatükkide täitmise ja puuduvate tööde esmane register on [PROGRESS.md](PROGRESS.md). See on nõuete jälgimise alus; allolev varasem tehniline tööjaotus ei asenda dokumendi sisukorda ega vastuvõtuteste.
+
 ## Valmis esimese tehnilise katse osana
 
 Lihtne avaleht, kaks ettevõttedemot, PostgreSQL-i skeem ja migratsioon, päris saadavus, broneeringu tehing, RLS, kattuvuse piirang, korduspäringud, teavitusülesande salvestamine. Esialgne kujundus eemaldati omaniku soovil; kasutajaliides kasutab brauseri vaikimisi HTML-elemente. Uus kujundussuund tuleb enne teostamist omanikuga kokku leppida. E2 põhikatse on olemas; see ei tähenda kogu arendusplaani V1 valmimist.
