@@ -40,3 +40,6 @@ Avalikus demos läbiti Chromiumiga broneerimine: Meeste lõikus, Mari, 7. septem
 
 ## Peatükk 05 — 07.09.2026
 46 rakenduse testi ja eraldi 1 tegeliku vidinaskripti test läbisid; 3 Pythoni testi ning kohalik ja VPS-i tootmisbuild läbisid. Brauseri CSP, iframe/modaal, Escape/fookus ning päris alamdomeeni sertifikaadi väljastamine, uuendamise proov ja sulgemine on kirjeldatud [CHAPTER-05](CHAPTER-05.md). Laiem brauserimaatriks jääb avatuks.
+
+## Peatükk 06 — 07.09.2026
+Kõik 59 rakenduse testi, tüübikontroll ja kohalik tootmisbuild läbisid. Kaksteist uut testi katavad hinnakirja õigusi, pärimist, erisusi, ajaloo säilitamist, versioone, broneeringu samaaegsust, hierarhiat ja RLS-i. Brauseris läbiti ajutise MFA omaniku grupi/alamgrupi, teenuse, töötaja ja seose loomine ning kontrolliti avalikku hinda ja profiili. Testandmed eemaldati. Serveri commit f51fd68, migratsioonid 005/006 ja HTTPS kontrollid on [CHAPTER-06](CHAPTER-06.md).
