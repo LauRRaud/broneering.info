@@ -10,13 +10,14 @@ import { AppError } from './errors';
 export const bookingSchema = z.object({
   serviceId: z.uuid(), staffId: z.uuid(), start: z.iso.datetime({ offset:true }),
   expectedPrice: z.number().int().min(0), expectedDuration: z.number().int().min(5).max(720),
+  expectedRulesVersion:z.number().int().positive().optional(),
   name: z.string().trim().min(2).max(120), email: z.email().trim().max(254),
   phone: z.string().trim().max(30).regex(/^[+\d ()-]*$/).optional(),
 }).strict();
 
-type BookingRow = { id:string; reference:string; service_name:string; staff_name:string; start_at:Date; end_at:Date; price:number; duration:number; status:string };
+type BookingRow = { id:string; reference:string; service_name:string; staff_name:string; start_at:Date; end_at:Date; price:number; duration:number; cancellation_hours:number|null; status:string };
 function publicResult(row: BookingRow): BookingResult {
-  return { id:row.id,reference:row.reference,serviceName:row.service_name,staffName:row.staff_name,start:row.start_at.toISOString(),end:row.end_at.toISOString(),price:row.price,duration:row.duration,status:row.status };
+  return { id:row.id,reference:row.reference,serviceName:row.service_name,staffName:row.staff_name,start:row.start_at.toISOString(),end:row.end_at.toISOString(),price:row.price,duration:row.duration,cancellationHours:row.cancellation_hours,status:row.status };
 }
 
 export async function createBooking(tenant: Tenant, raw: BookingInput, requestKey: string): Promise<BookingResult> {
@@ -37,6 +38,7 @@ export async function createBooking(tenant: Tenant, raw: BookingInput, requestKe
       const current = await client.query<Tenant>('SELECT * FROM tenants WHERE id=$1 AND active=true FOR SHARE',[tenant.id]);
       if (!current.rowCount) throw new AppError(404,'TENANT_NOT_FOUND','Ettevõte ei võta praegu broneeringuid vastu.');
       const freshTenant = current.rows[0];
+      if(input.expectedRulesVersion!==freshTenant.rules_version)throw new AppError(409,'RULES_CHANGED','Broneerimisreeglid on muutunud. Laadi värsked tingimused ja vali aeg uuesti; kontaktandmed jäävad alles.');
       const staff = await client.query('SELECT id FROM staff WHERE tenant_id=$1 AND id=$2 AND active AND online FOR UPDATE',[tenant.id,input.staffId]);
       if (!staff.rowCount) throw new AppError(409,'STAFF_UNAVAILABLE','See töötaja pole enam broneeritav.');
       const start = DateTime.fromISO(input.start,{setZone:true});
@@ -49,9 +51,9 @@ export async function createBooking(tenant: Tenant, raw: BookingInput, requestKe
       const detail = details.rows[0];
       const id = randomUUID();
       const reference = `BR-${id.replaceAll('-','').slice(0,12).toUpperCase()}`;
-      const inserted = await client.query<BookingRow>(`INSERT INTO bookings(id,tenant_id,reference,service_id,staff_id,service_name,staff_name,customer_name,customer_email,customer_phone,start_at,end_at,occupied,price,duration,buffer_before,buffer_after)
-        VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,tstzrange($13::timestamptz,$14::timestamptz,'[)'),$15,$16,$17,$18) RETURNING *`,
-        [id,tenant.id,reference,input.serviceId,input.staffId,detail.name,offer.staffName,input.name,input.email,input.phone||null,offer.start,offer.end,start.minus({minutes:detail.buffer_before}).toISO(),DateTime.fromISO(offer.end).plus({minutes:detail.buffer_after}).toISO(),offer.price,offer.duration,detail.buffer_before,detail.buffer_after]);
+      const inserted = await client.query<BookingRow>(`INSERT INTO bookings(id,tenant_id,reference,service_id,staff_id,service_name,staff_name,customer_name,customer_email,customer_phone,start_at,end_at,occupied,price,duration,buffer_before,buffer_after,cancellation_hours)
+        VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,tstzrange($13::timestamptz,$14::timestamptz,'[)'),$15,$16,$17,$18,$19) RETURNING *`,
+        [id,tenant.id,reference,input.serviceId,input.staffId,detail.name,offer.staffName,input.name,input.email,input.phone||null,offer.start,offer.end,start.minus({minutes:detail.buffer_before}).toISO(),DateTime.fromISO(offer.end).plus({minutes:detail.buffer_after}).toISO(),offer.price,offer.duration,detail.buffer_before,detail.buffer_after,freshTenant.cancellation_hours]);
       await client.query('INSERT INTO booking_requests(tenant_id,request_key,payload_hash,booking_id) VALUES($1,$2,$3,$4)',[tenant.id,requestKey,payloadHash,id]);
       await client.query("INSERT INTO outbox(tenant_id,booking_id,booking_version,kind) VALUES($1,$2,1,'booking.confirmed')",[tenant.id,id]);
       return publicResult(inserted.rows[0]);

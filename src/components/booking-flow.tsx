@@ -101,7 +101,8 @@ function downloadCalendar(result: BookingResult) {
   URL.revokeObjectURL(url);
 }
 
-export default function BookingFlow({ catalog }: { catalog: Catalog }) {
+export default function BookingFlow({ catalog:initialCatalog }: { catalog: Catalog }) {
+  const [catalog,setCatalog]=useState(initialCatalog);
   const [step, setStep] = useState<Step>("service");
   const [serviceId, setServiceId] = useState("");
   const [staffId, setStaffId] = useState("");
@@ -244,6 +245,7 @@ export default function BookingFlow({ catalog }: { catalog: Catalog }) {
           start: offer.start,
           expectedPrice: offer.price,
           expectedDuration: offer.duration,
+          expectedRulesVersion:catalog.tenant.rulesVersion,
           name: form.name.trim(),
           email: form.email.trim(),
           ...(form.phone.trim() ? { phone: form.phone.trim() } : {}),
@@ -283,6 +285,17 @@ export default function BookingFlow({ catalog }: { catalog: Catalog }) {
         if (response.status >= 500) {
           setSubmitState("uncertain");
           setSubmitError("Server ei andnud lõplikku vastust. Proovi sama taotlusega uuesti.");
+          return;
+        }
+        if(body.code==='RULES_CHANGED'){
+          keyRef.current='';payloadRef.current='';
+          try{
+            const refreshed=await fetch('/api/catalog',{cache:'no-store'});
+            if(!refreshed.ok)throw new Error('refresh failed');
+            const fresh=await refreshed.json() as Catalog;
+            setCatalog(fresh);setOffer(null);setSubmitState('idle');setServiceId('');setStaffId('');setDate(fresh.today);setStep('service');
+            setSubmitError('Broneerimisreeglid on muutunud ja uuendatud. Vali teenus ning aeg uuesti. Sinu kontaktandmed on alles.');
+          }catch{setSubmitState('error');setSubmitError('Värskeid tingimusi ei saanud laadida. Vajuta uuesti kinnitamise nuppu või laadi leht uuesti.');}
           return;
         }
         if (body.code === "SLOT_UNAVAILABLE" || body.code === "OFFER_CHANGED") {
@@ -375,6 +388,7 @@ export default function BookingFlow({ catalog }: { catalog: Catalog }) {
         {catalog.tenant.demo && <p role="status">Demokeskkond — proovibroneeringud</p>}
         <p>{stepIndex(step) + 1} / {visibleSteps.length}</p>
         <h2 id="booking-title" ref={headingRef} tabIndex={-1}>{step === "service" ? "Leia endale sobiv aeg." : step === "staff" ? "Kes sind vastu võtab?" : step === "time" ? "Vali endale hetk." : "Veel mõned andmed."}</h2>
+        {step==='service'&&submitError&&<p role="alert">{submitError}</p>}
         {canGoBack && <p><button type="button" onClick={goBack} disabled={bookingLocked}>Tagasi</button></p>}
 
           {step === "service" && (

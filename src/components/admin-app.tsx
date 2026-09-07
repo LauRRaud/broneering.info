@@ -3,6 +3,8 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import ServiceManagement from '@/components/service-management';
+import ScheduleManagement from '@/components/schedule-management';
+import type {ScheduleConflict} from '@/lib/schedule-contracts';
 import EmbeddingSettingsForm from '@/components/embedding-settings';
 import { delegationOptions, type AdminInvitation, type AdminMember, type AdminRole, type AdminState } from "@/lib/admin-contracts";
 
@@ -13,7 +15,7 @@ type AdminAppProps = {
   initialLogin?: boolean;
 };
 
-type AdminResponse = { ok?: boolean; error?: string; code?: string; tenantId?: string; grant?: { id: string; expiresAt: string } };
+type AdminResponse = { ok?: boolean; error?: string; code?: string; tenantId?: string; conflicts?:ScheduleConflict[];total?:number; grant?: { id: string; expiresAt: string } };
 
 function errorMessage(value: { error?: { message?: string; code?: string } | null; message?: string } | undefined, fallback: string) {
   return value?.error?.message || value?.message || fallback;
@@ -33,6 +35,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
   const [stateError, setStateError] = useState("");
   const [selectedTenantId, setSelectedTenantId] = useState("");
   const [message, setMessage] = useState(authError);
+  const [scheduleConflicts,setScheduleConflicts]=useState<{items:ScheduleConflict[];total:number}|null>(null);
   const [busy, setBusy] = useState("");
   const busyRef = useRef(false);
   const [authView, setAuthView] = useState<"login" | "signup" | "forgot">(invitationToken && !initialLogin ? "signup" : "login");
@@ -91,7 +94,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
     }
   }
 
-  useEffect(() => { void loadState(); }, [selectedTenantId]);
+  useEffect(() => { setScheduleConflicts(null); void loadState(); }, [selectedTenantId]);
 
   async function postAdmin(action: string, payload: Record<string, unknown>): Promise<AdminResponse> {
     const response = await fetch(`/api/admin/${action}`, {
@@ -102,7 +105,10 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
     });
     let body: AdminResponse = {};
     try { body = (await response.json()) as AdminResponse; } catch { body = {}; }
-    if (!response.ok) throw new Error(readError(body, "Toiming ebaõnnestus."));
+    if (!response.ok) {
+      if(body.code==='SCHEDULE_CONFLICT'&&body.conflicts)setScheduleConflicts({items:body.conflicts,total:body.total??body.conflicts.length});
+      throw new Error(readError(body, "Toiming ebaõnnestus."));
+    }
     return body;
   }
 
@@ -111,6 +117,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
     busyRef.current = true;
     setBusy(name);
     setMessage("");
+    setScheduleConflicts(null);
     return true;
   }
 
@@ -474,7 +481,10 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
         <>
           {ownMemberships.length > 0 && <section aria-labelledby="context-title"><h2 id="context-title">Minu ettevõtted</h2><label htmlFor="tenant-context">Vali enda kontekst</label><br /><select id="tenant-context" value={selectedTenantId || selected?.tenantId || ""} onChange={(event) => setSelectedTenantId(event.target.value)}>{ownMemberships.map((membership) => <option key={membership.tenantId} value={membership.tenantId}>{membership.tenantName} ({roleLabel(membership.role)})</option>)}</select></section>}
           {selected && <section aria-labelledby="workspace-title"><h2 id="workspace-title">{selected.tenantName}</h2><p>Roll: {roleLabel(selected.role)}</p><p>Kalenderivaade ei ole veel rakendatud.</p>
-            {state.catalog && <ServiceManagement key={selected.tenantId} tenantId={selected.tenantId} catalog={state.catalog} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,"Hinnakirja muudatus on salvestatud.")}/>}
+            <p><button type="button" disabled={!!busy} onClick={()=>window.location.reload()}>Laadi haldus uuesti</button> (salvestamata vormid lähtestatakse)</p>
+            {scheduleConflicts&&<div role="alert"><h3>Graafikumuudatuse konfliktid ({scheduleConflicts.total})</h3><p>Broneeringud ja graafik jäid muutmata. Loendis on kuni 30 mõjutatud broneeringut; kliendi kontaktandmeid siin ei kuvata.</p><ul>{scheduleConflicts.items.map(item=><li key={item.reference}>{item.reference} · {item.staffName} · {new Date(item.start).toLocaleString('et-EE',{timeZone:state.schedules?.rules.timezone??'Europe/Tallinn'})}–{new Date(item.end).toLocaleTimeString('et-EE',{timeZone:state.schedules?.rules.timezone??'Europe/Tallinn'})}</li>)}</ul></div>}
+            {state.schedules&&<ScheduleManagement key={'schedules:'+selected.tenantId} tenantId={selected.tenantId} state={state.schedules} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,'Graafiku muudatus on salvestatud.')}/>}
+            {state.catalog && <ServiceManagement key={'catalog:'+selected.tenantId} tenantId={selected.tenantId} catalog={state.catalog} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,"Hinnakirja muudatus on salvestatud.")}/>}
             {selected.role === "owner" && <>
               {state.embedding && <EmbeddingSettingsForm key={`${selected.tenantId}:${state.embedding.origins.join('|')}`} tenantId={selected.tenantId} settings={state.embedding} onSave={origins=>performAdminAction('embedding-settings',{tenantId:selected.tenantId,origins},'Lubatud kodulehed on salvestatud.')}/>}
               <h3>Liikmed</h3>

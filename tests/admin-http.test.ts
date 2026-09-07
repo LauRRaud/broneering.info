@@ -4,11 +4,13 @@ import { POST } from '../src/app/api/admin/[action]/route';
 import { getIdentity } from '../src/lib/auth';
 import { listMemberships, listMembers, revokeMember } from '../src/lib/access';
 import { authBaseUrl } from '../src/lib/auth-host';
+import {saveSchedule,scheduleState,ScheduleConflictError} from '../src/lib/schedule-management';
 
 vi.mock('../src/lib/auth', () => ({ getIdentity: vi.fn() }));
 vi.mock('../src/lib/auth-mail', () => ({ isAccountMailConfigured: () => false, sendAccountMail: vi.fn() }));
 vi.mock('../src/lib/access', () => ({listMemberships:vi.fn(),listMembers:vi.fn(),listPlatformTenants:vi.fn(),requireMembership:vi.fn(),requireOwnerInTransaction:vi.fn(),changeMemberRole:vi.fn(),createSupportGrant:vi.fn(),revokeMember:vi.fn(),revokeSupportGrant:vi.fn(),transferOwnership:vi.fn(),updateMemberPermissions:vi.fn()}));
 vi.mock('../src/lib/invitations', () => ({listInvitations:vi.fn(),acceptInvitation:vi.fn(),cancelInvitation:vi.fn(),inviteMember:vi.fn()}));
+vi.mock('../src/lib/schedule-management',async(importOriginal)=>({...await importOriginal<typeof import('../src/lib/schedule-management')>(),saveSchedule:vi.fn(),scheduleState:vi.fn()}));
 const tenantId='11111111-1111-4111-8111-111111111111';
 const actor={id:'actor',name:'Test',email:'test@example.invalid',emailVerified:true,twoFactorEnabled:false,isPlatformAdmin:false};
 function request(path:string, body?:unknown, origin=authBaseUrl) {
@@ -43,5 +45,18 @@ describe('Administration API boundaries',()=>{
     const call=()=>POST(request('/api/admin/revoke-member',{tenantId,userId:'target',role:'owner'}),{params:Promise.resolve({action:'revoke-member'})});
     expect((await call()).status).toBe(400);expect(revokeMember).not.toHaveBeenCalled();
     vi.mocked(getIdentity).mockResolvedValue(null);expect((await call()).status).toBe(401);
+  });
+  it('keeps the identity available for MFA setup without fetching privileged schedules',async()=>{
+    vi.mocked(getIdentity).mockResolvedValue({...actor,isPlatformAdmin:true});
+    vi.mocked(listMemberships).mockResolvedValue([{tenantId,userId:actor.id,tenantName:'Test',role:'receptionist',staffId:null,permissions:[],active:true}]);
+    const response=await GET(request('/api/admin/state'));
+    expect(response.status).toBe(200);expect((await response.json()).user.isPlatformAdmin).toBe(true);expect(scheduleState).not.toHaveBeenCalled();
+  });
+  it('returns a bounded schedule conflict envelope without customer contacts',async()=>{
+    const conflict={reference:'BR-TEST',staffName:'Test Staff',start:'2026-09-08T07:00:00.000Z',end:'2026-09-08T07:30:00.000Z'};
+    vi.mocked(saveSchedule).mockRejectedValue(new ScheduleConflictError([conflict],1));
+    const response=await POST(request('/api/admin/save-exception',{tenantId,staffId:null,version:0,startDay:'2026-09-08',endDay:'2026-09-08',closed:true,kind:'other',intervals:[]}),{params:Promise.resolve({action:'save-exception'})});
+    expect(response.status).toBe(409);expect(response.headers.get('cache-control')).toBe('no-store');
+    expect(await response.json()).toMatchObject({code:'SCHEDULE_CONFLICT',total:1,conflicts:[conflict]});
   });
 });

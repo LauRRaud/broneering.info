@@ -12,11 +12,13 @@ Olemas on avalik teenuse veebileht, kaks kohalikku demokeskkonda, teenuste ja so
 
 Peatüki 04 teostus lisab kutsega konto loomise, kinnitatud e-posti, sisselogimise, TOTP ja varukoodid, liikmesused, rollid, üksikload, kutsete/ligipääsu tühistamise ja omaniku üleandmise. Täpne vastuvõtt ja piirid on [peatüki 04 registris](docs/CHAPTER-04.md). Kontode kirjade SMTP liides on olemas, kuid avaliku serveri saatmine vajab veel seadistamist; kohalikud testkirjad salvestatakse privaatsesse kausta.
 
-See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, halduskalender, graafikute muutmise kasutajaliides, broneeringu muutmine/tühistamine, broneeringukirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Broneeringu e-kirja ülesanne salvestatakse koos broneeringuga, aga selle saatjat veel pole.
+See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, halduskalender, broneeringu muutmine/tühistamine, broneeringukirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Broneeringu e-kirja ülesanne salvestatakse koos broneeringuga, aga selle saatjat veel pole.
 
 Peatükk 05 lisab lubatud kodulehtede halduse, iframe-i ja modaali koos varulingiga ning käitaja käsuga uue alamdomeeni HTTPS-i. Paigaldus, testitulemused ja piirid: [peatükk 05](docs/CHAPTER-05.md).
 
 Peatükk 06 lisab teenusegruppide hierarhia, teenuste ja töötajate halduse, vaikeväärtuste pärimise ning töötajapõhised erisused. Täpne seis: [peatükk 06](docs/CHAPTER-06.md). V1 tootesuund on ilu ja heaolu, konsultatsioonid ning lihtsad teenindusettevõtted; ruumide ja teiste ressursside ühine broneerimine jääb eraldi laienduseks.
+
+Peatükk 07 lisab asukoha ja töötajate graafikute, perioodi erandite ning broneerimisreeglite halduse. Versioonid ja konfliktikontroll kaitsevad kinnitatud broneeringuid; muudetud tingimused küsitakse kliendilt uuesti. Täpne tõend: [peatükk 07](docs/CHAPTER-07.md).
 
 ## Avaldatud tehniline demo
 

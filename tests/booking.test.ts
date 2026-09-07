@@ -25,7 +25,7 @@ async function fixture():Promise<Fixture>{
   }
   return {tenant,staffId,serviceId,host};
 }
-function input(offer:Offer):BookingInput{return {serviceId:offer.serviceId,staffId:offer.staffId,start:offer.start,expectedPrice:offer.price,expectedDuration:offer.duration,name:'Test Client',email:'test@example.invalid'};}
+function input(offer:Offer):BookingInput{return {serviceId:offer.serviceId,staffId:offer.staffId,start:offer.start,expectedPrice:offer.price,expectedDuration:offer.duration,expectedRulesVersion:1,name:'Test Client',email:'test@example.invalid'};}
 async function firstOffer(f=first){return (await availableOffers(f.tenant,f.serviceId,day,f.staffId))[0];}
 
 beforeEach(async()=>{first=await fixture();second=await fixture();});

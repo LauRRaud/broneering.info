@@ -40,7 +40,7 @@ afterEach(async()=>{
   await db.query('DELETE FROM tenants WHERE id=ANY($1::uuid[])',[ids]);
   await db.query('DELETE FROM auth_user WHERE id=ANY($1::text[])',[[owner.id,clerk.id,worker.id]]);
 });
-const input=(o:Offer)=>({serviceId:o.serviceId,staffId:o.staffId,start:o.start,expectedPrice:o.price,expectedDuration:o.duration,name:'Test Client',email:'test@example.invalid'});
+const input=(o:Offer)=>({serviceId:o.serviceId,staffId:o.staffId,start:o.start,expectedPrice:o.price,expectedDuration:o.duration,expectedRulesVersion:1,name:'Test Client',email:'test@example.invalid'});
 async function service(){return (await state(owner,tenant.id)).services[0];}
 async function assignment(){return (await state(owner,tenant.id)).assignments[0];}
 it('inherits defaults independently and preserves explicit employee overrides',async()=>{

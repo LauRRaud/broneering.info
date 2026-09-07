@@ -4,6 +4,7 @@ import type { Offer, Catalog } from './contracts';
 import type { Tenant } from './tenants';
 import { withTenant } from './db';
 import { AppError } from './errors';
+import {mergeAdjacent} from './schedule-contracts';
 
 type Interval = [number, number];
 type Hours = { staff_id: string | null; start_minute: number; end_minute: number };
@@ -20,15 +21,18 @@ export function localInstant(day: string, minute: number, zone: string): DateTim
   return value;
 }
 
-function intervalsFor(staffId: string | null, hours: Hours[], exceptions: Exception[]): Interval[] {
+export function intervalsFor(staffId: string | null, hours: Hours[], exceptions: Exception[]): Interval[] {
   const override = exceptions.find(e => e.staff_id === staffId);
   const source = override ? (override.closed ? [] : override.intervals) : hours.filter(h => h.staff_id === staffId).map(h => [h.start_minute,h.end_minute] as Interval);
   // Invalid DB configuration must never accidentally open a whole day.
-  return source.filter(i => Array.isArray(i) && i.length === 2 && i.every(Number.isInteger) && i[0] >= 0 && i[1] <= 1440 && i[1] > i[0]);
+  return mergeAdjacent(source.filter(i => Array.isArray(i) && i.length === 2 && i.every(Number.isInteger) && i[0] >= 0 && i[1] <= 1440 && i[1] > i[0]));
 }
 
 export async function catalogFor(tenant: Tenant): Promise<Catalog> {
   return withTenant(tenant.id, async client => {
+    const current=await client.query<Tenant>('SELECT * FROM tenants WHERE id=$1 AND active FOR SHARE',[tenant.id]);
+    if(!current.rowCount)throw new AppError(404,'TENANT_NOT_FOUND','Ettevõtet ei leitud.');
+    tenant=current.rows[0];
     const services = await client.query(`SELECT s.id,s.name,s.description,COALESCE(g.path,s.category) AS category,min(COALESCE(ss.price,s.default_price))::int AS "priceFrom",min(COALESCE(ss.duration,s.default_duration))::int AS "durationFrom"
       FROM services s LEFT JOIN service_group_tree g ON g.tenant_id=s.tenant_id AND g.id=s.group_id JOIN staff_services ss ON ss.tenant_id=s.tenant_id AND ss.service_id=s.id
       JOIN staff st ON st.tenant_id=ss.tenant_id AND st.id=ss.staff_id
@@ -38,7 +42,7 @@ export async function catalogFor(tenant: Tenant): Promise<Catalog> {
       JOIN services s ON s.id=ss.service_id AND s.tenant_id=ss.tenant_id
       WHERE st.tenant_id=$1 AND st.active AND st.online AND s.active AND s.online AND ss.active AND (s.group_id IS NULL OR EXISTS (SELECT 1 FROM service_group_tree g WHERE g.tenant_id=s.tenant_id AND g.id=s.group_id AND g.effective_active)) GROUP BY st.id ORDER BY st.name,st.id`,[tenant.id]);
     const now = DateTime.now().setZone(tenant.timezone);
-    return { tenant: { name: tenant.name, slug: tenant.slug, address: tenant.address, description: tenant.description, timezone: tenant.timezone, cancellationHours: tenant.cancellation_hours, demo: tenant.demo }, services: services.rows, staff: staff.rows, today: now.toISODate()!, maxDate: now.plus({days:tenant.window_days}).toISODate()! };
+    return { tenant: { name: tenant.name, slug: tenant.slug, address: tenant.address, description: tenant.description, timezone: tenant.timezone, cancellationHours: tenant.cancellation_hours, rulesVersion:tenant.rules_version, demo: tenant.demo }, services: services.rows, staff: staff.rows, today: now.toISODate()!, maxDate: now.plus({days:tenant.window_days}).toISODate()! };
   });
 }
 
@@ -84,5 +88,9 @@ export async function offersInTransaction(client: PoolClient, tenant: Tenant, se
 }
 
 export function availableOffers(tenant: Tenant, serviceId: string, day: string, staffId?: string) {
-  return withTenant(tenant.id, client=>offersInTransaction(client,tenant,serviceId,day,staffId));
+  return withTenant(tenant.id, async client=>{
+    const current=await client.query<Tenant>('SELECT * FROM tenants WHERE id=$1 AND active FOR SHARE',[tenant.id]);
+    if(!current.rowCount)throw new AppError(404,'TENANT_NOT_FOUND','Ettevõtet ei leitud.');
+    return offersInTransaction(client,current.rows[0],serviceId,day,staffId);
+  });
 }

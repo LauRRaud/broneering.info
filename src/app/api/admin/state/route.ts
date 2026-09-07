@@ -8,6 +8,7 @@ import { adminError, adminJson, assertAdminHost } from '@/lib/admin-http';
 import { AppError } from '@/lib/errors';
 import type { AdminState } from '@/lib/admin-contracts';
 import {serviceManagementState} from '@/lib/service-management';
+import {scheduleState} from '@/lib/schedule-management';
 import {embeddingSettings} from '@/lib/embed';
 
 export const dynamic = 'force-dynamic';
@@ -46,12 +47,14 @@ export async function GET(request: Request) {
       state.staff = staff;
       state.embedding = await embeddingSettings(actor,selected.tenantId);
     }
-    if (selected && ((selected.role==='owner' && actor.twoFactorEnabled) || (selected.role==='receptionist' && selected.permissions.includes('services.manage')))) {
+    const assuranceReady=actor.twoFactorEnabled||(!actor.isPlatformAdmin&&selected?.role!=='owner');
+    if (selected && assuranceReady && ((selected.role==='owner' && actor.twoFactorEnabled) || (selected.role==='receptionist' && selected.permissions.includes('services.manage')))) {
       state.catalog=await serviceManagementState(actor,selected.tenantId);
     }
     if (actor.isPlatformAdmin && actor.twoFactorEnabled) {
       state.platformTenants = await listPlatformTenants(actor);
     }
+    if(selected && assuranceReady)state.schedules=await scheduleState(actor,selected.tenantId);
     return adminJson(state);
   } catch (error) { return adminError(error); }
 }

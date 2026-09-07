@@ -3,7 +3,7 @@ import { AppError } from './errors';
 
 export type Tenant = {
   id: string; slug: string; name: string; address: string; description: string; timezone: string;
-  lead_minutes: number; window_days: number; step_minutes: number; cancellation_hours: number; active: boolean; demo: boolean;
+  lead_minutes: number; window_days: number; step_minutes: number; cancellation_hours: number; rules_version:number; active: boolean; demo: boolean;
 };
 
 export function hostnameFromHost(host: string) {

@@ -8,6 +8,8 @@ import { AppError } from '@/lib/errors';
 import { limitTenant, readJson } from '@/lib/http';
 import {serviceManagementSchemas,type ServiceManagementAction} from '@/lib/service-management-contracts';
 import {saveServiceManagement} from '@/lib/service-management';
+import {scheduleSchemas,type ScheduleAction} from '@/lib/schedule-contracts';
+import {saveSchedule,ScheduleConflictError} from '@/lib/schedule-management';
 import {saveEmbedOrigins} from '@/lib/embed';
 
 const tenantId = z.uuid();
@@ -16,6 +18,7 @@ const role = z.enum(['receptionist', 'staff']);
 const staffId = z.uuid().nullable().optional();
 const permissions = z.array(z.enum(['services.manage','schedules.manage','theme.publish','schedules.own'])).max(4);
 const schemas = {
+  ...scheduleSchemas,
   ...serviceManagementSchemas,
   'embedding-settings': z.object({tenantId,origins:z.array(z.string().min(1).max(300)).max(10)}).strict(),
   invite: z.object({tenantId, email: z.email().max(254), role, staffId, permissions}).strict(),
@@ -43,6 +46,10 @@ export async function POST(request: Request, context: {params: Promise<{action: 
 
     if (Object.hasOwn(serviceManagementSchemas,action)) {
       await saveServiceManagement(actor,action as ServiceManagementAction,body);
+      return adminJson({ok:true});
+    }
+    if(Object.hasOwn(scheduleSchemas,action)){
+      await saveSchedule(actor,action as ScheduleAction,body);
       return adminJson({ok:true});
     }
 
@@ -98,5 +105,8 @@ export async function POST(request: Request, context: {params: Promise<{action: 
       case 'support-stop': await revokeSupportGrant(actor, schemas['support-stop'].parse(body).grantId); break;
     }
     return adminJson({ok: true});
-  } catch (error) { return adminError(error); }
+  } catch (error) {
+    if(error instanceof ScheduleConflictError)return adminJson({error:error.message,code:error.code,conflicts:error.conflicts,total:error.total},409);
+    return adminError(error);
+  }
 }

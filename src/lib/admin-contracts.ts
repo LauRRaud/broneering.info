@@ -1,4 +1,5 @@
 import type {ServiceManagementState} from './service-management-contracts';
+import type {ScheduleState} from './schedule-contracts';
 export type AdminRole = 'owner' | 'receptionist' | 'staff';
 export type AdminIdentity = {
   id: string;
@@ -40,6 +41,7 @@ export type AdminState = {
   invitations?: AdminInvitation[];
   staff?: Array<{id: string; name: string}>;
   catalog?: ServiceManagementState;
+  schedules?:ScheduleState;
   embedding?: {origins:string[];domains:Array<{hostname:string;ready:boolean}>};
   platformTenants?: Array<{id: string; name: string; slug: string; active: boolean}>;
 };
