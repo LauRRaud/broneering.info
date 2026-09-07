@@ -74,3 +74,6 @@ Ettevõtte kontrollitud `*.broneering.info` domeen indekseeritakse, kui ettevõt
 
 ## Domeenid ja manustamine (ptk 05)
 Püsiv domain_reservations register hoiab aadressi algse ettevõtte juures. tenant_domains.ready avatakse alles pärast HTTPS kontrolli. Ainult /embed kasutab ettevõtte tenant_embed_origins põhist CSP frame-ancestors poliitikat; teised vaated keelavad raamistamise. Omaniku MFA õiguskontroll kaitseb seadete muutmist. Versioonitud /widget/v1.js vahetab ainult paigutussõnumeid, kontrollides akent, päritolu ja juhuslikku kanalit. Käitaja HTTPS töövoog ja piirid on [CHAPTER-05](CHAPTER-05.md).
+
+## Teenuste haldus (ptk 06)
+Teenusegrupid moodustavad ettevõttepõhise hierarhia. Teenusel on vaikehind, kestus ja puhvrid; staff_services null-väärtus pärib vastava vaikeväärtuse. Välised API vastused sisaldavad arvutatud konkreetseid väärtusi. Kõik kataloogikirjutused võtavad ettevõtte eksklusiivse luku ja kontrollivad õigusi samas tehingus; broneeringu jagatud ettevõttelukk tagab ühtse hinnakirja hetkevaate. Versioonikonflikt ei kirjuta teise kasutaja muudatust üle. Arhiveeritud objektid säilivad ajaloo jaoks. service_group_tree kasutab security_invoker vaadet ja järgib RLS-i; arhiveeritud ülemgrupp sulgeb avalikult kogu haru. V1 staff tähistab inimest; mitme ressursi ühine saadavus jääb eraldi laienduseks.

@@ -9,8 +9,8 @@ export async function searchPageForHost(host: string): Promise<SearchPage | null
   if (hostname === 'broneering.info' || hostname === 'www.broneering.info') {
     return {
       url: 'https://broneering.info/',
-      title: 'Broneering.info – broneerimissüsteem ettevõtetele',
-      description: 'Veebipõhine broneerimissüsteem teenuseettevõtetele. Oma broneerimisleht, teenused ja kliendi enda valitud aeg. Tutvu võimalustega ja proovi demot.',
+      title: 'Broneering.info – broneerimissüsteem teenusepakkujatele',
+      description: 'Paindlik veebipõhine broneerimissüsteem teenusepakkujatele. Oma broneerimisleht, teenused ja kliendi enda valitud aeg. Tutvu võimalustega ja proovi demot.',
     };
   }
   const reserved = ['haldus', 'app', 'api', 'admin', 'cdn', 'mail', 'demo', 'demo2'];

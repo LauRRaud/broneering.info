@@ -396,13 +396,14 @@ export default function BookingFlow({ catalog }: { catalog: Catalog }) {
           {step === "staff" && (
             <ul aria-label="Töötajad">
               <li><button type="button" onClick={() => chooseStaff(null)} aria-pressed={staffId === ""}>Töötaja pole oluline</button><p>Näita kõigi seda teenust pakkuvate töötajate vabu aegu. Kuupäeva ja kellaaja valid ise.</p></li>
-              {eligibleStaff.map((item) => <li key={item.id}><button type="button" onClick={() => chooseStaff(item)} aria-pressed={staffId === item.id}>{item.name}</button><p>{item.title}</p></li>)}
+              {eligibleStaff.map((item) => <li key={item.id}><button type="button" onClick={() => chooseStaff(item)} aria-pressed={staffId === item.id}>{item.name}</button><p>{item.title}</p>{item.bio&&<p>{item.bio}</p>}{item.photoUrl&&<img src={item.photoUrl} alt="" width={96} height={96} loading="lazy" referrerPolicy="no-referrer"/>}</li>)}
               {!eligibleStaff.length && <li>Sellele teenusele ei ole sobivaid töötajaid.</li>}
             </ul>
           )}
 
           {step === "time" && (
             <div>
+              {eligibleStaff.filter(item=>item.id===staffId).map(item=><aside key={item.id} aria-label="Teenindaja tutvustus"><p>{item.name}{item.title ? " · "+item.title : ""}</p>{item.bio&&<p>{item.bio}</p>}{item.photoUrl&&<img src={item.photoUrl} alt="" width={96} height={96} loading="lazy" referrerPolicy="no-referrer"/>}</aside>)}
               {submitError && <p role="alert">{submitError}</p>}
               <p><button type="button" onClick={() => chooseDate(shiftDate(date, -1))} disabled={isDateAtStart || bookingLocked} aria-label="Eelmine päev">Eelmine päev</button></p>
               <label>Valitud kuupäev <input type="date" value={date} min={catalog.today} max={catalog.maxDate} onChange={(event) => chooseDate(event.target.value)} disabled={bookingLocked} /></label>

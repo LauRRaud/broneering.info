@@ -27,3 +27,9 @@ Ettevõtte seadistusviisard, kujunduse mustand/avaldamine, logo kontrollitud ül
 Paketid, arved, käsitsi laekumiste märkimine, piirangud ja eksport. Hinnad on veel otsustamata. Serveri staging ja tootmiskeskkond, seire, varundus, taastamine, hooldusjuhend. Repo privaatsus ja omaniku ettevõtte andmed. Kõik 48 lähteplaani vastuvõtutesti seotakse tegeliku teostuse ja tõenditega.
 
 SMS, kaardimaksed, Google'i kalendri sünkroonimine, mitu asukohta ja suvalise kodulehe ehitaja jäävad eraldi hilisemasse ulatusse.
+
+## Toote suund — omaniku täpsustus 07.09.2026
+
+broneering.info on paindlik broneerimissüsteem teenusepakkujatele. V1 fookus on ilu ja heaolu, konsultatsioonid ning lihtsad teenindusettevõtted, kus üks broneering hõivab ühe teenindaja aja. Avaleht ja otsingumetaandmed kasutavad seda laiemat positsioneerimist.
+
+Järgmine suur laiendus on ressursipõhine broneerimine: inimene, ruum, pesuboks, seade või nende kombinatsioon. See vajab eraldi ressursinõudeid, saadavuse ühisosa, kõigi vajalike ressursside atomaarset hõivamist ja vabastamist ning ressursipõhist haldust. Olemasolev staff tabel tähendab V1-s inimest; ruume ei esitata varjatult töötajatena. Rühmatundide kohtade arv, korduvad ajad, sõiduaeg ja valdkondlikud kliendiandmed on eraldi laiendused. Lai turupositsioon ei tähenda nende funktsioonide ega meditsiinivaldkonna nõuete täidetust.

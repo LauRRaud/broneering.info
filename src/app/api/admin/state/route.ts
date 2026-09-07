@@ -7,6 +7,7 @@ import { withTenant } from '@/lib/db';
 import { adminError, adminJson, assertAdminHost } from '@/lib/admin-http';
 import { AppError } from '@/lib/errors';
 import type { AdminState } from '@/lib/admin-contracts';
+import {serviceManagementState} from '@/lib/service-management';
 import {embeddingSettings} from '@/lib/embed';
 
 export const dynamic = 'force-dynamic';
@@ -44,6 +45,9 @@ export async function GET(request: Request) {
       state.invitations = invitations.filter(item => !item.acceptedAt && !item.cancelledAt && Date.parse(item.expiresAt) > Date.now());
       state.staff = staff;
       state.embedding = await embeddingSettings(actor,selected.tenantId);
+    }
+    if (selected && ((selected.role==='owner' && actor.twoFactorEnabled) || (selected.role==='receptionist' && selected.permissions.includes('services.manage')))) {
+      state.catalog=await serviceManagementState(actor,selected.tenantId);
     }
     if (actor.isPlatformAdmin && actor.twoFactorEnabled) {
       state.platformTenants = await listPlatformTenants(actor);

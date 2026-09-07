@@ -12,9 +12,11 @@ Olemas on avalik teenuse veebileht, kaks kohalikku demokeskkonda, teenuste ja so
 
 Peatüki 04 teostus lisab kutsega konto loomise, kinnitatud e-posti, sisselogimise, TOTP ja varukoodid, liikmesused, rollid, üksikload, kutsete/ligipääsu tühistamise ja omaniku üleandmise. Täpne vastuvõtt ja piirid on [peatüki 04 registris](docs/CHAPTER-04.md). Kontode kirjade SMTP liides on olemas, kuid avaliku serveri saatmine vajab veel seadistamist; kohalikud testkirjad salvestatakse privaatsesse kausta.
 
-See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, halduskalender, teenuste ja graafikute muutmise kasutajaliides, broneeringu muutmine/tühistamine, broneeringukirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Broneeringu e-kirja ülesanne salvestatakse koos broneeringuga, aga selle saatjat veel pole.
+See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, halduskalender, graafikute muutmise kasutajaliides, broneeringu muutmine/tühistamine, broneeringukirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Broneeringu e-kirja ülesanne salvestatakse koos broneeringuga, aga selle saatjat veel pole.
 
 Peatükk 05 lisab lubatud kodulehtede halduse, iframe-i ja modaali koos varulingiga ning käitaja käsuga uue alamdomeeni HTTPS-i. Paigaldus, testitulemused ja piirid: [peatükk 05](docs/CHAPTER-05.md).
+
+Peatükk 06 lisab teenusegruppide hierarhia, teenuste ja töötajate halduse, vaikeväärtuste pärimise ning töötajapõhised erisused. Täpne seis: [peatükk 06](docs/CHAPTER-06.md). V1 tootesuund on ilu ja heaolu, konsultatsioonid ning lihtsad teenindusettevõtted; ruumide ja teiste ressursside ühine broneerimine jääb eraldi laienduseks.
 
 ## Avaldatud tehniline demo
 
@@ -62,7 +64,7 @@ Integratsioonitestid vajavad migreeritud PostgreSQL-i ning `.env.local` ühendus
 
 ## Failid
 
-- `src/components/marketing-site.tsx`: avalik veebileht.
+- `src/app/page.tsx`: avalik veebileht.
 - `src/components/booking-flow.tsx`: broneerimisvaade.
 - `src/lib/availability.ts`: serveri saadavusarvutus.
 - `src/lib/bookings.ts`: tehinguline kinnitamine ja korduspäringud.

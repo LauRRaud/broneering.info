@@ -45,7 +45,7 @@ export async function createBooking(tenant: Tenant, raw: BookingInput, requestKe
       const offer = offers.find(o=>DateTime.fromISO(o.start).toMillis()===start.toMillis());
       if (!offer) throw new AppError(409,'SLOT_UNAVAILABLE','See aeg pole enam vaba. Vali uus aeg; kontaktandmed jäävad alles.');
       if (offer.price!==input.expectedPrice || offer.duration!==input.expectedDuration) throw new AppError(409,'OFFER_CHANGED','Teenuse hind või kestus muutus. Palun vali pakkumine uuesti.');
-      const details = await client.query(`SELECT s.name,ss.buffer_before,ss.buffer_after FROM services s JOIN staff_services ss ON ss.tenant_id=s.tenant_id AND ss.service_id=s.id WHERE s.tenant_id=$1 AND s.id=$2 AND ss.staff_id=$3`,[tenant.id,input.serviceId,input.staffId]);
+      const details = await client.query(`SELECT s.name,COALESCE(ss.buffer_before,s.buffer_before) AS buffer_before,COALESCE(ss.buffer_after,s.buffer_after) AS buffer_after FROM services s JOIN staff_services ss ON ss.tenant_id=s.tenant_id AND ss.service_id=s.id WHERE s.tenant_id=$1 AND s.id=$2 AND ss.staff_id=$3`,[tenant.id,input.serviceId,input.staffId]);
       const detail = details.rows[0];
       const id = randomUUID();
       const reference = `BR-${id.replaceAll('-','').slice(0,12).toUpperCase()}`;

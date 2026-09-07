@@ -28,7 +28,9 @@ export default async function Page({searchParams}: {searchParams: Promise<Record
   if(['localhost','127.0.0.1','broneering.info','www.broneering.info'].includes(hostname)) return (
     <main>
       <h1>broneering.info</h1>
-      <p>Lihtne viis aja broneerimiseks.</p>
+      <p>Paindlik broneerimissüsteem teenusepakkujatele.</p>
+      <p>Ilu ja heaolu, konsultatsioonid ning teised teenindusettevõtted: klient valib teenuse, teenindaja ja sobiva aja.</p>
+      <p>Rakendus on arenduses. Demodes saad proovida praegu toimivat broneerimisteekonda.</p>
       <h2>Proovi broneerimist</h2>
       <ul>
         <li><a href={local?`http://ilutegu.localhost${port}`:'https://demo.broneering.info'}>Ilutegu demo</a></li>

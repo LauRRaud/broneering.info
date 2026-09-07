@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import ServiceManagement from '@/components/service-management';
 import EmbeddingSettingsForm from '@/components/embedding-settings';
 import { delegationOptions, type AdminInvitation, type AdminMember, type AdminRole, type AdminState } from "@/lib/admin-contracts";
 
@@ -473,6 +474,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
         <>
           {ownMemberships.length > 0 && <section aria-labelledby="context-title"><h2 id="context-title">Minu ettevõtted</h2><label htmlFor="tenant-context">Vali enda kontekst</label><br /><select id="tenant-context" value={selectedTenantId || selected?.tenantId || ""} onChange={(event) => setSelectedTenantId(event.target.value)}>{ownMemberships.map((membership) => <option key={membership.tenantId} value={membership.tenantId}>{membership.tenantName} ({roleLabel(membership.role)})</option>)}</select></section>}
           {selected && <section aria-labelledby="workspace-title"><h2 id="workspace-title">{selected.tenantName}</h2><p>Roll: {roleLabel(selected.role)}</p><p>Kalenderivaade ei ole veel rakendatud.</p>
+            {state.catalog && <ServiceManagement key={selected.tenantId} tenantId={selected.tenantId} catalog={state.catalog} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,"Hinnakirja muudatus on salvestatud.")}/>}
             {selected.role === "owner" && <>
               {state.embedding && <EmbeddingSettingsForm key={`${selected.tenantId}:${state.embedding.origins.join('|')}`} tenantId={selected.tenantId} settings={state.embedding} onSave={origins=>performAdminAction('embedding-settings',{tenantId:selected.tenantId,origins},'Lubatud kodulehed on salvestatud.')}/>}
               <h3>Liikmed</h3>

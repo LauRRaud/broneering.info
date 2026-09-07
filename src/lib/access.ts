@@ -102,7 +102,7 @@ export async function requireOwnerInTransaction(actor: Actor, tenantId: string, 
   if (membership.role !== 'owner') fail('FORBIDDEN','Selle toimingu saab teha ainult omanik.');
   return membership;
 }
-async function requireMembershipInClient(actor: Actor, tenantId: string, permission: Permission | undefined, client: PoolClient): Promise<Membership> {
+export async function requireMembershipInClient(actor: Actor, tenantId: string, permission: Permission | undefined, client: PoolClient): Promise<Membership> {
   assertAuthEnabled();
   assertPermission(permission);
   await client.query("SELECT set_config('app.user_id',$1,true)",[actor.id]);

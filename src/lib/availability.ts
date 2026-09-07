@@ -29,14 +29,14 @@ function intervalsFor(staffId: string | null, hours: Hours[], exceptions: Except
 
 export async function catalogFor(tenant: Tenant): Promise<Catalog> {
   return withTenant(tenant.id, async client => {
-    const services = await client.query(`SELECT s.id,s.name,s.description,s.category,min(ss.price)::int AS "priceFrom",min(ss.duration)::int AS "durationFrom"
-      FROM services s JOIN staff_services ss ON ss.tenant_id=s.tenant_id AND ss.service_id=s.id
+    const services = await client.query(`SELECT s.id,s.name,s.description,COALESCE(g.path,s.category) AS category,min(COALESCE(ss.price,s.default_price))::int AS "priceFrom",min(COALESCE(ss.duration,s.default_duration))::int AS "durationFrom"
+      FROM services s LEFT JOIN service_group_tree g ON g.tenant_id=s.tenant_id AND g.id=s.group_id JOIN staff_services ss ON ss.tenant_id=s.tenant_id AND ss.service_id=s.id
       JOIN staff st ON st.tenant_id=ss.tenant_id AND st.id=ss.staff_id
-      WHERE s.tenant_id=$1 AND s.active AND s.online AND st.active AND st.online GROUP BY s.id ORDER BY s.category,s.name`,[tenant.id]);
-    const staff = await client.query(`SELECT st.id,st.name,st.title,array_agg(ss.service_id) AS "serviceIds"
+      WHERE s.tenant_id=$1 AND s.active AND s.online AND st.active AND st.online AND ss.active AND (s.group_id IS NULL OR g.effective_active) GROUP BY s.id,g.path ORDER BY category,s.name`,[tenant.id]);
+    const staff = await client.query(`SELECT st.id,st.name,st.title,st.bio,st.photo_url AS "photoUrl",array_agg(ss.service_id) AS "serviceIds"
       FROM staff st JOIN staff_services ss ON ss.staff_id=st.id AND ss.tenant_id=st.tenant_id
       JOIN services s ON s.id=ss.service_id AND s.tenant_id=ss.tenant_id
-      WHERE st.tenant_id=$1 AND st.active AND st.online AND s.active AND s.online GROUP BY st.id ORDER BY st.name,st.id`,[tenant.id]);
+      WHERE st.tenant_id=$1 AND st.active AND st.online AND s.active AND s.online AND ss.active AND (s.group_id IS NULL OR EXISTS (SELECT 1 FROM service_group_tree g WHERE g.tenant_id=s.tenant_id AND g.id=s.group_id AND g.effective_active)) GROUP BY st.id ORDER BY st.name,st.id`,[tenant.id]);
     const now = DateTime.now().setZone(tenant.timezone);
     return { tenant: { name: tenant.name, slug: tenant.slug, address: tenant.address, description: tenant.description, timezone: tenant.timezone, cancellationHours: tenant.cancellation_hours, demo: tenant.demo }, services: services.rows, staff: staff.rows, today: now.toISODate()!, maxDate: now.plus({days:tenant.window_days}).toISODate()! };
   });
@@ -47,10 +47,10 @@ export async function offersInTransaction(client: PoolClient, tenant: Tenant, se
   if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !date.isValid || date.toISODate() !== day) throw new AppError(400,'INVALID_DATE','Vali korrektne kuupäev.');
   const today = now.setZone(tenant.timezone).startOf('day');
   if (date < today || date > today.plus({days:tenant.window_days})) return [];
-  const eligible = await client.query<Eligible>(`SELECT st.id AS staff_id,st.name AS staff_name,ss.price,ss.duration,ss.buffer_before,ss.buffer_after
+  const eligible = await client.query<Eligible>(`SELECT st.id AS staff_id,st.name AS staff_name,COALESCE(ss.price,s.default_price) AS price,COALESCE(ss.duration,s.default_duration) AS duration,COALESCE(ss.buffer_before,s.buffer_before) AS buffer_before,COALESCE(ss.buffer_after,s.buffer_after) AS buffer_after
     FROM staff_services ss JOIN staff st ON st.tenant_id=ss.tenant_id AND st.id=ss.staff_id
     JOIN services s ON s.tenant_id=ss.tenant_id AND s.id=ss.service_id
-    WHERE ss.tenant_id=$1 AND ss.service_id=$2 AND ($3::uuid IS NULL OR st.id=$3) AND st.active AND st.online AND s.active AND s.online ORDER BY st.name,st.id`,[tenant.id,serviceId,staffId ?? null]);
+    WHERE ss.tenant_id=$1 AND ss.service_id=$2 AND ($3::uuid IS NULL OR st.id=$3) AND st.active AND st.online AND s.active AND s.online AND ss.active AND (s.group_id IS NULL OR EXISTS (SELECT 1 FROM service_group_tree g WHERE g.tenant_id=s.tenant_id AND g.id=s.group_id AND g.effective_active)) ORDER BY st.name,st.id`,[tenant.id,serviceId,staffId ?? null]);
   if (!eligible.rowCount) return [];
   const hours = await client.query<Hours>('SELECT staff_id,start_minute,end_minute FROM weekly_hours WHERE tenant_id=$1 AND weekday=$2',[tenant.id,date.weekday]);
   const exceptions = await client.query<Exception>('SELECT staff_id,closed,intervals FROM schedule_exceptions WHERE tenant_id=$1 AND day=$2::date',[tenant.id,day]);
