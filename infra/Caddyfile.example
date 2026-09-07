@@ -1,0 +1,10 @@
+# Merge with the server's existing proxy configuration after inspecting it.
+# Configure HTTPS/DNS for every hostname before enabling its public page.
+broneering.info, www.broneering.info, haldus.broneering.info {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:3107 {
+        header_up Host {host}
+    }
+}
+# Add staging demo hosts only after seeding and explicitly assigning their DB domain mappings.
+# Wildcard DNS alone does not create a tenant, issue its certificate or configure its application.

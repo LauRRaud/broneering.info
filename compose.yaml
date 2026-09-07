@@ -1,0 +1,20 @@
+# Local development database. Intentionally bound to loopback only.
+services:
+  db:
+    image: postgres:18@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280
+    environment:
+      POSTGRES_USER: booking_owner
+      POSTGRES_PASSWORD: local_owner_only
+      POSTGRES_DB: booking
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - booking_data:/var/lib/postgresql
+      - ./infra/local-init.sql:/docker-entrypoint-initdb.d/01-app-role.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U booking_owner -d booking"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+volumes:
+  booking_data:
