@@ -1,10 +1,42 @@
 # Ubuntu serverisse viimine
 
-Praegu ei ole SSH kasutaja, port, autentimine, Ubuntu versioon ega olemasolevad teenused teada. Selles töös serverisse sisse ei logitud ega seal muudatusi tehtud. Allolev on käivitusmaterjal järgmise sammu jaoks, mitte väide tehtud paigaldusest. Rakendus on tehniline katse; avalik ettevõtete liitumine pole veel valmis.
+Tehniline demo paigaldati 7. septembril 2026 Ubuntu 24.04.4 LTS serverisse aadressil `217.146.72.147`. SSH kasutaja on `ubuntu`, port 22 ja selle arvuti olemasolev SSH-võti töötab. Serveris olid Docker ning Nginx juba olemas. Teiste rakenduste konfiguratsioone ei muudetud. Rakendus on tehniline katse; avalik ettevõtete liitumine pole veel valmis.
+
+## Praegune paigaldus
+
+- Projekt serveris: `/srv/broneering.info`.
+- GitHub: privaatne `LauRRaud/broneering.info`, haru `main`.
+- Serveri GitHubi ligipääs: eraldi ainult selle repo lugemisõigusega deploy key; privaatvõti jääb serverisse.
+- Veebikonteiner kuulab ainult `127.0.0.1:3107`; PostgreSQL-il avalikku hostiporti pole.
+- Pöördproksi: `/etc/nginx/sites-available/broneering.info`, link `sites-enabled` kaustas.
+- HTTPS: broneering.info, www, haldus, demo ja demo2. Certbot kasutab webroot'i `/var/www/broneering-acme`; timer uuendab sertifikaati ning projektipõhine deploy hook laadib Nginxi uuesti.
+- Andmebaasi paroolid genereeriti serveris `.env.server` faili õigustega 600. Need ei ole GitHubis.
+- Demode domeeniseosed loodi käsuga `run --rm -e ALLOW_DEMO_SEED=true -e PUBLISH_DEMO_DOMAINS=broneering.info migrate node --import tsx scripts/seed.ts`.
+
+## Järgmise muudatuse avaldamine
+
+Arvutis tee kontrollitud muudatusest commit ja `git push`. Seejärel serveris:
+
+```bash
+ssh ubuntu@217.146.72.147
+cd /srv/broneering.info
+git pull --ff-only origin main
+sudo docker compose --env-file .env.server -f compose.server.yaml build web migrate
+umask 077
+mkdir -p backups
+sudo docker compose --env-file .env.server -f compose.server.yaml exec -T db pg_dump -U booking_owner -d booking -Fc > "backups/before-update-$(date -u +%Y%m%dT%H%M%SZ).dump"
+sudo docker compose --env-file .env.server -f compose.server.yaml run --rm migrate
+sudo docker compose --env-file .env.server -f compose.server.yaml up -d web
+curl -f https://broneering.info/api/health
+```
+
+Käivita sammud järjekorras ja peatu vea korral. Andmebaasi migratsioonid peavad sobima seni töötava versiooniga; skeemi tagasipöördumine tuleb eraldi läbi mõelda. `backups/` on Gitis ignoreeritud, kuid samas serveris asuv koopia ei asenda eraldi varundust. Nginxi tavapärase koodiuuenduse puhul muuta ei ole vaja. GitHub Actionsi automaatset juurutust pole veel seadistatud.
+
+Allpool on uue keskkonna ülesseadmise taustainfo.
 
 ## GitHub ja server on erinevad kohad
 
-GitHub hoiab koodi ja muudatuste ajalugu. Ubuntu server käitab Node.js-i rakendust, PostgreSQL-i ja HTTPS-i pöördproksit. Hiljem saab GitHub Actions ehitada kontrollitud väljalaske ning selle SSH kaudu serverisse viia. Praegu ei ole automaatset juurutust ega serveri saladusi lisatud.
+GitHub hoiab koodi ja muudatuste ajalugu. Ubuntu server käitab Node.js-i rakendust, PostgreSQL-i ja HTTPS-i pöördproksit. Hiljem saab GitHub Actions ehitada kontrollitud väljalaske ning selle SSH kaudu serverisse viia. Praegu ei ole automaatset juurutust seadistatud ega serveri saladusi GitHubi lisatud.
 
 SSH kasutajanimi, port ja ligipääsu lisamine leitakse VPS-i teenusepakkuja halduspaneelist. Parooli ega privaatvõtit ei panda vestlusse või GitHubi. Enne paigaldust tuleb üle vaadata Ubuntu versioon, olemasolevad veebilehed, portide 80/443 kasutus, Docker, kettaruum ja varundus. Olemasolevat proksit või andmebaasi ei asendata ülevaatuseta.
 

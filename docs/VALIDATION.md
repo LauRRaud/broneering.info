@@ -22,4 +22,12 @@ Kontrollitud 1280-pikslist broneerimisvaadet, 390 × 844 mobiili kinnitusvaadet,
 
 ## Kontrollimata või veel teostamata
 
-Päris Ubuntu VPS-i paigaldus, automaatne juurutus, avalik DNS/HTTPS tervik, Safari/Firefox maatriks, ekraanilugeja põhjalik kontroll, kadunud kinnituse järel lehe taasavamise taastamine, pikaajaline koormus, kuritarvituskaitse mitme protsessi vahel, varukoopia taastamine, halduse õigused/MFA, SMTP ja arveldus. Ülaltoodud testid katavad osa lähteplaani AT-nõuetest, mitte kõiki 48 testi ega kogu nimetatud nõude võimalikku ulatust.
+Automaatne juurutus, uute ettevõtete wildcard-HTTPS, Safari/Firefox maatriks, ekraanilugeja põhjalik kontroll, kadunud kinnituse järel lehe taasavamise taastamine, pikaajaline koormus, kuritarvituskaitse mitme protsessi vahel, varukoopia taastamine, halduse õigused/MFA, SMTP ja arveldus. Ülaltoodud testid katavad osa lähteplaani AT-nõuetest, mitte kõiki 48 testi ega kogu nimetatud nõude võimalikku ulatust.
+
+## VPS-i avaldamise kontroll samal päeval
+
+Ubuntu 24.04.4 LTS serveris ehitati GitHubi commit `4c5cd0d` Dockeriga, käivitati migratsioon ja loodi kaks demoettevõtet. Rakendus ja andmebaas käivad eraldi konteinerites. Nginxi uus projektipõhine konfiguratsioon läbis `nginx -t`; olemasolevad hoiatusteated olid olemas juba enne muudatust.
+
+HTTPS GET tagastas 200 aadressidel broneering.info, www.broneering.info, haldus.broneering.info, demo.broneering.info ja demo2.broneering.info. Let’s Encrypti sertifikaat väljastati kõigile viiele hostile, `certbot.timer` on aktiivne ning uuenduse Nginxi laadimishaak on paigaldatud. Serveri `.env.server` õigused on 600 ja fail ei kuulu Giti. Serveri GitHubi võti on ainult selle repo lugemisõigusega. Kõigi uute ettevõtete automaatne HTTPS ei ole selle viie domeeni kontrolliga tõendatud.
+
+Avalikus demos läbiti Chromiumiga broneerimine: Meeste lõikus, Mari, 7. september 2026 kell 17.15, 30 minutit, 25 €. Server tagastas kinnituse `BR-4AF211021676`. Kasutati väljamõeldud nime ja `.invalid` e-posti. Brauseri konsoolis oli 0 viga ja 0 hoiatust. Tegemist oli demoandmebaasi proovibroneeringuga, mitte salongi päris ajaga.

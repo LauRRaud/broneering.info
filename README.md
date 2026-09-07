@@ -8,6 +8,17 @@ Olemas on avalik teenuse veebileht, kaks kohalikku demokeskkonda, teenuste ja so
 
 See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, sisselogimine/MFA, halduskalender, teenuste ja graafikute muutmise kasutajaliides, broneeringu muutmine/tühistamine, e-kirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Haldusaadress näitab ausat arendusseisu. E-kirja ülesanne salvestatakse koos broneeringuga, aga saatjat veel pole.
 
+## Avaldatud tehniline demo
+
+7. septembril 2026 paigaldati katse Ubuntu VPS-i aadressil `217.146.72.147`. Kood asub privaatses [GitHubi repos](https://github.com/LauRRaud/broneering.info).
+
+- [Avalik veebileht](https://broneering.info)
+- [Ilutegu näidisandmetega demo](https://demo.broneering.info)
+- [Stuudio Kask demo](https://demo2.broneering.info)
+- [Halduskeskkonna arendusseis](https://haldus.broneering.info)
+
+Demo ei tee päris salongi broneeringuid ega saada e-kirju. `ilutegu.ee` ja selle olemasolev broneerimislink jäid muutmata. Serveri aadressid ning käsitsi uuendamine on kirjeldatud [serverijuhendis](docs/SERVER.md). GitHubi push ei avalda muudatusi automaatselt.
+
 ## Käivitamine oma arvutis
 
 Eeldused: Node.js 24, npm ja töötav Docker. Käsud käivita selle README-ga samas kaustas.
@@ -28,7 +39,7 @@ Kui `.env.local` on juba seadistatud, ära seda üle kirjuta. Port 3107 valiti, 
 - [Stuudio Kask demo](http://teine.localhost:3107)
 - [Halduskeskkonna arendusseis](http://haldus.localhost:3107)
 
-Ilutegu nimi lähtub kasutaja näitest; demo töötajad, graafikud, kestused ja pakkumised on näidisandmed. Stuudio Kask on väljamõeldud ettevõte. Demo ei saada e-kirju. Kasuta proovimisel väljamõeldud kontaktandmeid. Veebilehe ja demo aadressid töötavad selles arvutis; neid ei ole serverisse avaldatud.
+Ilutegu nimi lähtub kasutaja näitest; demo töötajad, graafikud, kestused ja pakkumised on näidisandmed. Stuudio Kask on väljamõeldud ettevõte. Demo ei saada e-kirju. Kasuta proovimisel väljamõeldud kontaktandmeid. Selle jaotise localhost-aadressid töötavad ainult selles arvutis; avalikud HTTPS-aadressid on eespool.
 
 ## Kontrollid
 
@@ -52,4 +63,4 @@ Integratsioonitestid vajavad migreeritud PostgreSQL-i ning `.env.local` ühendus
 - [Ubuntu serveri ettevalmistus](docs/SERVER.md)
 - [Järgmised tööd](docs/ROADMAP.md)
 
-Kasutaja soov on hoida projekti lähtekood suletuna. GitHubi repo oli töö alustamisel avalik ja tühi. Koodi ei ole sinna avaldatud ega litsentsi valikut välja mõeldud. Sõltuvused säilitavad oma litsentsid; nende register on [docs/DEPENDENCIES.md](docs/DEPENDENCIES.md).
+Kasutaja soov on hoida projekti lähtekood suletuna. GitHubi repo muudeti enne esimese koodi saatmist privaatseks. Projekti litsentsi valikut ei ole välja mõeldud. Sõltuvused säilitavad oma litsentsid; nende register on [docs/DEPENDENCIES.md](docs/DEPENDENCIES.md).
