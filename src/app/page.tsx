@@ -5,8 +5,21 @@ import MarketingSite from '@/components/marketing-site';
 import { hostnameFromHost,tenantForHost } from '@/lib/tenants';
 import { catalogFor } from '@/lib/availability';
 import { AppError } from '@/lib/errors';
+import type { Metadata } from 'next';
+import { searchPageForHost } from '@/lib/search';
 
 export const dynamic='force-dynamic';
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await searchPageForHost((await headers()).get('host') ?? '');
+  if (!page) return { robots: { index: false, follow: false } };
+  return {
+    title: page.title,
+    description: page.description,
+    robots: { index: true, follow: true },
+    alternates: { canonical: page.url },
+    openGraph: { title: page.title, description: page.description, url: page.url, siteName: 'broneering.info', locale: 'et_EE', type: 'website' },
+  };
+}
 export default async function Page() {
   const host=(await headers()).get('host')??'';
   const hostname=hostnameFromHost(host);

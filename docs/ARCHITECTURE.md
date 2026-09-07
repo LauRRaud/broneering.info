@@ -52,6 +52,12 @@ API vead sisaldavad `{error, code}`. Olulisemad: `SLOT_UNAVAILABLE`, `OFFER_CHAN
 
 ## Allikad
 
+### Otsingumootorite nähtavus
+
+Kasutaja täpsustas 7. septembril 2026: avalik veebileht peab olema otsingus nähtav ning hiljem ka ettevõtete päris broneerimislehed. Avaleht on `index, follow` ja selle kanooniline aadress on `https://broneering.info/`, ka www-aadressil. `robots.txt` lubab avaliku HTML-i lugemist ning viitab hostipõhisele saidikaardile.
+
+Ettevõtte kontrollitud `*.broneering.info` domeen indekseeritakse, kui ettevõte on aktiivne ja `demo=false`. Demod, haldus, kohalikud eelvaated ja tundmatud domeenid jäävad `noindex, nofollow`; nende saidikaart on tühi. Robotitele jäetakse HTML-i lugemine lubatuks, et nad näeksid noindex-märgist. API teekond on robots.txt-s välistatud. Hostipõhised metainfo ja saidikaardi päringud on dünaamilised, et ettevõtete andmed vahemälus ei seguneks. See on indekseerimise lubamine, mitte otsingumootori indeksi või positsiooni garantii.
+
 - [Next.js oma serveris](https://nextjs.org/docs/app/guides/self-hosting)
 - [PostgreSQL vahemikud ja välistuspiirangud](https://www.postgresql.org/docs/current/rangetypes.html)
 - [PostgreSQL reapõhine turve](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
