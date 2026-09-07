@@ -4,6 +4,8 @@ Reacti, Next.js-i ja TypeScripti baasil isemajutatava broneerimisplatvormi esime
 
 ## Praegune seis
 
+Avalik leht, demod ja halduse arendusseisu leht kasutavad brauseri vaikimisi HTML-elemente. Esialgne kujundus on omaniku soovil eemaldatud; uus kujundussuund lepitakse enne teostamist kokku.
+
 Olemas on avalik teenuse veebileht, kaks kohalikku demokeskkonda, teenuste ja sobivate töötajate valik, päris andmebaasi põhine saadavus, broneeringu kinnitamine ja ICS-allalaadimine. Testitud on ettevõtete eraldatus, samaaegsed kinnitused, korduspäringud, pausid, puhvrid, erandpäevad ja kellakeeramise ajad.
 
 See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, sisselogimine/MFA, halduskalender, teenuste ja graafikute muutmise kasutajaliides, broneeringu muutmine/tühistamine, e-kirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Haldusaadress näitab ausat arendusseisu. E-kirja ülesanne salvestatakse koos broneeringuga, aga saatjat veel pole.

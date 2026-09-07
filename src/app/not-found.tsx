@@ -1,1 +1,1 @@
-export default function NotFound(){return <main style={{maxWidth:640,margin:'12vh auto',padding:32}}><p>broneering.info</p><h1>Broneerimislehte ei leitud</h1><p>Kontrolli ettevõtte veebiaadressi. Tundmatul aadressil ei avata ühegi teise ettevõtte andmeid.</p></main>;}
+export default function NotFound(){return <main><p>broneering.info</p><h1>Broneerimislehte ei leitud</h1><p>Kontrolli ettevõtte veebiaadressi. Tundmatul aadressil ei avata ühegi teise ettevõtte andmeid.</p></main>;}

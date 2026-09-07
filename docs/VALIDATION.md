@@ -1,5 +1,11 @@
 # Esimese tehnilise katse kontroll 7. september 2026
 
+## Kujunduse eemaldamise kontroll
+
+Omaniku soovil eemaldati avalehe turunduskomponent, mõlemad CSS-failid, ikoon ning demo-, haldus-, vea- ja 404-vaadete kujundus. Alles on brauseri vaikimisi HTML-elemendid. Varasemad allpool kirjeldatud kujunduse ja mobiilimenüü kontrollid käivad eemaldatud versiooni kohta.
+
+`npm test`: 16 testi läbitud. `npm run build`: edukas. Kohalikus brauseris läbiti kujunduseta voog: Meeste lõikus → töötaja pole oluline → 8. september 2026 → Kertu kell 09.00 → väljamõeldud nimi ja `.invalid` e-post → kinnitus `BR-7CF554EC7B18` (30 minutit, 25 €). Brauseri vealogi oli tühi. Ekraanipilt kinnitas brauseri vaikimisi välimust. Broneerimise serveriloogikat ega andmebaasiskeemi ei muudetud.
+
 ## Läbitud
 
 - `npm run typecheck`: tüübikontroll läbitud.

@@ -2,7 +2,7 @@
 
 ## Valmis esimese tehnilise katse osana
 
-Avaliku veebilehe esimene kujundus ja sisustruktuur, kaks ettevõttedemot, PostgreSQL-i skeem ja migratsioon, päris saadavus, broneeringu tehing, RLS, kattuvuse piirang, korduspäringud, teavitusülesande salvestamine. E2 põhikatse on olemas; see ei tähenda kogu arendusplaani V1 valmimist.
+Lihtne avaleht, kaks ettevõttedemot, PostgreSQL-i skeem ja migratsioon, päris saadavus, broneeringu tehing, RLS, kattuvuse piirang, korduspäringud, teavitusülesande salvestamine. Esialgne kujundus eemaldati omaniku soovil; kasutajaliides kasutab brauseri vaikimisi HTML-elemente. Uus kujundussuund tuleb enne teostamist omanikuga kokku leppida. E2 põhikatse on olemas; see ei tähenda kogu arendusplaani V1 valmimist.
 
 ## 1. Kontod ja ettevõtte loomine
 
