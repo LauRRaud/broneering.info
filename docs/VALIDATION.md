@@ -37,3 +37,6 @@ Ubuntu 24.04.4 LTS serveris ehitati GitHubi commit `4c5cd0d` Dockeriga, käivita
 HTTPS GET tagastas 200 aadressidel broneering.info, www.broneering.info, haldus.broneering.info, demo.broneering.info ja demo2.broneering.info. Let’s Encrypti sertifikaat väljastati kõigile viiele hostile, `certbot.timer` on aktiivne ning uuenduse Nginxi laadimishaak on paigaldatud. Serveri `.env.server` õigused on 600 ja fail ei kuulu Giti. Serveri GitHubi võti on ainult selle repo lugemisõigusega. Kõigi uute ettevõtete automaatne HTTPS ei ole selle viie domeeni kontrolliga tõendatud.
 
 Avalikus demos läbiti Chromiumiga broneerimine: Meeste lõikus, Mari, 7. september 2026 kell 17.15, 30 minutit, 25 €. Server tagastas kinnituse `BR-4AF211021676`. Kasutati väljamõeldud nime ja `.invalid` e-posti. Brauseri konsoolis oli 0 viga ja 0 hoiatust. Tegemist oli demoandmebaasi proovibroneeringuga, mitte salongi päris ajaga.
+
+## Peatükk 05 — 07.09.2026
+46 rakenduse testi ja eraldi 1 tegeliku vidinaskripti test läbisid; 3 Pythoni testi ning kohalik ja VPS-i tootmisbuild läbisid. Brauseri CSP, iframe/modaal, Escape/fookus ning päris alamdomeeni sertifikaadi väljastamine, uuendamise proov ja sulgemine on kirjeldatud [CHAPTER-05](CHAPTER-05.md). Laiem brauserimaatriks jääb avatuks.
