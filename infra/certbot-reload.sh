@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
-if [ "${RENEWED_LINEAGE:-}" = /etc/letsencrypt/live/broneering.info ]; then
+case "${RENEWED_LINEAGE:-}" in
+  /etc/letsencrypt/live/broneering.info|/etc/letsencrypt/live/broneering-tenant-*)
   /usr/sbin/nginx -t
   /usr/bin/systemctl reload nginx
-fi
+    ;;
+esac

@@ -11,3 +11,5 @@ playwright-report/
 output/
 .playwright-cli/
 backups/
+__pycache__/
+*.pyc

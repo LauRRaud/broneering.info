@@ -6,6 +6,7 @@ import { changeMemberRole, createSupportGrant, revokeMember, revokeSupportGrant,
 import { acceptInvitation, cancelInvitation, inviteMember } from '@/lib/invitations';
 import { AppError } from '@/lib/errors';
 import { limitTenant, readJson } from '@/lib/http';
+import {saveEmbedOrigins} from '@/lib/embed';
 
 const tenantId = z.uuid();
 const userId = z.string().min(1).max(128);
@@ -13,6 +14,7 @@ const role = z.enum(['receptionist', 'staff']);
 const staffId = z.uuid().nullable().optional();
 const permissions = z.array(z.enum(['services.manage','schedules.manage','theme.publish','schedules.own'])).max(4);
 const schemas = {
+  'embedding-settings': z.object({tenantId,origins:z.array(z.string().min(1).max(300)).max(10)}).strict(),
   invite: z.object({tenantId, email: z.email().max(254), role, staffId, permissions}).strict(),
   'accept-invitation': z.object({token: z.string().min(30).max(256)}).strict(),
   'cancel-invitation': z.object({tenantId, invitationId: z.uuid()}).strict(),
@@ -38,6 +40,11 @@ export async function POST(request: Request, context: {params: Promise<{action: 
 
     // Parse the already validated body with the selected schema to keep each branch typed.
     switch (action as Action) {
+      case 'embedding-settings': {
+        const data=schemas['embedding-settings'].parse(body);
+        await saveEmbedOrigins(actor,data.tenantId,data.origins);
+        break;
+      }
       case 'invite': {
         if (!isAccountMailConfigured()) throw new AppError(503, 'MAIL_UNAVAILABLE', 'Kutsete saatmine ei ole veel seadistatud.');
         const data = schemas.invite.parse(body);

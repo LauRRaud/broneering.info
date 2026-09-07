@@ -71,3 +71,6 @@ Ettevõtte kontrollitud `*.broneering.info` domeen indekseeritakse, kui ettevõt
 - [Next.js oma serveris](https://nextjs.org/docs/app/guides/self-hosting)
 - [PostgreSQL vahemikud ja välistuspiirangud](https://www.postgresql.org/docs/current/rangetypes.html)
 - [PostgreSQL reapõhine turve](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+
+## Domeenid ja manustamine (ptk 05)
+Püsiv domain_reservations register hoiab aadressi algse ettevõtte juures. tenant_domains.ready avatakse alles pärast HTTPS kontrolli. Ainult /embed kasutab ettevõtte tenant_embed_origins põhist CSP frame-ancestors poliitikat; teised vaated keelavad raamistamise. Omaniku MFA õiguskontroll kaitseb seadete muutmist. Versioonitud /widget/v1.js vahetab ainult paigutussõnumeid, kontrollides akent, päritolu ja juhuslikku kanalit. Käitaja HTTPS töövoog ja piirid on [CHAPTER-05](CHAPTER-05.md).

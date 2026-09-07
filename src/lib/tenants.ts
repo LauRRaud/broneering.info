@@ -15,7 +15,7 @@ export function hostnameFromHost(host: string) {
 
 export async function tenantForHost(host: string): Promise<Tenant> {
   const hostname = hostnameFromHost(host);
-  const result = await pool().query<Tenant>('SELECT t.* FROM tenants t JOIN tenant_domains d ON d.tenant_id=t.id WHERE d.hostname=$1 AND t.active=true',[hostname]);
+  const result = await pool().query<Tenant>('SELECT t.* FROM tenants t JOIN tenant_domains d ON d.tenant_id=t.id WHERE d.hostname=$1 AND d.ready=true AND t.active=true',[hostname]);
   if (!result.rowCount) throw new AppError(404,'TENANT_NOT_FOUND','Sellel aadressil broneerimislehte ei ole.');
   return result.rows[0];
 }

@@ -86,3 +86,6 @@ Kohanda olemasoleva proksi seadistust, säilitades `Host` päise ja suunates ain
 ## Enne päris kasutust
 
 Vajalikud on töötav autentimine ja MFA, haldus ning õiguskontroll, automaatne ettevõtte loomine, meili saatmine, turvalised broneeringu halduslingid, säilitusreeglid, kuritarvituskaitse, serveriseire, välised kaitstud varukoopiad ning mõõdetud taastamiskatse. Andmekaitse tekstid, kuutasu ja klienditingimused on omaniku otsustada. Tagasipöördumise plaan peab katma nii rakenduse väljalaske kui andmebaasi migratsioonid; konteineri taaskäivitamine ei ole andmebaasi taastamine.
+
+## Peatüki 05 domeenikäsk
+Uute alamdomeenide HTTPS on nüüd automatiseeritud olemasoleva Certboti HTTP-01 kaudu. See täpsustab ülal varasemat taristu puudujääki. Käsk, domeeni sulgemine ja uuendamise piirid: [CHAPTER-05](CHAPTER-05.md). Enne kasutamist rakenda migratsioon 004 ning paigalda uuendatud infra/nginx.conf ja infra/certbot-reload.sh. Iseteeninduslik liitumine tuleb peatükis 18.
