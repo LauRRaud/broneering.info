@@ -45,6 +45,8 @@ Kontrollitud 07.09.2026:
 
 AT-19, AT-23 ja AT-24 konto-/liikmesusosa kohta on ülal tõendid. Kalender, kliendiregister, ettevõtte liitumisviisard, arveldus ning broneeringute meilide saatja jäävad oma peatükkidesse. Omaniku taastamise operatiivne juhend MFA ja kõigi varukoodide kaotamisel ning täielik kasutatavuse kontroll on veel avatud. Peatükki ei märgita tervikuna vastu võetuks.
 
+Serverisse avaldati 07.09.2026 kood `f326bb4`. Enne migratsioone salvestati `/srv/broneering.info/backups/before-chapter04-20260907T131739Z.dump`. Linuxi ehitus ja migratsioonid 002/003 läbisid; uus veebikonteiner käivitus. HTTPS kontroll: avaleht ja mõlemad demod 200, halduse anonüümne olek 200 koos `mailAvailable:false`, sama halduse päring demo hostilt 404, seadistamata saatjaga registreerumine 503. Avaldatud sisselogimisvorm kontrolliti ka brauseris. Serverisse ei loodud päris kasutajat ega saadetud kirja.
+
 ## Kontokirjade seadistus
 
 Tootmises on `AUTH_MAIL_MODE=disabled`. Haldus ütleb, et kutse, konto loomine või taastamiskirja saatmine ei ole veel saadaval; API tagastab 503. Olemasoleva konto sisselogimine ei sõltu SMTP-st.
