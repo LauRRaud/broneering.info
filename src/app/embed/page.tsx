@@ -16,6 +16,11 @@ export default async function EmbedPage({searchParams}:{searchParams:Promise<Rec
     let parent='';
     try {parent=canonicalEmbedOrigin(typeof query.parent==='string'?query.parent:'',process.env.NODE_ENV!=='production');}catch{}
     if(!parent || !(await embedOrigins(tenant.id)).includes(parent))return <main><h1>Ava broneerimisleht</h1><p>Manustamine pole sellele kodulehele seadistatud.</p><a href="/" target="_blank" rel="noopener noreferrer">Ava broneerimisleht</a></main>;
-    return <EmbedFrame parentOrigin={parent}><BookingFlow catalog={await catalogFor(tenant)}/></EmbedFrame>;
+    try {
+      return <EmbedFrame parentOrigin={parent}><BookingFlow catalog={await catalogFor(tenant,query.staff===undefined?undefined:typeof query.staff==='string'?query.staff:'')}/></EmbedFrame>;
+    }catch(error){
+      if(error instanceof AppError && error.code==='STAFF_UNAVAILABLE')return <EmbedFrame parentOrigin={parent}><main><h1>Töötaja link ei ole kasutatav</h1><a href={`/embed?parent=${encodeURIComponent(parent)}`}>Vaata ettevõtte teenuseid ja töötajaid</a></main></EmbedFrame>;
+      throw error;
+    }
   }catch(error){if(error instanceof AppError && error.status===404)notFound();throw error;}
 }

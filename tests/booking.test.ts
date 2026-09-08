@@ -2,7 +2,7 @@ import { beforeEach, afterEach, afterAll, describe, it, expect } from 'vitest';
 import { randomUUID } from 'node:crypto';
 import pg from 'pg';
 import { DateTime } from 'luxon';
-import { availableOffers, catalogFor, localInstant, offersInTransaction } from '../src/lib/availability';
+import { availableOffers, catalogFor, localInstant, offersInTransaction, nextAvailableDay } from '../src/lib/availability';
 import { createBooking } from '../src/lib/bookings';
 import { pool, withTenant } from '../src/lib/db';
 import { tenantForHost, type Tenant } from '../src/lib/tenants';
@@ -38,6 +38,45 @@ afterEach(async()=>{
 afterAll(async()=>{await admin.end();await pool().end();});
 
 describe('PostgreSQL booking core',()=>{
+  it('08/D-09: personal catalog uses only linked staff services and their concrete price and duration',async()=>{
+    const other=randomUUID(),extra=randomUUID();
+    await admin.query("INSERT INTO staff(id,tenant_id,name) VALUES($1,$2,'Other worker')",[other,first.tenant.id]);
+    await admin.query('INSERT INTO staff_services(tenant_id,staff_id,service_id,price,duration) VALUES($1,$2,$3,1000,15)',[first.tenant.id,other,first.serviceId]);
+    await admin.query("INSERT INTO services(id,tenant_id,name,category) VALUES($1,$2,'Other service','Hair')",[extra,first.tenant.id]);
+    await admin.query('INSERT INTO staff_services(tenant_id,staff_id,service_id) VALUES($1,$2,$3)',[first.tenant.id,other,extra]);
+    expect((await catalogFor(first.tenant)).services.find(s=>s.id===first.serviceId)).toMatchObject({priceFrom:1000,durationFrom:15});
+    const scoped=await catalogFor(first.tenant,first.staffId);
+    expect(scoped.selectedStaffId).toBe(first.staffId);
+    expect(scoped.services).toHaveLength(1);
+    expect(scoped.services[0]).toMatchObject({id:first.serviceId,priceFrom:2500,durationFrom:30});
+    expect(scoped.staff.map(s=>s.id)).toEqual([first.staffId]);
+    await expect(catalogFor(first.tenant,second.staffId)).rejects.toMatchObject({code:'STAFF_UNAVAILABLE'});
+    await expect(catalogFor(first.tenant,'bad-link')).rejects.toMatchObject({code:'STAFF_UNAVAILABLE'});
+    await admin.query('UPDATE staff SET online=false WHERE tenant_id=$1 AND id=$2',[first.tenant.id,first.staffId]);
+    await expect(catalogFor(first.tenant,first.staffId)).rejects.toMatchObject({code:'STAFF_UNAVAILABLE'});
+  });
+  it('08: next free day skips closed dates without creating or choosing a booking',async()=>{
+    const next=DateTime.fromISO(day).plus({days:1}).toISODate()!;
+    await admin.query('INSERT INTO schedule_exceptions(tenant_id,staff_id,day,closed) VALUES($1,$2,$3,true)',[first.tenant.id,first.staffId,next]);
+    const found=await nextAvailableDay(first.tenant,first.serviceId,day,first.staffId);
+    expect(found.date).toBe(DateTime.fromISO(day).plus({days:2}).toISODate());
+    expect(Object.keys(found).sort()).toEqual(['date','hasMore','searchedThrough']);
+    expect((await admin.query('SELECT id FROM bookings WHERE tenant_id=$1',[first.tenant.id])).rowCount).toBe(0);
+    expect((await nextAvailableDay(first.tenant,first.serviceId,day,second.staffId)).date).toBeNull();
+  });
+  it('08: next free day search is bounded, resumable, and respects the current booking window',async()=>{
+    await admin.query('UPDATE tenants SET window_days=90 WHERE id=$1',[first.tenant.id]);
+    await admin.query('DELETE FROM weekly_hours WHERE tenant_id=$1',[first.tenant.id]);
+    const firstBlock=await nextAvailableDay(first.tenant,first.serviceId,day);
+    expect(firstBlock).toEqual({date:null,searchedThrough:DateTime.fromISO(day).plus({days:31}).toISODate(),hasMore:true});
+    const secondBlock=await nextAvailableDay(first.tenant,first.serviceId,firstBlock.searchedThrough);
+    expect(secondBlock.searchedThrough).toBe(DateTime.fromISO(day).plus({days:62}).toISODate());
+    const finalBlock=await nextAvailableDay(first.tenant,first.serviceId,secondBlock.searchedThrough);
+    expect(finalBlock).toEqual({date:null,searchedThrough:DateTime.now().setZone(first.tenant.timezone).plus({days:90}).toISODate(),hasMore:false});
+    await expect(nextAvailableDay(first.tenant,first.serviceId,'2026-02-30')).rejects.toMatchObject({code:'INVALID_DATE'});
+    await admin.query('UPDATE tenants SET window_days=3 WHERE id=$1',[first.tenant.id]);
+    await expect(nextAvailableDay(first.tenant,first.serviceId,day)).rejects.toMatchObject({code:'INVALID_DATE'});
+  });
   it('AT-11: 50 competing requests create exactly one booking and one outbox event',async()=>{
     const offer=await firstOffer();
     const results=await Promise.allSettled(Array.from({length:50},()=>createBooking(first.tenant,input(offer),randomUUID())));

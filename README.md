@@ -20,6 +20,8 @@ Peatükk 06 lisab teenusegruppide hierarhia, teenuste ja töötajate halduse, va
 
 Peatükk 07 lisab asukoha ja töötajate graafikute, perioodi erandite ning broneerimisreeglite halduse. Versioonid ja konfliktikontroll kaitsevad kinnitatud broneeringuid; muudetud tingimused küsitakse kliendilt uuesti. Täpne tõend: [peatükk 07](docs/CHAPTER-07.md).
 
+Peatükk 08 lisab töötaja isikliku lingi, järgmise vaba päeva otsingu ning täpsustab kliendivormi ja kinnitust. Tõendid ja hilisemate peatükkide sõltuvused: [peatükk 08](docs/CHAPTER-08.md).
+
 ## Avaldatud tehniline demo
 
 7. septembril 2026 paigaldati katse Ubuntu VPS-i aadressil `217.146.72.147`. Kood asub privaatses [GitHubi repos](https://github.com/LauRRaud/broneering.info).
@@ -38,13 +40,13 @@ Eeldused: Node.js 24, npm ja töötav Docker. Käsud käivita selle README-ga sa
 ```powershell
 Copy-Item .env.example .env.local
 npm ci
-docker compose up -d db
+docker compose --env-file .env.local up -d db
 npm run db:migrate
 npm run db:seed
 npm run dev
 ```
 
-Kui `.env.local` on juba seadistatud, ära seda üle kirjuta. Port 3107 valiti, et vältida konflikti arvutis juba töötava teise rakendusega.
+Kui `.env.local` on juba seadistatud, ära seda üle kirjuta. Port 3107 valiti, et vältida konflikti arvutis juba töötava teise rakendusega. Kui andmebaasi vaikeport 55432 on hõivatud, lisa `.env.local` faili `LOCAL_DB_PORT=55433` ja muuda mõlema andmebaasiühenduse port samaks. Compose kasutab olemasolevat andmeköidet.
 
 - [Teenuse veebileht](http://localhost:3107)
 - [Ilutegu demo](http://ilutegu.localhost:3107)

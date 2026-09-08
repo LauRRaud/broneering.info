@@ -46,6 +46,12 @@ export default async function Page({searchParams}: {searchParams: Promise<Record
     const authError = typeof query.error === 'string' ? 'Link on vigane või aegunud. Proovi toimingut uuesti.' : undefined;
     return <AdminApp invitationToken={invitationToken} resetToken={resetToken} authError={authError} initialLogin={query.login === '1'} />;
   }
-  try { return <BookingFlow catalog={await catalogFor(await tenantForHost(host))} />; }
-  catch(error) { if(error instanceof AppError && error.status===404) notFound(); throw error; }
+  try {
+    const query=await searchParams;
+    return <BookingFlow catalog={await catalogFor(await tenantForHost(host),query.staff===undefined?undefined:typeof query.staff==='string'?query.staff:'')} />;
+  }
+  catch(error) {
+    if(error instanceof AppError && error.code==='STAFF_UNAVAILABLE')return <main><h1>Töötaja link ei ole kasutatav</h1><p>Töötaja ei võta selle lingi kaudu praegu broneeringuid vastu.</p><a href="/">Vaata ettevõtte teenuseid ja töötajaid</a></main>;
+    if(error instanceof AppError && error.status===404) notFound(); throw error;
+  }
 }
