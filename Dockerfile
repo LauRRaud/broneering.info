@@ -1,6 +1,6 @@
 FROM node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e AS dependencies
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY --chmod=644 package.json package-lock.json ./
 RUN npm ci --no-fund
 COPY scripts/licenses.ts ./scripts/licenses.ts
 RUN mkdir -p docs && npm run licenses && cp docs/THIRD-PARTY-NOTICES.txt /app/THIRD-PARTY-NOTICES.txt
@@ -20,6 +20,7 @@ ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
 COPY src ./src
 COPY scripts ./scripts
 COPY tsconfig.json ./
+RUN chmod -R a+rX src scripts tsconfig.json
 USER node
 CMD ["node", "--import", "tsx", "scripts/notification-worker.ts"]
 
@@ -29,6 +30,7 @@ RUN groupadd --system --gid 1001 booking && useradd --system --uid 1001 --gid bo
 COPY src ./src
 COPY scripts ./scripts
 COPY tsconfig.json ./
+RUN chmod -R a+rX src scripts tsconfig.json
 USER booking
 CMD ["node", "--import", "tsx", "scripts/export-worker.ts"]
 
@@ -37,6 +39,7 @@ ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
 COPY src ./src
 COPY scripts ./scripts
 COPY tsconfig.json ./
+RUN chmod -R a+rX src scripts tsconfig.json
 USER node
 CMD ["node", "--import", "tsx", "scripts/payment-worker.ts"]
 
@@ -45,6 +48,7 @@ ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
 COPY src ./src
 COPY scripts ./scripts
 COPY tsconfig.json ./
+RUN chmod -R a+rX src scripts tsconfig.json
 USER node
 CMD ["node", "--import", "tsx", "scripts/billing-worker.ts"]
 
