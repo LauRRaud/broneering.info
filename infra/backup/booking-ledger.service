@@ -1,0 +1,9 @@
+[Unit]
+Description=Encrypted contact-removal ledger snapshot
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/booking
+EnvironmentFile=/etc/booking/recovery.env
+ExecStart=/bin/sh /opt/booking/infra/backup/ledger.sh
+StandardOutput=journal
+StandardError=journal

@@ -1,0 +1,46 @@
+{
+  "verifiedAt": "2026-09-08T19:44:56.944225+00:00",
+  "baselineFiles": 331,
+  "existingFilesChangedByAudit": [
+    "README.md",
+    "docs/PROGRESS.md",
+    "docs/ROADMAP.md"
+  ],
+  "existingFilesUnchanged": 328,
+  "missingBaselineFiles": [],
+  "applicationScriptsInfraMigrationsTestsUnchanged": true,
+  "originalDevelopmentPlanUnchanged": true,
+  "atRows": 48,
+  "chapterRows": 30,
+  "stageRows": 11,
+  "openTasks": 14,
+  "browserBookingDbRecheck": {
+    "confirmedBookings": 1,
+    "bookingIds": [
+      "3a811651-6ee2-4688-a180-789f9507459a"
+    ]
+  },
+  "privacyDbRecheck": {
+    "action": "customer.correct",
+    "metadata": {}
+  },
+  "cleanup": {
+    "label": "chapter23-20260908",
+    "containersRemoved": [
+      "broneering-ch23-audit-web",
+      "broneering-ch23-audit-20260908"
+    ],
+    "anonymousVolumesRemoved": [
+      "30e6d8afc45da96cc92455a79e7619ae3def756320ddd57ec3a0f5edbc5a1647"
+    ],
+    "networkRemoved": "broneering-ch23-audit-net",
+    "browserSessionClosed": "chapter23-audit",
+    "imageCacheRetained": "broneering-ch23-audit:20260908",
+    "remainingAuditContainers": 0,
+    "remainingAuditNetworks": 0,
+    "remainingAuditVolumes": 0
+  },
+  "reviewLimits": "Four dynamic findings, one static proxy finding; no full browser/load/production acceptance; findings remain open",
+  "localMarkdownLinksChecked": 135,
+  "inventoryFiles": 295
+}

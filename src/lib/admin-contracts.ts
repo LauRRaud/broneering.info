@@ -10,6 +10,7 @@ export type AdminIdentity = {
   isPlatformAdmin: boolean;
 };
 export type AdminMembership = {
+  dataAccessExpired?:boolean;
   tenantId: string;
   tenantName: string;
   role: AdminRole;

@@ -4,6 +4,11 @@
   if(window.__broneeringWidgetV1)return;
   window.__broneeringWidgetV1=true;
   const script=document.currentScript;
+  /* LANGUAGES_START */
+  const languages={"et":{"Broneerimisvaate laadimine…":"Broneerimisvaate laadimine…","Manustatud vaadet ei õnnestunud avada. Kasuta broneerimislehe linki.":"Manustatud vaadet ei õnnestunud avada. Kasuta broneerimislehe linki.","Broneeri aeg":"Broneeri aeg","Sulge":"Sulge","Ava eraldi broneerimisleht":"Ava eraldi broneerimisleht","Aja broneerimine":"Aja broneerimine","Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht.":"Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht."},"en":{"Broneerimisvaate laadimine…":"Loading booking form…","Manustatud vaadet ei õnnestunud avada. Kasuta broneerimislehe linki.":"Could not open the embedded view. Use the booking page link.","Broneeri aeg":"Book an appointment","Sulge":"Close","Ava eraldi broneerimisleht":"Open booking page separately","Aja broneerimine":"Book an appointment","Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht.":"Could not open the embedded view. Open the booking page separately."},"ru":{"Broneerimisvaate laadimine…":"Загружаем форму записи…","Manustatud vaadet ei õnnestunud avada. Kasuta broneerimislehe linki.":"Не удалось открыть встроенную форму. Используйте ссылку на страницу записи.","Broneeri aeg":"Записаться на приём","Sulge":"Закрыть","Ava eraldi broneerimisleht":"Открыть страницу записи отдельно","Aja broneerimine":"Запись на приём","Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht.":"Не удалось открыть встроенную форму. Откройте страницу записи отдельно."}};
+  /* LANGUAGES_END */
+  const language=element=>{const code=(element?.dataset?.bookingLanguage||document.documentElement?.lang||'et').toLowerCase().split('-')[0];return ['et','en','ru'].includes(code)?code:'et';};
+  const translate=(locale,text)=>languages[locale]?.[text]||text;
   const local=host=>host==='localhost'||host==='127.0.0.1'||host.endsWith('.localhost');
   const development=script && local(new URL(script.src,location.href).hostname);
   function bookingUrl(value) {
@@ -50,34 +55,41 @@
       const root=bookingUrl(`${embed.origin}/`);
       if(!root||embed.pathname!=='/embed'||embed.searchParams.get('parent')!==location.origin)return;
       frame.dataset.bookingBound='true';
-      const status=document.createElement('p');status.setAttribute('role','status');status.textContent='Broneerimisvaate laadimine…';
+      const t=text=>translate(language(frame),text);
+      const status=document.createElement('p');status.setAttribute('role','status');status.textContent=t('Broneerimisvaate laadimine…');
       frame.after(status);
-      connect(frame,root,()=>{status.textContent='';},()=>{status.textContent='Manustatud vaadet ei õnnestunud avada. Kasuta broneerimislehe linki.';});
+      connect(frame,root,()=>{status.textContent='';},()=>{status.textContent=t('Manustatud vaadet ei õnnestunud avada. Kasuta broneerimislehe linki.');});
     }catch{/* Ordinary iframe and fallback link still work. */}
   }
   let activeDialog=null;
+  const dialogs=new WeakMap();
   function openModal(anchor,url) {
     if(typeof HTMLDialogElement==='undefined'||typeof HTMLDialogElement.prototype.showModal!=='function')return false;
+    if(activeDialog)activeDialog.close();
+    const cached=dialogs.get(anchor);
+    if(cached){cached.showModal();activeDialog=cached;document.documentElement.style.overflow='hidden';cached.querySelector('button').focus();return true;}
+    const locale=language(anchor),t=text=>translate(locale,text);
     const dialog=document.createElement('dialog');
-    const title=document.createElement('h2');title.textContent='Broneeri aeg';title.id=`booking-${channel()}`;
+    dialog.lang=locale;
+    const title=document.createElement('h2');title.textContent=t('Broneeri aeg');title.id=`booking-${channel()}`;
     dialog.setAttribute('aria-labelledby',title.id);
     // Only functional sizing: the application's visual design is intentionally deferred.
     Object.assign(dialog.style,{width:'min(56rem, 96vw)',maxWidth:'96vw',maxHeight:'96dvh',padding:'1rem',boxSizing:'border-box'});
-    const close=document.createElement('button');close.type='button';close.textContent='Sulge';close.autofocus=true;
-    const status=document.createElement('p');status.setAttribute('role','status');status.textContent='Broneerimisvaate laadimine…';
-    const fallback=document.createElement('a');fallback.href=url.href;fallback.textContent='Ava eraldi broneerimisleht';
-    const frame=document.createElement('iframe');frame.title='Aja broneerimine';frame.width='100%';frame.height='700';frame.referrerPolicy='no-referrer';
-    const embed=new URL('/embed',url);embed.searchParams.set('parent',location.origin);frame.src=embed.href;
+    const close=document.createElement('button');close.type='button';close.textContent=t('Sulge');close.autofocus=true;
+    const status=document.createElement('p');status.setAttribute('role','status');status.textContent=t('Broneerimisvaate laadimine…');
+    const fallback=document.createElement('a');fallback.href=url.href;fallback.textContent=t('Ava eraldi broneerimisleht');
+    const frame=document.createElement('iframe');frame.title=t('Aja broneerimine');frame.width='100%';frame.height='700';frame.referrerPolicy='no-referrer';
+    const embed=new URL('/embed',url);embed.searchParams.set('parent',location.origin);embed.searchParams.set('lang',locale);frame.src=embed.href;
     dialog.append(title,close,status,fallback,frame);
     let disconnect=()=>{};const oldOverflow=document.documentElement.style.overflow;
-    const cleanup=()=>{disconnect();dialog.remove();document.documentElement.style.overflow=oldOverflow;activeDialog=null;anchor.focus();};
-    close.addEventListener('click',()=>dialog.close());dialog.addEventListener('close',cleanup,{once:true});
+    const cleanup=()=>{if(activeDialog===dialog){document.documentElement.style.overflow=oldOverflow;activeDialog=null;anchor.focus();}};
+    close.addEventListener('click',()=>dialog.close());dialog.addEventListener('close',cleanup);
     // Native Escape handles the parent; the embedded frame sends a validated close message.
     try {
       if(activeDialog)activeDialog.close();
-      document.body.append(dialog);dialog.showModal();activeDialog=dialog;
+      document.body.append(dialog);dialog.showModal();activeDialog=dialog;dialogs.set(anchor,dialog);
       document.documentElement.style.overflow='hidden';close.focus();
-      disconnect=connect(frame,url,()=>{status.textContent='';},()=>{status.textContent='Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht.';frame.hidden=true;},()=>dialog.close());
+      disconnect=connect(frame,url,()=>{status.textContent='';},()=>{status.textContent=t('Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht.');frame.hidden=true;},()=>dialog.close());
       return true;
     }catch{disconnect();dialog.remove();document.documentElement.style.overflow=oldOverflow;activeDialog=null;return false;}
   }

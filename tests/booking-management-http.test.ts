@@ -7,6 +7,7 @@ import {getIdentity} from '../src/lib/auth';
 import {publicBookingState,publicChangeOffers,changePublicBooking,adminBookingsState,changeAdminBooking,saveBookingPolicy} from '../src/lib/booking-management';
 import {authBaseUrl,authHost} from '../src/lib/auth-host';
 import {AppError} from '../src/lib/errors';
+vi.mock('../src/lib/request-limits',()=>({limitTenant:vi.fn(async()=>{})}));
 vi.mock('../src/lib/auth',()=>({getIdentity:vi.fn()}));
 vi.mock('../src/lib/tenants',()=>({tenantForHost:vi.fn()}));
 vi.mock('../src/lib/booking-management',()=>({publicBookingState:vi.fn(),publicChangeOffers:vi.fn(),changePublicBooking:vi.fn(),adminBookingsState:vi.fn(),adminBookingOffers:vi.fn(),adminBookingHistory:vi.fn(),changeAdminBooking:vi.fn(),saveBookingPolicy:vi.fn()}));
@@ -52,5 +53,5 @@ it('requires a session and validates strict read filters and pagination',async()
   for(const query of ['?view=list&tenantId='+tenantId+'&day=2026-09-09&role=owner','?view=list&tenantId='+tenantId+'&day=2026-09-09&page=-1'])expect((await adminGet(adminRequest('/api/admin/bookings'+query))).status).toBe(400);
   vi.mocked(adminBookingsState).mockResolvedValue({bookings:[]} as unknown as Awaited<ReturnType<typeof adminBookingsState>>);
   const response=await adminGet(adminRequest('/api/admin/bookings?view=list&tenantId='+tenantId+'&day=2026-09-09&attention=1&page=2'));
-  expect(response.status).toBe(200);expect(adminBookingsState).toHaveBeenCalledWith(actor,tenantId,'2026-09-09',true,2);expect(response.headers.get('vary')).toContain('Cookie');
+  expect(response.status).toBe(200);expect(adminBookingsState).toHaveBeenCalledWith(actor,tenantId,'2026-09-09',true,2,'list',undefined);expect(response.headers.get('vary')).toContain('Cookie');
 });

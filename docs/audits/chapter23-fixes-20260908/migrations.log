@@ -1,0 +1,5 @@
+
+> broneering-info@0.1.0 db:migrate
+> node --env-file-if-exists=.env.local --import tsx scripts/migrate.ts
+
+Applied 048_archived_staff_access.sql

@@ -70,3 +70,40 @@ Ajutise MFA omaniku ja kliendi Chromiumi voos kontrolliti 12-tunnise poliitika s
 Teavituste tegelik saatmine, täismaatriks ja ASVS-i tervikvastuvõtt jäävad hilisemate peatükkide tööks. Nõuete seosed, migratsioonid ning korduspäringu/lingi säilitamise piirid: [CHAPTER-10](CHAPTER-10.md).
 
 Serverisse avaldati `6cb9516`: tootmisbuild läbis ning migratsioonid 008/009 rakendusid pärast õigustega 600 varukoopiat `before-chapter10.dump`. HTTPS-kontrollid läbisid: health=ok, kataloog neli teenust, saadavus/halduslingi HTML 200, vigane link 410, toimingut sisaldav GET 400, autentimata haldus 401 ja vale haldushost 404. No-store/noindex/no-referrer ning raamistamise keeld kontrollitud. Tootmisele testbroneeringuid ega omaniku poliitika väärtusi ei lisatud.
+
+
+## Peatükk 11 — 08.09.2026, kohalik tööpuu
+
+113 testi 13 failis, tüübikontroll ja tootmisbuild läbivad. Lisandusid seitse PostgreSQL/kalendri/kliendi ning kaks HTTP-testi: töötajapiirang, graafiku ühisosa/puudumine, suveaja nädal, arhiveeritud töötaja ajalugu, mõõdikute ulatus, kliendiregistri RLS/rollid/eksport, samaaegne auditeeritud parandus, kontaktandmete ajaloo säilimine, kontaktita kliendid, otsing ja CSV-valemikaitse ning teavitusjärjekorra seisund.
+
+Chromiumis kontrolliti päeva/nädala vahetust, filtrite säilimist, 390 px nimekirja, võrgu katkestust/taastumist ning põhjenduse säilimist teise haldaja ajamuudatuse ajal. Uus versioon ilmus 6-sekundilises kontrollaknas koos eraldi avamise nupuga. Kliendikaardi parandus, enne/pärast audit ja CSV allalaadimine läbisid. Kohaliku arendusserveri vananenud moodul kõrvaldati taaskäivitusega ja lõppvaade kontrolliti uuesti. Katseandmed eemaldati.
+
+Migratsioonid 010/011 on rakendatud ainult kohalikult; tootmise paigaldust ei tehtud. Täpne nõuete register, piirid ja tõendid on [CHAPTER-11.md](CHAPTER-11.md). Täielik brauseri/ekraanilugeja maatriks ning koormuskatse jäävad avatuks.
+
+
+## Peatükk 12 — 08.09.2026, kohalik tööpuu
+
+119 testi 14 failis, tüübikontroll ja tootmisbuild läbisid. Kataloogide terviklikkus, kohatäited, keeleprioriteet, kontaktiväljade vead, keelesätete õigused/ettevõttepiir, teavituskeele säilimine ja vana korduspäring on testitud. Chromiumis kontrolliti inglise/vene keelt, andmete säilimist keelevahetusel, vigase välja fookust, 390 px avalikku/halduse vaadet ning modaali Escape-i/fookuse taastamist ja sammu säilimist. Migratsioon 012 rakendati kohalikult. Täpsed piirid (sh ekraanilugeja, brauserimaatriks, ootel kujundus ja peatüki 17 e-kirjad): [CHAPTER-12](CHAPTER-12.md). Tootmisse ei paigaldatud.
+
+Peatüki 12 jätkutäiendus: teenuste nimede/kirjelduste tõlkemustandid, kinnitamine, vananemine ja ajalugu. 129 testi 15 failis ning tootmisbuild läbisid; avalik kinnitatud tõlge ja konfliktis vormi säilimine on Chromiumis kontrollitud. Migratsioon 013 kohalikult rakendatud. Automaattõlke päris API-katse eeldab veel serverivõtit ja mudeli seadistamist; ühenduse vead/leping on testitud makettidega.
+
+
+## Peatükk 13 — 08.09.2026, kohalik tööpuu
+
+136 testi 16 failis läbivad. Seitse uut PostgreSQL-i testi katavad aja/puhvri/valuuta/versiooni invariandid, graafiku ja ajavööndi, uute tabelite/vaadete RLS-i, võõra faili/arve/impordirea sidumise, arveperioodi korduse, muutmatud hetktõmmised, põhjendusega makse paranduse, impordi kinnituse ja ekspordi aegumise. Migratsioonid 014–016 on rakendatud kohalikult. `npm run db:schema` dokumenteerib 43 tabelit/vaadet ilma andmeridu lugemata. Nõuete vastendus ja hilisemate peatükkide piirid: [CHAPTER-13](CHAPTER-13.md).
+
+Peatüki 13 lõppkontroll: tüübikontroll ja tootmisbuild läbisid.
+
+## Peatükk 14 — 8. september 2026
+
+Moodulite impordigraafi kontroll: 74 faili; vaikimisi serverimoodulid, kaudsed impordid ja pöördsõltuvused. Kolm arhitektuuritesti sisaldavad teadlikult vigase graafi katset. Kogu komplekt: 139 testi / 17 faili läbisid (27,77 s). Typecheck, build koos architecture:check kontrolliga ja diff --check läbisid. Litsentsiregister uuendati 194 kirjele. Tootmisesse paigaldamist ega SMTP/failitöötaja vastuvõttu see ei tõenda.
+
+## Peatükk 15 — 8. september 2026
+
+146 testi / 18 faili läbisid (35,39 s), tüübikontroll ja build koos 74 faili arhitektuurikontrolliga läbisid. Uued katsed: päris PostgreSQL-i ummik ja kogu kaotava tehingu kordamine; kontrollitud 40001/40P01 pärast broneeringu kirjutamist ilma duplikaatsete kõrvalkirjeteta; kolme katse ülempiir; timeout'ide ja tundmatu COMMIT-i kordamata jätmine; katkise ühenduse eemaldamine; kaks ümbertõstmist ühte aega; käsitsi/avaliku kinnituse võistlus; luku taga aegunud halduslink. Kohalikud korrektsuskatsed ei määra tootmise läbilaskevõimet. VPS-i paigaldust ei tehtud.
+
+## Peatükid 16–17 — 8. september 2026
+
+Peatüki 16 järel 151 testi, tüübikontroll ja ehitus läbisid. Kaks sõltumatut PostgreSQL-i ühenduspuuli jagasid 40 päringu peale täpselt kümmet lubatud katset; RLS/grandid, rikke korral keeldumine, Origin ja ohutud koondlogid testitud. npm audit --omit=dev: 0 teadaolevat haavatavust. Migratsioon 017 rakendatud.
+
+Peatüki 17 lõppkontroll: 161 testi / 20 faili (34,95 s), tüübikontroll ja hoiatuseta build läbisid. Migratsioon 018; skeemiraportis 45 tabelit/vaadet. Worker-image Linuxis ehitatud ja moodulid laetud uid 1000 all. Proovikiri salvestati privaatselt, päris SMTP-võrgukirju ei saadetud. Ettevõtte/versiooni/saaja/saatmisrežiimi kontrollid, katse-/rendi-/veatöövood ja meeldetuletused testitud. Brauseris et/en, seadete salvestus ja 390 px vaade, taustavärskenduse ajal mustandi säilimine ning versioonikonflikti keeld kontrollitud. Prooviandmed ja sessioon kustutatud. Päris SMTP, DNS/maine, DSN-postkasti automaatika ning tootmise paigaldus ei ole nende katsete tulemus.

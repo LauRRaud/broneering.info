@@ -10,6 +10,8 @@ import {saveServiceManagement,serviceManagementState} from '../src/lib/service-m
 import {withTenant,pool} from '../src/lib/db';
 import {tokenHash} from '../src/lib/booking-secrets';
 import {bookingCalendar} from '../src/lib/booking-calendar';
+import {customerState,correctCustomer,csvCell} from '../src/lib/customer-management';
+import {languageSettings} from '../src/lib/language-settings';
 import type {Actor} from '../src/lib/access';
 import type {Tenant} from '../src/lib/tenants';
 import type {Offer,BookingResult} from '../src/lib/contracts';
@@ -45,9 +47,76 @@ const offerInput=(o:Offer)=>({serviceId:o.serviceId,staffId:o.staffId,start:o.st
 const input=(o:Offer)=>({...offerInput(o),name:'Test Klient',email:'client@example.invalid'});
 async function first(st=staffId){return (await availableOffers(tenant,serviceId,day,st))[0];}
 async function policy(hours:number|null=24){const p=(await state(owner,tenant.id,day)).policy;await saveBookingPolicy(owner,{tenantId:tenant.id,version:p.version,contactEmail:'salon@example.invalid',contactPhone:'',linkHours:hours});}
+
+it('separates saved language preferences and rejects cross-tenant and non-owner company changes',async()=>{
+  await languageSettings(owner,{tenantId:tenant.id,adminLanguage:'en',defaultLanguage:'ru'},true);
+  expect(await languageSettings(owner,{tenantId:tenant.id})).toEqual({adminLanguage:'en',defaultLanguage:'ru'});
+  await languageSettings(clerk,{tenantId:tenant.id,adminLanguage:'ru'},true);
+  expect((await languageSettings(owner,{tenantId:tenant.id})).adminLanguage).toBe('en');
+  await expect(languageSettings(clerk,{tenantId:tenant.id,defaultLanguage:'et'},true)).rejects.toMatchObject({status:403});
+  await expect(languageSettings(owner,{tenantId:foreign.id,defaultLanguage:'et'},true)).rejects.toMatchObject({status:403});
+  await expect(languageSettings(owner,{tenantId:tenant.id,adminLanguage:'de'},true)).rejects.toMatchObject({status:400});
+});
+it('retains the booking language in notices after administrator changes and supports legacy retries',async()=>{
+  const o=await first(),key=randomUUID(),data={...input(o),language:'ru' as const};
+  const b=await createBooking(tenant,data,key);
+  expect(b.language).toBe('ru');expect((await createBooking(tenant,data,key)).id).toBe(b.id);
+  await admin(owner,{tenantId:tenant.id,bookingId:b.id,action:'cancel',version:1,reason:'Customer request'},randomUUID());
+  const notices=await db.query('SELECT language FROM outbox WHERE tenant_id=$1 AND booking_id=$2',[tenant.id,b.id]);
+  expect(notices.rows.length).toBeGreaterThan(0);expect(notices.rows.every(r=>r.language==='ru')).toBe(true);
+  const legacy=input(await first()),legacyKey=randomUUID();const old=await createBooking(tenant,legacy,legacyKey);
+  expect(old.language).toBe('et');expect((await createBooking(tenant,legacy,legacyKey)).id).toBe(old.id);
+});
 const token=(b:BookingResult)=>b.managementUrl!.split('#')[1];
 const cancel=(b:BookingResult)=>({action:'cancel',version:b.version,reason:'Kliendi soov'});
 const identity=(b:BookingResult)=>({tenantId:tenant.id,bookingId:b.id,version:b.version});
+it('15: manual and public creation compete for the same allocation',async()=>{
+  const offer=await first();
+  const results=await Promise.allSettled([
+    createBooking(tenant,input(offer),randomUUID()),
+    admin(owner,{tenantId:tenant.id,action:'manual-create',...input(offer)},randomUUID()),
+  ]);
+  expect(results.filter(r=>r.status==='fulfilled')).toHaveLength(1);
+  expect(results.find(r=>r.status==='rejected')).toMatchObject({reason:{code:'SLOT_UNAVAILABLE'}});
+  expect((await db.query('SELECT count(*)::int n FROM bookings WHERE tenant_id=$1',[tenant.id])).rows[0].n).toBe(1);
+  expect((await db.query('SELECT count(*)::int n FROM outbox WHERE tenant_id=$1',[tenant.id])).rows[0].n).toBe(1);
+});
+it('15: two bookings racing for one new slot move only one and preserve the losing allocation',async()=>{
+  const a=await createBooking(tenant,input(await first()),randomUUID());
+  const b=await createBooking(tenant,input(await first()),randomUUID());
+  const target=await first(otherStaffId);
+  const results=await Promise.allSettled([a,b].map(booking=>admin(owner,{...identity(booking),action:'reschedule',...offerInput(target),reason:'Kliendi soov'},randomUUID())));
+  expect(results.filter(r=>r.status==='fulfilled')).toHaveLength(1);
+  expect(results.find(r=>r.status==='rejected')).toMatchObject({reason:{code:'SLOT_UNAVAILABLE'}});
+  for(const [i,booking] of [a,b].entries()){
+    const row=await rawBooking(booking.id);
+    if(results[i].status==='rejected'){
+      expect(row.start_at.toISOString()).toBe(booking.start);expect(row.staff_id).toBe(staffId);expect(row.version).toBe(1);
+      expect(await counts(booking.id)).toEqual({events:1,notices:1});
+    }else{expect(row.start_at.toISOString()).toBe(new Date(target.start).toISOString());expect(row.version).toBe(2);}
+  }
+});
+it('15: rejects a management link that expires while its command waits for the tenant lock',async()=>{
+  await policy();const b=await createBooking(tenant,input(await first()),randomUUID());
+  const blocker=new pg.Client({connectionString:process.env.MIGRATION_DATABASE_URL});await blocker.connect();
+  let pending:Promise<unknown>|undefined;
+  try{
+    const blockerPid=(await blocker.query('SELECT pg_backend_pid() pid')).rows[0].pid;
+    await db.query("UPDATE booking_management_tokens SET expires_at=clock_timestamp()+interval '2 seconds' WHERE booking_id=$1",[b.id]);
+    await blocker.query('BEGIN');await blocker.query('SELECT id FROM tenants WHERE id=$1 FOR UPDATE',[tenant.id]);
+    pending=change(tenant.id,token(b),cancel(b),randomUUID()).then(value=>({value}),error=>({error}));
+    // Observe an actual blocked app transaction, not a scheduling assumption.
+    let waiting=false;
+    for(let n=0;n<100&&!waiting;n++){
+      waiting=(await db.query("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE $1=ANY(pg_blocking_pids(pid)) AND usename='booking_app' AND wait_event_type='Lock') AS waiting",[blockerPid])).rows[0].waiting;
+      if(!waiting)await new Promise(r=>setTimeout(r,10));
+    }
+    expect(waiting).toBe(true);
+    await blocker.query('SELECT pg_sleep(2.1)');await blocker.query('COMMIT');
+    expect(await pending).toMatchObject({error:{code:'LINK_UNAVAILABLE'}});
+    expect((await rawBooking(b.id)).status).toBe('confirmed');expect(await counts(b.id)).toEqual({events:1,notices:1});
+  }finally{await blocker.query('ROLLBACK');await blocker.end();if(pending)await pending;}
+});
 async function rawBooking(id:string){return (await db.query('SELECT * FROM bookings WHERE id=$1',[id])).rows[0];}
 async function counts(id:string){return (await db.query('SELECT (SELECT count(*)::int FROM booking_events WHERE booking_id=$1) events,(SELECT count(*)::int FROM outbox WHERE booking_id=$1) notices',[id])).rows[0];}
 
@@ -230,4 +299,71 @@ it('exports stable calendar identity, updated sequence, cancellation and valid U
   expect(ics).toContain('UID:'+b.id+'@broneering.info');expect(ics).toContain('SEQUENCE:3');expect(ics).toContain('STATUS:CANCELLED');expect(ics).toContain('DTSTART:20261001T070000Z');
   expect(ics.replace(/\r\n /g,'')).toContain('SUMMARY:Õige\\; nimi\\,\\\\tekst\\n');
   expect(ics.split('\r\n').every(line=>Buffer.byteLength(line,'utf8')<=75)).toBe(true);expect(ics).not.toContain('\uFFFD');
+});
+
+it('shows a scoped week and intersects location hours, employee hours and absences',async()=>{
+  const calendar=await state(owner,tenant.id,day,false,0,'week',staffId);
+  expect(calendar.columns).toHaveLength(7);expect(calendar.columns?.every(c=>c.staffId===staffId&&JSON.stringify(c.working)==='[[540,1080]]')).toBe(true);
+  await db.query("INSERT INTO schedule_exceptions(tenant_id,staff_id,day,closed,intervals,kind) VALUES($1,$2,$3,true,'[]','vacation')",[tenant.id,staffId,day]);
+  const updated=await state(owner,tenant.id,day,false,0,'week',staffId);
+  expect(updated.columns?.find(c=>c.day===day)).toMatchObject({closed:true,working:[]});
+  await expect(state(worker,tenant.id,day,false,0,'day',otherStaffId)).rejects.toMatchObject({code:'STAFF_SCOPE_DENIED'});
+  expect((await state(worker,tenant.id,day,false,0,'day')).columns).toHaveLength(1);
+  await expect(state(owner,tenant.id,'2026-02-30',false,0,'week')).rejects.toMatchObject({code:'INVALID_DATE'});
+});
+it('keeps local week boundaries through daylight saving and preserves archived bookings',async()=>{
+  const calendar=await state(owner,tenant.id,'2026-10-25',false,0,'week',staffId);
+  expect(calendar.columns?.map(c=>c.day)).toEqual(['2026-10-19','2026-10-20','2026-10-21','2026-10-22','2026-10-23','2026-10-24','2026-10-25']);
+  const booking=await createBooking(tenant,input(await first()),randomUUID());
+  await db.query('UPDATE staff SET active=false WHERE id=$1',[staffId]);
+  expect((await state(owner,tenant.id,day,false,0,'day',staffId)).bookings[0].id).toBe(booking.id);
+});
+it('aggregates only the selected calendar scope with cancellation value excluded',async()=>{
+  const a=await createBooking(tenant,input(await first()),randomUUID());
+  await createBooking(tenant,input(await first(otherStaffId)),randomUUID());
+  await admin(owner,{...identity(a),action:'cancel',reason:''},randomUUID());
+  expect((await state(owner,tenant.id,day,false,0,'day')).metrics).toEqual({total:2,completed:0,cancelled:1,value:2500});
+  expect((await state(worker,tenant.id,day,false,0,'day')).metrics).toEqual({total:1,completed:0,cancelled:1,value:0});
+});
+it('groups exact contact snapshots and isolates the customer register and export permissions',async()=>{
+  await createBooking(tenant,input(await first()),randomUUID());
+  await createBooking(tenant,input(await first(otherStaffId)),randomUUID());
+  const list=await customerState(owner,{tenantId:tenant.id});
+  expect(list.customers).toHaveLength(1);
+  const customerId=list.customers![0].id;
+  expect((await customerState(clerk,{tenantId:tenant.id,customerId})).history).toHaveLength(2);
+  await expect(customerState(worker,{tenantId:tenant.id})).rejects.toMatchObject({code:'FORBIDDEN'});
+  await expect(customerState(owner,{tenantId:foreign.id})).rejects.toMatchObject({code:'MEMBERSHIP_REQUIRED'});
+  await expect(customerState(clerk,{tenantId:tenant.id,format:'csv'})).rejects.toMatchObject({code:'FORBIDDEN'});
+  expect((await customerState(owner,{tenantId:tenant.id,format:'csv'})).csv).toContain('Test Klient');
+  expect(await withTenant(foreign.id,c=>c.query('SELECT id FROM customers WHERE id=$1',[customerId]).then(r=>r.rowCount))).toBe(0);
+});
+it('audits concurrent customer corrections without changing booking snapshots or notices',async()=>{
+  const booking=await createBooking(tenant,input(await first()),randomUUID());
+  const customer=(await customerState(owner,{tenantId:tenant.id})).customers![0];
+  const command={tenantId:tenant.id,customerId:customer.id,version:1,name:'Parandatud nimi',email:'new@example.invalid',phone:'',reason:'Klient parandas nime'};
+  const results=await Promise.allSettled([correctCustomer(owner,command),correctCustomer(clerk,{...command,name:'Teine nimi'})]);
+  expect(results.filter(r=>r.status==='fulfilled')).toHaveLength(1);
+  expect(results.filter(r=>r.status==='rejected')).toHaveLength(1);
+  const updated=await customerState(owner,{tenantId:tenant.id,customerId:customer.id});
+  expect(updated.customers![0].version).toBe(2);expect(updated.events).toHaveLength(1);
+  expect((await rawBooking(booking.id)).customer_name).toBe('Test Klient');expect((await counts(booking.id)).notices).toBe(1);
+  await expect(correctCustomer(worker,command)).rejects.toMatchObject({code:'FORBIDDEN'});
+});
+it('does not merge contactless customers and searches literal wildcard characters',async()=>{
+  for(const st of [staffId,otherStaffId])await admin(owner,{tenantId:tenant.id,action:'manual-create',...offerInput(await first(st)),name:'Sama nimi',email:null,phone:''},randomUUID());
+  expect((await customerState(owner,{tenantId:tenant.id})).customers).toHaveLength(2);
+  expect((await customerState(owner,{tenantId:tenant.id,search:'%'})).customers).toHaveLength(0);
+  for(const value of ['=1+1','+123','-10','@SUM(A1)','  =2'])expect(csvCell(value)).toBe('"\''+value+'"');
+  expect(csvCell('a"b')).toBe('"a""b"');
+});
+
+it('validates customer inputs and reports the actual notice queue state',async()=>{
+  const booking=await createBooking(tenant,input(await first()),randomUUID());
+  expect((await state(owner,tenant.id,day)).bookings[0].noticeStatus).toBe('pending');
+  await db.query("UPDATE outbox SET status='failed' WHERE booking_id=$1",[booking.id]);
+  expect((await state(owner,tenant.id,day)).bookings[0].noticeStatus).toBe('failed');
+  await expect(customerState(owner,{tenantId:tenant.id,page:-1})).rejects.toMatchObject({code:'INVALID_INPUT'});
+  await expect(customerState(owner,{tenantId:tenant.id,role:'owner'})).rejects.toMatchObject({code:'INVALID_INPUT'});
+  await expect(correctCustomer(owner,{tenantId:tenant.id})).rejects.toMatchObject({code:'INVALID_INPUT'});
 });

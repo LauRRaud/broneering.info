@@ -1,0 +1,18 @@
+# Opt-in overlay. BACKUP_REPOSITORY must be a separately protected mounted location.
+# Keep it disabled until the operator provisions the repository and private config.
+services:
+  db:
+    image: ${BACKUP_DATABASE_IMAGE:?Set the tested immutable pgBackRest database image}
+    volumes:
+      - ${BACKUP_REPOSITORY:?Set repository mount}:/backup/repository
+      - ${BACKUP_CONFIG_FILE:?Set private pgBackRest config}:/etc/pgbackrest/pgbackrest.conf:ro
+    command:
+      - postgres
+      - -c
+      - wal_level=replica
+      - -c
+      - archive_mode=on
+      - -c
+      - archive_timeout=300
+      - -c
+      - archive_command=pgbackrest --stanza=booking archive-push %p

@@ -1,0 +1,10 @@
+[Unit]
+Description=Booking operational checks (read-only)
+# Configure OnFailure with the operator's approved notification unit before production.
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/booking
+EnvironmentFile=/etc/booking/operations.env
+ExecStart=/usr/bin/python3 /opt/booking/infra/operations/check.py /etc/booking/monitor.json
+StandardOutput=journal
+StandardError=journal

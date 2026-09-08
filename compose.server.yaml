@@ -27,6 +27,12 @@ services:
         condition: service_healthy
     profiles: [tools]
   web:
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 8s
+      start_period: 60s
+      retries: 3
     build:
       context: .
       target: runner
@@ -36,16 +42,122 @@ services:
       AUTH_BASE_URL: https://haldus.broneering.info
       AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET}
       AUTH_MAIL_MODE: ${AUTH_MAIL_MODE:-disabled}
+      BOOKING_MAIL_MODE: ${BOOKING_MAIL_MODE:-disabled}
+      PRIVATE_STORAGE_DIR: /data/private
       SMTP_HOST: ${SMTP_HOST:-}
       SMTP_PORT: ${SMTP_PORT:-587}
       SMTP_SECURE: ${SMTP_SECURE:-false}
       SMTP_USER: ${SMTP_USER:-}
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       SMTP_FROM: ${SMTP_FROM:-no-reply@broneering.info}
+      MAKECOMMERCE_MODE: ${MAKECOMMERCE_MODE:-disabled}
+      MAKECOMMERCE_SHOP_ID: ${MAKECOMMERCE_SHOP_ID:-}
+      MAKECOMMERCE_SECRET_KEY: ${MAKECOMMERCE_SECRET_KEY:-}
+      MAKECOMMERCE_PUBLISHABLE_KEY: ${MAKECOMMERCE_PUBLISHABLE_KEY:-}
+      MAKECOMMERCE_BASE_URL: ${MAKECOMMERCE_BASE_URL:-https://haldus.broneering.info}
+      MAKECOMMERCE_SERVER_IP: ${MAKECOMMERCE_SERVER_IP:-}
     ports:
       - "127.0.0.1:${WEB_PORT:-3107}:3000"
+    volumes:
+      - private_files:/data/private
+    depends_on:
+      db:
+        condition: service_healthy
+  notification-worker:
+    healthcheck:
+      test: ["CMD", "node", "--import", "tsx", "scripts/worker-healthcheck.ts", "notifications"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+    profiles: [workers]
+    build:
+      context: .
+      target: notification-worker
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://booking_app:${DB_APP_PASSWORD:?Set DB_APP_PASSWORD}@db:5432/booking
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET}
+      BOOKING_MAIL_MODE: ${BOOKING_MAIL_MODE:-disabled}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-no-reply@broneering.info}
+    depends_on:
+      db:
+        condition: service_healthy
+  export-worker:
+    healthcheck:
+      test: ["CMD", "node", "--import", "tsx", "scripts/worker-healthcheck.ts", "exports"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+    profiles: [workers]
+    build:
+      context: .
+      target: export-worker
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://booking_app:${DB_APP_PASSWORD:?Set DB_APP_PASSWORD}@db:5432/booking
+      PRIVATE_STORAGE_DIR: /data/private
+    volumes:
+      - private_files:/data/private
+    depends_on:
+      db:
+        condition: service_healthy
+  payment-worker:
+    healthcheck:
+      test: ["CMD", "node", "--import", "tsx", "scripts/worker-healthcheck.ts", "payments"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+    profiles: [workers]
+    build:
+      context: .
+      target: payment-worker
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://booking_app:${DB_APP_PASSWORD:?Set DB_APP_PASSWORD}@db:5432/booking
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET}
+      MAKECOMMERCE_MODE: ${MAKECOMMERCE_MODE:-disabled}
+      MAKECOMMERCE_SHOP_ID: ${MAKECOMMERCE_SHOP_ID:-}
+      MAKECOMMERCE_SECRET_KEY: ${MAKECOMMERCE_SECRET_KEY:-}
+      MAKECOMMERCE_PUBLISHABLE_KEY: ${MAKECOMMERCE_PUBLISHABLE_KEY:-}
+      MAKECOMMERCE_BASE_URL: ${MAKECOMMERCE_BASE_URL:-https://haldus.broneering.info}
+      MAKECOMMERCE_SERVER_IP: ${MAKECOMMERCE_SERVER_IP:-}
+    depends_on:
+      db:
+        condition: service_healthy
+  billing-worker:
+    healthcheck:
+      test: ["CMD", "node", "--import", "tsx", "scripts/worker-healthcheck.ts", "billing"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+    profiles: [workers]
+    build:
+      context: .
+      target: billing-worker
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://booking_app:${DB_APP_PASSWORD:?Set DB_APP_PASSWORD}@db:5432/booking
+      AUTH_BASE_URL: https://haldus.broneering.info
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET}
+      BILLING_MAIL_MODE: ${BILLING_MAIL_MODE:-disabled}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-no-reply@broneering.info}
     depends_on:
       db:
         condition: service_healthy
 volumes:
   server_database:
+  private_files:

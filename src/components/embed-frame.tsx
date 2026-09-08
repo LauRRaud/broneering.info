@@ -1,8 +1,14 @@
 'use client';
+import {useI18n} from '@/components/i18n-provider';
+
 import {useEffect,useRef,type ReactNode} from 'react';
 import {validEmbedMessage} from '@/lib/embed-contracts';
+import {resolveLocale} from '@/lib/locales';
 
 export default function EmbedFrame({parentOrigin,children}:{parentOrigin:string;children:ReactNode}) {
+  const {explicit,setLocale}=useI18n();
+  useEffect(()=>{const selected=new URLSearchParams(location.search).get('lang');if(selected&&!explicit)setLocale(resolveLocale(selected),false);},[]);
+
   const content=useRef<HTMLDivElement>(null);
   useEffect(()=>{
     if(window.parent===window || !content.current)return;

@@ -1,0 +1,42 @@
+{
+  "auditDate": "2026-09-08",
+  "head": "4af7f99b2088e87f77619e6648d15455f9916f5b",
+  "versionScope": "HEAD plus pre-existing uncommitted work, identified by baseline.json",
+  "testStartTimeUnixMs": 1788893574116,
+  "testFiles": 38,
+  "passedTests": 250,
+  "failedTests": 0,
+  "pendingTests": 0,
+  "durationSecondsFromLog": 47.63,
+  "migrationsApplied": 47,
+  "pythonTestsPassed": 6,
+  "typecheck": "passed",
+  "runnerBuild": "passed",
+  "readinessHttpStatus": 200,
+  "postgres": "18.6 (Debian 18.6-1.pgdg13+2)",
+  "imageManifestDigest": "sha256:bc90ee4a3ce4b630b7225726ae361c369d46de743ab8ac9fd31421be4fc0727a",
+  "imageConfigId": "sha256:52a8e779a169e572e9c6e94faa0c15a70ceccde198fb68b2420fd9f154021417",
+  "dynamicFindings": [
+    "F-01",
+    "F-02",
+    "F-03",
+    "F-04"
+  ],
+  "staticConfigurationFindings": [
+    "F-05"
+  ],
+  "inventoryCounts": {
+    "manual-source-or-configuration-review": 250,
+    "automated-test-and-result-review": 41,
+    "locked-dependency-inventory": 1,
+    "automated-structure-check": 3
+  },
+  "constraints": [
+    "synthetic data only",
+    "dedicated loopback Docker services",
+    "no production mutation",
+    "provider HTTP mocked",
+    "booking 429 injected; first creation real",
+    "privacy UI identity and unrelated routes mocked; customer payload from real service"
+  ]
+}

@@ -1,0 +1,171 @@
+
+> broneering-info@0.1.0 test
+> node --env-file-if-exists=.env.local ./node_modules/vitest/vitest.mjs run tests/payment-checkout-freshness.test.ts tests/service-management.test.ts tests/recovery-reconcile.test.ts --reporter=default
+
+
+ RUN  v4.1.11 C:/Users/rauds/Desktop/Projektid/Broneerimise SaaS/broneering.info
+
+ ❯ tests/service-management.test.ts (19 tests | 2 failed) 2669ms
+   × permanently cancels linked invitations when staff is archived and preserves fresh/unlinked invitations 240ms
+   × rejects legacy archived-staff invitations, memberships and role assignments for either linked role 111ms
+   ✓ serializes invitation acceptance against staff archive so no active linked member survives 114ms
+   ✓ publishes only approved current translations and invalidates them only on source text changes 211ms
+   ✓ rejects cross-tenant access, non-owner translation changes and stale draft overwrites 113ms
+   ✓ generates drafts and rejects results if the source or a target was edited during generation 175ms
+   ✓ snapshots the approved name in the customer language without changing old bookings 160ms
+   ✓ inherits defaults independently and preserves explicit employee overrides 157ms
+   ✓ allows delegated pricing but rejects structural changes, forged roles and revoked access 118ms
+   ✓ keeps tenant boundaries on reads, groups, staff assignments and raw RLS queries 120ms
+   ✓ rejects invalid values and unknown fields before changing the catalogue 139ms
+   ✓ accepts only one concurrent update of the same version and audits the successful write 106ms
+   ✓ retains historical price, names, duration and inherited buffers after editing and archiving 148ms
+   ✓ rejects a stale public price and excludes archived associations at confirmation 137ms
+   ✓ hides archived groups and online-hidden services without deleting their records 151ms
+   ✓ publishes only the selected public staff profile fields 79ms
+   ✓ serializes a concurrent price change and booking confirmation without mixed snapshots 112ms
+   ✓ supports nested groups, repeated names under different parents and inherited archiving 154ms
+   ✓ rejects group cycles and foreign parents without disturbing existing branches 107ms
+ ❯ tests/payment-checkout-freshness.test.ts (2 tests | 2 failed) 326ms
+   × withholds stale checkout capabilities on all replay/read paths without losing provider receipts 153ms
+   × rechecks the invoice after the provider call and keeps the stale attempt reconcilable 92ms
+ ❯ tests/recovery-reconcile.test.ts (1 test | 1 failed) 1184ms
+   × replays a later removal on an isolated older database without erasing unrelated contacts 1183ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/payment-checkout-freshness.test.ts > withholds stale checkout capabilities on all replay/read paths without losing provider receipts
+AssertionError: expected { …(10) } to match object { …(4) }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "errorCode": "INVOICE_CHANGED",
++   "errorCode": null,
+    "id": "ba09e893-828c-4e50-b0be-be4fe5f170a6",
+-   "redirectUrl": null,
+-   "state": "review",
++   "redirectUrl": "https://payment.test.maksekeskus.ee/pay.html?trx=0be797b9-4a54-4aa1-8d27-dfd323848aa7",
++   "state": "ready",
+  }
+
+ ❯ tests/payment-checkout-freshness.test.ts:51:64
+     49|  const link=await withTenant(f.tenantId,c=>readInvoicePaymentLink(c,f.…
+     50|  const paid=await f.partial(),blocked={id:first.id,state:'review',redi…
+     51|  expect(await beginInvoiceCheckout(owner,f.request,f.context)).toMatch…
+       |                                                                ^
+     52|  expect(await beginInvoiceCheckout(owner,{...f.request,requestKey:rand…
+     53|  expect((await readCheckouts(owner,f.tenantId,f.invoice.id)).attempts[…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/payment-checkout-freshness.test.ts > rechecks the invoice after the provider call and keeps the stale attempt reconcilable
+AssertionError: expected { …(10) } to match object { state: 'review', …(2) }
+(7 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "errorCode": "INVOICE_CHANGED",
+-   "redirectUrl": null,
+-   "state": "review",
++   "errorCode": null,
++   "redirectUrl": "https://payment.test.maksekeskus.ee/pay.html?trx=38d1af3a-ad80-43f0-87d2-c7413ddd5042",
++   "state": "ready",
+  }
+
+ ❯ tests/payment-checkout-freshness.test.ts:70:17
+     68|  const fetcher=vi.fn(async(_url:unknown,options:RequestInit)=>{provide…
+     69|  const result=await beginInvoiceCheckout(owner,f.request,f.context);
+     70|  expect(result).toMatchObject({state:'review',redirectUrl:null,errorCo…
+       |                 ^
+     71|  expect(result.transactionId).toBe(provider!.id);
+     72|  await db.query("UPDATE payment_attempts SET checked_at=now()-interval…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/recovery-reconcile.test.ts > replays a later removal on an isolated older database without erasing unrelated contacts
+AssertionError: expected {} to match object { before: { …(3) }, …(2) }
+
+- Expected
++ Received
+
+- {
+-   "after": {
+-     "email": null,
+-     "name": "[removed]",
+-     "phone": null,
+-   },
+-   "before": {
+-     "email": null,
+-     "name": "[removed]",
+-     "phone": null,
+-   },
+-   "reason": "",
+- }
++ {}
+
+ ❯ tests/recovery-reconcile.test.ts:48:66
+     46|   const events=(await target.query('SELECT action,metadata FROM access…
+     47|   const redacted={name:'[removed]',email:null,phone:null};
+     48|   expect(events.find(e=>e.action==='customer.correct').metadata).toMat…
+       |                                                                  ^
+     49|   expect(events.find(e=>e.action==='customer.merge').metadata).toMatch…
+     50|   expect(JSON.stringify(events)).not.toContain('Removed Person');expec…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/service-management.test.ts > permanently cancels linked invitations when staff is archived and preserves fresh/unlinked invitations
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/service-management.test.ts:58:70
+     56|  const staffData={tenantId:tenant.id,id:staffId,name:'Mari',title:'',b…
+     57|  await save(owner,'save-staff',{...staffData,version:1,active:false});
+     58|  expect(await validateInvitationForSignup(linked.token,clerk.email)).t…
+       |                                                                      ^
+     59|  await expect(acceptInvitation(clerk,linked.token)).rejects.toMatchObj…
+     60|  expect((await db.query("SELECT count(*)::int n FROM access_audit_log …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/service-management.test.ts > rejects legacy archived-staff invitations, memberships and role assignments for either linked role
+AssertionError: promise resolved "{ …(6) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "active": true,
++   "permissions": [],
++   "role": "receptionist",
++   "staffId": "32c50b8f-5418-4ae0-a6ab-8f2f94cec818",
++   "tenantId": "e27375d5-9e05-46d3-b76d-3b0a9f0e5dfb",
++   "userId": "3c8f7025-25e6-457e-a175-58edb704658a",
+  }
+
+ ❯ tests/service-management.test.ts:75:53
+     73|   const invite=await inviteMember(owner,{tenantId:tenant.id,email:cler…
+     74|   await db.query('UPDATE staff SET active=false WHERE id=$1',[staffId]…
+     75|   await expect(acceptInvitation(clerk,invite.token)).rejects.toMatchOb…
+       |                                                     ^
+     76|   expect((await db.query('SELECT 1 FROM memberships WHERE tenant_id=$1…
+     77|   await db.query('UPDATE invitations SET cancelled_at=now() WHERE id=$…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  5 failed | 17 passed (22)
+   Start at  22:52:14
+   Duration  5.19s (transform 262ms, setup 0ms, import 635ms, tests 4.18s, environment 0ms)
+

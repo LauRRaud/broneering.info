@@ -1,0 +1,33 @@
+import pg from 'pg';
+import {randomUUID} from 'node:crypto';
+import {writeFile} from 'node:fs/promises';
+import {correctCustomer,customerState} from '../../src/lib/customer-management';
+import {previewContactRemoval,removeCustomerContacts} from '../../src/lib/customer-privacy';
+import {closePool} from '../../src/lib/db';
+import type {Actor} from '../../src/lib/access';
+import {reconcileRemovedContacts} from '../../scripts/operations/reconcile';
+const migration=new URL(process.env.MIGRATION_DATABASE_URL!);
+const application=new URL(process.env.DATABASE_URL!);
+if([migration,application].some(u=>u.hostname!=='127.0.0.1'||u.port!==process.env.CH23_AUDIT_DB_PORT)||migration.password!=='local_audit_only')throw Error('Dedicated audit database required');
+const db=new pg.Client({connectionString:migration.toString()});await db.connect();
+try{
+ const tenantId=randomUUID(),customerId=randomUUID();
+ const owner:Actor={id:randomUUID(),email:randomUUID()+'@example.invalid',name:'Privacy audit owner',emailVerified:true,twoFactorEnabled:true,isPlatformAdmin:false};
+ await db.query("INSERT INTO tenants(id,slug,name,address) VALUES($1,$2,'Privacy audit company','Synthetic')",[tenantId,'privacy-audit-'+tenantId]);
+ await db.query('INSERT INTO auth_user(id,name,email,email_verified,two_factor_enabled) VALUES($1,$2,$3,true,true)',[owner.id,owner.name,owner.email]);
+ await db.query("INSERT INTO memberships(tenant_id,user_id,role) VALUES($1,$2,'owner')",[tenantId,owner.id]);
+ await db.query("INSERT INTO customers(id,tenant_id,name,email,source_key) VALUES($1,$2,'Synthetic customer','privacy@example.invalid',$3)",[customerId,tenantId,'audit:'+customerId]);
+ await correctCustomer(owner,{tenantId,customerId,version:1,name:'Corrected synthetic customer',email:'privacy@example.invalid',phone:'',reason:'Synthetic audit correction'});
+ const preview=await previewContactRemoval(owner,tenantId,customerId);
+ await removeCustomerContacts(owner,{tenantId,customerId,fingerprint:preview.fingerprint,identityConfirmed:true,confirmed:true});
+ if(/^\/recovery_[a-f0-9]{32}$/.test(migration.pathname)){
+  const removals=(await db.query('SELECT id,tenant_id AS "tenantId",customer_ids AS "customerIds",booking_ids AS "bookingIds",removed_at AS "removedAt" FROM contact_removals WHERE tenant_id=$1',[tenantId])).rows.map(r=>({...r,removedAt:r.removedAt.toISOString()}));
+  await reconcileRemovedContacts(db,removals,true);
+ }
+ const list=await customerState(owner,{tenantId});
+ const detail=await customerState(owner,{tenantId,customerId});
+ const result={generatedAt:new Date().toISOString(),scope:'Real service functions and PostgreSQL; synthetic local contacts',tenantId,customerId,owner,list,detail};
+ await writeFile('output/audit-chapter23-20260908/privacy-fixture.json',JSON.stringify(result,null,2));
+ if('csv' in detail)throw Error('Expected JSON');
+ console.log(JSON.stringify({customer:detail.customers[0].name,events:detail.events.map(e=>({metadata:e.metadata})),canEdit:detail.canEdit},null,2));
+}finally{await db.end();await closePool();}

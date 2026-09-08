@@ -1,0 +1,16 @@
+async (page) => {
+ const evidence={requests:[],firstSaved:null};
+ await page.route('**/api/bookings',async route=>{
+  const request=route.request();
+  evidence.requests.push({key:request.headers()['idempotency-key'],body:request.postData()});
+  if(evidence.requests.length===2){await route.fulfill({status:429,contentType:'application/json',body:JSON.stringify({error:'Audit synthetic rate limit',code:'RATE_LIMIT'})});}
+  else if(evidence.requests.length===3){await route.fulfill({status:403,contentType:'text/html',body:'Temporary proxy rejection'});}
+  else {
+   const response=await route.fetch({url:'http://127.0.0.1:56075/api/bookings',headers:{...request.headers(),host:'audit.localhost:56075',origin:'https://audit.localhost:56075'},timeout:10000});
+   if(evidence.requests.length===1){const saved=await response.json();evidence.firstSaved={status:response.status(),id:saved.id};await route.abort('failed');}
+   else await route.fulfill({response});
+  }
+  await page.evaluate(value=>window.__chapter23=value,evidence);
+ });
+}
+

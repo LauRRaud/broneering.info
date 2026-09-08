@@ -10,6 +10,7 @@ import type { AdminState } from '@/lib/admin-contracts';
 import {serviceManagementState} from '@/lib/service-management';
 import {scheduleState} from '@/lib/schedule-management';
 import {embeddingSettings} from '@/lib/embed';
+import {limitTenant} from '@/lib/request-limits';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,6 +20,7 @@ export async function GET(request: Request) {
     const actor = await getIdentity(request.headers);
     const state: AdminState = { user: actor, memberships: [], mailAvailable: isAccountMailConfigured() };
     if (!actor) return adminJson(state);
+    await limitTenant(`admin-state:${actor.id}`,120);
     const memberships = (await listMemberships(actor)).filter(item => item.active);
     state.memberships = memberships;
     const requestedId = new URL(request.url).searchParams.get('tenantId');
@@ -28,6 +30,10 @@ export async function GET(request: Request) {
     const selected = requestedId ? memberships.find(item => item.tenantId === requestedId) : memberships[0];
     if (requestedId && !selected) throw new AppError(403, 'MEMBERSHIP_REQUIRED', 'Sul ei ole selle ettevõtte liikmesust.');
     if (selected) state.selected = selected;
+    if(selected?.dataAccessExpired){
+      if(actor.isPlatformAdmin&&actor.twoFactorEnabled)state.platformTenants=await listPlatformTenants(actor);
+      return adminJson(state);
+    }
 
     // The identity and own memberships stay visible so a new owner can enroll MFA.
     // Privileged company information is not fetched until the server gate succeeds.
@@ -56,5 +62,5 @@ export async function GET(request: Request) {
     }
     if(selected && assuranceReady)state.schedules=await scheduleState(actor,selected.tenantId);
     return adminJson(state);
-  } catch (error) { return adminError(error); }
+  } catch (error) { return adminError(error,request); }
 }

@@ -1,0 +1,15 @@
+
+> broneering-info@0.1.0 test
+> node --env-file-if-exists=.env.local ./node_modules/vitest/vitest.mjs run tests/payment-checkout-freshness.test.ts tests/service-management.test.ts --reporter=default
+
+
+ RUN  v4.1.11 C:/Users/rauds/Desktop/Projektid/Broneerimise SaaS/broneering.info
+
+ ✓ tests/service-management.test.ts (20 tests) 2742ms
+ ✓ tests/payment-checkout-freshness.test.ts (5 tests) 774ms
+
+ Test Files  2 passed (2)
+      Tests  25 passed (25)
+   Start at  23:05:22
+   Duration  4.32s (transform 247ms, setup 0ms, import 532ms, tests 3.52s, environment 0ms)
+

@@ -1,0 +1,15 @@
+### Result
+[
+  "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+  "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+  "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+  "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+  "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+  "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+  "TypeError: Cannot read properties of undefined (reading 'name')\n    at http://haldus.localhost:50969/_next/static/chunks/04w-z-3y2wcoc.js:1:134527\n    at Array.map (<anonymous>)\n    at th (http://haldus.localhost:50969/_next/static/chunks/04w-z-3y2wcoc.js:1:134365)\n    at aS (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:79321)\n    at o1 (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:99614)\n    at id (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:111303)\n    at sh (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:154687)\n    at http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:154532\n    at sm (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:154540)\n    at sr (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:150454)",
+  "TypeError: Cannot read properties of undefined (reading 'name')\n    at http://haldus.localhost:50969/_next/static/chunks/04w-z-3y2wcoc.js:1:134527\n    at Array.map (<anonymous>)\n    at th (http://haldus.localhost:50969/_next/static/chunks/04w-z-3y2wcoc.js:1:134365)\n    at aS (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:79321)\n    at o1 (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:99614)\n    at id (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:111303)\n    at sh (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:154687)\n    at http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:154532\n    at sm (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:154540)\n    at sr (http://haldus.localhost:50969/_next/static/chunks/1mh6a-0e61pyc.js:1:150454)"
+]
+### Ran Playwright code
+```js
+await page.evaluate('() => (window.__privacyErrors)');
+```

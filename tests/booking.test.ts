@@ -3,8 +3,8 @@ import { randomUUID } from 'node:crypto';
 import pg from 'pg';
 import { DateTime } from 'luxon';
 import { availableOffers, catalogFor, localInstant, offersInTransaction, nextAvailableDay } from '../src/lib/availability';
-import { createBooking } from '../src/lib/bookings';
-import { pool, withTenant } from '../src/lib/db';
+import { createBooking, insertBooking } from '../src/lib/bookings';
+import { pool, withTenant, withTenantRetry } from '../src/lib/db';
 import { tenantForHost, type Tenant } from '../src/lib/tenants';
 import type { BookingInput, Offer } from '../src/lib/contracts';
 
@@ -45,6 +45,47 @@ afterEach(async()=>{
 afterAll(async()=>{await admin.end();await pool().end();});
 
 describe('PostgreSQL booking core',()=>{
+  it('15: recovers from a real PostgreSQL deadlock by rerunning the losing transaction',async()=>{
+    const other=await additionalWorker(),ids=[first.staffId,other],attempts=[0,0];
+    let arrived=0;let release!:()=>void;
+    const barrier=new Promise<void>(resolve=>{release=resolve;});
+    await Promise.all(ids.map((id,index)=>withTenantRetry(first.tenant.id,async client=>{
+      attempts[index]++;
+      await client.query("UPDATE staff SET name=name||'.' WHERE tenant_id=$1 AND id=$2",[first.tenant.id,id]);
+      if(attempts[index]===1){arrived++;if(arrived===2)release();await barrier;}
+      await client.query('SELECT id FROM staff WHERE tenant_id=$1 AND id=$2 FOR UPDATE',[first.tenant.id,ids[1-index]]);
+    })));
+    expect(attempts.reduce((a,b)=>a+b,0)).toBe(3);
+    const rows=(await admin.query('SELECT name FROM staff WHERE tenant_id=$1',[first.tenant.id])).rows;
+    expect(rows.map(r=>r.name).sort()).toEqual(['Another worker.','Test staff.']);
+  });
+  it('15: retries a complete aborted transaction without duplicate bookings, events or outbox',async()=>{
+    const offer=await firstOffer();let attempts=0;
+    const result=await withTenantRetry(first.tenant.id,async client=>{
+      attempts++;
+      const booking=await insertBooking(client,first.tenant,input(offer),offer,'online',null);
+      if(attempts===1)await client.query("DO $$ BEGIN RAISE EXCEPTION 'test serialization rollback' USING ERRCODE='40001'; END $$");
+      if(attempts===2)await client.query("DO $$ BEGIN RAISE EXCEPTION 'test deadlock rollback' USING ERRCODE='40P01'; END $$");
+      return booking;
+    });
+    expect(attempts).toBe(3);
+    for(const table of ['bookings','booking_events','outbox'])expect((await admin.query(`SELECT count(*)::int n FROM ${table} WHERE tenant_id=$1`,[first.tenant.id])).rows[0].n).toBe(1);
+    expect((await admin.query('SELECT id FROM bookings WHERE tenant_id=$1',[first.tenant.id])).rows[0].id).toBe(result.id);
+  });
+  it('15: limits aborted transaction retries and does not retry business or timeout failures',async()=>{
+    for(const [code,maximum] of [['40001',3],['40P01',3],['55P03',1],['57014',1],['23505',1]]){
+      let attempts=0;
+      await expect(withTenantRetry(first.tenant.id,async client=>{
+        attempts++;
+        await client.query(`DO $$ BEGIN RAISE EXCEPTION 'controlled test' USING ERRCODE='${code}'; END $$`);
+      })).rejects.toMatchObject({code});
+      expect(attempts).toBe(maximum);
+    }
+    let calls=0;const failure=new Error('unknown commit outcome');
+    await expect(withTenantRetry(first.tenant.id,async()=>{calls++;throw failure;})).rejects.toBe(failure);
+    expect(calls).toBe(1);
+    expect(await withTenant(second.tenant.id,async c=>(await c.query("SELECT current_setting('app.tenant_id') id")).rows[0].id)).toBe(second.tenant.id);
+  });
   it('09/AT-05: any-worker offers are the exact union of concrete workers, including equal and different prices',async()=>{
     const equal=await additionalWorker(),different=await additionalWorker(4000,45);
     const individual=(await Promise.all([first.staffId,equal,different].map(id=>availableOffers(first.tenant,first.serviceId,day,id)))).flat();

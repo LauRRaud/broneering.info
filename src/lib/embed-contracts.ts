@@ -1,3 +1,5 @@
+import {translator} from './i18n';
+import type {Locale} from './locales';
 /** v1 messages deliberately contain layout only: never booking IDs or customer data. */
 export type EmbedMessage = {type:'broneering:init'|'broneering:ready'|'broneering:resize'|'broneering:close';version:1;channel:string;height?:number};
 export function validEmbedMessage(data:unknown,type:EmbedMessage['type']): data is EmbedMessage {
@@ -22,11 +24,12 @@ export function canonicalEmbedOrigin(value:string,allowLocal=false):string {
 }
 
 function html(value:string){return value.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');}
-export function installationCode(bookingUrl:string,scriptUrl:string,parentOrigin:string) {
-  const target=new URL('/embed',bookingUrl);target.searchParams.set('parent',parentOrigin);
+export function installationCode(bookingUrl:string,scriptUrl:string,parentOrigin:string,language:Locale='et') {
+  const t=translator(language);
+  const target=new URL('/embed',bookingUrl);target.searchParams.set('parent',parentOrigin);target.searchParams.set('lang',language);
   return {
-    link:`<a href="${html(bookingUrl)}">Broneeri aeg</a>`,
-    inline:`<iframe src="${html(target.toString())}" data-booking-frame title="Aja broneerimine" width="100%" height="700" loading="lazy" referrerpolicy="no-referrer"></iframe>\n<p><a href="${html(bookingUrl)}">Ava broneerimisleht</a></p>\n<script src="${html(scriptUrl)}" defer></script>`,
-    modal:`<a href="${html(bookingUrl)}" data-booking-modal>Broneeri aeg</a>\n<script src="${html(scriptUrl)}" defer></script>`,
+    link:`<a href="${html(bookingUrl)}">${html(t('Broneeri aeg'))}</a>`,
+    inline:`<iframe src="${html(target.toString())}" data-booking-frame data-booking-language="${language}" title="${html(t('Aja broneerimine'))}" width="100%" height="700" loading="lazy" referrerpolicy="no-referrer"></iframe>\n<p><a href="${html(bookingUrl)}">${html(t('Ava broneerimisleht'))}</a></p>\n<script src="${html(scriptUrl)}" defer></script>`,
+    modal:`<a href="${html(bookingUrl)}" data-booking-modal data-booking-language="${language}">${html(t('Broneeri aeg'))}</a>\n<script src="${html(scriptUrl)}" defer></script>`,
   };
 }

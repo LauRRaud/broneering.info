@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily differential booking database backup
+[Timer]
+OnCalendar=Mon..Sat *-*-* 02:00:00
+Persistent=true
+Unit=booking-backup@diff.service
+[Install]
+WantedBy=timers.target

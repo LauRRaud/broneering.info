@@ -39,7 +39,7 @@ export async function POST(request: Request, context: {params: Promise<{action: 
     const { action } = await context.params;
     if (!Object.hasOwn(schemas, action)) throw new AppError(404, 'NOT_FOUND', 'Toimingut ei leitud.');
     const actor = await adminActor(request);
-    limitTenant(`admin:${actor.id}`, 60);
+    await limitTenant(`admin:${actor.id}`, 60);
     const body: unknown = await readJson(request);
     const validated = schemas[action as Action].safeParse(body);
     if (!validated.success) throw new AppError(400, 'INVALID_INPUT', 'Kontrolli vormi andmeid.');
@@ -63,7 +63,7 @@ export async function POST(request: Request, context: {params: Promise<{action: 
       case 'invite': {
         if (!isAccountMailConfigured()) throw new AppError(503, 'MAIL_UNAVAILABLE', 'Kutsete saatmine ei ole veel seadistatud.');
         const data = schemas.invite.parse(body);
-        limitTenant(`admin-invite:${data.tenantId}`, 10);
+        await limitTenant(`admin-invite:${data.tenantId}`, 10);
         const invitation = await inviteMember(actor, data);
         try {
           const url = new URL('/', authBaseUrl);
@@ -107,6 +107,6 @@ export async function POST(request: Request, context: {params: Promise<{action: 
     return adminJson({ok: true});
   } catch (error) {
     if(error instanceof ScheduleConflictError)return adminJson({error:error.message,code:error.code,conflicts:error.conflicts,total:error.total},409);
-    return adminError(error);
+    return adminError(error,request);
   }
 }

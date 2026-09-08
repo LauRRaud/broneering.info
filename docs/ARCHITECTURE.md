@@ -13,6 +13,8 @@ Lähteplaan on kasutaja kaustas olev `Broneerimisplatvorm_arendusplaan_v1_0.docx
 
 ## Üks rakendus
 
+Peatüki 14 moodulite kaart, käituspiirid ning ehitust blokeeriv impordigraafi kontroll on [CHAPTER-14.md](CHAPTER-14.md). Uued teegimoodulid on vaikimisi serveri omad; brauseriga jagatav pind on selgelt loetletud `scripts/architecture.ts` failis.
+
 Next.js App Router serveerib hostinime järgi veebilehe või ettevõtte broneerimisvaate. Serveri route handler'id kutsuvad eraldi äriloogika mooduleid; brauser ei kinnita lõplikku saadavust ega hinda. PostgreSQL käib kohalikus Dockeris ja hiljem eraldi konteineris samas omaniku kontrollitavas serveris.
 
 Esimese tehnilise katse teadlik lihtsustus võrreldes dokumendi tehnoloogiaettepanekuga: eraldi NestJS-serverit ja Drizzle-kihti ei lisatud. Next.js-i serveriliidesed, `pg` ja versioonitud SQL-migratsioonid tõendavad põhireegleid väiksema taristuga. Mooduleid saab vajadusel eraldi serverisse viia. Peatükk 04 kasutab Better Authi oma PostgreSQL-is; selle adapter kasutab Kyselyt. Broneeringute SMTP-taustatöö jääb peatükki 17.
@@ -36,6 +38,8 @@ Kõigil ettevõtte sisutabelitel on `tenant_id`, RLS ja FORCE RLS. Seotud objekt
 DNS-kirje, HTTPS-sertifikaat, pöördproksi ning rakenduse domeeniseos on neli eraldi asja. DNS-kontroll vastas 7. septembril 2026 nii `ilutegu` kui juhusliku alamdomeeni puhul sama IP-ga; see viitab wildcard-vastusele, mitte tõendatud toimivale broneerimislehele.
 
 ## Broneerimise invariandid
+
+Peatüki 15 täpne lukustus-/korduspäringu protokoll ja API leping on [CHAPTER-15.md](CHAPTER-15.md). Loomise ja broneeringukäskude 40001/40P01 tehinguid korratakse kuni kolm kogukatset; tundmatut COMMIT-i tulemust automaatselt ei korrata. Halduslingi aegumine kontrollitakse pärast lukuootust tegeliku kellaajaga.
 
 Saadavus on ettevõtte lahtioleku ja töötaja graafiku ühisosa, millest eemaldatakse broneeringute hõivamised. Mõlemal graafikul on mitu päevaosa ja kuupäevapõhised erandid. Hõivamine sisaldab ettevalmistust ja lõpetamist; vahemikud on `[algus,lõpp)`.
 

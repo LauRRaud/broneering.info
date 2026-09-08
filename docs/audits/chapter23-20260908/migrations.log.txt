@@ -1,0 +1,51 @@
+
+> broneering-info@0.1.0 db:migrate
+> node --env-file-if-exists=.env.local --import tsx scripts/migrate.ts
+
+Applied 001_booking.sql
+Applied 002_auth.sql
+Applied 003_access.sql
+Applied 004_domains_embed.sql
+Applied 005_service_management.sql
+Applied 006_service_group_hierarchy.sql
+Applied 007_schedule_management.sql
+Applied 008_booking_management.sql
+Applied 009_status_occupancy.sql
+Applied 010_customers.sql
+Applied 011_calendar_reads.sql
+Applied 012_languages.sql
+Applied 013_service_translations.sql
+Applied 014_model_invariants.sql
+Applied 015_lifecycle_model.sql
+Applied 016_snapshot_guards.sql
+Applied 017_request_limits.sql
+Applied 018_notification_delivery.sql
+Applied 019_company_provisioning.sql
+Applied 020_onboarding.sql
+Applied 021_export_jobs.sql
+Applied 022_media_write_scope.sql
+Applied 023_import_upload.sql
+Applied 024_import_preview.sql
+Applied 025_import_commit.sql
+Applied 026_import_cancel.sql
+Applied 027_company_exit.sql
+Applied 028_customer_merge.sql
+Applied 029_subscription_terms.sql
+Applied 030_invoice_issuance.sql
+Applied 031_payment_records.sql
+Applied 032_invoice_credit_notes.sql
+Applied 033_credit_integrity.sql
+Applied 034_payment_attempts.sql
+Applied 035_payment_mandates.sql
+Applied 036_autopay_attempts.sql
+Applied 037_invoice_payment_links.sql
+Applied 038_provider_refunds.sql
+Applied 039_billing_period_worker.sql
+Applied 040_invoice_mail.sql
+Applied 041_invoice_reminders.sql
+Applied 042_invoice_replacement.sql
+Applied 043_retention_policy_management.sql
+Applied 044_import_source_retention.sql
+Applied 045_import_external_digest.sql
+Applied 046_customer_contact_removal.sql
+Applied 047_readiness_metadata.sql

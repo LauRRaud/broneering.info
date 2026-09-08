@@ -1,0 +1,140 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.46kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 161B done
+#3 DONE 0.0s
+
+#4 [dependencies 1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#4 resolve docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 32.13kB 0.0s done
+#5 DONE 0.0s
+
+#6 [dependencies 2/6] WORKDIR /app
+#6 CACHED
+
+#7 [dependencies 3/6] COPY package.json package-lock.json ./
+#7 CACHED
+
+#8 [dependencies 4/6] RUN npm ci --no-fund
+#8 CACHED
+
+#9 [dependencies 5/6] COPY scripts/licenses.ts ./scripts/licenses.ts
+#9 CACHED
+
+#10 [dependencies 6/6] RUN mkdir -p docs && npm run licenses && cp docs/THIRD-PARTY-NOTICES.txt /app/THIRD-PARTY-NOTICES.txt
+#10 CACHED
+
+#11 [builder 1/2] COPY . .
+#11 DONE 0.1s
+
+#12 [builder 2/2] RUN npm run build
+#12 0.231 
+#12 0.231 > broneering-info@0.1.0 build
+#12 0.231 > npm run architecture:check && node --import tsx scripts/widget-languages.ts && next build
+#12 0.231 
+#12 0.307 
+#12 0.307 > broneering-info@0.1.0 architecture:check
+#12 0.307 > node --import tsx scripts/architecture.ts
+#12 0.307 
+#12 1.145 Architecture boundaries passed (151 source files).
+#12 1.559 ▲ Next.js 16.3.4 (Turbopack)
+#12 1.584 ✓ Running next.config.ts took 25ms
+#12 1.595 
+#12 1.617   Creating an optimized production build ...
+#12 6.271 ✓ Compiled successfully in 4.5s
+#12 6.275   Running TypeScript ...
+#12 12.63   Finished TypeScript in 6.4s ...
+#12 12.63   Collecting page data using 15 workers ...
+#12 13.79   Generating static pages using 15 workers (0/17) ...
+#12 13.86   Generating static pages using 15 workers (4/17) 
+#12 13.96   Generating static pages using 15 workers (8/17) 
+#12 13.98   Generating static pages using 15 workers (12/17) 
+#12 14.00 ✓ Generating static pages using 15 workers (17/17) in 202ms
+#12 14.00   Finalizing page optimization ...
+#12 14.30 
+#12 14.30 Route (app)
+#12 14.30 ┌ ƒ /
+#12 14.30 ├ ƒ /_not-found
+#12 14.30 ├ ƒ /api/admin/[action]
+#12 14.30 ├ ƒ /api/admin/billing
+#12 14.30 ├ ƒ /api/admin/booking-policy
+#12 14.30 ├ ƒ /api/admin/bookings
+#12 14.30 ├ ƒ /api/admin/companies
+#12 14.30 ├ ƒ /api/admin/customers
+#12 14.30 ├ ƒ /api/admin/customers/privacy
+#12 14.30 ├ ƒ /api/admin/exit
+#12 14.30 ├ ƒ /api/admin/exports
+#12 14.30 ├ ƒ /api/admin/imports
+#12 14.30 ├ ƒ /api/admin/language
+#12 14.30 ├ ƒ /api/admin/notifications
+#12 14.30 ├ ƒ /api/admin/onboarding
+#12 14.30 ├ ƒ /api/admin/preview/[action]
+#12 14.30 ├ ƒ /api/admin/retention
+#12 14.30 ├ ƒ /api/admin/state
+#12 14.30 ├ ƒ /api/admin/subscription
+#12 14.30 ├ ƒ /api/admin/translations
+#12 14.30 ├ ƒ /api/auth/[...all]
+#12 14.30 ├ ƒ /api/availability
+#12 14.30 ├ ƒ /api/booking/manage
+#12 14.30 ├ ƒ /api/bookings
+#12 14.30 ├ ƒ /api/catalog
+#12 14.30 ├ ƒ /api/health
+#12 14.30 ├ ƒ /api/payments/invoice
+#12 14.30 ├ ƒ /api/payments/makecommerce/notify
+#12 14.30 ├ ƒ /api/payments/makecommerce/return
+#12 14.30 ├ ƒ /api/ready
+#12 14.30 ├ ƒ /broneering
+#12 14.30 ├ ƒ /embed
+#12 14.30 ├ ƒ /pay
+#12 14.30 ├ ƒ /preview
+#12 14.30 ├ ƒ /robots.txt
+#12 14.30 └ ƒ /sitemap.xml
+#12 14.30 
+#12 14.30 
+#12 14.30 ƒ Proxy (Middleware)
+#12 14.30 
+#12 14.30 ƒ  (Dynamic)  server-rendered on demand
+#12 14.30 
+#12 DONE 14.4s
+
+#13 [runner 3/8] RUN groupadd --system --gid 1001 booking && useradd --system --uid 1001 --gid booking booking && mkdir -p /data/private && chown booking:booking /data/private
+#13 CACHED
+
+#14 [runner 4/8] COPY --from=builder --chown=booking:booking /app/.next/standalone ./
+#14 DONE 0.4s
+
+#15 [runner 5/8] COPY --from=builder --chown=booking:booking /app/.next/static ./.next/static
+#15 DONE 0.1s
+
+#16 [runner 6/8] COPY --from=builder --chown=booking:booking /app/public ./public
+#16 DONE 0.0s
+
+#17 [runner 7/8] COPY --from=builder --chown=booking:booking /app/db/migrations ./db/migrations
+#17 DONE 0.0s
+
+#18 [runner 8/8] COPY --from=dependencies --chown=booking:booking /app/THIRD-PARTY-NOTICES.txt ./THIRD-PARTY-NOTICES.txt
+#18 DONE 0.0s
+
+#19 exporting to image
+#19 exporting layers
+#19 exporting layers 1.2s done
+#19 exporting manifest sha256:cf370dc9f55ef3f317d29fba5d6bdff5ea5d3b6bbf9a6a082d5adbf5d3435129 0.0s done
+#19 exporting config sha256:e5c8d3e174873a7c3a75d1e333a0de7679b68ab614667a161d3838e6fab8a345 done
+#19 exporting attestation manifest sha256:58f3179c779c24163bb4b1c6fd44d2966b1f8e1432e5a0602b72c939e598990d 0.0s done
+#19 exporting manifest list sha256:ac47cf14c73d8c229f0245b265bc3d661823b463c38c3f9898e9c75dffd5c703 0.0s done
+#19 naming to docker.io/library/broneering-ch23-fixes:20260908 done
+#19 unpacking to docker.io/library/broneering-ch23-fixes:20260908
+#19 unpacking to docker.io/library/broneering-ch23-fixes:20260908 0.5s done
+#19 DONE 1.8s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/2xfo4xs48tpc2xbj291ti8ymn

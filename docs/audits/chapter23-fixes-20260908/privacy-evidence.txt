@@ -1,0 +1,17 @@
+### Result
+{
+  "customerOpened": true,
+  "legacyCorrectionAndMergeMetadata": "empty objects",
+  "unexpectedErrors": [],
+  "expectedUnrelated403": 20
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => (window.__privacyProof)');
+```
+### Page
+- Page URL: http://haldus.localhost:56075/
+- Page Title: broneering.info
+- Console: 21 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli\console-2026-09-08T20-01-43-388Z.log#L29

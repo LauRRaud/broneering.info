@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-09-08T18:59:36.113Z",
+  "scope": "Synthetic local database; provider fetch is mocked, no external requests",
+  "partialPaymentCheckout": {
+    "outstanding": 2500,
+    "returnedAmount": 3500,
+    "sameAttempt": true,
+    "ready": true,
+    "redirectReturned": true,
+    "providerCalls": 1
+  },
+  "creditedInvoiceReplay": {
+    "invoiceStatus": "void",
+    "returnedState": "ready",
+    "redirectReturned": true,
+    "providerCalls": 1
+  },
+  "archivedStaffInvitation": {
+    "archived": true,
+    "invitationAccepted": true,
+    "role": "receptionist",
+    "canReadCustomers": true
+  },
+  "browserFixture": {
+    "tenantId": "c9f0b274-310d-477c-a33d-db26f12fcd58",
+    "staffId": "71a01dde-abc7-47fe-a71e-f0ef2936bd35",
+    "serviceId": "17b8e3e4-4d57-458b-b171-0e96f3c1aeed",
+    "day": "2026-09-10"
+  }
+}

@@ -106,6 +106,10 @@ export async function acceptInvitation(actor: Actor, token: string): Promise<Mem
     if (!invitationResult.rowCount) fail('INVALID_INVITATION','Kutse on aegunud, tühistatud või juba kasutatud.',400);
     const invitation=invitationResult.rows[0];
     if (normalizeEmail(user.rows[0].email) !== invitation.email) fail('INVITATION_EMAIL_MISMATCH','Kutse on seotud teise e-posti aadressiga.',403);
+    if (invitation.staff_id) {
+      const staff=await client.query('SELECT id FROM staff WHERE tenant_id=$1 AND id=$2 AND active FOR SHARE',[invitation.tenant_id,invitation.staff_id]);
+      if (!staff.rowCount) fail('STAFF_NOT_FOUND','Töötajat ei leitud.',404);
+    }
     if (invitation.role === 'owner') {
       const owners=await client.query("SELECT 1 FROM memberships WHERE tenant_id=$1 AND role='owner' AND active LIMIT 1",[invitation.tenant_id]);
       if (owners.rowCount) fail('OWNER_ALREADY_EXISTS','Ettevõttel on juba aktiivne omanik.',409);

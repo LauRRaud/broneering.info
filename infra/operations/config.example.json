@@ -1,0 +1,10 @@
+{
+  "project": "booking-production",
+  "composeFile": "/opt/booking/compose.server.yaml",
+  "readyUrl": "https://haldus.broneering.info/api/ready",
+  "tlsHost": "haldus.broneering.info",
+  "diskPaths": ["/var/lib/docker", "/mnt/booking-backup"],
+  "latestLedgerDirectory": "/mnt/booking-backup/ledger/latest",
+  "backupMaxAgeSeconds": 90000,
+  "minimumFreeBytes": 5368709120
+}

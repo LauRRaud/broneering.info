@@ -1,0 +1,25 @@
+### Result
+{
+  "requests": [
+    {
+      "key": "569100ae-e243-4a3e-978a-f36bb38ed8ec",
+      "body": "{\"language\":\"et\",\"serviceId\":\"17b8e3e4-4d57-458b-b171-0e96f3c1aeed\",\"staffId\":\"71a01dde-abc7-47fe-a71e-f0ef2936bd35\",\"start\":\"2026-09-10T06:00:00.000Z\",\"expectedPrice\":2500,\"expectedDuration\":30,\"expectedRulesVersion\":1,\"name\":\"Auditi Klient\",\"email\":\"audit@example.invalid\"}"
+    },
+    {
+      "key": "569100ae-e243-4a3e-978a-f36bb38ed8ec",
+      "body": "{\"language\":\"et\",\"serviceId\":\"17b8e3e4-4d57-458b-b171-0e96f3c1aeed\",\"staffId\":\"71a01dde-abc7-47fe-a71e-f0ef2936bd35\",\"start\":\"2026-09-10T06:00:00.000Z\",\"expectedPrice\":2500,\"expectedDuration\":30,\"expectedRulesVersion\":1,\"name\":\"Auditi Klient\",\"email\":\"audit@example.invalid\"}"
+    },
+    {
+      "key": "bd9a266a-1f32-4b58-a453-816a40a201ac",
+      "body": "{\"language\":\"et\",\"serviceId\":\"17b8e3e4-4d57-458b-b171-0e96f3c1aeed\",\"staffId\":\"71a01dde-abc7-47fe-a71e-f0ef2936bd35\",\"start\":\"2026-09-10T06:00:00.000Z\",\"expectedPrice\":2500,\"expectedDuration\":30,\"expectedRulesVersion\":1,\"name\":\"Auditi Klient\",\"email\":\"audit@example.invalid\"}"
+    }
+  ],
+  "firstSaved": {
+    "status": 201,
+    "id": "3a811651-6ee2-4688-a180-789f9507459a"
+  }
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => (window.__chapter23)');
+```

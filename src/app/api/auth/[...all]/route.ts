@@ -6,6 +6,7 @@ import { validateInvitationForSignup } from '../../../../lib/invitations';
 import { isAccountMailConfigured } from '../../../../lib/auth-mail';
 import { AppError } from '../../../../lib/errors';
 import { errorResponse, readJson } from '../../../../lib/http';
+import {recordSecurityRejection} from '../../../../lib/security-log';
 
 function rejectHost(): Response {
   return new Response('Not Found', { status: 404, headers: { 'cache-control': 'no-store' } });
@@ -47,8 +48,13 @@ async function dispatch(method: 'GET' | 'POST', request: Request): Promise<Respo
     response.headers.set('Cache-Control','no-store');
     response.headers.set('X-Robots-Tag','noindex, nofollow');
     return response;
-  } catch(error) { return errorResponse(error); }
+  } catch(error) { return errorResponse(error,request); }
 }
 
-export async function GET(request: Request): Promise<Response> { return dispatch('GET', request); }
-export async function POST(request: Request): Promise<Response> { return dispatch('POST', request); }
+async function loggedDispatch(method:'GET'|'POST',request:Request){
+  const response=await dispatch(method,request);
+  recordSecurityRejection('AUTH_REJECTED',response.status);
+  return response;
+}
+export async function GET(request: Request): Promise<Response> { return loggedDispatch('GET', request); }
+export async function POST(request: Request): Promise<Response> { return loggedDispatch('POST', request); }

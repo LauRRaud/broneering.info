@@ -1,6 +1,8 @@
 import type { NextConfig } from 'next';
 const config: NextConfig = {
   output: 'standalone',
+  // Runtime data and local verification artifacts are not application dependencies.
+  outputFileTracingExcludes: {'/*': ['./output/**/*', './.private/**/*', './.env*']},
   poweredByHeader: false,
   allowedDevOrigins: ['ilutegu.localhost', 'teine.localhost', 'haldus.localhost'],
   async headers() {

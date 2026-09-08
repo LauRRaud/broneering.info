@@ -1,0 +1,17 @@
+/* Functional accessibility rules; visual design remains deferred. */
+* {box-sizing:border-box;}
+body {overflow-wrap:anywhere;}
+button,input,select,textarea {font:inherit;max-inline-size:100%;}
+button,select,input:not([type=checkbox]):not([type=radio]) {min-block-size:24px;}
+button,select {min-inline-size:24px;}
+fieldset {min-inline-size:0;}
+img {max-inline-size:100%;height:auto;}
+:focus-visible {outline:2px solid CanvasText;outline-offset:3px;}
+[tabindex="-1"] {scroll-margin-block:1rem;}
+.skip-link {position:absolute;top:0;left:0;transform:translateY(-150%);background:Canvas;color:CanvasText;padding:.5rem;z-index:100;}
+.skip-link:focus {transform:none;}
+.language-switcher {margin-block:.5rem;}
+.field-error {display:block;}
+.table-scroll {overflow:auto;max-inline-size:100%;}
+.notification-queue {min-inline-size:60rem;overflow-wrap:normal;}
+@media(prefers-reduced-motion:reduce) {*,*::before,*::after {scroll-behavior:auto!important;animation:none!important;transition:none!important;}}

@@ -1,0 +1,28 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "baseline.json": "ae479600ce26594c44672e9efb38ee55381c06d4521e26cf10cd03275e43f046",
+    "browser-evidence.txt": "04beb962b2648fcc27864ac62417e09925fa905d2075a26d3bf6742580803c93",
+    "browser-flow.js.txt": "bd148dbca94271f4e1404734590a039246b083addc725a66beacc1ea14466ae9",
+    "browser-route.js.txt": "31ea73aa3075b1246c99ecefac2d6d3f66898fbb8e96ef0514d335b3721f5765",
+    "build.log.txt": "12dd20356bac08c3c7a23e5e1da6264b654dbc8e86fef5f4d494d301ac05f181",
+    "chapter23-lost-confirmation.png": "6530ca8d22cf7a8a56a1cd3a92be11734a020e01ee6dcbde1b71daa20208316d",
+    "chapter23-rate-limit.png": "4e497fa5af45eb066cf4c479a80a1c7160ab4174b5fb3f91adcabaeb62544216",
+    "chapter23-recovered-customer.png": "4477c9be8fefb25d816f4ff01b8447d48afde9f83a908387853e2d326a9385d3",
+    "file-inventory.tsv": "912ce02b6d309c6853773c2d557313c914d6799e616ef12ac7ddcec4ea1ba576",
+    "final-verification.json": "5ed8e3fb21a7a49d64409c7a417580a9cfc38f57acb841a4344cacc97d3701f1",
+    "migrations.log.txt": "12b685dabcba922d3bc6a7b1a1acc60e5e95b0105bf8985ae36c71b7137ccc15",
+    "privacy-browser-errors.txt": "0ceed20cfd0d532dbf387cea970599b64669bb5456f64b04cc8a9ce64489edb5",
+    "privacy-browser.js.txt": "b426d8507a095ac9f9711e53814cc3c07c11179cb6b26c5b315ba4bb120863de",
+    "privacy-fixture.json": "f132af0772beb7460fdac72e70f0f9b4981cb13f3e7c9c0422b346b002d0581a",
+    "privacy-migrations.log.txt": "12b685dabcba922d3bc6a7b1a1acc60e5e95b0105bf8985ae36c71b7137ccc15",
+    "privacy-probe.ts.txt": "a8f80ecb38c29f5e04a777f845190e1a3b746e9bdc9b54f82056e393c051017c",
+    "probes.json": "36ec09fcae2e127dff6b16cadc01d0f44efcddf5bd149ba8f0bdf7cf446bff9f",
+    "probes.ts.txt": "7213c41e298a203bdfecd964ad132e5c8e2ed9c4410abd5d07609350361ece15",
+    "README.md": "a39637557e96f914d1fce55d616e8f26193335a82a093ac33f96543f6761a2cc",
+    "summary.json": "9799e841a49b914fa37a39ce57c50e1d32a33718bbad20797f232a7c5fb8567a",
+    "tests.log.txt": "e43daf08ec14633d58d53f03abba35c7ef66f43a5095657977b74344b2d57839",
+    "typecheck.log.txt": "7f4c80187b18a82eaea2b0329fc0d29b1aaf95e6776ad845d882a2d7216ea580",
+    "vitest.json": "02a3124e1a3f5ad23987aafd1328c171b91f004c3af9a6f21b43d496c4a311e8"
+  }
+}

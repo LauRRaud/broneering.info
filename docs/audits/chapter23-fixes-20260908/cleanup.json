@@ -1,0 +1,19 @@
+{
+  "containers": [
+    {
+      "id": "64ba53a68dd6b826fc601fd428114ad2cf18a30fccfe16aa5a8da6313a80574f",
+      "volumes": [],
+      "name": "broneering-ch23-fixes-web"
+    },
+    {
+      "id": "de69660012bd3dd789a474308c7bbc6d0dbc23b929df14891d8592fded6778d6",
+      "volumes": [
+        "b694d11aa64ef3d6c5b5fe8c2fff269e9ade431887979ba9a484414b960166bd"
+      ],
+      "name": "broneering-ch23-fixes-db"
+    }
+  ],
+  "network": "broneering-ch23-fixes-net",
+  "removed": true,
+  "browser": "chapter23-fixes closed"
+}

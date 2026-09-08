@@ -89,3 +89,11 @@ Vajalikud on töötav autentimine ja MFA, haldus ning õiguskontroll, automaatne
 
 ## Peatüki 05 domeenikäsk
 Uute alamdomeenide HTTPS on nüüd automatiseeritud olemasoleva Certboti HTTP-01 kaudu. See täpsustab ülal varasemat taristu puudujääki. Käsk, domeeni sulgemine ja uuendamise piirid: [CHAPTER-05](CHAPTER-05.md). Enne kasutamist rakenda migratsioon 004 ning paigalda uuendatud infra/nginx.conf ja infra/certbot-reload.sh. Iseteeninduslik liitumine tuleb peatükis 18.
+
+## Arveldustöötaja
+
+Pärast migratsioone 039–040 käivita `billing-worker` koos teiste `workers` profiili teenustega. See koostab saabunud kuuperioodide arveid ning töötleb arvete ja kreeditarvete e-posti järjekorda. Vajalikud on rakenduse andmebaasiühendus, AUTH_SECRET ja AUTH_BASE_URL. Arvete väljastaja ning saaja andmed peavad olema kinnitatud. Saatmiseks määra BILLING_MAIL_MODE=smtp ja SMTP seaded; vaikimisi disabled jätab kirjad ootele. Capture on lubatud ainult kohalikus keskkonnas. Maksete kontrollimiseks ja püsimakseteks käivitatakse eraldi payment-worker. Käivitamine ei kinnita pakkuja tegeliku makse ega SMTP tarne toimimist.
+
+## Varundus, seire ja taastamine (peatükk 22)
+
+Töövahendid, kaitstud seadistus, ajastamise näidised, isoleeritud taastamise vastuvõtt ning uuendamise/tagasipöörde järjekord on [CHAPTER-22.md](CHAPTER-22.md). Serveri Compose sisaldab nüüd veebi `/api/ready` kontrolli ja nelja töötaja südamelööki. `compose.backup.yaml` on eraldi sisse lülitatav pgBackResti kiht; ilma kaitstud välise hoidla ja võtmeteta seda ei aktiveerita. Kohalik taastamiskatse ei tähenda tootmise varunduse ega SLA olemasolu.

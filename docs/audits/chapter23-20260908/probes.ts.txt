@@ -1,0 +1,70 @@
+import pg from 'pg';
+import {randomUUID} from 'node:crypto';
+import {writeFile} from 'node:fs/promises';
+import {DateTime} from 'luxon';
+import {type Actor,requireMembership,rolePermissions} from '../../src/lib/access';
+import {createSubscription} from '../../src/lib/subscriptions';
+import {billingIssuerState,saveBillingIssuer} from '../../src/lib/billing-config';
+import {saveBillingRecipient,previewInvoice,issueInvoice,readInvoice} from '../../src/lib/invoices';
+import {beginInvoiceCheckout} from '../../src/lib/payment-checkout';
+import {recordPayment} from '../../src/lib/payments';
+import {creditInvoice} from '../../src/lib/invoice-corrections';
+import {inviteMember,acceptInvitation} from '../../src/lib/invitations';
+import {saveServiceManagement} from '../../src/lib/service-management';
+import {closePool} from '../../src/lib/db';
+
+// Only run against the throwaway audit container, never an existing project DB.
+const url=new URL(process.env.MIGRATION_DATABASE_URL!);
+if(url.hostname!=='127.0.0.1'||url.port!==process.env.CH23_AUDIT_DB_PORT||url.password!=='local_audit_only')throw Error('Dedicated local audit database required');
+const db=new pg.Client({connectionString:url.toString()});
+const actor=(platform=false):Actor=>({id:randomUUID(),name:'Audit synthetic user',email:randomUUID()+'@example.invalid',emailVerified:true,twoFactorEnabled:true,isPlatformAdmin:platform});
+const admin=actor(true),owner=actor(),invited=actor();
+const tenantId=randomUUID(),staffId=randomUUID(),serviceId=randomUUID();
+const result:Record<string,unknown>={generatedAt:new Date().toISOString(),scope:'Synthetic local database; provider fetch is mocked, no external requests'};
+await db.connect();
+try{
+ for(const user of [admin,owner,invited])await db.query('INSERT INTO auth_user(id,name,email,email_verified,two_factor_enabled,is_platform_admin) VALUES($1,$2,$3,true,true,$4)',[user.id,user.name,user.email,user.isPlatformAdmin]);
+ await db.query("INSERT INTO tenants(id,slug,name,address,demo) VALUES($1,$2,'Audit tenant','Synthetic address',false)",[tenantId,'audit-'+tenantId]);
+ await db.query("INSERT INTO memberships(tenant_id,user_id,role) VALUES($1,$2,'owner')",[tenantId,owner.id]);
+ const today=DateTime.now().setZone('Europe/Tallinn').toISODate()!;
+ await createSubscription(admin,{tenantId,requestKey:randomUUID(),start:today,billingName:'Audit buyer',billingEmail:'buyer@example.invalid',confirmed:true});
+ const issuerVersion=(await billingIssuerState(admin)).issuer?.version??0;
+ await saveBillingIssuer(admin,{requestKey:randomUUID(),expectedVersion:issuerVersion,settings:{issuer:{name:'Audit issuer',registrationCode:'AUDIT123',address:'Test street',country:'EE',vatNumber:'',email:'issuer@example.invalid'},iban:'GB82WEST12345698765432',numberPrefix:'AUDIT',vatRegistered:false,taxRateBasisPoints:0,taxNote:'Synthetic audit only'},approvalNote:'Synthetic audit fixture, no real invoice',confirmed:true});
+ await saveBillingRecipient(owner,{tenantId,requestKey:randomUUID(),version:1,recipient:{name:'Audit buyer',registrationCode:'BUYER123',address:'Test street',country:'EE',vatNumber:'',email:'buyer@example.invalid'}});
+ const preview=await previewInvoice(admin,tenantId);
+ const invoice=await issueInvoice(admin,{tenantId,requestKey:randomUUID(),fingerprint:preview.fingerprint,confirmed:true});
+ Object.assign(process.env,{MAKECOMMERCE_MODE:'test',MAKECOMMERCE_SHOP_ID:randomUUID(),MAKECOMMERCE_SECRET_KEY:'synthetic-audit-not-real',MAKECOMMERCE_PUBLISHABLE_KEY:'synthetic-audit-public',MAKECOMMERCE_BASE_URL:'https://billing.example.invalid'});
+ const realFetch=globalThis.fetch;let providerCalls=0;
+ globalThis.fetch=async(_url,options)=>{
+  providerCalls++;const body=JSON.parse(String(options?.body)),id=randomUUID();
+  return Response.json({id,status:'CREATED',amount:body.transaction.amount,currency:'EUR',reference:body.transaction.reference,merchant_data:body.transaction.merchant_data,payment_methods:{other:[{name:'redirect',url:'https://payment.test.maksekeskus.ee/pay.html?trx='+id}]}},{status:201});
+ };
+ try{
+  const request={tenantId,invoiceId:invoice.id,invoiceVersion:invoice.version,requestKey:randomUUID(),method:'link'};
+  const original=await beginInvoiceCheckout(owner,request,{ip:'192.0.2.10',locale:'et'});
+  const payment=await recordPayment(admin,{tenantId,requestKey:randomUUID(),invoiceId:invoice.id,invoiceVersion:invoice.version,amount:1000,receivedOn:today,bankEntryId:'AUDIT-'+randomUUID(),reference:'Synthetic partial payment',allowOverpayment:false,confirmed:true});
+  const repeated=await beginInvoiceCheckout(owner,{...request,invoiceVersion:payment.invoice.version,requestKey:randomUUID()},{ip:'192.0.2.10',locale:'et'});
+  result.partialPaymentCheckout={outstanding:payment.invoice.total-payment.invoice.paidAmount,returnedAmount:repeated.amount,sameAttempt:original.id===repeated.id,ready:repeated.state==='ready',redirectReturned:!!repeated.redirectUrl,providerCalls};
+  await creditInvoice(admin,{tenantId,requestKey:randomUUID(),invoiceId:invoice.id,version:payment.invoice.version,reason:'Synthetic audit full credit',confirmed:true});
+  const afterCredit=await beginInvoiceCheckout(owner,request,{ip:'192.0.2.10',locale:'et'});
+  result.creditedInvoiceReplay={invoiceStatus:(await readInvoice(owner,tenantId,invoice.id)).status,returnedState:afterCredit.state,redirectReturned:!!afterCredit.redirectUrl,providerCalls};
+ }finally{globalThis.fetch=realFetch;}
+ await db.query("INSERT INTO staff(id,tenant_id,name) VALUES($1,$2,'Departed audit worker')",[staffId,tenantId]);
+ const invitation=await inviteMember(owner,{tenantId,email:invited.email,role:'receptionist',staffId});
+ await saveServiceManagement(owner,'save-staff',{tenantId,id:staffId,version:1,name:'Departed audit worker',title:'',bio:'',photoUrl:'',active:false,online:false});
+ const membership=await acceptInvitation(invited,invitation.token);
+ const authorized=await requireMembership(invited,tenantId,'customers.read');
+ result.archivedStaffInvitation={archived:!(await db.query('SELECT active FROM staff WHERE id=$1',[staffId])).rows[0].active,invitationAccepted:membership.active,role:membership.role,canReadCustomers:rolePermissions(authorized.role,authorized.permissions).includes('customers.read')};
+ // Retain synthetic rows solely in the disposable audit database for browser probes.
+ const browserTenant=randomUUID();
+ await db.query("INSERT INTO tenants(id,slug,name,address,demo,lead_minutes,management_link_hours,contact_email) VALUES($1,'audit-browser','Auditi prooviettevõte','Sünteetiline aadress',true,0,24,'audit@example.invalid')",[browserTenant]);
+ await db.query("INSERT INTO tenant_domains(hostname,tenant_id) VALUES('audit.localhost',$1)",[browserTenant]);
+ const browserStaff=randomUUID();
+ await db.query("INSERT INTO staff(id,tenant_id,name) VALUES($1,$2,'Auditi töötaja')",[browserStaff,browserTenant]);
+ await db.query("INSERT INTO services(id,tenant_id,name,category) VALUES($1,$2,'Auditi teenus','Audit')",[serviceId,browserTenant]);
+ await db.query('INSERT INTO staff_services(tenant_id,staff_id,service_id,price,duration) VALUES($1,$2,$3,2500,30)',[browserTenant,browserStaff,serviceId]);
+ for(let weekday=1;weekday<=7;weekday++)for(const id of [null,browserStaff])await db.query('INSERT INTO weekly_hours(tenant_id,staff_id,weekday,start_minute,end_minute) VALUES($1,$2,$3,540,1080)',[browserTenant,id,weekday]);
+ result.browserFixture={tenantId:browserTenant,staffId:browserStaff,serviceId,day:DateTime.now().setZone('Europe/Tallinn').plus({days:2}).toISODate()};
+ await writeFile('output/audit-chapter23-20260908/probes.json',JSON.stringify(result,null,2));
+ console.log(JSON.stringify(result,null,2));
+}finally{await db.end();await closePool();}

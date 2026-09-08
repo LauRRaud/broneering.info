@@ -1,11 +1,12 @@
+import {serviceNameFor} from './service-content';
 import {DateTime} from 'luxon';
 import {z} from 'zod';
 import type {PoolClient} from 'pg';
-import {withTenant} from './db';
+import {withTenant,withTenantRetry} from './db';
 import {AppError} from './errors';
 import {requireMembershipInClient,rolePermissions,audit,type Actor,type Membership} from './access';
 import type {Tenant} from './tenants';
-import {offersInTransaction} from './availability';
+import {offersInTransaction,intervalsFor} from './availability';
 import {insertBooking} from './bookings';
 import {bookingResult,bookingEvent,issueBookingLink,queueBookingNotice,type BookingRow} from './booking-records';
 import {tokenHash,sealBookingReply,openBookingReply} from './booking-secrets';
@@ -31,15 +32,17 @@ async function adminContext(client:PoolClient,actor:Actor,tenantId:string){
 function staffScope(m:Membership,staffId:string){if(m.role==='staff'&&m.staffId!==staffId)fail(403,'STAFF_SCOPE_DENIED','Töötaja pääseb ligi ainult enda broneeringutele.');}
 function detail(row:BookingRow):BookingDetail{
   const deadline=row.cancellation_hours==null?null:new Date(row.start_at.getTime()-row.cancellation_hours*3600000).toISOString();
-  return {...bookingResult(row),version:row.version,serviceId:row.service_id,staffId:row.staff_id,name:row.customer_name,email:row.customer_email,phone:row.customer_phone,attentionReason:row.attention_reason,source:row.source,deadline,canChange:row.status==='confirmed'&&deadline!==null&&Date.now()<Date.parse(deadline),notice:row.customer_email?'Muudatuse teavitus salvestatakse saatmise järjekorda.':'E-posti aadress puudub: e-kirja ei saadeta. Võta kliendiga ise ühendust.'};
+  return {...bookingResult(row),version:row.version,serviceId:row.service_id,staffId:row.staff_id,name:row.customer_name,email:row.customer_email,phone:row.customer_phone,attentionReason:row.attention_reason,source:row.source,noticeStatus:(row as BookingRow&{notice_status?:string}).notice_status,deadline,canChange:row.status==='confirmed'&&deadline!==null&&Date.now()<Date.parse(deadline),notice:row.customer_notifications===false?'Selle broneeringu kliendikirjad on välja lülitatud.':row.customer_email?'Muudatuse teavitus salvestatakse saatmise järjekorda.':'E-posti aadress puudub: e-kirja ei saadeta. Võta kliendiga ise ühendust.'};
 }
 async function bookingRow(client:PoolClient,tenantId:string,id:string,write=false){
   const result=await client.query<BookingRow>(`SELECT * FROM bookings WHERE tenant_id=$1 AND id=$2${write?' FOR UPDATE':''}`,[tenantId,id]);
-  if(!result.rowCount)fail(404,'BOOKING_NOT_FOUND','Broneeringut ei leitud.');return result.rows[0];
+  if(!result.rowCount)fail(404,'BOOKING_NOT_FOUND','Broneeringut ei leitud.');
+  if(write&&result.rows[0].contact_redacted_at)fail(409,'CONTACTS_REMOVED','Kliendi kontaktid on eemaldatud.');
+  return result.rows[0];
 }
 async function tokenContext(client:PoolClient,tenantId:string,token:string){
   if(!/^[A-Za-z0-9_-]{43}$/.test(token))fail(410,'LINK_UNAVAILABLE','Link on vigane, aegunud või tühistatud. Võta ettevõttega ühendust.');
-  const result=await client.query<{id:string;booking_id:string;expires_at:Date}>(`SELECT id,booking_id,expires_at FROM booking_management_tokens WHERE tenant_id=$1 AND token_hash=$2 AND revoked_at IS NULL AND expires_at>now()`,[tenantId,tokenHash(token)]);
+  const result=await client.query<{id:string;booking_id:string;expires_at:Date}>(`SELECT id,booking_id,expires_at FROM booking_management_tokens WHERE tenant_id=$1 AND token_hash=$2 AND revoked_at IS NULL AND expires_at>clock_timestamp()`,[tenantId,tokenHash(token)]);
   if(!result.rowCount)fail(410,'LINK_UNAVAILABLE','Link on vigane, aegunud või tühistatud. Võta ettevõttega ühendust.');return result.rows[0];
 }
 function dateLimits(tenant:Tenant){const today=DateTime.now().setZone(tenant.timezone);return {today:today.toISODate()!,maxDate:today.plus({days:tenant.window_days}).toISODate()!,rulesVersion:tenant.rules_version,cancellationHours:tenant.cancellation_hours};}
@@ -47,7 +50,7 @@ export async function publicBookingState(tenantId:string,token:string):Promise<M
   return withTenant(tenantId,async client=>{
     const tenant=await tenantContext(client,tenantId),grant=await tokenContext(client,tenantId,token);
     const row=await bookingRow(client,tenantId,grant.booking_id);
-    return {booking:{...detail(row),notice:row.customer_email?'Muudatuse teavitus salvestatakse saatmise järjekorda.':'Sellel broneeringul ei ole e-posti aadressi. Kinnituskirja ei saadeta; hoia muudatuse kinnitus alles.'},linkId:grant.id,expiresAt:grant.expires_at.toISOString(),tenant:{name:tenant.name,address:tenant.address,timezone:tenant.timezone,contactEmail:tenant.contact_email,contactPhone:tenant.contact_phone,demo:tenant.demo},...dateLimits(tenant)};
+    return {booking:{...detail(row),notice:row.customer_notifications===false?'Selle broneeringu kliendikirjad on välja lülitatud.':row.customer_email?'Muudatuse teavitus salvestatakse saatmise järjekorda.':'Sellel broneeringul ei ole e-posti aadressi. Kinnituskirja ei saadeta; hoia muudatuse kinnitus alles.'},linkId:grant.id,expiresAt:grant.expires_at.toISOString(),tenant:{name:tenant.name,address:tenant.address,timezone:tenant.timezone,contactEmail:tenant.contact_email,contactPhone:tenant.contact_phone,demo:tenant.demo},...dateLimits(tenant)};
   });
 }
 export async function publicChangeOffers(tenantId:string,token:string,day:string){
@@ -56,7 +59,7 @@ export async function publicChangeOffers(tenantId:string,token:string,day:string
     enforceDeadline(row);
     const offers=await offersInTransaction(client,tenant,row.service_id,day,undefined,DateTime.now(),{excludeBookingId:row.id});
     const service=await client.query<{name:string}>('SELECT name FROM services WHERE tenant_id=$1 AND id=$2',[tenantId,row.service_id]);
-    return {offers,serviceName:service.rows[0]?.name??row.service_name,rulesVersion:tenant.rules_version,cancellationHours:tenant.cancellation_hours};
+    return {offers,serviceName:await serviceNameFor(client,tenant.id,row.service_id,row.customer_language)??service.rows[0]?.name??row.service_name,rulesVersion:tenant.rules_version,cancellationHours:tenant.cancellation_hours};
   });
 }
 function enforceDeadline(row:BookingRow,override=false,reason='',membership?:Membership){
@@ -102,14 +105,14 @@ async function applyChange(client:PoolClient,tenant:Tenant,row:BookingRow,input:
       const offer=await checkedOffer(client,tenant,input,row.id,!!membership);
       const values=(await client.query(`SELECT s.name,COALESCE(ss.buffer_before,s.buffer_before) AS before,COALESCE(ss.buffer_after,s.buffer_after) AS after FROM services s JOIN staff_services ss ON ss.tenant_id=s.tenant_id AND ss.service_id=s.id WHERE s.tenant_id=$1 AND s.id=$2 AND ss.staff_id=$3`,[tenant.id,input.serviceId,input.staffId])).rows[0];
       const occupiedStart=DateTime.fromISO(offer.start).minus({minutes:values.before}).toISO(),occupiedEnd=DateTime.fromISO(offer.end).plus({minutes:values.after}).toISO();
-      after=(await client.query<BookingRow>(`UPDATE bookings SET service_id=$3,staff_id=$4,service_name=$5,staff_name=$6,start_at=$7,end_at=$8,occupied=tstzrange($9::timestamptz,$10::timestamptz,'[)'),price=$11,duration=$12,buffer_before=$13,buffer_after=$14,attention_reason=NULL,version=version+1,updated_at=now() WHERE tenant_id=$1 AND id=$2 RETURNING *`,[tenant.id,row.id,input.serviceId,input.staffId,values.name,offer.staffName,offer.start,offer.end,occupiedStart,occupiedEnd,offer.price,offer.duration,values.before,values.after])).rows[0];
+      after=(await client.query<BookingRow>(`UPDATE bookings SET service_id=$3,staff_id=$4,service_name=$5,staff_name=$6,start_at=$7,end_at=$8,occupied=tstzrange($9::timestamptz,$10::timestamptz,'[)'),price=$11,duration=$12,buffer_before=$13,buffer_after=$14,attention_reason=NULL,version=version+1,updated_at=now() WHERE tenant_id=$1 AND id=$2 RETURNING *`,[tenant.id,row.id,input.serviceId,input.staffId,await serviceNameFor(client,tenant.id,input.serviceId,row.customer_language)??values.name,offer.staffName,offer.start,offer.end,occupiedStart,occupiedEnd,offer.price,offer.duration,values.before,values.after])).rows[0];
       // Live tokens follow the changed end using their originally agreed expiry policy. Expired links stay expired.
       await client.query("UPDATE booking_management_tokens SET expires_at=$3::timestamptz+after_end_hours*interval '1 hour' WHERE tenant_id=$1 AND booking_id=$2 AND revoked_at IS NULL AND expires_at>now()",[tenant.id,row.id,offer.end]);
     }
   }
   await bookingEvent(client,after,'booking.'+input.action,actorId,row,reason);
   if(input.action==='cancel'||input.action==='reschedule')await queueBookingNotice(client,after,input.action==='cancel'?'booking.cancelled':'booking.changed');
-  else await client.query("UPDATE outbox SET status='superseded' WHERE tenant_id=$1 AND booking_id=$2 AND status IN ('pending','failed')",[tenant.id,row.id]);
+  else await client.query("UPDATE outbox SET status='superseded' WHERE tenant_id=$1 AND booking_id=$2 AND status IN ('pending','failed','sending')",[tenant.id,row.id]);
   return bookingResult(after);
 }
 async function command(tenantId:string,requestKey:string,raw:unknown,actor?:Actor,token?:string):Promise<BookingResult>{
@@ -117,7 +120,7 @@ async function command(tenantId:string,requestKey:string,raw:unknown,actor?:Acto
   const parsed=actor?adminBookingCommandSchema.safeParse(raw):publicBookingCommandSchema.safeParse(raw);
   if(!parsed.success)fail(400,'INVALID_INPUT','Kontrolli broneeringu andmeid ja kinnita soovitud toiming.');
   const input=parsed.data,principal=actor?'user:'+actor.id:'token:'+tokenHash(token??''),hash=tokenHash(JSON.stringify(input));
-  try{return await withTenant(tenantId,async client=>{
+  try{return await withTenantRetry(tenantId,async client=>{
     await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[`${tenantId}:command:${requestKey}`]);
     const tenant=await tenantContext(client,tenantId,true);
     const membership=actor?await adminContext(client,actor,tenantId):undefined;
@@ -147,7 +150,7 @@ async function command(tenantId:string,requestKey:string,raw:unknown,actor?:Acto
   });}catch(error){
     const code=(error as {code?:string}).code;
     if(code==='23P01')fail(409,'SLOT_UNAVAILABLE','Valitud uus aeg hõivati. Vana broneering jäi alles.');
-    if(['55P03','57014','40P01'].includes(code??''))fail(503,'RETRY_SAME_REQUEST','Tulemus vajab uut kontrolli. Proovi sama toimingu tunnusega uuesti.');
+    if(['55P03','57014','40P01','40001'].includes(code??''))fail(503,'RETRY_SAME_REQUEST','Tulemus vajab uut kontrolli. Proovi sama toimingu tunnusega uuesti.');
     throw error;
   }
 }
@@ -162,18 +165,39 @@ export async function adminBookingOffers(actor:Actor,tenantId:string,serviceId:s
     return {offers:await offersInTransaction(client,tenant,serviceId,day,staffId,DateTime.now(),{excludeBookingId:bookingId,includeHidden:true}),rulesVersion:tenant.rules_version,cancellationHours:tenant.cancellation_hours};
   });
 }
-export async function adminBookingsState(actor:Actor,tenantId:string,day:string,attention=false,page=0):Promise<AdminBookingsState>{
+export async function adminBookingsState(actor:Actor,tenantId:string,day:string,attention=false,page=0,view:'list'|'day'|'week'='list',filter?:string):Promise<AdminBookingsState>{
   uuid(tenantId);
   if(!Number.isInteger(page)||page<0||page>10000)fail(400,'INVALID_INPUT','Vigane lehekülg.');
   return withTenant(tenantId,async client=>{
-    const tenant=await tenantContext(client,tenantId),m=await adminContext(client,actor,tenantId),from=dayValue(day,tenant.timezone);
+    if(filter)uuid(filter);
+    const tenant=await tenantContext(client,tenantId),m=await adminContext(client,actor,tenantId),date=dayValue(day,tenant.timezone),from=view==='week'&&!attention?date.startOf('week'):date;
     const own=m.role==='staff'?m.staffId:null;
-    const rows=await client.query<BookingRow>(`SELECT * FROM bookings WHERE tenant_id=$1 AND ($2::uuid IS NULL OR staff_id=$2) AND CASE WHEN $3::boolean THEN status='confirmed' AND attention_reason IS NOT NULL AND end_at>now() ELSE start_at>=$4::timestamptz AND start_at<$5::timestamptz END ORDER BY start_at,id LIMIT 101 OFFSET $6`,[tenantId,own,attention,from.toISO(),from.plus({days:1}).toISO(),page*100]);
-    const staff=await client.query<{id:string;name:string}>('SELECT id,name FROM staff WHERE tenant_id=$1 AND active AND ($2::uuid IS NULL OR id=$2) ORDER BY name,id',[tenantId,own]);
+    if(filter)staffScope(m,filter);
+    const staff=await client.query<{id:string;name:string;active:boolean}>('SELECT id,name,active FROM staff WHERE tenant_id=$1 AND ($2::uuid IS NULL OR id=$2) ORDER BY name,id',[tenantId,own]);
+    if(filter&&!staff.rows.some(s=>s.id===filter))fail(403,'STAFF_SCOPE_DENIED','Töötaja ei kuulu lubatud valikusse.');
+    const selectedStaffId=own??filter??(view==='week'?staff.rows[0]?.id:undefined),until=from.plus({days:view==='week'&&!attention?7:1});
+    const pageSize=view==='list'||attention?100:2000;
+    const values=[tenantId,selectedStaffId??null,attention,from.toISO(),until.toISO()];
+    const where=`tenant_id=$1 AND ($2::uuid IS NULL OR staff_id=$2) AND CASE WHEN $3::boolean THEN status='confirmed' AND attention_reason IS NOT NULL AND end_at>now() ELSE end_at>$4::timestamptz AND start_at<$5::timestamptz END`;
+    const rows=await client.query<BookingRow>(`SELECT b.*,(SELECT o.status FROM outbox o WHERE o.tenant_id=b.tenant_id AND o.booking_id=b.id AND o.booking_version=b.version AND o.recipient_kind='customer' AND o.kind<>'booking.reminder' ORDER BY o.created_at DESC,o.id DESC LIMIT 1) AS notice_status FROM bookings b WHERE ${where} ORDER BY start_at,id LIMIT $6 OFFSET $7`,[...values,pageSize+1,page*pageSize]);
+    const metrics=(await client.query(`SELECT count(*)::int AS total,count(*) FILTER(WHERE status='completed')::int AS completed,count(*) FILTER(WHERE status='cancelled')::int AS cancelled,coalesce(sum(price) FILTER(WHERE status<>'cancelled'),0)::float8 AS value FROM bookings WHERE ${where}`,values)).rows[0];
+    const columns:NonNullable<AdminBookingsState['columns']>=[];
+    if(!attention&&view!=='list'){
+      const hours=(await client.query('SELECT staff_id,weekday,start_minute,end_minute FROM weekly_hours WHERE tenant_id=$1',[tenantId])).rows;
+      const exceptions=(await client.query("SELECT staff_id,to_char(day,'YYYY-MM-DD') AS day,closed,intervals FROM schedule_exceptions WHERE tenant_id=$1 AND day>=$2::date AND day<$3::date",[tenantId,from.toISODate(),until.toISODate()])).rows;
+      for(let current=from;current<until;current=current.plus({days:1})){
+        const dayHours=hours.filter(h=>h.weekday===current.weekday),dayExceptions=exceptions.filter(e=>e.day===current.toISODate()),location=intervalsFor(null,dayHours,dayExceptions);
+        for(const worker of staff.rows.filter(s=>!selectedStaffId||s.id===selectedStaffId)){
+          const working:Array<[number,number]>=[];
+          for(const [a,b] of worker.active?location:[])for(const [c,d] of intervalsFor(worker.id,dayHours,dayExceptions))if(Math.max(a,c)<Math.min(b,d))working.push([Math.max(a,c),Math.min(b,d)]);
+          columns.push({day:current.toISODate()!,staffId:worker.id,name:worker.name,working,closed:dayExceptions.some(e=>(e.staff_id===null||e.staff_id===worker.id)&&e.closed)});
+        }
+      }
+    }
     const services=await client.query<{id:string;name:string;online:boolean}>(`SELECT s.id,s.name,s.online FROM services s WHERE s.tenant_id=$1 AND s.active AND (s.group_id IS NULL OR EXISTS (SELECT 1 FROM service_group_tree g WHERE g.tenant_id=s.tenant_id AND g.id=s.group_id AND g.effective_active)) AND EXISTS (SELECT 1 FROM staff_services ss JOIN staff st ON st.tenant_id=ss.tenant_id AND st.id=ss.staff_id WHERE ss.tenant_id=s.tenant_id AND ss.service_id=s.id AND ss.active AND st.active AND ($2::uuid IS NULL OR st.id=$2)) ORDER BY s.name,s.id`,[tenantId,own]);
     const assignments=await client.query<{staffId:string;serviceId:string}>('SELECT staff_id AS "staffId",service_id AS "serviceId" FROM staff_services WHERE tenant_id=$1 AND active AND ($2::uuid IS NULL OR staff_id=$2)',[tenantId,own]);
     const domain=await client.query<{hostname:string}>("SELECT hostname FROM tenant_domains WHERE tenant_id=$1 AND ready AND ($2::boolean OR hostname NOT LIKE '%.localhost') ORDER BY hostname LIMIT 1",[tenantId,process.env.NODE_ENV!=='production']);
-    return {bookings:rows.rows.slice(0,100).map(detail),hasMore:rows.rows.length>100,policy:{version:tenant.management_policy_version,contactEmail:tenant.contact_email,contactPhone:tenant.contact_phone,linkHours:tenant.management_link_hours,canEdit:m.role==='owner'},timezone:tenant.timezone,...dateLimits(tenant),canOverride:m.role!=='staff',publicHostname:domain.rows[0]?.hostname??null,staff:staff.rows,services:services.rows,assignments:assignments.rows};
+    return {columns,selectedStaffId,pageSize,metrics,bookings:rows.rows.slice(0,pageSize).map(detail),hasMore:rows.rows.length>pageSize,policy:{version:tenant.management_policy_version,contactEmail:tenant.contact_email,contactPhone:tenant.contact_phone,linkHours:tenant.management_link_hours,canEdit:m.role==='owner'},timezone:tenant.timezone,...dateLimits(tenant),canOverride:m.role!=='staff',publicHostname:domain.rows[0]?.hostname??null,staff:staff.rows,services:services.rows,assignments:assignments.rows};
   });
 }
 export async function adminBookingHistory(actor:Actor,tenantId:string,bookingId:string):Promise<BookingHistoryItem[]>{

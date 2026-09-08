@@ -1,0 +1,20 @@
+'use client';
+import {useEffect,useRef,useState,type FormEvent} from 'react';
+import {localizedFetch as fetch} from '@/lib/client-fetch';
+import {useI18n} from './i18n-provider';
+import type {ProvisionReply} from '@/lib/company-provisioning';
+type Info={tenantId:string;name:string;eligible:boolean;invitation:{id:string;email:string;expiresAt:string;cancelled:boolean}|null};
+export default function OwnerInvitationRecovery({tenants}:{tenants:{id:string;name:string;slug:string}[]}){
+ const {t}=useI18n(),[tenantId,setTenantId]=useState(''),[info,setInfo]=useState<Info|null>(null),[reason,setReason]=useState(''),[confirmed,setConfirmed]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(''),[reply,setReply]=useState<ProvisionReply|null>(null),[revision,setRevision]=useState(0);
+ const running=useRef(false),pending=useRef<{signature:string;key:string}|null>(null);
+ useEffect(()=>{setInfo(null);setReply(null);setConfirmed(false);setError('');pending.current=null;if(!tenantId)return;const controller=new AbortController();setBusy(true);void fetch('/api/admin/companies?'+new URLSearchParams({tenantId}),{cache:'no-store',signal:controller.signal}).then(async r=>{const b=await r.json();if(!r.ok)throw Error(b.error);if(!controller.signal.aborted)setInfo(b);}).catch(e=>{if(!controller.signal.aborted)setError(e.message);}).finally(()=>{if(!controller.signal.aborted)setBusy(false);});return()=>controller.abort();},[tenantId,revision]);
+ async function renew(e:FormEvent){e.preventDefault();if(!info?.invitation||!confirmed||running.current)return;running.current=true;setBusy(true);setError('');const data={tenantId,invitationId:info.invitation.id,reason,confirmed:true},signature=JSON.stringify(data);if(pending.current?.signature!==signature)pending.current={signature,key:crypto.randomUUID()};try{const r=await fetch('/api/admin/companies',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,requestKey:pending.current.key})});const b=await r.json();if(!r.ok)throw Error(b.error);setReply(b);}catch(e){setError(e instanceof Error?e.message:t('Toiming ebaõnnestus.'));}finally{running.current=false;setBusy(false);}}
+ return <section aria-labelledby="owner-recovery-title"><h3 id="owner-recovery-title">{t('Esimese omaniku kutse taastamine')}</h3>
+  <p>{t('Taasta aegunud või kaotatud kutse enne omaniku liitumist. Saaja e-post jääb samaks ja varasemad kutselingid tühistatakse.')}</p>
+  <label>{t('Ettevõte')} <select value={tenantId} disabled={busy} onChange={e=>setTenantId(e.target.value)}><option value="">{t('Vali ettevõte')}</option>{tenants.map(tenant=><option key={tenant.id} value={tenant.id}>{tenant.name} ({tenant.slug})</option>)}</select></label>
+  {error&&<p role="alert">{error} <button disabled={busy} onClick={()=>setRevision(v=>v+1)}>{t('Laadi kehtiv kutseinfo')}</button></p>}
+  {info&&!info.eligible&&<p>{t('Ettevõte ei vaja esimese omaniku kutse taastamist või omanik on juba liitunud.')}</p>}
+  {info?.invitation&&!reply&&<form onSubmit={renew}><p>{t('Omaniku e-post')}: {info.invitation.email}</p><p>{t('Kutse aegub:')} {info.invitation.expiresAt}</p><fieldset disabled={busy}><p><label>{t('Kutse taastamise põhjus')} <input required minLength={10} maxLength={500} value={reason} onChange={e=>{setReason(e.target.value);setConfirmed(false);}}/></label></p><p><label><input type="checkbox" required checked={confirmed} onChange={e=>setConfirmed(e.target.checked)}/>{t('Kinnitan uue kutse loomise samale omanikule ja vanade linkide tühistamise.')}</label></p><button disabled={!confirmed}>{t('Loo uus omaniku kutselink')}</button></fieldset></form>}
+  {reply&&<div role="status"><p>{t('Edasta see privaatne kutselink omanikule. Kutset ei ole e-postiga saadetud.')}</p><label>{t('Omaniku kutselink')}<br/><textarea readOnly rows={3} value={reply.activationUrl} onFocus={e=>e.currentTarget.select()}/></label><p>{t('Kutse aegub:')} {reply.expiresAt}</p><button onClick={()=>setRevision(v=>v+1)}>{t('Sulge kutselink')}</button></div>}
+ </section>;
+}

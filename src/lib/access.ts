@@ -26,7 +26,7 @@ export type Membership = {
   active: boolean;
 };
 
-export type ListedMembership = Membership & { tenantName: string };
+export type ListedMembership = Membership & { tenantName: string; dataAccessExpired:boolean };
 export type ListedMember = Membership & {
   email: string;
   name: string;
@@ -95,14 +95,14 @@ async function ownerContext(actor: Actor, tenantId: string, client: PoolClient) 
   const membership = await requireOwnerInTransaction(actor, tenantId, client);
   return membership;
 }
-export async function requireOwnerInTransaction(actor: Actor, tenantId: string, client: PoolClient) {
+export async function requireOwnerInTransaction(actor: Actor, tenantId: string, client: PoolClient, exitStatusOnly=false) {
   assertTenantId(tenantId);
   await lockTenant(client, tenantId);
-  const membership = await requireMembershipInClient(actor, tenantId, undefined, client);
+  const membership = await requireMembershipInClient(actor, tenantId, undefined, client, exitStatusOnly);
   if (membership.role !== 'owner') fail('FORBIDDEN','Selle toimingu saab teha ainult omanik.');
   return membership;
 }
-export async function requireMembershipInClient(actor: Actor, tenantId: string, permission: Permission | undefined, client: PoolClient): Promise<Membership> {
+export async function requireMembershipInClient(actor: Actor, tenantId: string, permission: Permission | undefined, client: PoolClient, exitStatusOnly=false): Promise<Membership> {
   assertAuthEnabled();
   assertPermission(permission);
   await client.query("SELECT set_config('app.user_id',$1,true)",[actor.id]);
@@ -114,8 +114,16 @@ export async function requireMembershipInClient(actor: Actor, tenantId: string, 
   const result = await client.query(`SELECT tenant_id,user_id,role,staff_id,permissions,active FROM memberships WHERE tenant_id=$1 AND user_id=$2 AND active=true`,[tenantId,actor.id]);
   if (!result.rowCount) fail('MEMBERSHIP_REQUIRED','Sul ei ole selles ettevõttes aktiivset liikmesust.');
   const membership = mapMembership(result.rows[0]);
+  if (membership.role !== 'owner' && membership.staffId) {
+    const staff=await client.query('SELECT id FROM staff WHERE tenant_id=$1 AND id=$2 AND active',[tenantId,membership.staffId]);
+    if (!staff.rowCount) fail('STAFF_SCOPE_DENIED','Aktiivne töötajaprofiil puudub.');
+  }
   if ((membership.role === 'owner' || user.is_platform_admin) && (!user.two_factor_enabled)) fail('MFA_REQUIRED','Selle konto privileegide kasutamiseks peab olema MFA.',403);
   if (permission && !rolePermissions(membership.role,membership.permissions).includes(permission)) fail('FORBIDDEN','Sul puudub selleks toiminguks õigus.');
+  if(!exitStatusOnly){
+    const access=await client.query('SELECT data_access_until IS NULL OR data_access_until>clock_timestamp() AS allowed FROM tenants WHERE id=$1',[tenantId]);
+    if(!access.rows[0]?.allowed)fail('DATA_ACCESS_ENDED','Ettevõtte ajutine andmeligipääs on lõppenud. Võta ühendust platvormi haldajaga.',403);
+  }
   return membership;
 }
 
@@ -131,9 +139,9 @@ export async function listMemberships(actor: Actor): Promise<ListedMembership[]>
     await client.query('BEGIN');
     await client.query("SELECT set_config('app.user_id',$1,true)",[actor.id]);
     const user = await freshUser(client, actor.id);
-    const result = await client.query(`SELECT m.tenant_id,m.user_id,m.role,m.staff_id,m.permissions,m.active,t.name AS tenant_name
+    const result = await client.query(`SELECT m.tenant_id,m.user_id,m.role,m.staff_id,m.permissions,m.active,t.name AS tenant_name,COALESCE(t.data_access_until<=clock_timestamp(),false) AS data_access_expired
       FROM memberships m JOIN tenants t ON t.id=m.tenant_id WHERE m.user_id=$1 ORDER BY t.name,t.id`,[user.id]);
-    const mapped=result.rows.map(row => ({...mapMembership(row),tenantName:row.tenant_name}));
+    const mapped=result.rows.map(row => ({...mapMembership(row),tenantName:row.tenant_name,dataAccessExpired:row.data_access_expired}));
     await client.query('COMMIT'); return mapped;
   } catch(error) { await client.query('ROLLBACK'); throw error; } finally { client.release(); }
 }
@@ -180,7 +188,7 @@ export async function updateMemberPermissions(actor: Actor, input: { tenantId:st
 export async function changeMemberRole(actor: Actor, input: { tenantId:string; userId:string; role:Exclude<Role,'owner'>; staffId?:string|null }): Promise<Membership> {
   return withTenant(input.tenantId, async client => {
     await ownerContext(actor,input.tenantId,client);
-    if (input.role === 'staff' && input.staffId) {
+    if (input.staffId) {
       const staff = await client.query('SELECT id FROM staff WHERE tenant_id=$1 AND id=$2 AND active FOR SHARE',[input.tenantId,input.staffId]);
       if (!staff.rowCount) fail('STAFF_NOT_FOUND','Töötajat ei leitud.',404);
     }
@@ -237,6 +245,14 @@ export async function transferOwnership(actor: Actor, tenantId: string, newOwner
     await client.query('DELETE FROM auth_session WHERE user_id = ANY($1::text[])',[[actor.id,newOwnerUserId]]);
     await audit(client,tenantId,actor.id,'ownership.transferred',newOwnerUserId,undefined,{fromRole:current.role});
   });
+}
+
+export async function requirePlatformInClient(actor:Actor,client:PoolClient) {
+  assertAuthEnabled();
+  await client.query("SELECT set_config('app.user_id',$1,true)",[actor.id]);
+  const user=await freshUser(client,actor.id);
+  if(!user.is_platform_admin || !user.two_factor_enabled) fail('PLATFORM_MFA_REQUIRED','Platvormihalduri kontol peab olema MFA.');
+  return user;
 }
 
 export async function listPlatformTenants(actor: Actor): Promise<Array<{id:string;slug:string;name:string;active:boolean;demo:boolean}>> {

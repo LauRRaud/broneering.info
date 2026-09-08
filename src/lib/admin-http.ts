@@ -21,14 +21,14 @@ export async function adminActor(request: Request): Promise<Actor> {
 export function adminJson(value: unknown, status = 200) {
   return Response.json(value, { status, headers: {
     'Cache-Control': 'no-store',
-    Vary: 'Host, Cookie',
+    Vary: 'Host, Cookie, X-Booking-Language',
     'X-Robots-Tag': 'noindex, nofollow',
   } });
 }
 
-export function adminError(error: unknown) {
-  const response = errorResponse(error);
-  response.headers.set('Vary', 'Host, Cookie');
+export function adminError(error: unknown,request?:Request) {
+  const response = errorResponse(error,request);
+  response.headers.set('Vary', 'Host, Cookie, X-Booking-Language');
   response.headers.set('X-Robots-Tag', 'noindex, nofollow');
   return response;
 }

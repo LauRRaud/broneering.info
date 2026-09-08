@@ -1,0 +1,18 @@
+async (page) => {
+ await page.getByRole('textbox',{name:'Teenuse saaja nimi *'}).fill('Auditi Klient');
+ await page.getByRole('textbox',{name:'Kontaktisiku e-post *'}).fill('audit@example.invalid');
+ await page.getByRole('button',{name:'Kinnita broneering',exact:true}).click();
+ await page.getByRole('button',{name:'Proovi uuesti',exact:true}).waitFor();
+ for(let retry=0;retry<2;retry++){
+  await page.getByRole('button',{name:'Proovi uuesti',exact:true}).click();
+  await page.getByRole('button',{name:'Proovi uuesti',exact:true}).waitFor();
+  if(await page.getByRole('textbox',{name:'Teenuse saaja nimi *'}).isEnabled())throw Error('Uncertain request unexpectedly unlocked');
+ }
+ await page.screenshot({path:'output/playwright/chapter23-fixed-uncertain.png',fullPage:true});
+ await page.getByRole('button',{name:'Proovi uuesti',exact:true}).click();
+ await page.getByRole('heading',{name:'Kohtumiseni, Auditi.',exact:true}).waitFor();
+ const evidence=await page.evaluate(()=>window.__chapter23);
+ if(evidence.requests.length!==4||new Set(evidence.requests.map(r=>r.key)).size!==1||new Set(evidence.requests.map(r=>r.body)).size!==1||evidence.firstSaved.status!==201)throw Error('Request identity was not preserved');
+ console.log(JSON.stringify({evidence,text:await page.getByRole('main').innerText()}));
+ await page.screenshot({path:'output/playwright/chapter23-fixed-confirmation.png',fullPage:true});
+}

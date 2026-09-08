@@ -1,0 +1,29 @@
+### Result
+{
+  "requests": [
+    {
+      "key": "5d872f39-4646-40e8-83ed-8f1cce678db9",
+      "body": "{\"language\":\"et\",\"serviceId\":\"2cd3a344-194b-4fe1-956a-59f185d8542d\",\"staffId\":\"42e902e9-6edc-4b05-a512-0a22f51b78a7\",\"start\":\"2026-09-10T06:00:00.000Z\",\"expectedPrice\":2500,\"expectedDuration\":30,\"expectedRulesVersion\":1,\"name\":\"Auditi Klient\",\"email\":\"audit@example.invalid\"}"
+    },
+    {
+      "key": "5d872f39-4646-40e8-83ed-8f1cce678db9",
+      "body": "{\"language\":\"et\",\"serviceId\":\"2cd3a344-194b-4fe1-956a-59f185d8542d\",\"staffId\":\"42e902e9-6edc-4b05-a512-0a22f51b78a7\",\"start\":\"2026-09-10T06:00:00.000Z\",\"expectedPrice\":2500,\"expectedDuration\":30,\"expectedRulesVersion\":1,\"name\":\"Auditi Klient\",\"email\":\"audit@example.invalid\"}"
+    },
+    {
+      "key": "5d872f39-4646-40e8-83ed-8f1cce678db9",
+      "body": "{\"language\":\"et\",\"serviceId\":\"2cd3a344-194b-4fe1-956a-59f185d8542d\",\"staffId\":\"42e902e9-6edc-4b05-a512-0a22f51b78a7\",\"start\":\"2026-09-10T06:00:00.000Z\",\"expectedPrice\":2500,\"expectedDuration\":30,\"expectedRulesVersion\":1,\"name\":\"Auditi Klient\",\"email\":\"audit@example.invalid\"}"
+    },
+    {
+      "key": "5d872f39-4646-40e8-83ed-8f1cce678db9",
+      "body": "{\"language\":\"et\",\"serviceId\":\"2cd3a344-194b-4fe1-956a-59f185d8542d\",\"staffId\":\"42e902e9-6edc-4b05-a512-0a22f51b78a7\",\"start\":\"2026-09-10T06:00:00.000Z\",\"expectedPrice\":2500,\"expectedDuration\":30,\"expectedRulesVersion\":1,\"name\":\"Auditi Klient\",\"email\":\"audit@example.invalid\"}"
+    }
+  ],
+  "firstSaved": {
+    "status": 201,
+    "id": "99c05667-31a7-4aea-aec2-7bb19bd3f519"
+  }
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => (window.__chapter23)');
+```

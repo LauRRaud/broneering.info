@@ -1,0 +1,80 @@
+async (page) => {
+ const fixture={
+  "generatedAt": "2026-09-08T19:16:10.305Z",
+  "scope": "Real service functions and PostgreSQL; synthetic local contacts",
+  "tenantId": "963b09c4-e733-4d2b-8248-06fb5891eff1",
+  "customerId": "e2685b89-532d-443e-a70a-2ffc9e782c8a",
+  "owner": {
+    "id": "f56cc967-4e6c-4505-8ef1-f3b20b8b2f3a",
+    "email": "9e2a5c8c-9bc2-446b-b43e-db7312b1480c@example.invalid",
+    "name": "Privacy audit owner",
+    "emailVerified": true,
+    "twoFactorEnabled": true,
+    "isPlatformAdmin": false
+  },
+  "list": {
+    "customers": [
+      {
+        "id": "e2685b89-532d-443e-a70a-2ffc9e782c8a",
+        "name": "[removed]",
+        "email": null,
+        "phone": null,
+        "version": 3,
+        "merged_into_id": null,
+        "contact_redacted_at": "2026-09-08T19:16:10.254Z"
+      }
+    ],
+    "hasMore": false,
+    "history": [],
+    "historyHasMore": false,
+    "events": [],
+    "merges": [],
+    "timezone": "Europe/Tallinn",
+    "canPrivacy": true,
+    "canEdit": true,
+    "canExport": true
+  },
+  "detail": {
+    "customers": [
+      {
+        "id": "e2685b89-532d-443e-a70a-2ffc9e782c8a",
+        "name": "[removed]",
+        "email": null,
+        "phone": null,
+        "version": 3,
+        "merged_into_id": null,
+        "contact_redacted_at": "2026-09-08T19:16:10.254Z"
+      }
+    ],
+    "hasMore": false,
+    "history": [],
+    "historyHasMore": false,
+    "events": [
+      {
+        "at": "2026-09-08T19:16:10.215Z",
+        "actor": "Privacy audit owner",
+        "metadata": {}
+      }
+    ],
+    "merges": [],
+    "timezone": "Europe/Tallinn",
+    "canPrivacy": true,
+    "canEdit": true,
+    "canExport": true
+  }
+};
+ fixture.detail.merges=[{at:'2026-09-08T19:00:00.000Z',actor:'Synthetic former user',metadata:{}}];
+ const membership={tenantId:fixture.tenantId,tenantName:'Privacy audit company',role:'receptionist',staffId:null,permissions:[]};
+ await page.route('**/api/admin/**',async route=>{
+  const url=route.request().url(),pathname=url.split('?')[0];let body;
+  if(pathname.endsWith('/api/admin/state'))body={user:{...fixture.owner,twoFactorEnabled:false},memberships:[membership],selected:membership,mailAvailable:false};
+  else if(pathname.endsWith('/api/admin/customers'))body=url.includes('customerId=')?fixture.detail:fixture.list;
+  else if(pathname.endsWith('/api/admin/language'))body={adminLanguage:'et',defaultLanguage:'et'};
+  else {await route.fulfill({status:403,contentType:'application/json',body:JSON.stringify({error:'Audit: unrelated UI service disabled'})});return;}
+  await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(body)});
+ });
+ await page.addInitScript(()=>window.__privacyErrors=[]);
+ page.on('pageerror',error=>page.evaluate(message=>window.__privacyErrors.push(message),error.message).catch(()=>{}));
+ page.on('console',message=>{if(message.type()==='error')page.evaluate(text=>window.__privacyErrors.push(text),message.text()).catch(()=>{});});
+ await page.goto('http://haldus.localhost:56075/');
+}

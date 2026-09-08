@@ -1,0 +1,24 @@
+{
+  "unchanged": 341,
+  "changed": [
+    "docs/CHAPTER-23-ACCEPTANCE.md",
+    "docs/CHAPTER-23-WORK.md",
+    "docs/CHAPTER-23.md",
+    "scripts/architecture.ts",
+    "scripts/operations/reconcile.ts",
+    "src/components/customer-management.tsx",
+    "src/lib/payment-checkout.ts",
+    "tests/recovery-reconcile.test.ts",
+    "README.md",
+    "docs/PROGRESS.md",
+    "docs/ROADMAP.md",
+    "infra/nginx.conf",
+    "src/components/booking-flow.tsx",
+    "src/components/use-booking-mutation.ts",
+    "src/lib/access.ts",
+    "src/lib/invitations.ts",
+    "src/lib/service-management.ts",
+    "tests/service-management.test.ts"
+  ],
+  "missing": []
+}

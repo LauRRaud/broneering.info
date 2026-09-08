@@ -1,0 +1,296 @@
+path	review_mode	note
+.dockerignore	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+.env.example	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+.gitignore	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+compose.backup.yaml	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+compose.server.yaml	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+compose.yaml	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/001_booking.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/002_auth.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/003_access.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/004_domains_embed.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/005_service_management.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/006_service_group_hierarchy.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/007_schedule_management.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/008_booking_management.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/009_status_occupancy.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/010_customers.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/011_calendar_reads.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/012_languages.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/013_service_translations.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/014_model_invariants.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/015_lifecycle_model.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/016_snapshot_guards.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/017_request_limits.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/018_notification_delivery.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/019_company_provisioning.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/020_onboarding.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/021_export_jobs.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/022_media_write_scope.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/023_import_upload.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/024_import_preview.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/025_import_commit.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/026_import_cancel.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/027_company_exit.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/028_customer_merge.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/029_subscription_terms.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/030_invoice_issuance.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/031_payment_records.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/032_invoice_credit_notes.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/033_credit_integrity.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/034_payment_attempts.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/035_payment_mandates.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/036_autopay_attempts.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/037_invoice_payment_links.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/038_provider_refunds.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/039_billing_period_worker.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/040_invoice_mail.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/041_invoice_reminders.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/042_invoice_replacement.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/043_retention_policy_management.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/044_import_source_retention.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/045_import_external_digest.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/046_customer_contact_removal.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+db/migrations/047_readiness_metadata.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+Dockerfile	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/booking-backup-check.timer	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/booking-backup-diff.timer	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/booking-backup-full.timer	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/booking-backup@.service	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/booking-ledger.service	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/booking-ledger.timer	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/Dockerfile	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/ledger.sh	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/pgbackrest.conf.example	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/prove_recovery.py	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/restore-empty.sh	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/run.sh	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/backup/test_restore_guards.py	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+infra/Caddyfile.example	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/certbot-reload.sh	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/local-init.sql	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/nginx-bootstrap.conf	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/nginx.conf	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/operations/booking-monitor.service	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/operations/booking-monitor.timer	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/operations/check.py	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/operations/config.example.json	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/operations/test_check.py	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+infra/provision-domain.py	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+infra/server-init.sh	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+next.config.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+package-lock.json	locked-dependency-inventory	Lock/build and existing license inventory; no fresh CVE or dependency source audit
+package.json	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+public/widget/v1.js	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/architecture.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/billing-worker.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/bootstrap-owner.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/export-worker.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/licenses.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/migrate.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/notification-worker.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/operations/reconcile.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/operations/recovery-artifact.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/operations/recovery.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/payment-worker.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/schema-report.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/seed.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/smtp-verify.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/widget-languages.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+scripts/worker-healthcheck.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/accessibility.css	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/[action]/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/billing/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/booking-policy/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/bookings/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/companies/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/customers/privacy/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/customers/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/exit/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/exports/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/imports/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/language/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/notifications/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/onboarding/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/preview/[action]/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/retention/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/state/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/subscription/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/admin/translations/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/auth/[...all]/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/availability/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/booking/manage/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/bookings/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/catalog/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/health/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/payments/invoice/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/payments/makecommerce/notify/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/payments/makecommerce/return/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/api/ready/route.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/broneering/page.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/embed/page.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/error.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/layout.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/not-found.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/page.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/pay/page.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/preview/page.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/robots.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/app/sitemap.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/admin-app.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/admin-calendar.module.css	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/admin-calendar.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/billing-checkout.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/billing-invoices.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/billing-issuer.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/billing-party-fields.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/billing-payments.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/booking-flow.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/booking-management.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/company-exit.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/company-provisioning.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/customer-management.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/embed-frame.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/embedding-settings.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/export-management.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/i18n-provider.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/import-management.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/invoice-payment.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/language-settings.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/manage-booking.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/notification-settings.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/onboarding.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/owner-invitation-recovery.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/retention-settings.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/schedule-management.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/service-management.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/service-translations.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/subscription-management.tsx	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/components/use-booking-mutation.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/access.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/admin-contracts.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/admin-http.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/auth-client.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/auth-host.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/auth-mail.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/auth.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/availability.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/billing-access.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/billing-config.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/billing-rules.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/billing-worker.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/booking-access.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/booking-calendar.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/booking-management-contracts.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/booking-management.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/booking-records.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/booking-secrets.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/bookings.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/client-fetch.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/company-exit.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/company-provisioning.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/contact-validation.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/contracts.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/customer-management.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/customer-merge.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/customer-privacy.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/db.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/embed-contracts.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/embed.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/errors.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/export-management.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/export-worker.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/http.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/i18n-server.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/i18n.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/import-commit.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/import-csv.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/import-fields.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/import-lifecycle.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/import-management.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/invitations.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/invoice-corrections.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/invoice-document.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/invoice-links.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/invoice-mail-admin.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/invoice-mail.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/invoices.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/language-settings.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/locales.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/makecommerce.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/notification-config.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/notification-contracts.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/notification-mail.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/notification-management.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/notification-templates.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/notification-worker.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/onboarding.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/operations-health.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/payment-autopay.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/payment-checkout.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/payment-events.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/payment-http.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/payment-mandates.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/payments.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/preview.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/private-files.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/request-limits.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/retention.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/schedule-contracts.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/schedule-management.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/search.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/security-log.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/service-content.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/service-management-contracts.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/service-management.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/service-translation-contracts.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/service-translations.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/subscriptions.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/tenants.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/translation-provider.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/lib/worker-health.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+src/locales/en.json	automated-structure-check	Catalog keys and interpolation tests; not a full linguistic review
+src/locales/et.json	automated-structure-check	Catalog keys and interpolation tests; not a full linguistic review
+src/locales/ru.json	automated-structure-check	Catalog keys and interpolation tests; not a full linguistic review
+src/proxy.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+tests/access.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/admin-http.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/architecture.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/auth-flow.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/auth.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/billing-rules.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/booking-management-http.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/booking-management.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/booking.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/company-exit.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/company-provisioning.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/customer-management-http.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/customer-merge.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/customer-privacy-http.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/data-model.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/db.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/embed.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/exports.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/import-csv.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/import-fields.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/import-management.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/invoices.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/locales.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/makecommerce.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/notifications.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/onboarding.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/operations-health.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/payments.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/provision_domain_test.py	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/recovery-artifact.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/recovery-reconcile.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/request-limits.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/schedule-management.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/search.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/service-management.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/subscriptions.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/translation-provider.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/widget.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tests/worker-health.test.ts	automated-test-and-result-review	Fresh run; names mapped to requirements; selected critical assertions also manually read
+tsconfig.json	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised
+vitest.config.ts	manual-source-or-configuration-review	Read and compared to chapter requirements; not every runtime path exercised

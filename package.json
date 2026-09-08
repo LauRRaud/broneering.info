@@ -5,13 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1 --port 3107",
-    "build": "next build",
+    "build": "npm run architecture:check && node --import tsx scripts/widget-languages.ts && next build",
+    "architecture:check": "node --import tsx scripts/architecture.ts",
+    "worker:notifications": "node --env-file-if-exists=.env.local --import tsx scripts/notification-worker.ts",
+    "worker:exports": "node --env-file-if-exists=.env.local --import tsx scripts/export-worker.ts",
+    "worker:payments": "node --env-file-if-exists=.env.local --import tsx scripts/payment-worker.ts",
+    "worker:billing": "node --env-file-if-exists=.env.local --import tsx scripts/billing-worker.ts",
+    "smtp:verify": "node --env-file-if-exists=.env.local --import tsx scripts/smtp-verify.ts",
     "start": "next start --hostname 127.0.0.1 --port 3107",
     "typecheck": "tsc --noEmit",
     "db:migrate": "node --env-file-if-exists=.env.local --import tsx scripts/migrate.ts",
     "db:seed": "node --env-file-if-exists=.env.local --import tsx scripts/seed.ts",
     "test": "node --env-file-if-exists=.env.local ./node_modules/vitest/vitest.mjs run",
-    "licenses": "node --import tsx scripts/licenses.ts"
+    "licenses": "node --import tsx scripts/licenses.ts",
+    "db:schema": "node --env-file-if-exists=.env.local --import tsx scripts/schema-report.ts"
   },
   "dependencies": {
     "better-auth": "1.7.3",

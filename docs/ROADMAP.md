@@ -1,32 +1,22 @@
-# Järgmised arendusetapid
+# Järgmised arendustööd
 
-Arendusplaani peatükkide täitmise ja puuduvate tööde esmane register on [PROGRESS.md](PROGRESS.md). See on nõuete jälgimise alus; allolev varasem tehniline tööjaotus ei asenda dokumendi sisukorda ega vastuvõtuteste.
+08.09.2026 ajakohane alus on [peatüki 23 koodi- ja vastuvõtuaudit](CHAPTER-23.md), [AT-01–48 maatriks](CHAPTER-23-ACCEPTANCE.md) ning [hinnatud tööregister](CHAPTER-23-WORK.md). Dokumendi peatükkide järjekord säilib [PROGRESS.md](PROGRESS.md) registris. Auditi valmimine ei tähenda V1 vastuvõttu.
 
-## Valmis esimese tehnilise katse osana
+## Auditi parandused
 
-Lihtne avaleht, kaks ettevõttedemot, PostgreSQL-i skeem ja migratsioon, päris saadavus, broneeringu tehing, RLS, kattuvuse piirang, korduspäringud, teavitusülesande salvestamine. Esialgne kujundus eemaldati omaniku soovil; kasutajaliides kasutab brauseri vaikimisi HTML-elemente. Uus kujundussuund tuleb enne teostamist omanikuga kokku leppida. E2 põhikatse on olemas; see ei tähenda kogu arendusplaani V1 valmimist.
+**23-F01–F05 on kohalikult parandatud ja kontrollitud.** [Järelraport](CHAPTER-23-FIXES.md) sisaldab 261 testi, brauseri ja Nginxi tõendeid ning kasutuselevõtu samme: migratsioon 048, rakenduse/taastamistööriista pilt ja Nginxi uuendus. Tootmise paigaldust selles voorus ei tehtud.
 
-## 1. Kontod ja ettevõtte loomine
+## Puuduv teostus ja vastuvõtt
 
-Kontode, sessioonide, kutsete, rollide ja MFA tehniline alus on lisatud; täpne seis ja SMTP sõltuvus on [peatükis 04](CHAPTER-04.md). Ettevõtte loomise vorm peab hiljem lisama ettevõtte, omaniku liikmesuse ja kordumatu reserveerimata alamdomeeni ühes kontrollitud töövoos. Kasutatud aadresse ei anta teisele ettevõttele.
+Kohalikult on olemas kontod/õigused, teenused/graafikud, avalik broneerimine ja halduslingid, oma päeva-/nädalakalender, kliendid, teavitustöö, ettevõtte loomine/seadistamine, import/eksport/lahkumine, arveldus ja taastamistööriistad. Kasutatav auditeeritud tugivaade ning säilituskava automaatne täitmine on veel tegemata.
 
-## 2. Ettevõtte töölaud
+Järgmised vastuvõtud: päris SMTP ja Maksekeskuse ühendus, brauserite/klaviatuuri/ekraanilugeja ja rollide maatriks, lähtekoormus ja kalendri nähtavuse mõõtmine, piloot, sõltumatu paigaldus/taastamine ning õiguste/litsentside üleandmine. Iga töö täpsed eeltingimused ja tõend on tööregistris.
 
-Teenuste hinnad ja kestused, töötajate teenusepõhised erisused, nädalagraafikud ja erandid. Päeva-/nädalakalender, käsitsi broneering, vananenud muudatuste versioonikontroll, audit. Kõik saadavust mõjutavad kirjutused kasutavad broneerimisega sama lukustusprotokolli.
+Kuutasu kokkulepe: **35 € lõpphind kuus, piiramatu töötajate arv, prooviperioodita, maksetähtaeg 7 päeva, hilinemise lisaaeg 0**. Maksekeskuse kuutasu arve makselink/püsimakse on omaniku lubatud täpsustus. Broneeriva lõppkliendi teenuse ettemaks ei kuulu V1-sse.
 
-## 3. Broneeringu elutsükkel
+Kujundus jääb omaniku suuna kokkuleppeni ootele. Väline varunduskoht, tootmise varunduse aktiveerimine ning hoiatuskanal jäävad omaniku 08.09.2026 otsusel hilisemaks. Need piirid jäävad V1 vastuvõtus nähtavaks.
 
-Juhusliku räsitud tunnusega aeguv halduslink, muutmine ja tühistamine eraldi kinnitatava toiminguna. GET ei muuda andmeid. Aja muutmine säilitab vana broneeringu, kui uus aeg ei kinnitu. Isiklik töötajalink, järgmise vaba päeva otsing, veaseisundite täiendavad brauseritestid. Piloodi ärireeglid tuleb omanikul kinnitada.
-
-## 4. Liitumine, kujundus ja teavitused
-
-Ettevõtte seadistusviisard, kujunduse mustand/avaldamine, logo kontrollitud üleslaadimine. SMTP, teavituste saatja, korduskatsed ja meeldetuletused. Demo/import ei saada päriskirju. DNS ja HTTPS automatiseerimine. Kodulehe tavaline link, seejärel lubatud päritoluga iframe ja modaal.
-
-## 5. Kuutasu ja käitamine
-
-Paketid, arved, käsitsi laekumiste märkimine, piirangud ja eksport. Hinnad on veel otsustamata. Serveri staging ja tootmiskeskkond, seire, varundus, taastamine, hooldusjuhend. Repo privaatsus ja omaniku ettevõtte andmed. Kõik 48 lähteplaani vastuvõtutesti seotakse tegeliku teostuse ja tõenditega.
-
-SMS, kaardimaksed, Google'i kalendri sünkroonimine, mitu asukohta ja suvalise kodulehe ehitaja jäävad eraldi hilisemasse ulatusse.
+SMS, väliskalendrite sünkroonimine, mitu asukohta ja suvalise kodulehe ehitaja jäävad eraldi hilisemasse ulatusse.
 
 ## Toote suund — omaniku täpsustus 07.09.2026
 

@@ -1,0 +1,18 @@
+async (page) => {
+ await page.getByRole('button',{name:'Auditi teenus',exact:true}).click();
+ await page.getByRole('textbox',{name:'Valitud kuupäev'}).fill('2026-09-10');
+ await page.getByRole('button',{name:'09:00 — Auditi töötaja, 30 min · 25,00 €',exact:true}).click();
+ await page.getByRole('textbox',{name:'Teenuse saaja nimi *'}).fill('Auditi Klient');
+ await page.getByRole('textbox',{name:'Kontaktisiku e-post *'}).fill('audit@example.invalid');
+ await page.getByRole('button',{name:'Kinnita broneering',exact:true}).click();
+ await page.getByRole('button',{name:'Proovi uuesti',exact:true}).waitFor();
+ console.log('AFTER_LOST_REPLY',await page.evaluate(()=>window.__chapter23));
+ await page.getByRole('button',{name:'Proovi uuesti',exact:true}).click();
+ await page.getByRole('button',{name:'Kinnita broneering',exact:true}).waitFor();
+ console.log('AFTER_429',JSON.stringify({evidence:await page.evaluate(()=>window.__chapter23),nameEnabled:await page.getByRole('textbox',{name:'Teenuse saaja nimi *'}).isEnabled(),text:await page.getByRole('main').innerText()}));
+ await page.screenshot({path:'output/playwright/chapter23-rate-limit.png',fullPage:true});
+ await page.getByRole('button',{name:'Kinnita broneering',exact:true}).click();
+ await page.getByRole('heading',{name:'Vali endale hetk.'}).waitFor();
+ console.log('FINAL',JSON.stringify({evidence:await page.evaluate(()=>window.__chapter23),text:await page.getByRole('main').innerText()}));
+ await page.screenshot({path:'output/playwright/chapter23-lost-confirmation.png',fullPage:true});
+}

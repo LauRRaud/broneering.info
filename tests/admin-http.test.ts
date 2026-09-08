@@ -5,6 +5,7 @@ import { getIdentity } from '../src/lib/auth';
 import { listMemberships, listMembers, revokeMember } from '../src/lib/access';
 import { authBaseUrl } from '../src/lib/auth-host';
 import {saveSchedule,scheduleState,ScheduleConflictError} from '../src/lib/schedule-management';
+vi.mock('../src/lib/request-limits',()=>({limitTenant:vi.fn(async()=>{})}));
 
 vi.mock('../src/lib/auth', () => ({ getIdentity: vi.fn() }));
 vi.mock('../src/lib/auth-mail', () => ({ isAccountMailConfigured: () => false, sendAccountMail: vi.fn() }));
@@ -33,13 +34,20 @@ describe('Administration API boundaries',()=>{
     expect(response.headers.get('cache-control')).toBe('no-store');expect(response.headers.get('x-robots-tag')).toContain('noindex');
   });
   it('does not fetch owner data until MFA is enrolled',async()=>{
-    vi.mocked(listMemberships).mockResolvedValue([{tenantId,userId:actor.id,tenantName:'Test',role:'owner',staffId:null,permissions:[],active:true}]);
+    vi.mocked(listMemberships).mockResolvedValue([{tenantId,userId:actor.id,tenantName:'Test',role:'owner',staffId:null,permissions:[],active:true,dataAccessExpired:false}]);
     const response=await GET(request('/api/admin/state'));
     expect(response.status).toBe(200);expect((await response.json()).selected.role).toBe('owner');expect(listMembers).not.toHaveBeenCalled();
   });
   it('rejects selecting a company without membership',async()=>{
     const response=await GET(request(`/api/admin/state?tenantId=${tenantId}`));
     expect(response.status).toBe(403);expect(listMembers).not.toHaveBeenCalled();
+  });
+  it('keeps the account context visible after company data access expires without loading company data',async()=>{
+    vi.mocked(getIdentity).mockResolvedValue({...actor,twoFactorEnabled:true});
+    vi.mocked(listMemberships).mockResolvedValue([{tenantId,userId:actor.id,tenantName:'Test',role:'owner',staffId:null,permissions:[],active:true,dataAccessExpired:true}]);
+    const response=await GET(request('/api/admin/state'));
+    expect(response.status).toBe(200);expect((await response.json()).selected.dataAccessExpired).toBe(true);
+    expect(listMembers).not.toHaveBeenCalled();expect(scheduleState).not.toHaveBeenCalled();
   });
   it('requires identity and strict payloads for member changes',async()=>{
     const call=()=>POST(request('/api/admin/revoke-member',{tenantId,userId:'target',role:'owner'}),{params:Promise.resolve({action:'revoke-member'})});
@@ -48,7 +56,7 @@ describe('Administration API boundaries',()=>{
   });
   it('keeps the identity available for MFA setup without fetching privileged schedules',async()=>{
     vi.mocked(getIdentity).mockResolvedValue({...actor,isPlatformAdmin:true});
-    vi.mocked(listMemberships).mockResolvedValue([{tenantId,userId:actor.id,tenantName:'Test',role:'receptionist',staffId:null,permissions:[],active:true}]);
+    vi.mocked(listMemberships).mockResolvedValue([{tenantId,userId:actor.id,tenantName:'Test',role:'receptionist',staffId:null,permissions:[],active:true,dataAccessExpired:false}]);
     const response=await GET(request('/api/admin/state'));
     expect(response.status).toBe(200);expect((await response.json()).user.isPlatformAdmin).toBe(true);expect(scheduleState).not.toHaveBeenCalled();
   });

@@ -1,0 +1,8 @@
+[Unit]
+Description=Verify archived WAL round trip every five minutes
+[Timer]
+OnBootSec=120
+OnUnitActiveSec=300
+Unit=booking-backup@check.service
+[Install]
+WantedBy=timers.target

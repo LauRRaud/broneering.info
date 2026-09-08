@@ -11,7 +11,7 @@ const mode = (process.env.AUTH_MAIL_MODE?.trim().toLowerCase() || 'disabled') as
 const captureDir = process.env.AUTH_MAIL_CAPTURE_DIR?.trim() || path.join(process.cwd(), 'output', 'auth-mail');
 let transporter: Transporter | undefined;
 
-function smtpTransport(): Transporter {
+export function smtpTransport(): Transporter {
   if (transporter) return transporter;
   const host = process.env.SMTP_HOST?.trim();
   const port = Number(process.env.SMTP_PORT || '587');
@@ -30,9 +30,12 @@ function smtpTransport(): Transporter {
 export function authMailMode(): MailMode { return mode; }
 export function isAccountMailConfigured(): boolean {
   if (mode === 'capture') return !production;
+  return mode==='smtp'&&smtpConfigured();
+}
+export function smtpConfigured(): boolean {
   const port=Number(process.env.SMTP_PORT || '587');
   const from=process.env.SMTP_FROM?.trim();
-  return mode === 'smtp' && Number.isInteger(port) && port>0 && port<=65535 && Boolean(process.env.SMTP_HOST?.trim() && process.env.SMTP_USER?.trim() && process.env.SMTP_PASSWORD && from && !/[\r\n]/.test(from));
+  return Number.isInteger(port) && port>0 && port<=65535 && Boolean(process.env.SMTP_HOST?.trim() && process.env.SMTP_USER?.trim() && process.env.SMTP_PASSWORD && from && !/[\r\n]/.test(from));
 }
 
 /** Delivery is explicit: disabled mode fails rather than pretending to send mail. */

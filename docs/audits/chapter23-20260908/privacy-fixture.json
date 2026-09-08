@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-09-08T19:16:10.305Z",
+  "scope": "Real service functions and PostgreSQL; synthetic local contacts",
+  "tenantId": "963b09c4-e733-4d2b-8248-06fb5891eff1",
+  "customerId": "e2685b89-532d-443e-a70a-2ffc9e782c8a",
+  "owner": {
+    "id": "f56cc967-4e6c-4505-8ef1-f3b20b8b2f3a",
+    "email": "9e2a5c8c-9bc2-446b-b43e-db7312b1480c@example.invalid",
+    "name": "Privacy audit owner",
+    "emailVerified": true,
+    "twoFactorEnabled": true,
+    "isPlatformAdmin": false
+  },
+  "list": {
+    "customers": [
+      {
+        "id": "e2685b89-532d-443e-a70a-2ffc9e782c8a",
+        "name": "[removed]",
+        "email": null,
+        "phone": null,
+        "version": 3,
+        "merged_into_id": null,
+        "contact_redacted_at": "2026-09-08T19:16:10.254Z"
+      }
+    ],
+    "hasMore": false,
+    "history": [],
+    "historyHasMore": false,
+    "events": [],
+    "merges": [],
+    "timezone": "Europe/Tallinn",
+    "canPrivacy": true,
+    "canEdit": true,
+    "canExport": true
+  },
+  "detail": {
+    "customers": [
+      {
+        "id": "e2685b89-532d-443e-a70a-2ffc9e782c8a",
+        "name": "[removed]",
+        "email": null,
+        "phone": null,
+        "version": 3,
+        "merged_into_id": null,
+        "contact_redacted_at": "2026-09-08T19:16:10.254Z"
+      }
+    ],
+    "hasMore": false,
+    "history": [],
+    "historyHasMore": false,
+    "events": [
+      {
+        "at": "2026-09-08T19:16:10.215Z",
+        "actor": "Privacy audit owner",
+        "metadata": {}
+      }
+    ],
+    "merges": [],
+    "timezone": "Europe/Tallinn",
+    "canPrivacy": true,
+    "canEdit": true,
+    "canExport": true
+  }
+}

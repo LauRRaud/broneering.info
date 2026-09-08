@@ -1,0 +1,35 @@
+{
+  "nginxConfig": "passed",
+  "requests": [
+    {
+      "path": "/api/admin/imports?kind=customers",
+      "bytes": 32768,
+      "status": 204,
+      "expected": 204
+    },
+    {
+      "path": "/api/admin/imports",
+      "bytes": 5242880,
+      "status": 204,
+      "expected": 204
+    },
+    {
+      "path": "/api/admin/imports",
+      "bytes": 5242881,
+      "status": 413,
+      "expected": 413
+    },
+    {
+      "path": "/api/bookings",
+      "bytes": 32768,
+      "status": 413,
+      "expected": 413
+    },
+    {
+      "path": "/api/admin/imports/other",
+      "bytes": 32768,
+      "status": 413,
+      "expected": 413
+    }
+  ]
+}

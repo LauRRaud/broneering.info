@@ -1,6 +1,8 @@
 "use client";
+import {localizedFetch as fetch} from '@/lib/client-fetch';
 import {useEffect,useRef,useState} from 'react';
 import type {BookingResult} from '@/lib/contracts';
+import {isDefinitiveBookingRejection} from '@/lib/booking-mutation-outcome';
 type Pending={key:string;body:string};
 export function useBookingMutation(namespace:string,endpoint:string,headers:Record<string,string>={}){
   const [ready,setReady]=useState(false),[pending,setPending]=useState<Pending|null>(null),[saving,setSaving]=useState(false),[error,setError]=useState(''),[code,setCode]=useState(''),[result,setResult]=useState<BookingResult|null>(null);
@@ -21,14 +23,12 @@ export function useBookingMutation(namespace:string,endpoint:string,headers:Reco
       catch{setError('Ühendus katkes. Tulemus pole teada; kontrolli sama taotluse tulemust uuesti.');return null;}
       let body:Partial<BookingResult>&{error?:string;code?:string};
       try{body=await response.json();}catch{
-        if(response.status>=400&&response.status<500&&![401,403,429].includes(response.status))clear();
         setError('Serveri vastust ei saanud lugeda. Proovi uuesti.');return null;
       }
       if(!response.ok){
         // Admission/auth failures do not tell us whether an earlier lost reply committed.
         // Keep the same key across rate limits, reauthentication and temporary access loss.
-        const retryable=['RATE_LIMIT','UNAUTHENTICATED','MFA_REQUIRED','EMAIL_UNVERIFIED','ORIGIN_REJECTED','LINK_UNAVAILABLE','STAFF_SCOPE_DENIED','MEMBERSHIP_REQUIRED','ACCOUNT_DISABLED'];
-        if(response.status<500&&response.status!==429&&!retryable.includes(body.code??''))clear();
+        if(isDefinitiveBookingRejection(response.status,body.code))clear();
         setError(body.error||'Toiming ei õnnestunud.');setCode(body.code||'');return null;
       }
       if(!body.id||!body.reference||!body.version||!['confirmed','cancelled','completed','no_show'].includes(body.status??'')){

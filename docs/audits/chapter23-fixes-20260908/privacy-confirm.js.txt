@@ -1,0 +1,9 @@
+async (page) => {
+ await page.getByRole('heading',{name:'[removed]',exact:true}).waitFor();
+ const errors=await page.evaluate(()=>window.__privacyErrors);
+ const unexpected=errors.filter(e=>!e.includes('status of 403 (Forbidden)'));
+ if(unexpected.length)throw Error(JSON.stringify(unexpected));
+ if(await page.getByRole('heading',{name:'Lehte ei saanud laadida'}).count())throw Error('Customer view crashed');
+ await page.evaluate(value=>window.__privacyProof=value,{customerOpened:true,legacyCorrectionAndMergeMetadata:'empty objects',unexpectedErrors:unexpected,expectedUnrelated403:errors.length});
+ await page.screenshot({path:'output/playwright/chapter23-fixed-customer.png',fullPage:true});
+}

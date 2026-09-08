@@ -7,13 +7,13 @@ export const dynamic='force-dynamic';
 export async function GET(request: Request) {
   try {
     const tenant=await tenantForHost(request.headers.get('host')??'');
-    limitTenant(`read:${tenant.id}`,600);
+    await limitTenant(`read:${tenant.id}`,600);
     const parsed=z.object({serviceId:z.uuid(),date:z.string().regex(/^\d{4}-\d{2}-\d{2}$/),staffId:z.uuid().optional(),next:z.literal('1').optional()}).safeParse(Object.fromEntries(new URL(request.url).searchParams));
     if(!parsed.success) throw new AppError(400,'INVALID_INPUT','Vali teenus ja kuupäev.');
     if(parsed.data.next){
-      limitTenant(`next-day:${tenant.id}`,30);
+      await limitTenant(`next-day:${tenant.id}`,30);
       return json(await nextAvailableDay(tenant,parsed.data.serviceId,parsed.data.date,parsed.data.staffId));
     }
     return json({offers:await availableOffers(tenant,parsed.data.serviceId,parsed.data.date,parsed.data.staffId)});
-  } catch(error) { return errorResponse(error); }
+  } catch(error) { return errorResponse(error,request); }
 }

@@ -1,0 +1,35 @@
+# Peatükk 11 — töötaja kalender ja ettevõtte haldus
+
+Alus: lähteplaani peatükk 11 ja D-16; õigused peatükist 04, graafikud peatükist 07 ning broneeringutoimingud peatükist 10. Põhiteostus on kohalikus tööpuus kontrollitud. Tootmisse pole seda väljalaset veel paigaldatud. Kujundus jääb omaniku varasema korralduse järgi ootele; kalendri ruudustiku CSS täidab funktsionaalset paigutusnõuet.
+
+## Tööde register
+
+Eeltingimused: aktiivne ettevõte, migratsioonid 010/011, kinnitatud kasutaja ja aktiivne liikmesus; omanikul MFA. Kõik API-toimingud kontrollivad õigusi serveris. Hinnang on suhteline keerukus, mitte kinnitatud tundide või maksumuse eelarve.
+
+| Nõue, kasutaja ja eesmärk | Sisend, põhikäik ja mõju | Õigused, vead ja teavitused | Vastuvõtt, sõltuvus ja hinnang |
+| --- | --- | --- | --- |
+| 11-01 / D-16: päeva- ja nädalakalender | Kuupäev, vaade, töötaja. Päeval töötajad veergudes ja kellaaeg vertikaalselt; nädalal üks töötaja ning esmaspäevast pühapäevani kuupäevad. Asukoha ja töötaja graafiku ühisosa, tööväline aeg ja suletud erandid on tekstiga eristatavad. | Töötaja näeb ainult oma andmeid; võõra töötajafiltri otsene päring keelatakse. Arhiveeritud töötaja varasemad broneeringud jäävad omaniku/vastuvõtu filtrisse. Lugemine ei muuda broneeringuid. | 7-päevase vahemiku, suveaja, puudumise ja töötajapiiri integratsioonitestid; Chromiumi päeva/nädala vahetus. AT-19/23/35 osaline tõend. Ptk 04/07; keskmine. |
+| 11-02: mobiilne nimekiri ja detail | Alla 701 px kalender peitub, sama vahemiku nimekiri, kuupäev ja töötajafilter jäävad kasutatavaks. Detail näitab kontakte, päritolu, seisundit ning kehtiva versiooni outbox-seisundit. Kalendri „Lisa broneering” eeltäidab kuupäeva ja töötaja. | Muutmine, tühistamine ja päeva lõpetamine kasutavad ptk 10 versioonitud toiminguid, sama saadavust ja kattumise kontrolli. Tühistatud broneeringud jäävad loendisse, kuid ei hõiva kalendriplokki. | 390 px Chromiumi kontroll, teavitusjärjekorra oleku test. AT-32/35 täielik maatriks jääb ptk 12/25. Ptk 10; keskmine. |
+| 11-03: taustavärskendus | Nähtavas vahekaardis päring iga 5 sekundi järel, ka võrgu või nähtavuse taastumisel. Korraga üks päring; 8-sekundiline katkestuspiir. Nähtav viimase eduka uuenduse aeg. | Võrguveaga säilib viimane vaade, kirjutused on keelatud. Õiguse kaotamise 401/403/404 vastus puhastab broneeringuvaate. Avatud vorm säilitab oma versiooni ja sisestuse; uus versioon avaneb eraldi nupuga. | Chromiumis võrgu katkestus/taastumine, sisestuse säilimine ja teise haldaja ajamuudatuse ilmumine 6 sekundi jooksul. Tavakoormuse kuni 10 s siht ei asenda koormuskatset. Ptk 10/15/26; keskmine. |
+| 11-04: kliendinimekiri, ajalugu ja parandamine | Nime, e-posti või telefoni sõnasõnaline otsing. Kliendikaart ja broneeringuajalugu ettevõtte piires. Parandus nõuab kehtivat versiooni ja põhjust; audit näitab tegijat, aega, enne/pärast väärtusi. | Omanik ja vastuvõtt saavad lugeda/parandada; töötaja kliendiregistrile ligi ei pääse. Konflikt ei kirjuta teise kasutaja parandust üle. Broneeringu algsed kontaktandmed ning outbox jäävad muutmata. | Ettevõtte/RLS-i eraldatus, rollid, kaks samaaegset parandust, kontaktita profiilid, otsingu metamärgid ja audit on testitud. Chromiumis parandus ning ajalugu. AT-19/21/23 osaline tõend. Ptk 04/13; suurem. |
+| 11-05: kontrollitud eksport ja mõõdikud | Omanik ekspordib otsingu tulemuse UTF-8 CSV-na. Kalendri vahemiku ja töötajafiltri mõõdikud: broneeringuid, teenindatud, tühistatud ning tühistamata teenuste hinnakirjaline väärtus. | Eksport nõuab eraldi `export` õigust, jätab auditisse rea arvu ja on no-store manus. CSV kaitseb valemiga algavaid välju. Väärtust ei nimetata tegelikuks käibeks. | Vastuvõtu ekspordikeeld, CSV-vormistus/valemikaitse, HTTP kaitsed ja mõõdikute ulatus testitud; Chromiumis fail alla laaditud. AT-20/23 osaline tõend. Ptk 18 laiem eksport jääb eraldi; keskmine. |
+
+## Andmemudel ja piirid
+
+Migratsioon `010_customers.sql` lisab RLS-iga klienditabeli, ettevõttega seotud välisvõtme ja indeksi broneeringuajaloole. Olemasolevad broneeringud saavad kliendiseose migratsioonis; uued saavad selle sama broneeringutehingu käigus andmebaasi päästikuga. Rakenduse roll ei saa kliendikaarti kustutada. Migratsioon 011 lisab kalendri, teavitusseisundi ja kliendiajaloo lugemise indeksid.
+
+Koondatakse ainult **täpselt kattuv algne nimi, e-post ja telefon**. Üksnes nime või e-posti järgi ei ühendata. Kontaktita broneeringud saavad eraldi kaardid. See on kontaktandmete koondamine, mitte isikusamasuse tõendamine. Kliendikaardi parandus ei ühenda teisi kaarte ega kirjuta ajaloolisi broneeringuid ümber; muutunud kontaktidega uus broneering võib luua uue kaardi. Duplikaatide käsitsi ühendamine, import, säilitamine ja anonüümimine jäävad ptk 18/21.
+
+Kalendris on kuni 2000 kirjet leheküljel, eraldi nimekirja- ja tähelepanuvaates kuni 100. Lehekülg ja järgmise lehe olemasolu on nähtavad; mõõdikud hõlmavad kogu filtrit. Kliendinimekiri ja broneeringuajalugu on 50 kirje kaupa; parandustest kuvatakse 50 viimast. CSV piir on 10 000 klienti: suurem tulemus nõuab kitsamat otsingut ega anna vaikimisi poolikut eksporti.
+
+Graafiku tööaeg ei tähenda automaatselt vaba broneeritavat aega: teenuse kestus, puhvrid, etteteatamine ja konkurents kontrollitakse endiselt pakkumise ning salvestamise ajal. Suveaja ülemineku nädal kasutab kohalikke kuupäevapiire; kaardi kellaajal kuvatakse UTC-nihe. Teavituse seisund tuleb andmebaasi järjekorrast; tegelik saatmine jääb ptk 17.
+
+## Kontrollitõendid — 08.09.2026
+
+- 113 testi 13 failis läbivad. Peatüki 11 lisandus: seitse PostgreSQL/andme-/kalendritesti ja kaks HTTP-testi; senise HTTP-testi argumendid arvestavad kalendrirežiimi ja töötajafiltrit.
+- `npm run typecheck` ja `npm run build` läbivad. Migratsioonid 010/011 rakendati kohalikus andmebaasis. `git diff --check` ei leidnud tühikuvigu.
+- Ajutise MFA omaniku Chromiumi katses kontrolliti päeva/nädala vahetust, kuupäeva ja töötajafiltri säilimist, detaili, serveri teavitusseisundit, võrgu katkestust/taastumist ning poolelioleva põhjenduse säilimist teise haldaja muudatuse ajal. Uus broneeringuversioon jõudis vaatesse 6 sekundi kontrollaknas.
+- 390 px vaates oli broneeringupiirkonna laius 374 px ja kalender peidetud; nimekiri, detail ja vorm olid kasutatavad. Arvutis kontrolliti tööaja lähedalt avanemist ja töötajate veerge. Kohaliku arendusserveri vananenud moodul kõrvaldati taaskäivitusega ning lõppvaade kontrolliti uuesti.
+- Kliendikaardi nime parandus, ajaloo enne/pärast väärtused ning CSV allalaadimine läbisid. Katse kasutas väljamõeldud kontakte. Kohalikud ekraanipildid on `output/playwright/chapter11-desktop.png` ja `output/playwright/chapter11-mobile.png`; katseettevõte ja sessioon eemaldati.
+
+Tootmise paigaldus, piloodi vastuvõtt, kogu klaviatuuri/ekraanilugeja ja Safari/Firefoxi maatriks ning koormuse all 10-sekundiline siht ei ole selle tööga tõendatud. Peatükki ei märgita kogu V1 tervikvastuvõtuks. Järgmine sisuline peatükk on 12; kujundussuund vajab jätkuvalt omaniku kokkulepet.
