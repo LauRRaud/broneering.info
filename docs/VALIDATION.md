@@ -46,3 +46,11 @@ Kõik 59 rakenduse testi, tüübikontroll ja kohalik tootmisbuild läbisid. Kaks
 
 ## Peatükk 07 — 07.09.2026
 Kõik 74 rakenduse testi ning kohalik ja serveri tootmisbuild läbisid. Uued kontrollid katavad nädalagraafikuid, erandeid, õigusi, versioone, olemasolevate broneeringute konflikte, samaaegset kinnitamist ning reeglite ja tühistamistähtaja hetkeseisu. Kohalikus MFA omaniku ja kliendi brauserivoos kontrolliti graafiku muutmist, reeglimuutuse järel uuesti valimist koos kontaktandmete säilimisega, broneeringu kinnitamist ning puhkuse konflikti ja edukat sulgemist. Ajutised testandmed eemaldati. Serveris avaldati commit 1751646 ja migratsioon 007 pärast varukoopiat; välised tervise-, kataloogi-, saadavuse- ja autentimata halduse HTTPS kontrollid läbisid. Täpne tõendus ja piirid on [CHAPTER-07](CHAPTER-07.md).
+
+## Peatükk 08 — 08.09.2026
+
+Koodi väljalase `5cad56e`: 77 testi läbivad, kohalik ja serveri tootmisbuild läbivad. Töötaja isiklik kataloog filtreerib teenused ning töötajapõhise hinna/kestuse; järgmise päeva otsing on 31 päeva kaupa jätkatav ja broneerimisakna piires. PostgreSQL-i kolm uut testi katavad eraldatust, suletud töötajat, erandpäeva ja otsingupiire.
+
+Brauseris kontrolliti isiklikku linki, töötaja muutmist, ühe töötaja sammu vahelejätmist, tühjalt päevalt järgmise vaba päeva leidmist, kontaktide säilimist, töötaja sulgemist enne kinnitust ning ICS-i. Katkestatud serverivastuse korduskatse järel jäi täpselt üks broneering ja üks outbox-sündmus. 390 px vaates kontrolliti ülevoolu puudumist ja kokkuvõtte järel oleva nupu kaudu kinnitamist. Testandmed eemaldati kohalikust baasist.
+
+Serveri avalik HTTPS: health=ok; isiklik leht 200, õige töötajapiirang ja järgmise vaba päeva vastus; anonüümne haldus ei väljasta kasutajat. Täpne ulatus ning halduslingi ja kasutatavuse sõltuvused on [CHAPTER-08.md](CHAPTER-08.md). Peatükk ei ole tervikuna vastu võetud.

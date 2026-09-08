@@ -39,4 +39,4 @@ Peatükk jääb registris **osaliseks**. Turvaline halduslink, selle aegumise/uu
 
 Kontaktide ja poolelioleva taotluse mälu kestab avatud vaate eluaja; lehe taaslaadimise järel taastamist ei ole veel teostatud. Võrdsete pakkumiste koondamise reegel jääb peatükki 09. Päriskasutajatega prototüübitest, suured puutealad, täielik klaviatuuri/ekraanilugeja kontroll ning brauserimaatriks jäävad peatükkide 12 ja 25 vastuvõttu. Üks mobiilimõõdus Chromiumi kontroll ei tõenda kogu kasutatavuse vastuvõttu.
 
-Serveri avaldamise tõend lisatakse pärast paigaldamist.
+08.09.2026 avaldati serverisse kood `5cad56e`. Serveri tootmisbuild läbis ja veebikonteiner käivitati uuesti; selle peatüki jaoks skeemimigratsiooni ei lisatud. Enne uuendust tehti `backups/before-chapter08.dump`. Avalik HTTPS-kontroll: health=ok, üldkataloogis neli demo teenust, isiklikus kataloogis üks õige töötaja, isiklik leht HTTP 200 koos muutmisnupuga ning järgmise vaba päeva otsing tagastas 09.09.2026. Anonüümne haldus vastas user=null. Tootmise testbroneeringuid ei loodud.
