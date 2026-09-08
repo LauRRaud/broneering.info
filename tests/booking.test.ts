@@ -27,6 +27,13 @@ async function fixture():Promise<Fixture>{
 }
 function input(offer:Offer):BookingInput{return {serviceId:offer.serviceId,staffId:offer.staffId,start:offer.start,expectedPrice:offer.price,expectedDuration:offer.duration,expectedRulesVersion:1,name:'Test Client',email:'test@example.invalid'};}
 async function firstOffer(f=first){return (await availableOffers(f.tenant,f.serviceId,day,f.staffId))[0];}
+async function additionalWorker(price=2500,duration=30){
+  const id=randomUUID();
+  await admin.query("INSERT INTO staff(id,tenant_id,name) VALUES($1,$2,'Another worker')",[id,first.tenant.id]);
+  await admin.query('INSERT INTO staff_services(tenant_id,staff_id,service_id,price,duration,buffer_before,buffer_after) VALUES($1,$2,$3,$4,$5,5,10)',[first.tenant.id,id,first.serviceId,price,duration]);
+  await admin.query('INSERT INTO weekly_hours(tenant_id,staff_id,weekday,start_minute,end_minute) SELECT tenant_id,$2,weekday,start_minute,end_minute FROM weekly_hours WHERE tenant_id=$1 AND staff_id=$3',[first.tenant.id,id,first.staffId]);
+  return id;
+}
 
 beforeEach(async()=>{first=await fixture();second=await fixture();});
 afterEach(async()=>{
@@ -38,6 +45,44 @@ afterEach(async()=>{
 afterAll(async()=>{await admin.end();await pool().end();});
 
 describe('PostgreSQL booking core',()=>{
+  it('09/AT-05: any-worker offers are the exact union of concrete workers, including equal and different prices',async()=>{
+    const equal=await additionalWorker(),different=await additionalWorker(4000,45);
+    const individual=(await Promise.all([first.staffId,equal,different].map(id=>availableOffers(first.tenant,first.serviceId,day,id)))).flat();
+    const combined=await availableOffers(first.tenant,first.serviceId,day);
+    const identity=(o:Offer)=>JSON.stringify(o);
+    expect(combined.map(identity).sort()).toEqual(individual.map(identity).sort());
+    const sameTime=combined.filter(o=>o.start===combined[0].start);
+    expect(sameTime).toHaveLength(3);
+    expect(sameTime.map(o=>[o.price,o.duration]).sort()).toEqual([[2500,30],[2500,30],[4000,45]].sort());
+    expect(await availableOffers(first.tenant,first.serviceId,day)).toEqual(combined);
+    expect((await admin.query('SELECT id FROM bookings WHERE tenant_id=$1',[first.tenant.id])).rowCount).toBe(0);
+  });
+  it('09/AT-11: a taken concrete offer never falls back to an available colleague',async()=>{
+    const colleague=await additionalWorker();
+    const chosen=await firstOffer();
+    await createBooking(first.tenant,input(chosen),randomUUID());
+    expect((await availableOffers(first.tenant,first.serviceId,day,colleague)).some(o=>o.start===chosen.start)).toBe(true);
+    await expect(createBooking(first.tenant,input(chosen),randomUUID())).rejects.toMatchObject({code:'SLOT_UNAVAILABLE'});
+    expect((await admin.query('SELECT staff_id FROM bookings WHERE tenant_id=$1',[first.tenant.id])).rows).toEqual([{staff_id:first.staffId}]);
+  });
+  it('09/AT-06: changed price or duration cannot select a cheaper or shorter colleague instead',async()=>{
+    await additionalWorker();
+    const chosen=await firstOffer();
+    await admin.query('UPDATE staff_services SET price=3100,duration=45 WHERE tenant_id=$1 AND staff_id=$2',[first.tenant.id,first.staffId]);
+    await expect(createBooking(first.tenant,input(chosen),randomUUID())).rejects.toMatchObject({code:'OFFER_CHANGED'});
+    expect((await admin.query('SELECT id FROM bookings WHERE tenant_id=$1',[first.tenant.id])).rowCount).toBe(0);
+    const refreshed=(await availableOffers(first.tenant,first.serviceId,day)).filter(o=>o.start===chosen.start);
+    expect(refreshed.map(o=>[o.price,o.duration]).sort()).toEqual([[2500,30],[3100,45]].sort());
+  });
+  it('09/AT-01: service eligibility remains distinct from a worker having no free hours',async()=>{
+    const noHours=await additionalWorker(),unrelated=randomUUID();
+    await admin.query('DELETE FROM weekly_hours WHERE tenant_id=$1 AND staff_id=$2',[first.tenant.id,noHours]);
+    await admin.query("INSERT INTO staff(id,tenant_id,name) VALUES($1,$2,'Not offering this service')",[unrelated,first.tenant.id]);
+    expect((await catalogFor(first.tenant)).staff.map(s=>s.id).sort()).toEqual([first.staffId,noHours].sort());
+    expect((await availableOffers(first.tenant,first.serviceId,day)).every(o=>o.staffId===first.staffId)).toBe(true);
+    await admin.query('UPDATE staff_services SET active=false WHERE tenant_id=$1 AND staff_id=$2',[first.tenant.id,noHours]);
+    expect((await catalogFor(first.tenant)).staff.map(s=>s.id)).toEqual([first.staffId]);
+  });
   it('08/D-09: personal catalog uses only linked staff services and their concrete price and duration',async()=>{
     const other=randomUUID(),extra=randomUUID();
     await admin.query("INSERT INTO staff(id,tenant_id,name) VALUES($1,$2,'Other worker')",[other,first.tenant.id]);

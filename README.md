@@ -22,6 +22,8 @@ Peatükk 07 lisab asukoha ja töötajate graafikute, perioodi erandite ning bron
 
 Peatükk 08 lisab töötaja isikliku lingi, järgmise vaba päeva otsingu ning täpsustab kliendivormi ja kinnitust. Tõendid ja hilisemate peatükkide sõltuvused: [peatükk 08](docs/CHAPTER-08.md).
 
+Peatükk 09 täpsustab ja kontrollib „Töötaja pole oluline” voogu: eraldi konkreetsed pakkumised, ajapuuduse teade ja automaatse asendamise keeld. [Teostus ja kontrollid](docs/CHAPTER-09.md).
+
 ## Avaldatud tehniline demo
 
 7. septembril 2026 paigaldati katse Ubuntu VPS-i aadressil `217.146.72.147`. Kood asub privaatses [GitHubi repos](https://github.com/LauRRaud/broneering.info).

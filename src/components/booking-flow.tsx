@@ -274,7 +274,7 @@ export default function BookingFlow({ catalog:initialCatalog }: { catalog: Catal
   }
 
   function chooseOffer(next: Offer) {
-    if(bookingLocked)return;
+    if(bookingLocked || availability !== 'ready' || !offers.includes(next))return;
     setOffer(next);
     setSubmitState("idle");
     setSubmitError("");
@@ -499,6 +499,7 @@ export default function BookingFlow({ catalog:initialCatalog }: { catalog: Catal
               <label>Valitud kuupäev <input type="date" value={date} min={catalog.today} max={catalog.maxDate} onChange={(event) => chooseDate(event.target.value)} disabled={bookingLocked} /></label>
               <p><button type="button" onClick={() => chooseDate(shiftDate(date, 1))} disabled={isDateAtEnd || bookingLocked} aria-label="Järgmine päev">Järgmine päev</button></p>
               <p>Valitud: {service?.name} / {staffId ? eligibleStaff.find((item) => item.id === staffId)?.name : "Kõik töötajad"}</p>
+              {!staffId && <p>Iga pakkumine näitab konkreetset töötajat, hinda ja kestust. Samal kellaajal võib olla mitu pakkumist; vali neist endale sobiv. Ühtegi aega ei valita sinu eest.</p>}
               <ul aria-label="Vali kuupäev">
                 {dateStrip.map((item) => <li key={item}><button type="button" onClick={() => chooseDate(item)} disabled={bookingLocked} aria-pressed={item === date}>{shortDateLabel(item)}</button></li>)}
               </ul>
@@ -506,6 +507,7 @@ export default function BookingFlow({ catalog:initialCatalog }: { catalog: Catal
               {availability === "error" && <p role="alert"><strong>Ajad ei avanenud.</strong> {availabilityError} <button type="button" onClick={() => setAvailabilityRetry((value) => value + 1)}>Proovi uuesti</button></p>}
               {availability === "empty" && <div><p><strong>Sel päeval vabu aegu ei ole.</strong> Vali järgmine päev või proovi teist töötajat.</p><button type="button" onClick={findNextDay} disabled={nextDaySearching || nextDayExhausted || isDateAtEnd || bookingLocked}>{nextDaySearching?'Otsime järgmist vaba päeva…':nextDayCursor?'Jätka vaba päeva otsingut':'Leia järgmine vaba päev'}</button><p>Otsime kuni 31 päeva korraga. Kellaaeg jääb sinu valida.</p></div>}
               {nextDayMessage && <p role="status">{nextDayMessage}</p>}
+              {!staffId && (availability === 'ready' || availability === 'empty') && eligibleStaff.some(item=>!offers.some(value=>value.staffId===item.id)) && <ul aria-label="Töötajad, kellel sel päeval vabu aegu pole">{eligibleStaff.filter(item=>!offers.some(value=>value.staffId===item.id)).map(item=><li key={item.id}>{item.name}: sel päeval vabu aegu pole.</li>)}</ul>}
               {availability === "ready" && <ul aria-label="Vabad ajad">{offers.map((item) => <li key={`${item.staffId}-${item.start}`}><button type="button" onClick={() => chooseOffer(item)}><strong>{timeLabel(item.start, catalog.tenant.timezone)}</strong> — {item.staffName}, {item.duration} min · {money(item.price)}</button></li>)}</ul>}
             </div>
           )}
