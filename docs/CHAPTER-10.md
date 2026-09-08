@@ -55,3 +55,9 @@ Brauserikontroll kasutas ajutist kohalikku MFA omaniku kontot ja ettevõtet:
 7. Fragmente vahetades ja uut lugemist katkestades ei jäänud eelmise broneeringu andmed/toimingud uue tunnuse alla nähtavaks. Aegunud link näitas selget juhist ja ettevõtte e-posti; 390 px vaatel ei olnud horisontaalset ülevoolu.
 
 Ajutine ettevõte, konto, testkirjad, broneering ja muud seotud andmed eemaldati. Tootmisele testbroneeringuid ei lisata. Täielik Safari/Firefox/Chrome’i ja ekraanilugeja maatriks, ASVS-i tervikvastuvõtt, saatja/meeldetuletuste kontroll ning koormuskatse jäävad peatükkidesse 12/16/17/25/26. Järgmine põhiteostus on peatükk 11: töötaja kalender ja ettevõtte haldus.
+
+## Serveri väljalase
+
+08.09.2026 avaldati kood `6cb9516`. Enne migratsiooni loodi `backups/before-chapter10.dump` õigustega 600; selle custom-dump vorming kontrolliti `pg_restore --list` abil. Serveri tootmisbuild läbis, migratsioonid 008/009 rakendusid ja veebikonteiner käivitati uuesti. See varukoopia vormingukontroll ei asenda peatüki 22 taastamisproovi.
+
+Välised HTTPS GET-kontrollid: health=ok; demo kataloogis senised neli teenust; saadavus ja `/broneering` HTTP 200; vigane Bearer-link 410 koos selge juhisega; GET-i `action=cancel` 400; autentimata halduse broneeringud 401; sama halduse API ettevõtte hostile suunatuna 404. Kontrolliti no-store/noindex/no-referrer ja raamistamise keeldu. Tootmisele broneeringuid ega omaniku poliitika väärtusi ei lisatud: iga ettevõtte omanik seadistab oma lingi kehtivuse ja kontakti ise.
