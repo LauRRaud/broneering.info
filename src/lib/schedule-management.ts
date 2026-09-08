@@ -6,6 +6,7 @@ import {AppError} from './errors';
 import {localInstant,intervalsFor} from './availability';
 import {scheduleSchemas,mergeAdjacent,type ScheduleAction,type ScheduleState,type ScheduleConflict,type TimeInterval} from './schedule-contracts';
 import type {Tenant} from './tenants';
+import {markBookingsForAttention} from './booking-records';
 
 export class ScheduleConflictError extends AppError{
   constructor(public conflicts:ScheduleConflict[],public total:number){super(409,'SCHEDULE_CONFLICT','Muudatus jäi salvestamata: olemasolevad broneeringud koos puhvritega ei mahu uude graafikusse. Lahenda need enne graafiku muutmist.');}
@@ -37,11 +38,11 @@ async function scheduleData(client:PoolClient,tenantId:string){
   const exceptions=await client.query<{staff_id:string|null;day:string;closed:boolean;intervals:TimeInterval[];kind:'vacation'|'illness'|'extra_work'|'other'}>('SELECT staff_id,day::text,closed,intervals,kind FROM schedule_exceptions WHERE tenant_id=$1',[tenantId]);
   return {hours:hours.rows,exceptions:exceptions.rows};
 }
-async function ensureBookingsFit(client:PoolClient,tenant:Tenant,staffId?:string|null,startDay?:string,endDay?:string){
-  const bookings=await client.query<{reference:string;staff_name:string;staff_id:string;start_at:Date;end_at:Date;occupied_start:Date;occupied_end:Date}>(`SELECT reference,staff_name,staff_id,start_at,end_at,lower(occupied) AS occupied_start,upper(occupied) AS occupied_end FROM bookings
+async function ensureBookingsFit(client:PoolClient,tenant:Tenant,staffId?:string|null,startDay?:string,endDay?:string,acknowledge?:{actorId:string;reason:string}){
+  const bookings=await client.query<{id:string;reference:string;staff_name:string;staff_id:string;start_at:Date;end_at:Date;occupied_start:Date;occupied_end:Date}>(`SELECT id,reference,staff_name,staff_id,start_at,end_at,lower(occupied) AS occupied_start,upper(occupied) AS occupied_end FROM bookings
     WHERE tenant_id=$1 AND status='confirmed' AND upper(occupied)>now() AND ($2::uuid IS NULL OR staff_id=$2)
     AND ($3::date IS NULL OR (start_at AT TIME ZONE $5)::date BETWEEN $3::date AND $4::date) ORDER BY start_at,id`,[tenant.id,staffId??null,startDay??null,endDay??null,tenant.timezone]);
-  const data=await scheduleData(client,tenant.id),conflicts:ScheduleConflict[]=[];
+  const data=await scheduleData(client,tenant.id),conflicts:ScheduleConflict[]=[],ids:string[]=[];
   for(const booking of bookings.rows){
     const date=DateTime.fromJSDate(booking.start_at).setZone(tenant.timezone),day=date.toISODate()!;
     const hours=data.hours.filter(h=>h.weekday===date.weekday),exceptions=data.exceptions.filter(e=>e.day===day);
@@ -50,9 +51,10 @@ async function ensureBookingsFit(client:PoolClient,tenant:Tenant,staffId?:string
       const start=localInstant(day,Math.max(a,c),tenant.timezone),end=localInstant(day,Math.min(b,d),tenant.timezone);
       return start&&end&&start.toMillis()<=booking.occupied_start.getTime()&&end.toMillis()>=booking.occupied_end.getTime();
     }));
-    if(!fits)conflicts.push({reference:booking.reference,staffName:booking.staff_name,start:booking.start_at.toISOString(),end:booking.end_at.toISOString()});
+    if(!fits){ids.push(booking.id);conflicts.push({reference:booking.reference,staffName:booking.staff_name,start:booking.start_at.toISOString(),end:booking.end_at.toISOString()});}
   }
-  if(conflicts.length)throw new ScheduleConflictError(conflicts.slice(0,30),conflicts.length);
+  if(conflicts.length&&!acknowledge)throw new ScheduleConflictError(conflicts.slice(0,30),conflicts.length);
+  if(acknowledge)await markBookingsForAttention(client,tenant.id,ids,acknowledge.actorId,acknowledge.reason);
 }
 export async function scheduleState(actor:Actor,tenantId:string):Promise<ScheduleState>{
   return withTenant(tenantId,async client=>{
@@ -100,7 +102,10 @@ export async function saveSchedule(actor:Actor,action:ScheduleAction,raw:unknown
           SELECT $1,$2,day::date,$5,$6,$7 FROM generate_series($3::date,$4::date,interval '1 day') day
           ON CONFLICT (tenant_id,staff_id,day) DO UPDATE SET closed=excluded.closed,intervals=excluded.intervals,kind=excluded.kind`,[tenantId,d.staffId,range.startDay,range.endDay,exception.closed,JSON.stringify(mergeAdjacent(exception.intervals)),exception.kind]);
       }
-      await ensureBookingsFit(client,tenant,d.staffId,range.startDay,range.endDay);
+      const exception=action==='save-exception'?scheduleSchemas['save-exception'].parse(raw):null;
+      const acknowledge=exception?.closed&&exception.acknowledgeConflicts?{actorId:actor.id,reason:d.staffId?'Töötaja puudumine / suletud tööpäev':'Asukoha sulgemine'}:undefined;
+      await ensureBookingsFit(client,tenant,d.staffId,range.startDay,range.endDay,acknowledge);
+      if(acknowledge)changes.affectedBookingsQueued=true;
     }
     await audit(client,tenantId,actor.id,'schedule.'+action,undefined,d.staffId??tenantId,{version:d.version+1,...changes});
   });

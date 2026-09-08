@@ -35,7 +35,7 @@ Kohalik tootmisbuild läbis. Ajutised brauseritesti ettevõte ja broneeringud ee
 
 ## Sõltuvused ja vastuvõtu piir
 
-Peatükk jääb registris **osaliseks**. Turvaline halduslink, selle aegumise/uuendamise poliitika ning muutmine/tühistamine vajavad peatükkide 10 ja 16 teostust. Praegu tulemusvaates halduslinki ei ole. Broneeringukirjade tegelik saatmine on peatüki 17 töö; outbox salvestub juba broneeringuga samas tehingus. Teenuse saaja eraldi kontaktisiku nimi/kliendikirje vajab hilisemat kliendimudelit; praegu eristatakse saaja nime ja kontaktisiku e-posti/telefoni.
+Peatükk jääb registris **osaliseks**. 08.09.2026 peatükk 10 lisas turvalise halduslingi, omaniku määratud kehtivuse ning muutmise/tühistamise. Tulemusvaade näitab linki pärast omaniku poliitika seadistamist; üksikasjad on [CHAPTER-10](CHAPTER-10.md). Broneeringukirjade tegelik saatmine on peatüki 17 töö; outbox salvestub juba broneeringuga samas tehingus. Teenuse saaja eraldi kontaktisiku nimi/kliendikirje vajab hilisemat kliendimudelit; praegu eristatakse saaja nime ja kontaktisiku e-posti/telefoni.
 
 Kontaktide ja poolelioleva taotluse mälu kestab avatud vaate eluaja; lehe taaslaadimise järel taastamist ei ole veel teostatud. Võrdsete pakkumiste koondamise reegel jääb peatükki 09. Päriskasutajatega prototüübitest, suured puutealad, täielik klaviatuuri/ekraanilugeja kontroll ning brauserimaatriks jäävad peatükkide 12 ja 25 vastuvõttu. Üks mobiilimõõdus Chromiumi kontroll ei tõenda kogu kasutatavuse vastuvõttu.
 

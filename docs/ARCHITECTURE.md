@@ -80,3 +80,25 @@ Teenusegrupid moodustavad ettevõttepõhise hierarhia. Teenusel on vaikehind, ke
 
 ## Graafikute haldus (ptk 07)
 Graafikukirjutus ja reeglimuudatus lukustavad ettevõtte FOR UPDATE, kontrollivad värsket liikmesust ning töötajamuudatuse korral lukustavad sama ettevõtte töötaja. Broneeringute kinnitused ja avalikud kataloogi/saadavuse lugemised kasutavad FOR SHARE ettevõttelukku. Graafiku muutmisel kontrollitakse hõivamiste sobivust koos puhvritega; vea korral veeretatakse kogu tehing tagasi. schedule_versions tuvastab vanad haldusvormid. Reeglite rules_version kandub avalikku kataloogi ja kinnituspäringu expectedRulesVersion välja. Uutel broneeringutel säilib cancellation_hours hetkeseis. Täpne ulatus: [CHAPTER-07](CHAPTER-07.md).
+
+## Broneeringute haldus (ptk 10)
+
+`booking-management.ts` rakendab avaliku Bearer-lingi ja halduse värske liikmesuse kontrolli, tehingulisi käske, optimistlikku versioonikontrolli ning algse tühistamistähtaja põhjendatud erandit. Käsud võtavad tunnuse tehinguluku, ettevõtte FOR UPDATE ja broneeringu FOR UPDATE. Uue pakkumise arvutus välistab ainult muudetava broneeringu hõivamise. Vana hõivamise asendamine, ajalookirje, teavitus ning korduspäringu kinnitus on üks tehing; tagasipööramisel säilib vana aeg.
+
+Kliendi halduslink on `/broneering#tunnus`; HTTP kasutab Authorization Bearer päist. Õiguste otsing on SHA-256 räsiga, ettevõttepõhine, aeguv ja tühistatav. Kaotatud vastuse jaoks on lingikoopia ja käsu tulemus kontekstiga seotud AES-256-GCM ümbrikus; võtme tuletus kasutab serveri AUTH_SECRET-i. Seda saladust tuleb säilitada koos käituse taastamisvahenditega. Halduslink on alati noindex/no-store, GET ei kirjuta ning ID/viitenumber ligipääsu ei anna.
+
+Omanik määrab kontakti ja uute linkide kehtivuse tundides pärast broneeringu lõppu; NULL ei väljasta linke. Broneeringu algne cancellation_hours ja lingi väljastamise after_end_hours on eraldi hetkeseisud. Veel kehtiv link järgib muutmisel uut lõppu oma algse kehtivusreegliga. Uus link tühistab eelmise; olemasolevate linkide sulgemine on eraldi toiming.
+
+Migratsioonid 008/009 lisavad booking_commands, booking_events, booking_management_tokens, tähelepanumärke, kontakt-/poliitikaväljad ja seisundid. FORCE RLS ning liitvälisvõtmed kehtivad ka uutele tabelitele. GiST piirang ja saadavus säilitavad kõik tühistamata hõivamised, sealhulgas teenindatud broneeringu järelpuhvri. Puudumise kinnitus või töötaja arhiveerimine lisab mõjutatud tulevastele kinnitatud broneeringutele tähelepanumärke, versiooni ja sündmuse, säilitades nende ajad. Töötaja ettevõtteliikmesused ja sessioonid suletakse; teistes ettevõtetes tema liikmesused säilivad.
+
+Outbox saab loomise/muutmise/tühistamise sündmuse koos broneeringu versiooniga; vanema versiooni pending/failed sündmused märgitakse superseded ning e-postita broneeringu teade skipped. Saatja ja versiooni lõppkontroll enne SMTP-d on peatüki 17 sõltuvus. Algse loomise ja halduskäsu kordusvastus ei kirjuta hilisemat broneeringuseisu üle: vastuses eristatakse vajadusel ajalooline tulemus ja praegune versioon/seisund. Katkestatud halduskäsu UUID/sisu säilib sama vahelehe sessionStorage-is; tokenit sinna ei kirjutata.
+
+| Päring | Õigus ja sisu |
+| --- | --- |
+| `GET /api/booking/manage` | Ettevõtte host + Bearer; broneering ja kontakt, valikulise day parameetriga uued pakkumised |
+| `POST /api/booking/manage` | Sama Origin, Bearer ja UUID Idempotency-Key; selgelt kinnitatud muutmine/tühistamine |
+| `GET /api/admin/bookings` | Täpne haldushost + sessioon; view=list/offers/history, ettevõte ja piiratud päev/lehekülg |
+| `POST /api/admin/bookings` | Täpne haldushost/Origin + sessioon + UUID; loomine, muutmine, tühistamine, seisund, link |
+| `POST /api/admin/booking-policy` | Omaniku MFA + poliitika versioon; kontakt ja uute linkide kehtivus |
+
+Teostuse nõuded, testid ja piirid: [CHAPTER-10](CHAPTER-10.md).

@@ -1,0 +1,57 @@
+# Peatükk 10 — muutmine, tühistamine ja erandolukorrad
+
+Alus: arendusplaani peatükk 10, D-13 ning seotud AT-09/10/12–16/18/19/23–26 kontrollid. Kujundus jääb omaniku korraldusel ootele. Peatüki funktsionaalne teostus on allpool; see ei kinnita kogu V1 turva-, kasutatavuse ega meilisaatmise vastuvõttu.
+
+## Omaniku täpsustus
+
+08.09.2026 täpsustas omanik: **„Poliitika määrab iga ettevõtte omanik.”** Ettevõttele ei lisata vaikimisi 24-tunnist halduslinki. Omanik määrab halduses avaliku e-posti või telefoni ning uute linkide kehtivuse: 0–8760 täistundi pärast broneeritud aja lõppu. Seadistamata / välja lülitatud poliitika (`NULL`) ei väljasta uusi linke. Muutmis- ja tühistamistähtaeg jääb eraldi, broneeringu loomisel salvestatud ettevõtte reegliks.
+
+Uus link tühistab selle broneeringu eelmise lingi. Olemasolev link säilitab väljastamisel määratud kehtivusreegli; aja muutmisel järgib veel kehtiv link uut lõppaega sama reegliga. Aegunud link ei ärka aja muutmisel uuesti ellu. Uute linkide keelamine ei tühista olemasolevaid: selleks on detailis eraldi põhjendatud toiming. Kui linke on juba väljastatud, peab aegunud lingi abivaate jaoks säilima vähemalt üks avalik kontakt.
+
+## Tööde register
+
+Kõigi tööde eeltingimused on aktiivne ettevõte, migreeritud PostgreSQL ning halduse korral kehtiv kinnitatud kasutaja/liikmesus; omaniku kontol on MFA. Kirjutused kontrollivad õigusi uuesti tehingus. Hinnangud on teostuse suhteline keerukus, mitte kinnitatud tunnieelarve.
+
+| Töö, kasutaja ja eesmärk | Sisend, põhikäik ja andmete mõju | Õigused, vead ja teavitused | Tõend / sõltuvus / hinnang |
+| --- | --- | --- | --- |
+| 10-01 / D-13: klient vaatab ja haldab oma broneeringut | Juhuslik ühe broneeringu link; GET kuvab kokkuvõtte, tähtaja ja ettevõtte kontakti. Omaniku poliitikavorm, uue lingi väljastamine ja lingi tühistamine. | Lingita, vale ettevõtte, aegunud või tühistatud tunnusega haldus on keelatud. GET ei kirjuta. Väljastamine nõuab broneeringu haldusõigust; töötaja ainult enda broneeringul. | AT-25/26; 17 PostgreSQL/kalendri testi ja 6 HTTP testi allpool. Meiliga edastamine: ptk 17. Suur. |
+| 10-02: klient või haldaja muudab aega | Broneeringu versioon, konkreetne teenus/töötaja/aeg, oodatud hind, kestus ja reeglite versioon. Uus pakkumine kontrollitakse vana hõivamist välistades. Üks UPDATE asendab vana hõivamise; ajalugu ja teavitus salvestuvad samas tehingus. | Klient säilitab teenuse; haldaja võib valida teise sobiva aktiivse teenuse. Töötaja ei liiguta teise töötaja broneeringuid. Hõivatud aeg, muutunud hind/reegel või vana versioon peatab kogu muudatuse. | AT-09/12/13/15/16; PostgreSQL ja brauseri hinnamuutuse/katkenud vastuse katse. Kalender: ptk 11. Suur. |
+| 10-03: klient tühistab; haldaja teeb põhjendatud erandi | Eraldi kinnitusvorm ja POST, versioon ning sama toimingu UUID. Tühistamine vabastab hõivamise ja salvestab sündmuse. Korduv tühistamine ei lisa sündmust ega teadet. | Algne etteteatamistähtaeg kehtib ka pärast hinnakirja või ettevõtte reegli muutmist. Pärast tähtaega või tundmatu vana tingimuse korral saab erandi teha omanik/vastuvõtt eraldi valiku ja vähemalt 3-märgilise põhjendusega. | AT-12/13/15/23/26; kordus, tähtajad, põhjendus ja audit testitud. Keskmine. |
+| 10-04: haldaja lahendab puudumise või lahkumise | Suletud kuupäevaerand annab esmalt konfliktide loendi. Eraldi kinnitus lubab sulgeda pakkumised ja märkida mõjutatud broneeringud lahendada. Töötaja arhiveerimine sulgeb liikmesused/sessioonid ning märgib tulevased kinnitatud broneeringud. Ajad, hinnad ja ajalugu säilivad. | Graafiku senised õigused; arhiveerimine ainult omanikule. Omanikuga seotud töötajaprofiil on juhusliku ligipääsukaotuse eest kaitstud. Ühtegi broneeringut ei tõsteta automaatselt ümber. | AT-10/14/18/24; API, sessioonide andmebaasikontroll ja puudumise brauserivoog. Keskmine. |
+| 10-05: vastuvõtt lisab telefonibroneeringu | Konkreetne pakkumine, nimi, valikuline e-post/telefon. Sama saadavuse, puhvrireegli, hinna ja kattumise kontroll; aktiivseid veebis peidetud teenuseid saab valida haldusest. | Omanik/vastuvõtt või töötaja enda aeg. Puuduv e-post salvestub NULL-ina, teavitus `skipped`; väljamõeldud aadressi ei lisata. | AT-02/09/12/13; päris API ja katkestatud vastuse brauserikatse. Keskmine. |
+| 10-06: töötaja lõpetab päeva või parandab seisundit | Kinnitatud, teenindatud, tühistatud, ei ilmunud. Teenindatud / ei ilmunud on lubatud pärast lõppu; parandusel on põhjendus ja ajalugu. Tühistatud kirjet ei avata uuesti. | Haldusõigus ja töötaja piirang. Kohaloleku märkimine ei vabasta järelpuhvrit; hõivamise vabastab tühistamine. Seisund, teavitus ja ettevõtte tellimus on eraldi mõisted. | AT-09/16/23; seisundid ja GiST kattumiskaitse testitud. Keskmine. |
+
+## Teostuse piirid ja invariandid
+
+- Halduses on päevapõhine loend ja tulevaste lahendamist ootavate broneeringute filter, detail, kontaktid, enne/pärast ajalugu, käsitsi lisamine, muutmine, tühistamine, seisund ja halduslink. Loend on 100 kirje kaupa lehekülgedel; ajaloos kuvatakse 100 viimast sündmust koos piiri märkega. Päeva-/nädalakalender, töötajafilter, kliendinimekiri ja taustavärskendus on peatüki 11 töö.
+- Käsu lukujärjekord on toimingu tunnuse tehingulukk → ettevõtte eksklusiivne lukk → värske liikmesuse või lingi kontroll → broneeringu realukk. Loomise jagatud ettevõttelukk ning graafiku/hinnakirja eksklusiivsed lukud ühildavad kõik need kirjutused.
+- Versioon kontrollitakse enne muutmist. Sama tunnuse/sisuga edukas käsk tagastab salvestatud tulemuse; teistsugune sisu või tegutseja saab konflikti. Kui hilisem käsk on kirjet muutnud, märgistatakse kordusvastus ajaloolisena ja kasutajaliides laadib kehtiva seisu. Loomise kordusvastus säilitab esialgse kinnituse; see ei väida hiljem tühistatud broneeringut uuesti kinnitatuks.
+- Andmebaasi välistuspiirang ja saadavuse päring arvestavad kõiki tühistamata hõivamisi, sealhulgas teenindatud / mitteilmunud broneeringu järelpuhvrit. Juba kinnitatud hind, nimed, kestus, puhvrid ja etteteatamine säilivad hinnakirja muutmisel. Broneeringu teadlikul muutmisel kinnitatakse uus pakkumine, kuid algne etteteatamine säilib.
+- Haiguse/sulgemise kinnitus lisab tähelepanumärke, versiooni ja auditi; broneeringute automaatset nihutamist ei ole. Nädalagraafiku lühendamine ja erandi eemaldamine jäävad konfliktide korral blokeerituks, kuni broneeringud lahendatakse. Arhiveeritud töötaja ajaloolisi kirjeid ei kustutata. Sama inimese teiste ettevõtete liikmesusi ei suleta, kuid tema sessioonid lõpetatakse ja selle ettevõtte liikmesus ei taastu profiili taasaktiveerimisel.
+- Muutmis-/tühistamisteate ülesanne salvestub samas tehingus. Vanema versiooni `pending`/`failed` ülesanded muutuvad `superseded`; e-postita toimingu ülesanne on `skipped`. Saatjat ega meeldetuletusi selles peatükis ei lisata. Kasutajale näidatakse järjekorda salvestamise või e-kirja mittesaatmise mõju, mitte lubadust, et kiri on kohale jõudnud.
+
+## Halduslingi ja korduspäringu kaitse
+
+Tunnus sisaldab 32 krüptograafiliselt juhuslikku baiti. Õiguse otsing kasutab SHA-256 räsi, ettevõtet, aegumist ja tühistamise seisu. URL-is on ainult `/broneering#tunnus`; fragment ei lähe HTTP päringu ega referrer-iga kaasa. Brauser kasutab API-s Authorization Bearer päist. ID, viitenumber ega URL-i päringuparameeter ei ava broneeringut. Vastused on `no-store`, linkide HTML/API `noindex`, referrer-poliitika on `no-referrer` ning lehte ei saa raamida.
+
+Kaotatud eduka vastuse kordamiseks hoitakse lingi koopiat loomise vastuse või käsu tulemuse sees AES-256-GCM-iga krüpteeritult. Kirje kontekst on autentitud AAD-ga ja võti tuletatakse serveri `AUTH_SECRET` väärtusest. See ei ole avatekstiline tokeniväli ega õiguste otsingu alus. `AUTH_SECRET` peab säilima turvalises käitussaladuste varunduses: selle vahetamine ei ole nende krüpteeritud vastuste jaoks läbipaistev operatsioon. Lingid, kontaktid, kehad ja SQL-parameetrid ei lähe rakenduse vealogisse.
+
+Brauseri sama vahelehe `sessionStorage` hoiab lõpetamata halduskäsu UUID-d ja sisu, et lehe taaslaadimine ei looks uut toimingut. Avalik võti on seotud broneeringu ja konkreetse lingi kirje tunnusega, halduse võti kasutaja ja ettevõttega. Bearer-tunnust sinna ei kirjutata. Käsitsi lisamisel võib lõpetamata taotluse sisu sisaldada sisestatud kontakte; pärast lõplikku vastust see eemaldatakse. Võrguvea, 5xx, päringupiirangu või ajutise autentimisvea korral säilib sama tunnus ja uus toiming jääb lukku. Avaliku algse loomise vormi taastamine lehe taaslaadimisel jääb senise peatüki 08 piiranguks.
+
+Migratsioonid `008_booking_management.sql` ja `009_status_occupancy.sql` lisavad poliitika, kontaktid, seisundid, tähelepanumärke, tehingulised käsud, lingid, ajaloo ning täpsustatud hõivamiskaitse. Uued ettevõttepõhised tabelid kasutavad FORCE RLS-i ja liitvälisvõtmeid. Enne muudatusi loodud broneeringutele ei mõelda varasemaid sündmusi tagantjärele välja; nende loomise kinnitus külmutatakse ning järgnev ajalugu salvestub päris muudatustest.
+
+## Kontrollid 08.09.2026
+
+**104 testi 12 failis, tüübikontroll ja kohalik tootmisbuild läbivad.** Lisandus 17 PostgreSQL/kalendri testi ja 6 HTTP-piiride testi. Need katavad omaniku poliitikat, krüpteeritud kordusvastust ja hash-põhist ligipääsu, RLS-i, vigast/võõrast/aegunud/tühistatud/uusväljastatud linki, GET-i kõrvaltoimete puudumist, atomaarset muutmist, hinnamuutust, vana aja säilimist, kaht haldajat, tühistamise kordamist, tähtaja erandit, enda töötaja piiri, ligipääsu lõpetamist, e-postita käsitsi lisamist, seisundeid, puhvri andmebaasikaitset, puudumist, arhiveerimist ning ICS-i identiteeti, versiooni ja UTF-8 ridu.
+
+Brauserikontroll kasutas ajutist kohalikku MFA omaniku kontot ja ettevõtet:
+
+1. Omanik määras lingi poliitikaks 12 tundi ja avaliku kontakti. Käsitsi lisati e-postita telefonibroneering; serveri eduka vastuse katkestamine ja kordamine jätsid ühe broneeringu.
+2. Kliendi valitud uue töötaja pakkumine kallines 35 eurolt 40 eurole. Esimene kinnitus peatati, vana 10. septembri aeg säilis ning uut pakkumist tuli uuesti valida ja kinnitada.
+3. Edukas aja muutmise vastus katkestati ja leht laaditi uuesti. Taastatud toiming kordas täpselt sama UUID-d ja sisu; uus hind/aeg ilmus pärast serveri kinnitust.
+4. Töötaja haiguspäeva esimene salvestus näitas konflikti. Eraldi sulgemiskinnitus jättis broneeringu alles ja lisas lahendamise märke. Varem avatud haldaja muutmisvorm sai versioonikonflikti; see ei kirjutanud uut seisu üle. Värskelt kinnitatud ümbertõstmine tühjendas lahendamist ootava loendi.
+5. Kliendi vananenud tühistamisvorm nõudis värsket seisu ja uut kinnitust. Eduka tühistuse vastuse kaotamisele järgnenud 429 ei kustutanud toimingu tunnust; kõik kolm päringut kasutasid sama UUID-d ja sisu.
+6. Lõpus oli üks tühistatud broneering versiooniga 5, viis sisulist ajaloosündmust, neli edukat käsku ja neli e-postita teavitusülesannet. Katkenud vastused ei dubleerinud ühtegi neist.
+7. Fragmente vahetades ja uut lugemist katkestades ei jäänud eelmise broneeringu andmed/toimingud uue tunnuse alla nähtavaks. Aegunud link näitas selget juhist ja ettevõtte e-posti; 390 px vaatel ei olnud horisontaalset ülevoolu.
+
+Ajutine ettevõte, konto, testkirjad, broneering ja muud seotud andmed eemaldati. Tootmisele testbroneeringuid ei lisata. Täielik Safari/Firefox/Chrome’i ja ekraanilugeja maatriks, ASVS-i tervikvastuvõtt, saatja/meeldetuletuste kontroll ning koormuskatse jäävad peatükkidesse 12/16/17/25/26. Järgmine põhiteostus on peatükk 11: töötaja kalender ja ettevõtte haldus.

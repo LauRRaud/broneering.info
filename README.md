@@ -12,7 +12,7 @@ Olemas on avalik teenuse veebileht, kaks kohalikku demokeskkonda, teenuste ja so
 
 Peatüki 04 teostus lisab kutsega konto loomise, kinnitatud e-posti, sisselogimise, TOTP ja varukoodid, liikmesused, rollid, üksikload, kutsete/ligipääsu tühistamise ja omaniku üleandmise. Täpne vastuvõtt ja piirid on [peatüki 04 registris](docs/CHAPTER-04.md). Kontode kirjade SMTP liides on olemas, kuid avaliku serveri saatmine vajab veel seadistamist; kohalikud testkirjad salvestatakse privaatsesse kausta.
 
-See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, halduskalender, broneeringu muutmine/tühistamine, broneeringukirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Broneeringu e-kirja ülesanne salvestatakse koos broneeringuga, aga selle saatjat veel pole.
+See ei ole veel müügivalmis V1. Ettevõtte iseteeninduslik liitumine, halduskalender, broneeringukirjade saatmine, arveldus ning varunduse taastamiskatse on järgmised etapid. Broneeringu e-kirja ülesanne salvestatakse koos broneeringuga, aga selle saatjat veel pole.
 
 Peatükk 05 lisab lubatud kodulehtede halduse, iframe-i ja modaali koos varulingiga ning käitaja käsuga uue alamdomeeni HTTPS-i. Paigaldus, testitulemused ja piirid: [peatükk 05](docs/CHAPTER-05.md).
 
@@ -23,6 +23,8 @@ Peatükk 07 lisab asukoha ja töötajate graafikute, perioodi erandite ning bron
 Peatükk 08 lisab töötaja isikliku lingi, järgmise vaba päeva otsingu ning täpsustab kliendivormi ja kinnitust. Tõendid ja hilisemate peatükkide sõltuvused: [peatükk 08](docs/CHAPTER-08.md).
 
 Peatükk 09 täpsustab ja kontrollib „Töötaja pole oluline” voogu: eraldi konkreetsed pakkumised, ajapuuduse teade ja automaatse asendamise keeld. [Teostus ja kontrollid](docs/CHAPTER-09.md).
+
+Peatükk 10 lisab kliendi ja haldaja muutmise/tühistamise, omaniku määratud kehtivusega halduslingid, e-postita käsitsi broneeringud, seisundid ja ajaloo ning puudumise/lahkumise lahendamist ootavad broneeringud. [Teostus, 104 testi ja brauserikontrollid](docs/CHAPTER-10.md). Uusi halduslinke väljastatakse alles pärast ettevõtte omaniku poliitika ja avaliku kontakti seadistamist.
 
 ## Avaldatud tehniline demo
 
@@ -74,6 +76,7 @@ Integratsioonitestid vajavad migreeritud PostgreSQL-i ning `.env.local` ühendus
 - `src/components/booking-flow.tsx`: broneerimisvaade.
 - `src/lib/availability.ts`: serveri saadavusarvutus.
 - `src/lib/bookings.ts`: tehinguline kinnitamine ja korduspäringud.
+- `src/lib/booking-management.ts`: õigustega muutmine, tühistamine, käsitsi lisamine ja halduskäsud.
 - `db/migrations/001_booking.sql`: skeem, RLS ja kattuvuse piirang.
 - [Arhitektuur ja otsused](docs/ARCHITECTURE.md)
 - [Ubuntu serveri ettevalmistus](docs/SERVER.md)

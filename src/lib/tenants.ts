@@ -4,6 +4,7 @@ import { AppError } from './errors';
 export type Tenant = {
   id: string; slug: string; name: string; address: string; description: string; timezone: string;
   lead_minutes: number; window_days: number; step_minutes: number; cancellation_hours: number; rules_version:number; active: boolean; demo: boolean;
+  contact_email:string;contact_phone:string;management_link_hours:number|null;management_policy_version:number;
 };
 
 export function hostnameFromHost(host: string) {

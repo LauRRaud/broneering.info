@@ -2,6 +2,7 @@ import type {PoolClient} from 'pg';
 import {withTenant} from './db';
 import {requireMembershipInClient,type Actor} from './access';
 import {AppError} from './errors';
+import {markBookingsForAttention} from './booking-records';
 import {serviceManagementSchemas,type ServiceManagementAction,type ServiceManagementState} from './service-management-contracts';
 
 function conflict():never {throw new AppError(409,'VERSION_CONFLICT','Andmed on vahepeal muutunud. Laadi haldus uuesti ja kontrolli muudatusi.');}
@@ -49,8 +50,19 @@ export async function saveServiceManagement(actor:Actor,action:ServiceManagement
       if(!saved.rowCount)conflict();targetId=saved.rows[0].id;
     }else if(action==='save-staff'){
       const d=serviceManagementSchemas[action].parse(raw),values=[tenantId,d.name,d.title,d.bio,d.photoUrl,d.active,d.online];
+      if(d.id&&!d.active){
+        const owner=await client.query("SELECT user_id FROM memberships WHERE tenant_id=$1 AND staff_id=$2 AND active AND role='owner'",[tenantId,d.id]);
+        if(owner.rowCount)throw new AppError(409,'OWNER_PROTECTED','Selle töötajaga on seotud omaniku konto. Eemalda enne omaniku töötajaseos või anna omandiõigus üle.');
+      }
       const saved=d.id?await client.query('UPDATE staff SET name=$2,title=$3,bio=$4,photo_url=$5,active=$6,online=$7,version=version+1 WHERE tenant_id=$1 AND id=$8 AND version=$9 RETURNING id',[...values,d.id,d.version]):await client.query('INSERT INTO staff(tenant_id,name,title,bio,photo_url,active,online) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING id',values);
       if(!saved.rowCount)conflict();targetId=saved.rows[0].id;
+      if(d.id&&!d.active){
+        const affected=await client.query<{id:string}>("SELECT id FROM bookings WHERE tenant_id=$1 AND staff_id=$2 AND status='confirmed' AND end_at>now()",[tenantId,d.id]);
+        await markBookingsForAttention(client,tenantId,affected.rows.map(row=>row.id),actor.id,'Töötaja on arhiveeritud');
+        const revoked=await client.query<{user_id:string}>("UPDATE memberships SET active=false,updated_at=now() WHERE tenant_id=$1 AND staff_id=$2 AND active AND role<>'owner' RETURNING user_id",[tenantId,d.id]);
+        if(revoked.rowCount)await client.query('DELETE FROM auth_session WHERE user_id=ANY($1::text[])',[revoked.rows.map(row=>row.user_id)]);
+        for(const row of revoked.rows)await client.query("INSERT INTO access_audit_log(tenant_id,actor_user_id,target_user_id,action,target_id) VALUES($1,$2,$3,'member.revoked.staff-archived',$4)",[tenantId,actor.id,row.user_id,d.id]);
+      }
     }else if(action==='save-assignment'){
       const d=serviceManagementSchemas[action].parse(raw);
       const parents=await client.query('SELECT s.id FROM services s JOIN staff st ON st.tenant_id=s.tenant_id WHERE s.tenant_id=$1 AND s.id=$2 AND st.id=$3',[tenantId,d.serviceId,d.staffId]);

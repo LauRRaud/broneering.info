@@ -3,6 +3,8 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import type { BookingInput, BookingResult, Catalog, NextAvailability, Offer, Service, Staff } from "../lib/contracts";
 
+import {downloadBookingCalendar} from '@/lib/booking-calendar';
+
 type Step = "service" | "staff" | "time" | "details";
 type AvailabilityState = "idle" | "loading" | "ready" | "empty" | "error";
 
@@ -67,40 +69,6 @@ function dateTimeLabel(value: string, timezone: string) {
 
 function shortDateLabel(value: string) {
   return new Intl.DateTimeFormat("et-EE", { weekday: "short", day: "numeric", month: "short" }).format(localDate(value));
-}
-
-function cleanIcs(value: string) {
-  return value.replace(/[\\;,\n\r]/g, " ").trim().slice(0, 180);
-}
-
-function icsDate(value: string) {
-  return new Date(value).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
-}
-
-function downloadCalendar(result: BookingResult, catalog: Catalog) {
-  const ics = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//broneering.info//Booking//ET",
-    "CALSCALE:GREGORIAN",
-    "BEGIN:VEVENT",
-    `UID:${cleanIcs(result.id)}@broneering.info`,
-    `DTSTAMP:${icsDate(new Date().toISOString())}`,
-    `DTSTART:${icsDate(result.start)}`,
-    `DTEND:${icsDate(result.end)}`,
-    `SUMMARY:${cleanIcs(result.serviceName)} · ${cleanIcs(result.staffName)}`,
-    `LOCATION:${cleanIcs(catalog.tenant.name)} ${cleanIcs(catalog.tenant.address)}`,
-    `DESCRIPTION:Broneering ${cleanIcs(result.reference)}`,
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ].join("\r\n");
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "broneering.ics";
-  link.click();
-  URL.revokeObjectURL(url);
 }
 
 export default function BookingFlow({ catalog:initialCatalog }: { catalog: Catalog }) {
@@ -409,9 +377,9 @@ export default function BookingFlow({ catalog:initialCatalog }: { catalog: Catal
       <main>
         <section aria-labelledby="success-title">
           {catalog.tenant.demo && <p role="status">Demokeskkond — proovibroneeringud</p>}
-          <p>Broneering kinnitatud</p>
+          <p>{result.currentVersion ? 'Broneeringu esialgne kinnitus' : 'Broneering kinnitatud'}</p>
           <h1 id="success-title" ref={headingRef} tabIndex={-1}>Kohtumiseni, {form.name.split(" ")[0] || "sind"}.</h1>
-          <p>Sinu aeg on kalendrisse märgitud. Hoia broneeringu number alles.</p>
+          <p>{result.currentVersion ? 'Broneeringut on pärast loomist muudetud. Allpool on esialgse kinnituse andmed; kontrolli kehtivat aega halduslingilt või ettevõttelt.' : 'Sinu aeg on kalendrisse märgitud. Hoia broneeringu number alles.'}</p>
           <dl>
             <div><dt>Broneering</dt><dd>{result.reference}</dd></div>
             <div><dt>Teenus</dt><dd>{result.serviceName}</dd></div>
@@ -422,8 +390,8 @@ export default function BookingFlow({ catalog:initialCatalog }: { catalog: Catal
             <div><dt>Hind</dt><dd>{money(result.price)}</dd></div>
           </dl>
           {result.cancellationHours != null && <p>Palume muutmisest või tühistamisest ettevõttele teada anda vähemalt {result.cancellationHours} tundi ette.</p>}
-          <p>Broneering on kinnitatud sõltumata kinnituskirja kohalejõudmisest.{catalog.tenant.demo && ' Demokeskkond e-kirju ei saada.'}</p>
-          <p><button type="button" onClick={() => downloadCalendar(result,catalog)}>Lisa kalendrisse</button></p>
+          <p>{result.currentVersion ? 'Siin näidatud esialgne kinnitus ei kajasta hilisemaid muudatusi.' : 'Broneering on kinnitatud sõltumata kinnituskirja kohalejõudmisest.'}{catalog.tenant.demo && ' Demokeskkond e-kirju ei saada.'}</p>
+          <p><button type="button" disabled={!!result.currentVersion} onClick={() => downloadBookingCalendar(result,catalog.tenant)}>Lisa kalendrisse</button></p>{result.managementUrl&&<p><a href={result.managementUrl} target="_blank" rel="noopener noreferrer">Vaata, muuda või tühista broneeringut</a><br/>Hoia halduslink alles ja enda teada. {!result.currentVersion&&result.managementExpiresAt&&<>Link kehtib kuni {dateTimeLabel(result.managementExpiresAt,catalog.tenant.timezone)}, {timeLabel(result.managementExpiresAt,catalog.tenant.timezone)}.</>}</p>}
           <button type="button" onClick={() => { setResult(null); setStep("service"); setServiceId(""); setStaffId(""); setOffer(null); }}>Tee uus broneering</button>
         </section>
       </main>

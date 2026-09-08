@@ -4,4 +4,4 @@ export type Catalog = { tenant: { name: string; slug: string; address: string; t
 export type NextAvailability = { date: string | null; searchedThrough: string; hasMore: boolean };
 export type Offer = { staffId: string; staffName: string; serviceId: string; start: string; end: string; price: number; duration: number };
 export type BookingInput = { serviceId: string; staffId: string; start: string; expectedPrice: number; expectedDuration: number; expectedRulesVersion:number; name: string; email: string; phone?: string };
-export type BookingResult = { id: string; reference: string; serviceName: string; staffName: string; start: string; end: string; price: number; duration: number; cancellationHours?:number|null; status: string };
+export type BookingResult = { id: string; reference: string; serviceName: string; staffName: string; start: string; end: string; price: number; duration: number; cancellationHours?:number|null; status: string;version?:number;managementUrl?:string;managementExpiresAt?:string;currentVersion?:number;currentStatus?:string };

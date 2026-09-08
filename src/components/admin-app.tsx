@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import ServiceManagement from '@/components/service-management';
 import ScheduleManagement from '@/components/schedule-management';
+import BookingManagement from '@/components/booking-management';
 import type {ScheduleConflict} from '@/lib/schedule-contracts';
 import EmbeddingSettingsForm from '@/components/embedding-settings';
 import { delegationOptions, type AdminInvitation, type AdminMember, type AdminRole, type AdminState } from "@/lib/admin-contracts";
@@ -483,6 +484,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
           {selected && <section aria-labelledby="workspace-title"><h2 id="workspace-title">{selected.tenantName}</h2><p>Roll: {roleLabel(selected.role)}</p><p>Kalenderivaade ei ole veel rakendatud.</p>
             <p><button type="button" disabled={!!busy} onClick={()=>window.location.reload()}>Laadi haldus uuesti</button> (salvestamata vormid lähtestatakse)</p>
             {scheduleConflicts&&<div role="alert"><h3>Graafikumuudatuse konfliktid ({scheduleConflicts.total})</h3><p>Broneeringud ja graafik jäid muutmata. Loendis on kuni 30 mõjutatud broneeringut; kliendi kontaktandmeid siin ei kuvata.</p><ul>{scheduleConflicts.items.map(item=><li key={item.reference}>{item.reference} · {item.staffName} · {new Date(item.start).toLocaleString('et-EE',{timeZone:state.schedules?.rules.timezone??'Europe/Tallinn'})}–{new Date(item.end).toLocaleTimeString('et-EE',{timeZone:state.schedules?.rules.timezone??'Europe/Tallinn'})}</li>)}</ul></div>}
+            <BookingManagement key={'bookings:'+selected.tenantId+':'+state.user.id} tenantId={selected.tenantId} userId={state.user.id}/>
             {state.schedules&&<ScheduleManagement key={'schedules:'+selected.tenantId} tenantId={selected.tenantId} state={state.schedules} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,'Graafiku muudatus on salvestatud.')}/>}
             {state.catalog && <ServiceManagement key={'catalog:'+selected.tenantId} tenantId={selected.tenantId} catalog={state.catalog} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,"Hinnakirja muudatus on salvestatud.")}/>}
             {selected.role === "owner" && <>

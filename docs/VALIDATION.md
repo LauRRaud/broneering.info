@@ -60,3 +60,11 @@ Serveri avalik HTTPS: health=ok; isiklik leht 200, õige töötajapiirang ja jä
 Väljalase `f886a7c`: 81 rakenduse testi ning kohalik ja serveri tootmisbuild läbivad. Neli uut PostgreSQL-i testi katavad koondsaadavuse täpset ühendit, võrdseid ja erinevaid pakkumisi, hõivatud või muutunud pakkumise automaatse asendamise keeldu ning teenusesobivuse eristamist ajapuudusest.
 
 Kohalikus brauseris kontrolliti automaatse aja puudumist, sama kellaaja erinevaid pakkumisi, päeva/töötaja/teenuse vahetuse sõltuvusi ja kontaktide säilimist, konkureerivat broneeringut ning vana saadavusvastuse hilinemist. Katseettevõte eemaldati. Avaliku demo HTTPS-kontrollis kattusid 56 koondpakkumist kahe töötaja üksikpakkumistega; brauseris kuvati uus selgitus ja automaatset ajavalikut ei tehtud. Tootmisse testbroneeringuid ei lisatud. Tõendi piirid ja O-06 avatud otsus: [CHAPTER-09.md](CHAPTER-09.md).
+
+## Peatükk 10 — 08.09.2026
+
+104 testi 12 failis, tüübikontroll ja kohalik tootmisbuild läbivad. Lisatud on 17 PostgreSQL/kalendri ning 6 HTTP testi: omaniku lingipoliitika, tokenite kaitse, GET-i kõrvaltoimete puudumine, vana aja säilimine, versioonikonfliktid, korduskindel tühistamine, tähtaja põhjendatud erand, töötajapiirang ja ligipääsu sulgemine, e-postita käsitsi broneering, seisundid/ajalugu, puudumine/arhiveerimine ning puhvrikaitse ka pärast teenindatuks märkimist.
+
+Ajutise MFA omaniku ja kliendi Chromiumi voos kontrolliti 12-tunnise poliitika seadistamist, käsitsi e-postita broneeringut, katkenud vastust ja sama UUID-ga kordust, hinnamuutuse uut kinnitamist, muutmise kordust pärast lehe taaslaadimist, puudumise konflikti/eraldikinnitust, vananenud haldaja vormi ning lahendamist ootava loendi tühjenemist pärast kinnitatud ümbertõstmist. Katkestatud tühistamise ja vahepealse 429 järel säilis sama tunnus. Andmebaasis oli lõpuks üks broneering, viis sisulist ajaloosündmust ja neli edukat käsku; duplikaate ei tekkinud. Fragmente vahetades ei lekkinud vana vaate andmed uue tunnuse alla. Aegunud lingi 390 px vaade näitas kontakti ilma horisontaalse ülevooluta. Kohalikud katseandmed eemaldati.
+
+Teavituste tegelik saatmine, täismaatriks ja ASVS-i tervikvastuvõtt jäävad hilisemate peatükkide tööks. Nõuete seosed, migratsioonid ning korduspäringu/lingi säilitamise piirid: [CHAPTER-10](CHAPTER-10.md).
