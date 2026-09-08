@@ -1,2 +1,6 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.pdf binary
 # Audit manifests identify exact captured bytes, including original line endings.
 docs/audits/** -text
