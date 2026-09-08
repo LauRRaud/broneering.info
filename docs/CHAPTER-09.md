@@ -37,4 +37,4 @@ O-06 võimalik võrdsete pakkumiste automaatse töötajamääramise reegel on en
 
 Laiem brauserimaatriks, ligipääsetavuse tervikvastuvõtt ning päriskasutajatega prototüübitest jäävad peatükkidesse 12/25. Järgmine põhiteostus on peatükk 10: muutmine, tühistamine ja erandolukorrad.
 
-Serveri avaldamise tõend lisatakse pärast paigaldamist.
+08.09.2026 avaldati serverisse kood `f886a7c`. Serveri tootmisbuild läbis ja veebikonteiner käivitati uuesti. Skeemimigratsiooni ei lisatud; enne uuendust tehti `backups/before-chapter09.dump`. Avalik HTTPS-kontroll: health=ok, demo HTTP 200 ning Meeste lõikuse 09.09.2026 koondsaadavuse 56 pakkumist kattusid täpselt kahe töötaja üksikpakkumistega. Avaliku demo brauseris oli uus selgitus nähtav ja andmete samm lukus kuni ajavalikuni. Tootmise testbroneeringuid ei loodud.

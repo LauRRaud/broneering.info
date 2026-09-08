@@ -54,3 +54,9 @@ Koodi väljalase `5cad56e`: 77 testi läbivad, kohalik ja serveri tootmisbuild l
 Brauseris kontrolliti isiklikku linki, töötaja muutmist, ühe töötaja sammu vahelejätmist, tühjalt päevalt järgmise vaba päeva leidmist, kontaktide säilimist, töötaja sulgemist enne kinnitust ning ICS-i. Katkestatud serverivastuse korduskatse järel jäi täpselt üks broneering ja üks outbox-sündmus. 390 px vaates kontrolliti ülevoolu puudumist ja kokkuvõtte järel oleva nupu kaudu kinnitamist. Testandmed eemaldati kohalikust baasist.
 
 Serveri avalik HTTPS: health=ok; isiklik leht 200, õige töötajapiirang ja järgmise vaba päeva vastus; anonüümne haldus ei väljasta kasutajat. Täpne ulatus ning halduslingi ja kasutatavuse sõltuvused on [CHAPTER-08.md](CHAPTER-08.md). Peatükk ei ole tervikuna vastu võetud.
+
+## Peatükk 09 — 08.09.2026
+
+Väljalase `f886a7c`: 81 rakenduse testi ning kohalik ja serveri tootmisbuild läbivad. Neli uut PostgreSQL-i testi katavad koondsaadavuse täpset ühendit, võrdseid ja erinevaid pakkumisi, hõivatud või muutunud pakkumise automaatse asendamise keeldu ning teenusesobivuse eristamist ajapuudusest.
+
+Kohalikus brauseris kontrolliti automaatse aja puudumist, sama kellaaja erinevaid pakkumisi, päeva/töötaja/teenuse vahetuse sõltuvusi ja kontaktide säilimist, konkureerivat broneeringut ning vana saadavusvastuse hilinemist. Katseettevõte eemaldati. Avaliku demo HTTPS-kontrollis kattusid 56 koondpakkumist kahe töötaja üksikpakkumistega; brauseris kuvati uus selgitus ja automaatset ajavalikut ei tehtud. Tootmisse testbroneeringuid ei lisatud. Tõendi piirid ja O-06 avatud otsus: [CHAPTER-09.md](CHAPTER-09.md).
