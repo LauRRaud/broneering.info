@@ -1,5 +1,7 @@
 # Peatükk 23 — paranduste ja vastuvõtu tööregister
 
+**Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
+
 Seis 08.09.2026 pärast omaniku paranduskäsku: **23-F01–F05 on kohalikult parandatud ja kontrollitud**, [järelraport ja tõendid](CHAPTER-23-FIXES.md). **23-G01–G09 on avatud**; tootmise paigaldus ja omaniku etappide vastuvõtt jäävad eraldi. Audit ega selle register ei ole korraldus väliste teenuste tellimiseks või tootmise muutmiseks. Omaniku varasem kujunduse ning välise varunduse/hoiatuste edasilükkamine jääb kehtima. [Koodileiud ja tõendid](CHAPTER-23.md), [AT-maatriks](CHAPTER-23-ACCEPTANCE.md).
 
 Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tähendab järgmise kirjeldatud piiritletud töö arendaja/testija tunde; välise teenuse ooteaeg, partnerite ajakulu ja pärast katset ilmnev parandustöö on eraldi. Hinnangud vajavad töö alustamisel täpsustamist. Kõigi tööde kinnitaja on toote omanik; vastuvõtu kuupäev on märkimata.

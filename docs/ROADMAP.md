@@ -1,5 +1,7 @@
 # Järgmised arendustööd
 
+**Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
+
 08.09.2026 ajakohane alus on [peatüki 23 koodi- ja vastuvõtuaudit](CHAPTER-23.md), [AT-01–48 maatriks](CHAPTER-23-ACCEPTANCE.md) ning [hinnatud tööregister](CHAPTER-23-WORK.md). Dokumendi peatükkide järjekord säilib [PROGRESS.md](PROGRESS.md) registris. Auditi valmimine ei tähenda V1 vastuvõttu.
 
 ## Auditi parandused

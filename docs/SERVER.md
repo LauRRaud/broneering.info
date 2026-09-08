@@ -4,6 +4,8 @@ Tehniline demo paigaldati 7. septembril 2026 Ubuntu 24.04.4 LTS serverisse aadre
 
 ## Praegune paigaldus
 
+**08.09.2026 uuendus:** peatükid 11–23 ja F-01–F-05 parandused on paigaldatud, skeemil on 48 migratsiooni. [Paigaldusprotokoll](DEPLOYMENT-2026-09-08.md). Veeb, eksport ja arveldustöö on aktiivsed; SMTP- ja maksetöö jäävad väliste ühenduste seadistamiseni välja lülitatuks.
+
 - Projekt serveris: `/srv/broneering.info`.
 - GitHub: privaatne `LauRRaud/broneering.info`, haru `main`.
 - Serveri GitHubi ligipääs: eraldi ainult selle repo lugemisõigusega deploy key; privaatvõti jääb serverisse.
@@ -21,16 +23,18 @@ Arvutis tee kontrollitud muudatusest commit ja `git push`. Seejärel serveris:
 ssh ubuntu@217.146.72.147
 cd /srv/broneering.info
 git pull --ff-only origin main
-sudo docker compose --env-file .env.server -f compose.server.yaml build web migrate
+sudo docker compose --env-file .env.server -f compose.server.yaml --profile workers build web migrate export-worker billing-worker notification-worker payment-worker
 umask 077
 mkdir -p backups
 sudo docker compose --env-file .env.server -f compose.server.yaml exec -T db pg_dump -U booking_owner -d booking -Fc > "backups/before-update-$(date -u +%Y%m%dT%H%M%SZ).dump"
 sudo docker compose --env-file .env.server -f compose.server.yaml run --rm migrate
-sudo docker compose --env-file .env.server -f compose.server.yaml up -d web
-curl -f https://broneering.info/api/health
+sudo docker compose --env-file .env.server -f compose.server.yaml --profile workers up -d --no-deps web export-worker billing-worker
+curl -f https://broneering.info/api/ready
 ```
 
 Käivita sammud järjekorras ja peatu vea korral. Andmebaasi migratsioonid peavad sobima seni töötava versiooniga; skeemi tagasipöördumine tuleb eraldi läbi mõelda. `backups/` on Gitis ignoreeritud, kuid samas serveris asuv koopia ei asenda eraldi varundust. Nginxi tavapärase koodiuuenduse puhul muuta ei ole vaja. GitHub Actionsi automaatset juurutust pole veel seadistatud.
+
+Teavituste töötaja käivita alles töötava SMTP ning maksetöötaja alles kontrollitud Maksekeskuse seadistuse järel. Hoia range `umask 077` saladuste/varukoopiate kirjutamiseks; tavapärase checkout'i ja lähtefailide jaoks kasuta `umask 022`. Nginxi muudatuse korral salvesta vana projektifail, paigalda uus ning tee `nginx -t` enne reload'i.
 
 Allpool on uue keskkonna ülesseadmise taustainfo.
 

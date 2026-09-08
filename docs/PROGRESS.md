@@ -1,5 +1,7 @@
 # Arendusplaani täitmise register
 
+**Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
+
 Alus: `Broneerimisplatvorm_arendusplaan_v1_0.docx`, versioon 1.0, 06.09.2026. Esmane võrdlus tehti 07.09.2026 commit'i `7c89d6e` suhtes; **08.09.2026 värske tööpuu koodi- ja vastuvõtuaudit on [peatükis 23](CHAPTER-23.md)**. See register ei muuda lähteplaani ega asenda omaniku vastuvõttu. Varasemad peatükkide testiarvud kirjeldavad nende kontrollimise hetke, mitte tänast koguarvu.
 
 ## Töökorra parandus

@@ -1,5 +1,7 @@
 # Peatüki 23 auditi parandused
 
+**Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
+
 **08.09.2026 · Tulemus: `fixed` — F-01–F-05 parandatud ja kohalikult kontrollitud.** Omaniku korraldus „tee parandused” järgnes [auditile](CHAPTER-23.md). Muudatused on tööpuus; tootmisse neid selles voorus ei viidud. V1 ülejäänud teostuse ja vastuvõtu tööd 23-G01–G09 jäävad [registrisse](CHAPTER-23-WORK.md).
 
 | Leid | Parandus | Korduskatse ja säilinud põhikäitumine |

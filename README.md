@@ -4,6 +4,8 @@ Reacti, Next.js-i ja TypeScripti baasil isemajutatava broneerimisplatvormi arend
 
 ## Praegune seis
 
+**08.09.2026 serveriuuendus:** peatükid 11–23 ja auditi viis parandust on GitHubi `main` harus ning avalikus katsekeskkonnas paigaldatud. [Paigaldus ja kontrollid](docs/DEPLOYMENT-2026-09-08.md). SMTP/Maksekeskus ning varasemad edasilükatud tööd jäävad seadistamata.
+
 Dokumendi 30 peatüki täitmise seis, puuduvad tööd ja peatüki 01 tulemuste võrdlus: [arendusplaani register](docs/PROGRESS.md).
 
 08.09.2026 peatüki 23 auditi viis koodi-/konfiguratsiooniviga on kohalikult parandatud. Kontroll: 261 testi, tüübikontroll, 48 migratsiooni, tootmispildi ehitus ja sihitud brauseri/proksi katsed läbisid. [Paranduste järelraport](docs/CHAPTER-23-FIXES.md). [Audit, failide katvus ja avatud tööd](docs/CHAPTER-23.md). See kirjeldab kohalikku tööpuud, mitte avaliku serveri praegust versiooni.
@@ -14,7 +16,7 @@ Olemas on avalik teenuse veebileht, kaks kohalikku demokeskkonda, teenuste ja so
 
 Peatüki 04 teostus lisab kutsega konto loomise, kinnitatud e-posti, sisselogimise, TOTP ja varukoodid, liikmesused, rollid, üksikload, kutsete/ligipääsu tühistamise ja omaniku üleandmise. Täpne vastuvõtt ja piirid on [peatüki 04 registris](docs/CHAPTER-04.md). Kontode kirjade SMTP liides on olemas, kuid avaliku serveri saatmine vajab veel seadistamist; kohalikud testkirjad salvestatakse privaatsesse kausta.
 
-See ei ole veel müügivalmis V1. Kohalikult on teostatud ettevõtte loomine/seadistamine, halduskalender, teavituste taustatöö, import/eksport, arveldus ja taastamistööriistad. Kuutasu kehtiv kokkulepe on 35 € lõpphind kuus, piiramatu töötajate arv ja prooviperioodita. Avatud on paranduste tootmisse paigaldus, päris SMTP/Maksekeskuse vastuvõtt, säilituse automaatika, kasutatav tugivaade ning koormuse, brauserite, piloodi ja üleandmise kontrollid. Kujundus ning tootmise väline varundus ja hoiatused on omaniku otsusel ootel.
+See ei ole veel müügivalmis V1. Kohalikult on teostatud ettevõtte loomine/seadistamine, halduskalender, teavituste taustatöö, import/eksport, arveldus ja taastamistööriistad. Kuutasu kehtiv kokkulepe on 35 € lõpphind kuus, piiramatu töötajate arv ja prooviperioodita. Avatud on päris SMTP/Maksekeskuse vastuvõtt, säilituse automaatika, kasutatav tugivaade ning koormuse, brauserite, piloodi ja üleandmise kontrollid. Kujundus ning tootmise väline varundus ja hoiatused on omaniku otsusel ootel.
 
 Peatükk 05 lisab lubatud kodulehtede halduse, iframe-i ja modaali koos varulingiga ning käitaja käsuga uue alamdomeeni HTTPS-i. Paigaldus, testitulemused ja piirid: [peatükk 05](docs/CHAPTER-05.md).
 

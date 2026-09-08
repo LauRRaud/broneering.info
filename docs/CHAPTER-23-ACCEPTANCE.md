@@ -1,5 +1,7 @@
 # Peatükk 23 — AT-01–AT-48 tõendite maatriks
 
+**Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
+
 08.09.2026 auditeeritud tööpuu ja ühised keskkonnaandmed: [auditi põhiosa](CHAPTER-23.md). Katsete pealkirjad pärinevad lähteplaani peatükkidest 24–26. Kõik allpool viidatud automaattestid läbisid selle auditi käivituses; [JSON-raport](audits/chapter23-20260908/vitest.json) sisaldab täpseid testinimesid ja tulemusi.
 
 08.09 paranduste järel on F-01–F-05 mõjutatud read allpool ajakohastatud. [Järelraport](CHAPTER-23-FIXES.md) eristab uut kohalikku tõendit kogu toote ja omaniku vastuvõtust.
