@@ -9,7 +9,22 @@ if(new URL(process.env.MIGRATION_DATABASE_URL!).hostname!=='127.0.0.1'||base.ori
 const dir='output/playwright/acceptance-g03';await mkdir(dir,{recursive:true});
 const db=new pg.Client({connectionString:process.env.MIGRATION_DATABASE_URL});await db.connect();
 try{
- if(process.argv[2]==='proof'){
+ if(process.argv[2]==='deadline'){
+  const f=JSON.parse(await readFile(`${dir}/fixture.json`,'utf8')),t=f.tenants[0];
+  if(!t.singleService)throw Error('Variants fixture required');
+  const target=DateTime.fromISO(`${f.day}T16:00:00`,{zone:'Europe/Tallinn'}),now=DateTime.now();
+  const leadMinutes=Math.floor(target.diff(now,'minutes').minutes)-2;
+  if(leadMinutes<0)throw Error('Fixture day is stale');
+  await db.query('UPDATE tenants SET lead_minutes=$2,rules_version=rules_version+1 WHERE id=$1',[t.id,leadMinutes]);
+  f.deadline={target:target.toUTC().toISO(),expiresAt:target.minus({minutes:leadMinutes}).toUTC().toISO(),leadMinutes};
+  await writeFile(`${dir}/fixture.json`,JSON.stringify(f));
+  console.log(JSON.stringify(f.deadline));
+ }else if(process.argv[2]==='raise-price'){
+  const f=JSON.parse(await readFile(`${dir}/fixture.json`,'utf8')),t=f.tenants[0];
+  if(!t.singleService)throw Error('Variants fixture required');
+  await db.query('UPDATE staff_services SET price=4500,version=version+1 WHERE tenant_id=$1 AND staff_id=$2 AND service_id=$3',[t.id,t.staff[1],t.service]);
+  console.log('Synthetic second employee price raised to 45 EUR');
+ }else if(process.argv[2]==='proof'){
   const f=JSON.parse(await readFile(`${dir}/fixture.json`,'utf8')),ids=f.tenants.map((t:any)=>t.id);
   const bookings=(await db.query("SELECT is_test,source,count(*)::int count,bool_and(customer_email LIKE '%@example.invalid') synthetic_contacts FROM bookings WHERE tenant_id=ANY($1::uuid[]) GROUP BY is_test,source ORDER BY is_test,source",[ids])).rows;
   const outbox=(await db.query('SELECT status,recipient_kind,count(*)::int count FROM outbox WHERE tenant_id=ANY($1::uuid[]) GROUP BY status,recipient_kind ORDER BY status,recipient_kind',[ids])).rows;
@@ -32,7 +47,7 @@ try{
   const tenants:any[]=[],users:Record<string,any>={};
   await db.query('BEGIN');
   for(const label of ['A','B']){
-   const t={id:randomUUID(),staff:[randomUUID(),randomUUID()],service:randomUUID(),bookings:[] as string[],customers:[] as string[],slug:`g03-${randomUUID()}`};
+   const t={id:randomUUID(),staff:[randomUUID(),randomUUID()],service:randomUUID(),singleService:process.argv[2]==='variants'?randomUUID():null,bookings:[] as string[],customers:[] as string[],slug:`g03-${randomUUID()}`};
    await db.query("INSERT INTO tenants(id,slug,name,address) VALUES($1,$2,$3,'Synthetic test address')",[t.id,t.slug,`G03 ettevõte ${label}`]);
    await db.query("INSERT INTO tenant_domains(tenant_id,hostname) VALUES($1,$2)",[t.id,`${t.slug}.localhost`]);
    await db.query("INSERT INTO services(id,tenant_id,name,category,default_price,default_duration) VALUES($1,$2,'G03 lõikus','Test',2500,30)",[t.service,t.id]);
@@ -43,6 +58,11 @@ try{
     const id=randomUUID();t.bookings.push(id);
     const b=(await db.query(`INSERT INTO bookings(id,tenant_id,reference,service_id,staff_id,service_name,staff_name,customer_name,customer_email,start_at,end_at,occupied,price,duration,buffer_before,buffer_after)
      VALUES($1,$2,$3,$4,$5,'G03 lõikus',$6,$7,$8,($9::date+time '10:00') AT TIME ZONE 'Europe/Tallinn',($9::date+time '10:30') AT TIME ZONE 'Europe/Tallinn',tstzrange(($9::date+time '10:00') AT TIME ZONE 'Europe/Tallinn',($9::date+time '10:30') AT TIME ZONE 'Europe/Tallinn','[)'),2500,30,0,0) RETURNING customer_id`,[id,t.id,`G03-${randomUUID()}`,t.service,st,`G03 ${label} töötaja ${i+1}`,`G03 ${label} klient ${i+1}`,`g03-${label}-${i}@example.invalid`,day])).rows[0];t.customers.push(b.customer_id);
+   }
+   if(t.singleService){
+    await db.query("INSERT INTO services(id,tenant_id,name,category,default_price,default_duration) VALUES($1,$2,'G03 ainuteenuse valik','Test',1500,15)",[t.singleService,t.id]);
+    await db.query('INSERT INTO staff_services(tenant_id,staff_id,service_id) VALUES($1,$2,$3)',[t.id,t.staff[0],t.singleService]);
+    await db.query('UPDATE staff_services SET price=3500,duration=45 WHERE tenant_id=$1 AND staff_id=$2 AND service_id=$3',[t.id,t.staff[1],t.service]);
    }
    await db.query('INSERT INTO weekly_hours(tenant_id,staff_id,weekday,start_minute,end_minute) SELECT $1,NULL,d,540,1080 FROM generate_series(1,7) d',[t.id]);tenants.push(t);
   }

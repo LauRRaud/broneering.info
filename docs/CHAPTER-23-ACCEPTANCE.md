@@ -21,14 +21,14 @@ Testija: Codex, kohalik koodi- ja käitumisaudit. Kõigi ridade omaniku kinnitaj
 
 | ID ja lähteplaani katse | Seis | Tegelik tõend | Puuduv vastuvõtt / parandus |
 | --- | --- | --- | --- |
-| AT-01 Teenuse järgi töötajate valik | Tehniline tõend | [booking.test.ts](../tests/booking.test.ts): teenuse sobivus eristub vabade aegade puudumisest; kataloog tagastab lubatud seosed | UI eri teenuste maatriks 23-G03 |
+| AT-01 Teenuse järgi töötajate valik | Tehniline ja piiratud brauseritõend | `booking.test.ts` ning [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): ühe ja kahe töötajaga teenuse lubatud valikud kolmes mootoris | Laiem teenuste/veaseisude ja sõltumatu vastuvõtt |
 | AT-02 Vigane töötaja otse API-s | Osaline | `booking.test.ts`: võõra/sobimatu seose tagasilükkamine päris mootoris; marsruut läbib sama mootorit | Täielik päris HTTP negatiivne katse 23-G03 |
-| AT-03 Teenusel ainult üks töötaja | Osaline | `booking-flow.tsx` jätab ühe töötaja sammu vahele; auditi F-02 brauseris kasutati ühe töötajaga teenust | Eri teenuste sammude ja kokkuvõtte eraldi läbiv protokoll 23-G03 |
-| AT-04 Töötaja isiklik otselink | Osaline | `booking.test.ts`: isiklik kataloog sisaldab ainult seotud teenuseid ning konkreetseid hindu/kestusi; lehe parameetrid ja UI loetud | Värske otselingi brauserikatse 23-G03 |
+| AT-03 Teenusel ainult üks töötaja | Tehniline ja brauseritõend | [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): töötaja samm puudub, õige töötaja/hind/kestus kokkuvõttes; Chrome/Firefox/WebKit | Pärisseadmete ja sõltumatu vastuvõtt |
+| AT-04 Töötaja isiklik otselink | Tehniline ja brauseritõend | [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): otselink välistab teise teenuse/töötaja ning näitab isiklikku hinda/kestust; kolm mootorit | Aegunud otselingi UI ja pärisseadmete vastuvõtt |
 | AT-05 „Töötaja pole oluline” | Osaline | `booking.test.ts`: koondsaadavus on töötajate pakkumiste täpne ühend; `booking-flow.tsx` ei kinnita aega valiku eest | Põhiteekonna brauseri/kasutaja vastuvõtt 23-G03 |
-| AT-06 Erinev hind/kestus samal ajal | Osaline | `booking.test.ts`: eraldi pakkumised, muutunud hinna/kestuse korral puudub vaikimisi asendamine; UI kuvab konkreetse pakkumise | Brauseris võrreldavuse ja korduskinnituse protokoll 23-G03 |
+| AT-06 Erinev hind/kestus samal ajal | Tehniline ja brauseritõend | [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): samal ajal 25 €/30 min ja 35 €/45 min; hinna muutus → 409 → uus valik → 201; kontaktid säilivad kõigis kolmes mootoris | Pärisseadmete ja sõltumatu vastuvõtt |
 | AT-07 Etteteatamine 2 h, praegu 13.00 | Tehniline tõend | `booking.test.ts`, [schedule-management.test.ts](../tests/schedule-management.test.ts): kahe tunni piir saadavusel ja kinnitamisel | Omaniku lõplik vaikeväärtus/katseversioon fikseerida |
-| AT-08 Etteteatamispiir möödub vormis | Osaline | Samad testid kontrollivad aega kinnitamisel uuesti; UI säilitab kontaktid vananenud pakkumise korral | Kontaktide säilimise värske brauserikatse 23-G03 |
+| AT-08 Etteteatamispiir möödub vormis | Tehniline ja brauseritõend | [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): päris ajapiir möödub avatud vormis; 409, vana aeg kaob, nimi/e-post/telefon säilivad kolmes mootoris; kõrvalkirjeid ei lisandu | Pärisseadmete ja sõltumatu vastuvõtt |
 | AT-09 Teenuse puhver ja kõrvalbroneering | Tehniline tõend | `booking.test.ts`, `schedule-management.test.ts`: puhvrid, pausid ja ainult puhvrit puudutavad konfliktid | Tõend kohaliku mootori/DB piirist |
 | AT-10 Tööpaus, puhkus ja erandpäev | Tehniline tõend | `booking.test.ts`, `schedule-management.test.ts`: suletud/asendatud päev, puhkus ning asukoha/töötaja ühisosa | Tõend kohaliku mootori/DB piirist |
 | AT-11 50 sama aja samaaegset taotlust | Tehniline tõend | `booking.test.ts`: 50 konkureerivat päris DB toimingut → 1 broneering ja 1 outbox-sündmus | Ei ole 20 HTTP saadavuspäringu/s ega tootmiskoormuse katse; AT-48 eraldi |

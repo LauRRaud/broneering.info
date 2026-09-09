@@ -1,0 +1,160 @@
+{
+  "at": "2026-09-09T10:24:31.167Z",
+  "total": 15,
+  "passed": 15,
+  "deadline": {
+    "target": "2026-09-16T13:00:00.000Z",
+    "expiresAt": "2026-09-09T10:22:00.000Z",
+    "leadMinutes": 10238
+  },
+  "negativeRequestsCreatedNoBookings": true,
+  "results": [
+    {
+      "engine": "chrome",
+      "version": "152.0.7977.83",
+      "phase": "prepare",
+      "singleService": true,
+      "personalLink": true,
+      "sameTimeDifferentOffer": true,
+      "selectedOffer": "09:00 — G03 A töötaja 2, 45 min · 35,00 €",
+      "pass": true,
+      "evidence": "chrome-prepare.log"
+    },
+    {
+      "engine": "chrome",
+      "phase": "reject",
+      "status": 409,
+      "code": "OFFER_CHANGED",
+      "explicitReselectionRequired": true,
+      "pass": true,
+      "evidence": "chrome-reject.log"
+    },
+    {
+      "engine": "chrome",
+      "phase": "confirm",
+      "contactsPreserved": true,
+      "status": 201,
+      "price": 4500,
+      "duration": 45,
+      "pass": true,
+      "evidence": "chrome-confirm.log"
+    },
+    {
+      "engine": "chrome",
+      "phase": "deadline-prepare",
+      "at": "2026-09-09T10:19:19.031Z",
+      "selected": "16:00",
+      "pass": true,
+      "evidence": "chrome-deadline-prepare.log"
+    },
+    {
+      "engine": "chrome",
+      "phase": "deadline-reject",
+      "at": "2026-09-09T10:22:25.961Z",
+      "status": 409,
+      "code": "SLOT_UNAVAILABLE",
+      "contactsPreserved": true,
+      "expiredOfferRemoved": true,
+      "pass": true,
+      "evidence": "chrome-deadline-reject.log"
+    },
+    {
+      "engine": "firefox",
+      "version": "155.0",
+      "phase": "prepare",
+      "singleService": true,
+      "personalLink": true,
+      "sameTimeDifferentOffer": true,
+      "selectedOffer": "09:00 — G03 A töötaja 2, 45 min · 35,00 €",
+      "pass": true,
+      "evidence": "firefox-prepare.log"
+    },
+    {
+      "engine": "firefox",
+      "phase": "reject",
+      "status": 409,
+      "code": "OFFER_CHANGED",
+      "explicitReselectionRequired": true,
+      "pass": true,
+      "evidence": "firefox-reject.log"
+    },
+    {
+      "engine": "firefox",
+      "phase": "confirm",
+      "contactsPreserved": true,
+      "status": 201,
+      "price": 4500,
+      "duration": 45,
+      "pass": true,
+      "evidence": "firefox-confirm.log"
+    },
+    {
+      "engine": "firefox",
+      "phase": "deadline-prepare",
+      "at": "2026-09-09T10:19:18.940Z",
+      "selected": "16:00",
+      "pass": true,
+      "evidence": "firefox-deadline-prepare.log"
+    },
+    {
+      "engine": "firefox",
+      "phase": "deadline-reject",
+      "at": "2026-09-09T10:22:25.981Z",
+      "status": 409,
+      "code": "SLOT_UNAVAILABLE",
+      "contactsPreserved": true,
+      "expiredOfferRemoved": true,
+      "pass": true,
+      "evidence": "firefox-deadline-reject.log"
+    },
+    {
+      "engine": "webkit",
+      "version": "26.5",
+      "phase": "prepare",
+      "singleService": true,
+      "personalLink": true,
+      "sameTimeDifferentOffer": true,
+      "selectedOffer": "09:00 — G03 A töötaja 2, 45 min · 35,00 €",
+      "pass": true,
+      "evidence": "webkit-prepare.log"
+    },
+    {
+      "engine": "webkit",
+      "phase": "reject",
+      "status": 409,
+      "code": "OFFER_CHANGED",
+      "explicitReselectionRequired": true,
+      "pass": true,
+      "evidence": "webkit-reject.log"
+    },
+    {
+      "engine": "webkit",
+      "phase": "confirm",
+      "contactsPreserved": true,
+      "status": 201,
+      "price": 4500,
+      "duration": 45,
+      "pass": true,
+      "evidence": "webkit-confirm.log"
+    },
+    {
+      "engine": "webkit",
+      "phase": "deadline-prepare",
+      "at": "2026-09-09T10:19:39.557Z",
+      "selected": "16:00",
+      "pass": true,
+      "evidence": "webkit-deadline-prepare.log"
+    },
+    {
+      "engine": "webkit",
+      "phase": "deadline-reject",
+      "at": "2026-09-09T10:22:26.691Z",
+      "status": 409,
+      "code": "SLOT_UNAVAILABLE",
+      "contactsPreserved": true,
+      "expiredOfferRemoved": true,
+      "pass": true,
+      "evidence": "webkit-deadline-reject.log"
+    }
+  ]
+}

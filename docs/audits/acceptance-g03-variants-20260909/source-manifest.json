@@ -1,0 +1,30 @@
+{
+  "at": "2026-09-09T10:24:32.682Z",
+  "format": "SHA-256 of Git index blob bytes",
+  "sources": [
+    {
+      "path": "scripts/acceptance-g03-fixture.ts",
+      "sha256": "7e41f87c73a20e6d81e48597e49a8c1a5465a70ae919db55e0f177e01a2442f8"
+    },
+    {
+      "path": "scripts/acceptance-g03-variants.js",
+      "sha256": "75dd5c372f56c08524ef1cbe4431eb80c5696f271d1c1a61d40f2a08a523aa3a"
+    },
+    {
+      "path": "scripts/acceptance-g03-variants-report.mjs",
+      "sha256": "c8e8b5e5de3d16b585fdacc8bb03d7ec3dbaf24cc5c4b6fbc4cec9102c563d51"
+    },
+    {
+      "path": "src/components/booking-flow.tsx",
+      "sha256": "3ca61df2e982be48d0999860944c01a7bc9cd0b492c311fc35dd8b910098e2cd"
+    },
+    {
+      "path": "src/lib/availability.ts",
+      "sha256": "123ce5b35f4de9cbc975ddf8f4d0bd8bf5418b457d8d507cd97a9848605f93a7"
+    },
+    {
+      "path": "src/lib/bookings.ts",
+      "sha256": "a6d5e7c81bf2a8b9234f100577e18645e660a5a3a62a85adcc2fe5347de3cc33"
+    }
+  ]
+}

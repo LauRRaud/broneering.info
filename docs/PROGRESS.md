@@ -1,5 +1,7 @@
 # Arendusplaani täitmise register
 
+**23-G03 teine voor 09.09.2026:** [teenusevalikud, töötaja otselink, hinnamuutus ja päris ajapiiri aegumine](ACCEPTANCE-G03-VARIANTS.md) kontrollitud kolmes mootoris. Kõik 15 brauserifaasi läbisid; rakenduse koodi selles voorus muuta polnud vaja. G03 ülejäänud maatriks jääb avatuks.
+
 **23-G03 uuendus 09.09.2026:** [esimene HTTP-, brauseri- ja klaviatuurimaatriks](ACCEPTANCE-G03.md) läbis; WebKiti põhisisulingi Tab-viga parandatud. See on piiritletud tehniline tõend, mitte 23-G03 ega V1 tervikvastuvõtt. Järgmise vooru katmata teekonnad on protokollis eraldi märgitud.
 
 **Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on API/andmebaasi/brauseriga kontrollitud ning serverisse paigaldatud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.

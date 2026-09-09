@@ -90,6 +90,8 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G03 — brauseri-, õiguste ja kasutatavuse vastuvõtt
 
+**Teine voor 09.09.2026:** [AT-01/03/04/06/08 teenusevalikud ja avatud vormi aegumine](ACCEPTANCE-G03-VARIANTS.md) läbisid 15 brauserifaasi Chrome'is, Firefoxis ja WebKitis. Kontaktid säilisid nii hinna muutumisel kui ka päris etteteatamispiiri möödumisel; keelatud kinnitamised ei loonud kõrvalkirjeid. Katmata harud ja sõltumatu vastuvõtt jäävad avatuks.
+
 **Seis 09.09.2026: esimene automaatne põhimatriks valmis, tervikvastuvõtt avatud.** 240 päris HTTP-päringut ja äriandmete räsivõrdlus läbisid; kolm brauserimootorit × neli haldusrolli ning kolm klaviatuuriga avalikku broneerimist läbisid. Leitud WebKiti põhisisulingi Tab-viga parandatud. [Täpne ulatus, kordamise juhis, tõendid ja järgmise vooru protokoll](ACCEPTANCE-G03.md). Safari/pärisseadmed, ekraanilugejad, ülejäänud API-harud ja veateekonnad jäävad avatuks. Allpool on algne tööleping.
 
 - **Seos / eesmärk:** ptk 08–12/16/24/25, E3–E7/E10, eriti AT-01–08 ja AT-19–35. Mõõta tervikteekonda kokkulepitud brauserites ning rollidega.

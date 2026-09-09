@@ -1,0 +1,88 @@
+### Result
+{"engine":"firefox","phase":"reject","status":409,"code":"OFFER_CHANGED","explicitReselectionRequired":true,"pass":true}
+### Ran Playwright code
+```js
+await (async page=>{
+ const phase='reject',engine='firefox',url='http://g03-97ed9721-b308-4e18-b262-dd0e2da7a063.localhost:3108',day='2026-09-16',staff='f8156f3a-d8f8-4f64-b931-a219cdb16796';
+ const dir='output/playwright/acceptance-g03-variants';
+ const ensure=(value,message)=>{if(!value)throw Error(message);};
+ const heading=name=>page.getByRole('heading',{name,exact:true});
+ const offers=()=>page.getByRole('list',{name:'Vabad ajad',exact:true});
+ const summary=()=>page.getByRole('complementary',{name:'Broneeringu kokkuvõte'});
+ const details=async()=>{
+  await heading('Veel mõned andmed.').waitFor();
+  ensure(await page.evaluate(()=>document.activeElement.id)==='booking-title','Details must receive focus');
+ };
+ if(phase==='prepare'){
+  await page.context().setStorageState({cookies:[],origins:[]});
+  await page.setViewportSize({width:390,height:844});
+  await page.goto(url);await page.waitForFunction(()=>document.activeElement.id==='booking-title');
+  await page.getByRole('button',{name:'G03 ainuteenuse valik',exact:true}).click();
+  await heading('Vali endale hetk.').waitFor();
+  ensure(await page.getByRole('navigation',{name:'Broneerimise sammud'}).getByRole('button').count()===3,'Single staff must omit staff step');
+  await page.getByRole('textbox',{name:'Valitud kuupäev',exact:true}).fill(day);
+  await offers().getByRole('button').first().waitFor();
+  ensure(!(await offers().innerText()).includes('G03 A töötaja 2'),'Single service must exclude other staff');
+  await offers().getByRole('button').first().click();await details();
+  ensure((await summary().innerText()).includes('15,00')&&(await summary().innerText()).includes('15 min'),'Single service summary');
+  await page.screenshot({path:`${dir}/${engine}-single-service.png`});
+  await page.goto(`${url}?staff=${staff}`);await page.waitForFunction(()=>document.activeElement.id==='booking-title');
+  ensure(await page.getByRole('button',{name:'G03 ainuteenuse valik',exact:true}).count()===0,'Personal link must exclude unrelated service');
+  await page.getByRole('button',{name:'G03 lõikus',exact:true}).click();await heading('Vali endale hetk.').waitFor();
+  await page.getByRole('textbox',{name:'Valitud kuupäev',exact:true}).fill(day);
+  await offers().getByRole('button').first().waitFor();
+  ensure(!(await offers().innerText()).includes('G03 A töötaja 1'),'Personal link must exclude other employee');
+  await offers().getByRole('button').first().click();await details();
+  ensure((await summary().innerText()).includes('35,00')&&(await summary().innerText()).includes('45 min'),'Personal price and duration');
+  await page.screenshot({path:`${dir}/${engine}-personal-link.png`});
+  await page.goto(url);await page.waitForFunction(()=>document.activeElement.id==='booking-title');
+  await page.getByRole('button',{name:'G03 lõikus',exact:true}).click();
+  await page.getByRole('button',{name:'Töötaja pole oluline',exact:true}).click();
+  await page.getByRole('textbox',{name:'Valitud kuupäev',exact:true}).fill(day);
+  await offers().getByRole('button').first().waitFor();
+  const all=await offers().getByRole('button').allInnerTexts();
+  const pair=all.find(text=>text.includes('G03 A töötaja 2')&&all.some(other=>other.startsWith(text.slice(0,5))&&other.includes('G03 A töötaja 1')));
+  ensure(pair&&pair.includes('35,00')&&pair.includes('45 min'),'Different offers must coexist at same time');
+  ensure(all.some(text=>text.startsWith(pair.slice(0,5))&&text.includes('25,00')&&text.includes('30 min')),'Cheaper shorter offer visible alongside');
+  await page.screenshot({path:`${dir}/${engine}-different-offers.png`});
+  await offers().getByRole('button').filter({hasText:pair}).first().click();await details();
+  await page.getByRole('textbox',{name:'Teenuse saaja nimi *',exact:true}).fill(`G03 ${engine} Variant`);
+  await page.getByRole('textbox',{name:'Kontaktisiku e-post *',exact:true}).fill(`g03-${engine}-variant@example.invalid`);
+  await page.getByRole('textbox',{name:'Kontaktisiku telefon (soovi korral)',exact:true}).fill('+372 5555 0101');
+  return {engine,version:page.context().browser().version(),phase,singleService:true,personalLink:true,sameTimeDifferentOffer:true,selectedOffer:pair,pass:true};
+ }
+ if(phase==='reject'){
+  const responsePromise=page.waitForResponse(r=>r.url().endsWith('/api/bookings')&&r.request().method()==='POST');
+  await page.getByRole('button',{name:'Kinnita broneering',exact:true}).click();
+  const response=await responsePromise,body=await response.json();
+  ensure(response.status()===409&&body.code==='OFFER_CHANGED','Stale price must be rejected');
+  await heading('Vali endale hetk.').waitFor();
+  ensure(await page.getByRole('button',{name:'Kinnita broneering',exact:true}).count()===0,'No silently substituted offer');
+  await offers().getByRole('button').filter({hasText:'45,00'}).first().waitFor();
+  await page.screenshot({path:`${dir}/${engine}-stale-price.png`});
+  return {engine,phase,status:response.status(),code:body.code,explicitReselectionRequired:true,pass:true};
+ }
+ if(phase==='confirm'){
+  await offers().getByRole('button').filter({hasText:'45,00'}).first().click();await details();
+  ensure(await page.getByRole('textbox',{name:'Teenuse saaja nimi *',exact:true}).inputValue()===`G03 ${engine} Variant`,'Name preserved');
+  ensure(await page.getByRole('textbox',{name:'Kontaktisiku e-post *',exact:true}).inputValue()===`g03-${engine}-variant@example.invalid`,'Email preserved');
+  ensure(await page.getByRole('textbox',{name:'Kontaktisiku telefon (soovi korral)',exact:true}).inputValue()==='+372 5555 0101','Phone preserved');
+  ensure((await summary().innerText()).includes('45,00'),'New price requires visible summary');
+  const responsePromise=page.waitForResponse(r=>r.url().endsWith('/api/bookings')&&r.request().method()==='POST');
+  await page.getByRole('button',{name:'Kinnita broneering',exact:true}).click();
+  const response=await responsePromise,body=await response.json();
+  ensure(response.status()===201&&body.price===4500&&body.duration===45,'New price must be confirmed');
+  await heading('Kohtumiseni, G03.').waitFor();await page.screenshot({path:`${dir}/${engine}-reconfirmed.png`});
+  return {engine,phase,contactsPreserved:true,status:response.status(),price:body.price,duration:body.duration,pass:true};
+ }
+ throw Error('Unknown phase');
+}
+
+
+)(page);
+```
+### Page
+- Page URL: http://g03-97ed9721-b308-4e18-b262-dd0e2da7a063.localhost:3108/
+- Page Title: broneering.info
+### Events
+- New console entries: .playwright-cli\console-2026-09-09T10-13-47-247Z.log#L722-L758

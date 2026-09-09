@@ -1,5 +1,7 @@
 # 23-G03 — esimene HTTP-, brauseri- ja klaviatuurimaatriks
 
+**Järgnev voor 09.09.2026:** [teenusevalikute, otselingi, hinnamuutuse ja päriselt aegunud etteteatamispiiri kontroll](ACCEPTANCE-G03-VARIANTS.md) lisab 15 läbinud brauserifaasi ning täpsed AT-01/03/04/06/08 tõendid. Allpool olev esimene protokoll säilitab oma kontrolliseisu; osa siin järgmiseks tööks nimetatust on järgnevas voorus tehtud.
+
 09.09.2026 tehti kohalik automaatne põhimatriks ja parandati selle leitud klaviatuuriviga. **23-G03 tervikvastuvõtt jääb avatuks.** Testija oli Codex; sõltumatu testija ja omaniku vastuvõtt on märkimata. Kujundus on endiselt omaniku otsusel ootel.
 
 ## Tulemus ja parandatud viga
