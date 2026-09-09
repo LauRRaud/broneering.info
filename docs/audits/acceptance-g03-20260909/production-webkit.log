@@ -1,0 +1,9 @@
+### Result
+{"url":"https://haldus.broneering.info/#main-content","version":"26.5","first":"Liigu põhisisu juurde","target":"main-content","pass":true}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("heading",{name:"broneering.info haldus",exact:true}).waitFor(); await page.keyboard.press("Tab"); const first=await page.locator(":focus").innerText(); if(first!=="Liigu põhisisu juurde")throw Error("Skip link missing"); await page.keyboard.press("Enter"); const target=await page.evaluate(()=>document.activeElement.id); if(target!=="main-content")throw Error("Main focus missing"); await page.screenshot({path:"output/playwright/acceptance-g03/production-webkit-skip.png"}); return {url:page.url(),version:page.context().browser().version(),first,target,pass:true}; })(page);
+```
+### Page
+- Page URL: https://haldus.broneering.info/#main-content
+- Page Title: broneering.info

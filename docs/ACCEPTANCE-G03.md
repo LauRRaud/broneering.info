@@ -76,4 +76,6 @@ HTTP-skript lõpetab veaga, kui mõni kontroll ei läbi. Brauserikatse tulemuse 
 
 ## Paigaldus
 
-Lähtekoodi parandus ja kontrollitud katsetööriistad on paigalduseks ette valmistatud. Serveri tulemus lisatakse pärast kontrollitud veebikonteineri uuendust; migratsioone pole lisatud.
+09.09.2026 paigaldati GitHubi `main` commit `309b708a9a8e2f9d08402deb4ee75d119b9d4676` serverisse `217.146.72.147`, `/srv/broneering.info`. Uuendati ainult veebikonteiner; migratsioonide arv jäi 48 ja töölistel säilis varasem käivitusaeg. Veebipilt: `sha256:f448ad099a9ea48dd8038bef99fa0a6e1d5b7895849976d1c44ac2c232ab0eae`; eelmine pilt säilitati sildiga `broneeringinfo-web:before-acceptance-g03-20260909`.
+
+[Paigalduslogi](audits/acceptance-g03-20260909/server-deploy.log): viis HTTPS-avalehte 200, readiness `ready`, anonüümne support GET 401 ja POST 405, töölistel `healthy`. [Järelkontrollis](audits/acceptance-g03-20260909/server-health.log) olid web/db/export-worker/billing-worker kõik `healthy`. [Päris tootmise WebKiti kontroll](audits/acceptance-g03-20260909/production-webkit.log) kinnitas, et Tab jõuab põhisisulingile ja Enter viib fookuse `main-content`-ile.

@@ -1,0 +1,262 @@
+From github.com:LauRRaud/broneering.info
+ * branch            main       -> FETCH_HEAD
+   16d7042..309b708  main       -> origin/main
+Updating 16d7042..309b708
+Fast-forward
+ docs/ACCEPTANCE-G03.md                             |   79 +
+ docs/CHAPTER-23-ACCEPTANCE.md                      |    2 +
+ docs/CHAPTER-23-COVERAGE.md                        |    2 +
+ docs/CHAPTER-23-WORK.md                            |    2 +
+ docs/CHAPTER-23.md                                 |    2 +
+ docs/PROGRESS.md                                   |    2 +
+ docs/ROADMAP.md                                    |    2 +
+ docs/audits/acceptance-g03-20260909/build.log      |   69 +
+ .../acceptance-g03-20260909/chrome-browser.log     |   60 +
+ .../chrome-owner-desktop.png                       |  Bin 0 -> 61133 bytes
+ .../chrome-owner-mobile.png                        |  Bin 0 -> 57792 bytes
+ .../chrome-platform-desktop.png                    |  Bin 0 -> 40428 bytes
+ .../chrome-public-confirmation.png                 |  Bin 0 -> 33480 bytes
+ .../acceptance-g03-20260909/chrome-public.log      |   57 +
+ .../chrome-receptionist-desktop.png                |  Bin 0 -> 60779 bytes
+ .../chrome-receptionist-mobile.png                 |  Bin 0 -> 57838 bytes
+ .../chrome-staff-desktop.png                       |  Bin 0 -> 54668 bytes
+ .../chrome-staff-mobile.png                        |  Bin 0 -> 50797 bytes
+ docs/audits/acceptance-g03-20260909/cleanup.json   |    7 +
+ .../acceptance-g03-20260909/database-proof.json    |   30 +
+ .../acceptance-g03-20260909/firefox-browser.log    |   63 +
+ .../firefox-owner-desktop.png                      |  Bin 0 -> 58245 bytes
+ .../firefox-owner-mobile.png                       |  Bin 0 -> 54614 bytes
+ .../firefox-platform-desktop.png                   |  Bin 0 -> 39161 bytes
+ .../firefox-public-confirmation.png                |  Bin 0 -> 31488 bytes
+ .../acceptance-g03-20260909/firefox-public.log     |   60 +
+ .../firefox-receptionist-desktop.png               |  Bin 0 -> 57830 bytes
+ .../firefox-receptionist-mobile.png                |  Bin 0 -> 54650 bytes
+ .../firefox-staff-desktop.png                      |  Bin 0 -> 50964 bytes
+ .../firefox-staff-mobile.png                       |  Bin 0 -> 48282 bytes
+ .../acceptance-g03-20260909/http-results.json      | 2656 ++++++++++++++++++++
+ .../acceptance-g03-20260909/source-manifest.json   |   26 +
+ .../acceptance-g03-20260909/webkit-before-fix.log  |   60 +
+ .../acceptance-g03-20260909/webkit-browser.log     |   63 +
+ .../webkit-owner-desktop.png                       |  Bin 0 -> 44883 bytes
+ .../webkit-owner-mobile.png                        |  Bin 0 -> 44930 bytes
+ .../webkit-platform-desktop.png                    |  Bin 0 -> 34286 bytes
+ .../webkit-public-confirmation.png                 |  Bin 0 -> 26864 bytes
+ .../acceptance-g03-20260909/webkit-public.log      |   60 +
+ .../webkit-receptionist-desktop.png                |  Bin 0 -> 46574 bytes
+ .../webkit-receptionist-mobile.png                 |  Bin 0 -> 44117 bytes
+ .../webkit-staff-desktop.png                       |  Bin 0 -> 42795 bytes
+ .../webkit-staff-mobile.png                        |  Bin 0 -> 42722 bytes
+ scripts/acceptance-g03-browser.js                  |   51 +
+ scripts/acceptance-g03-fixture.ts                  |   60 +
+ scripts/acceptance-g03-http.ts                     |  118 +
+ scripts/acceptance-g03-public.js                   |   48 +
+ src/components/i18n-provider.tsx                   |    2 +-
+ 48 files changed, 3580 insertions(+), 1 deletion(-)
+ create mode 100644 docs/ACCEPTANCE-G03.md
+ create mode 100644 docs/audits/acceptance-g03-20260909/build.log
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-browser.log
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-owner-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-owner-mobile.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-platform-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-public-confirmation.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-public.log
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-receptionist-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-receptionist-mobile.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-staff-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/chrome-staff-mobile.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/cleanup.json
+ create mode 100644 docs/audits/acceptance-g03-20260909/database-proof.json
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-browser.log
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-owner-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-owner-mobile.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-platform-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-public-confirmation.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-public.log
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-receptionist-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-receptionist-mobile.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-staff-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/firefox-staff-mobile.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/http-results.json
+ create mode 100644 docs/audits/acceptance-g03-20260909/source-manifest.json
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-before-fix.log
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-browser.log
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-owner-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-owner-mobile.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-platform-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-public-confirmation.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-public.log
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-receptionist-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-receptionist-mobile.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-staff-desktop.png
+ create mode 100644 docs/audits/acceptance-g03-20260909/webkit-staff-mobile.png
+ create mode 100644 scripts/acceptance-g03-browser.js
+ create mode 100644 scripts/acceptance-g03-fixture.ts
+ create mode 100644 scripts/acceptance-g03-http.ts
+ create mode 100644 scripts/acceptance-g03-public.js
+time="2026-09-09T09:58:29+03:00" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [web internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.65kB done
+#1 DONE 0.0s
+
+#2 [web internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#2 DONE 0.7s
+
+#3 [web internal] load .dockerignore
+#3 transferring context: 161B done
+#3 DONE 0.0s
+
+#4 [web dependencies 1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#4 resolve docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e done
+#4 DONE 0.0s
+
+#5 [web internal] load build context
+#5 transferring context: 1.45MB 0.0s done
+#5 DONE 0.0s
+
+#6 [web dependencies 2/6] WORKDIR /app
+#6 CACHED
+
+#7 [web dependencies 4/6] RUN npm ci --no-fund
+#7 CACHED
+
+#8 [web dependencies 5/6] COPY scripts/licenses.ts ./scripts/licenses.ts
+#8 CACHED
+
+#9 [web dependencies 3/6] COPY --chmod=644 package.json package-lock.json ./
+#9 CACHED
+
+#10 [web dependencies 6/6] RUN mkdir -p docs && npm run licenses && cp docs/THIRD-PARTY-NOTICES.txt /app/THIRD-PARTY-NOTICES.txt
+#10 CACHED
+
+#11 [web builder 1/2] COPY . .
+#11 DONE 0.1s
+
+#12 [web builder 2/2] RUN npm run build
+#12 0.232 
+#12 0.232 > broneering-info@0.1.0 build
+#12 0.232 > npm run architecture:check && node --import tsx scripts/widget-languages.ts && next build
+#12 0.232 
+#12 0.300 
+#12 0.300 > broneering-info@0.1.0 architecture:check
+#12 0.300 > node --import tsx scripts/architecture.ts
+#12 0.300 
+#12 1.039 Architecture boundaries passed (155 source files).
+#12 1.433 ▲ Next.js 16.3.4 (Turbopack)
+#12 1.453 ✓ Running next.config.ts took 19ms
+#12 1.464 
+#12 1.484   Creating an optimized production build ...
+#12 11.36 ✓ Compiled successfully in 9.7s
+#12 11.37   Running TypeScript ...
+#12 17.31   Finished TypeScript in 5.9s ...
+#12 17.31   Collecting page data using 2 workers ...
+#12 18.06   Generating static pages using 2 workers (0/17) ...
+#12 18.08   Generating static pages using 2 workers (4/17) 
+#12 18.15   Generating static pages using 2 workers (8/17) 
+#12 18.16   Generating static pages using 2 workers (12/17) 
+#12 18.16 ✓ Generating static pages using 2 workers (17/17) in 102ms
+#12 18.17   Finalizing page optimization ...
+#12 18.40 
+#12 18.40 Route (app)
+#12 18.40 ┌ ƒ /
+#12 18.40 ├ ƒ /_not-found
+#12 18.40 ├ ƒ /api/admin/[action]
+#12 18.40 ├ ƒ /api/admin/billing
+#12 18.40 ├ ƒ /api/admin/booking-policy
+#12 18.40 ├ ƒ /api/admin/bookings
+#12 18.40 ├ ƒ /api/admin/companies
+#12 18.40 ├ ƒ /api/admin/customers
+#12 18.40 ├ ƒ /api/admin/customers/privacy
+#12 18.40 ├ ƒ /api/admin/exit
+#12 18.40 ├ ƒ /api/admin/exports
+#12 18.40 ├ ƒ /api/admin/imports
+#12 18.40 ├ ƒ /api/admin/language
+#12 18.40 ├ ƒ /api/admin/notifications
+#12 18.40 ├ ƒ /api/admin/onboarding
+#12 18.40 ├ ƒ /api/admin/preview/[action]
+#12 18.40 ├ ƒ /api/admin/retention
+#12 18.40 ├ ƒ /api/admin/state
+#12 18.40 ├ ƒ /api/admin/subscription
+#12 18.40 ├ ƒ /api/admin/support
+#12 18.40 ├ ƒ /api/admin/translations
+#12 18.40 ├ ƒ /api/auth/[...all]
+#12 18.40 ├ ƒ /api/availability
+#12 18.40 ├ ƒ /api/booking/manage
+#12 18.40 ├ ƒ /api/bookings
+#12 18.40 ├ ƒ /api/catalog
+#12 18.40 ├ ƒ /api/health
+#12 18.40 ├ ƒ /api/payments/invoice
+#12 18.40 ├ ƒ /api/payments/makecommerce/notify
+#12 18.40 ├ ƒ /api/payments/makecommerce/return
+#12 18.40 ├ ƒ /api/ready
+#12 18.40 ├ ƒ /broneering
+#12 18.40 ├ ƒ /embed
+#12 18.40 ├ ƒ /pay
+#12 18.40 ├ ƒ /preview
+#12 18.40 ├ ƒ /robots.txt
+#12 18.40 └ ƒ /sitemap.xml
+#12 18.40 
+#12 18.40 
+#12 18.40 ƒ Proxy (Middleware)
+#12 18.40 
+#12 18.40 ƒ  (Dynamic)  server-rendered on demand
+#12 18.40 
+#12 DONE 18.5s
+
+#13 [web runner 3/8] RUN groupadd --system --gid 1001 booking && useradd --system --uid 1001 --gid booking booking && mkdir -p /data/private && chown booking:booking /data/private
+#13 CACHED
+
+#14 [web runner 4/8] COPY --from=builder --chown=booking:booking /app/.next/standalone ./
+#14 DONE 0.3s
+
+#15 [web runner 5/8] COPY --from=builder --chown=booking:booking /app/.next/static ./.next/static
+#15 DONE 0.0s
+
+#16 [web runner 6/8] COPY --from=builder --chown=booking:booking /app/public ./public
+#16 DONE 0.0s
+
+#17 [web runner 7/8] COPY --from=builder --chown=booking:booking /app/db/migrations ./db/migrations
+#17 DONE 0.0s
+
+#18 [web runner 8/8] COPY --from=dependencies --chown=booking:booking /app/THIRD-PARTY-NOTICES.txt ./THIRD-PARTY-NOTICES.txt
+#18 DONE 0.0s
+
+#19 [web] exporting to image
+#19 exporting layers
+#19 exporting layers 1.2s done
+#19 exporting manifest sha256:18874934d21a27fd979263234f5705e2177fa5fdb5a0b9b74020104bd9bf10d0 done
+#19 exporting config sha256:b6a4baef0b5b670a0171ef213736a144421d886b3a64a47b556cfcd248fc159d done
+#19 exporting attestation manifest sha256:4a63459a1e235100180c0d0e1c711db2c2bb820f5fed331ad49fa68f44dbec26 done
+#19 exporting manifest list sha256:f448ad099a9ea48dd8038bef99fa0a6e1d5b7895849976d1c44ac2c232ab0eae done
+#19 naming to docker.io/library/broneeringinfo-web:latest done
+#19 unpacking to docker.io/library/broneeringinfo-web:latest
+#19 unpacking to docker.io/library/broneeringinfo-web:latest 0.4s done
+#19 DONE 1.7s
+
+#20 [web] resolving provenance for metadata file
+#20 DONE 0.0s
+ web  Built
+ Container broneeringinfo-web-1  Recreate
+ Container broneeringinfo-web-1  Recreated
+ Container broneeringinfo-web-1  Starting
+ Container broneeringinfo-web-1  Started
+curl: (56) Recv failure: Connection reset by peer
+broneering.info root=200
+www.broneering.info root=200
+haldus.broneering.info root=200
+demo.broneering.info root=200
+demo2.broneering.info root=200
+{"status":"ready"}
+support anonymous=401
+support POST=405
+48
+{"status":"healthy"}
+{"status":"healthy"}
+NAME                              IMAGE                                                                                 COMMAND                  SERVICE          CREATED         STATUS                            PORTS
+broneeringinfo-billing-worker-1   broneeringinfo-billing-worker                                                         "docker-entrypoint.s…"   billing-worker   11 hours ago    Up 11 hours (healthy)             
+broneeringinfo-db-1               postgres:18@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280   "docker-entrypoint.s…"   db               43 hours ago    Up 43 hours (healthy)             5432/tcp
+broneeringinfo-export-worker-1    broneeringinfo-export-worker                                                          "docker-entrypoint.s…"   export-worker    11 hours ago    Up 11 hours (healthy)             
+broneeringinfo-web-1              broneeringinfo-web                                                                    "docker-entrypoint.s…"   web              3 seconds ago   Up 3 seconds (health: starting)   127.0.0.1:3107->3000/tcp
+309b708a9a8e2f9d08402deb4ee75d119b9d4676
+sha256:f448ad099a9ea48dd8038bef99fa0a6e1d5b7895849976d1c44ac2c232ab0eae
