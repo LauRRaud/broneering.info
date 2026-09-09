@@ -1,6 +1,6 @@
 # Peatükk 23 — nõuete ja failide läbivaatuse katvus
 
-**Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on kohalikult teostatud ning API/andmebaasi/brauseriga kontrollitud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.
+**Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on API/andmebaasi/brauseriga kontrollitud ning serverisse paigaldatud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.
 
 See on 08.09.2026 auditi **tehtud kontrolli** register. Peatüki number ja etapp E0–E10 on eri asjad: lähteplaanil on 30 peatükki, tööde teostusjärjekorral 11 etappi. Audit võrdles peatükkide nõudeid nende tegeliku teostusega algusest lõpuni; koodi lugemine algas riskantsematest kohtadest ja laienes seejärel kogu oma rakenduskoodile. See ei ole väide, et kõik nõuded on täidetud.
 

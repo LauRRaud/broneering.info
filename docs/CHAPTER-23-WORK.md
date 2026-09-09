@@ -150,7 +150,7 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G09 — tegelik auditeeritud tugivaade
 
-**Seis 09.09.2026: piiratud kalendri/kliendikontaktide lugemisvoog on teostatud ja kohalikult kontrollitud.** [Teostus ning API, andmebaasi ja brauseri tõendid](SUPPORT-G09.md). Omaniku ja sõltumatu ülevaataja vastuvõtt on märkimata. Allpool on töö algne vastuvõtuleping.
+**Seis 09.09.2026: piiratud kalendri/kliendikontaktide lugemisvoog on teostatud, kohalikult kontrollitud ning serverisse paigaldatud.** [Teostus ning API, andmebaasi ja brauseri tõendid](SUPPORT-G09.md). Omaniku ja sõltumatu ülevaataja vastuvõtt on märkimata. Allpool on töö algne vastuvõtuleping.
 
 - **Seos / eesmärk:** ptk 04/19, E9. Platvormihaldur saab põhjendatud ajutise loa alusel ettevõtet aidata.
 - **Sisendid / eeltingimused:** olemasolev support grant, ettevõte ja nõutud lugemisvaadete selgelt piiratud loend.

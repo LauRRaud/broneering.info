@@ -1,6 +1,6 @@
 # 23-G09 — ajutine ainult lugemiseks tugivaade
 
-09.09.2026 teostus ja kohalik kontroll: **valmis**. Seos: ptk 04/19, E9 ja AT-23. Testija ja koodi ülevaataja: Codex. Omaniku ning sõltumatu ülevaataja vastuvõtt on märkimata; see töö ei sulge kogu E9 ega V1 vastuvõttu.
+09.09.2026 teostus, kohalik kontroll ja serveri paigaldus: **valmis**. Seos: ptk 04/19, E9 ja AT-23. Testija ja koodi ülevaataja: Codex. Omaniku ning sõltumatu ülevaataja vastuvõtt on märkimata; see töö ei sulge kogu E9 ega V1 vastuvõttu.
 
 ## Kasutamine ja lubatud andmed
 
@@ -33,3 +33,9 @@ Playwrighti brauserikontroll tehti kohaliku rakenduse ja sünteetilise MFA kinni
 Tõendid: [kalender](audits/support-g09-20260909/calendar.png), [mobiili kliendid](audits/support-g09-20260909/customers-mobile.png), [teises vahelehes lõpetamine](audits/support-g09-20260909/revoked-other-tab.png), [aegumine](audits/support-g09-20260909/expired.png), [testilogi](audits/support-g09-20260909/tests.log), [buildilogi](audits/support-g09-20260909/build.log). Kuvade HTML-i vaikevormid järgivad omaniku varasemat kujunduse edasilükkamist.
 
 Koodiülevaatus hõlmas uut marsruuti, tehingu ja rea luku piire, andmeväljade lubatud loendit, loa taastamist haldusolekus, brauseri vana vastuse/aegumise/tühistamise käsitlust ning olemasolevate kirjutusõiguste säilimist. Töö ei lisa migratsiooni; andmebaasi versioon jääb 048. SMTP/Maksekeskuse pärisühendused, laiem brauserite ja abitehnoloogiate maatriks, koormus, sõltumatu üleandmine, piloot ning välise varunduse/hoiatuste aktiveerimine jäävad vastavatesse 23-G01–G08 töödesse.
+
+## Serveri paigaldus 09.09.2026
+
+Rakenduse commit `96df0e2fb77f7305f01830f37af6b9a409fceb4b` saadeti GitHubi `main` harusse ning paigaldati serveri `/srv/broneering.info` projektist. Ehitati ja taaskäivitati ainult `web`; andmebaasi, ekspordi- ja arveldustöötaja konteinerid jäid tööle. Uue veebipildi tunnus on `sha256:c5fbb6570b9635bb7b72de17db6cee37c2374fbc5e32ba7a80660b975001ee61`. Eelmine pilt säilitati märgendiga `broneeringinfo-web:before-support-g09-20260909`. Järgnev dokumentatsiooni commit ei muuda seda rakenduspilti.
+
+HTTPS kontroll: `broneering.info`, `www`, `haldus`, `demo` ja `demo2` juurlehed vastasid 200; `/api/ready` tagastas `ready`; haldushosti tugimarsruut andis anonüümsele GET-ile 401 ja POST-ile 405. Migratsioone on endiselt 48 ning ekspordi- ja arveldustöötaja tervisekontrollid läbisid. [Paigalduslogi](audits/support-g09-20260909/server-deploy.log). Autenditud tugiteekonna täielik tõend on kohalikust brauserist; operaatori päriskontoga tootmise vastuvõttu selle paigaldusega ei väideta. SMTP/Maksekeskuse ühendusi ja välise varunduse/hoiatuste seadeid ei muudetud.

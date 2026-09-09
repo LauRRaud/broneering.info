@@ -1,0 +1,215 @@
+From github.com:LauRRaud/broneering.info
+ * branch            main       -> FETCH_HEAD
+   a5fc5c1..96df0e2  main       -> origin/main
+Updating a5fc5c1..96df0e2
+Fast-forward
+ docs/CHAPTER-04.md                                 |   2 +
+ docs/CHAPTER-19.md                                 |   2 +
+ docs/CHAPTER-23-ACCEPTANCE.md                      |   4 +-
+ docs/CHAPTER-23-COVERAGE.md                        |   2 +
+ docs/CHAPTER-23-WORK.md                            |   6 +-
+ docs/CHAPTER-23.md                                 |   2 +
+ docs/PROGRESS.md                                   |   6 +-
+ docs/ROADMAP.md                                    |   4 +-
+ docs/SUPPORT-G09.md                                |  35 ++++++
+ docs/audits/support-g09-20260909/build.log         |  69 +++++++++++
+ docs/audits/support-g09-20260909/calendar.png      | Bin 0 -> 42896 bytes
+ .../support-g09-20260909/customers-mobile.png      | Bin 0 -> 17062 bytes
+ docs/audits/support-g09-20260909/expired.png       | Bin 0 -> 10517 bytes
+ .../support-g09-20260909/revoked-other-tab.png     | Bin 0 -> 10449 bytes
+ .../support-g09-20260909/source-manifest.json      |  57 +++++++++
+ docs/audits/support-g09-20260909/tests.log         |  13 ++
+ src/app/api/admin/state/route.ts                   |   5 +-
+ src/app/api/admin/support/route.ts                 |  24 ++++
+ src/components/admin-app.tsx                       |  17 ++-
+ src/components/platform-support.tsx                |  35 ++++++
+ src/components/support-view.tsx                    |  69 +++++++++++
+ src/lib/access.ts                                  |  22 ++++
+ src/lib/admin-contracts.ts                         |   2 +
+ src/lib/support-view.ts                            |  48 ++++++++
+ src/locales/en.json                                |  20 ++-
+ src/locales/et.json                                |  20 ++-
+ src/locales/ru.json                                |  20 ++-
+ tests/admin-http.test.ts                           |   2 +-
+ tests/support-view.test.ts                         | 136 +++++++++++++++++++++
+ 29 files changed, 607 insertions(+), 15 deletions(-)
+ create mode 100644 docs/SUPPORT-G09.md
+ create mode 100644 docs/audits/support-g09-20260909/build.log
+ create mode 100644 docs/audits/support-g09-20260909/calendar.png
+ create mode 100644 docs/audits/support-g09-20260909/customers-mobile.png
+ create mode 100644 docs/audits/support-g09-20260909/expired.png
+ create mode 100644 docs/audits/support-g09-20260909/revoked-other-tab.png
+ create mode 100644 docs/audits/support-g09-20260909/source-manifest.json
+ create mode 100644 docs/audits/support-g09-20260909/tests.log
+ create mode 100644 src/app/api/admin/support/route.ts
+ create mode 100644 src/components/platform-support.tsx
+ create mode 100644 src/components/support-view.tsx
+ create mode 100644 src/lib/support-view.ts
+ create mode 100644 tests/support-view.test.ts
+time="2026-09-09T09:29:28+03:00" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [web internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.65kB done
+#1 DONE 0.0s
+
+#2 [web internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#2 DONE 0.7s
+
+#3 [web internal] load .dockerignore
+#3 transferring context: 161B done
+#3 DONE 0.0s
+
+#4 [web dependencies 1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#4 resolve docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e done
+#4 DONE 0.0s
+
+#5 [web internal] load build context
+#5 transferring context: 3.46MB 0.1s done
+#5 DONE 0.1s
+
+#6 [web dependencies 5/6] COPY scripts/licenses.ts ./scripts/licenses.ts
+#6 CACHED
+
+#7 [web dependencies 4/6] RUN npm ci --no-fund
+#7 CACHED
+
+#8 [web dependencies 2/6] WORKDIR /app
+#8 CACHED
+
+#9 [web dependencies 3/6] COPY --chmod=644 package.json package-lock.json ./
+#9 CACHED
+
+#10 [web dependencies 6/6] RUN mkdir -p docs && npm run licenses && cp docs/THIRD-PARTY-NOTICES.txt /app/THIRD-PARTY-NOTICES.txt
+#10 CACHED
+
+#11 [web builder 1/2] COPY . .
+#11 DONE 0.1s
+
+#12 [web builder 2/2] RUN npm run build
+#12 0.236 
+#12 0.236 > broneering-info@0.1.0 build
+#12 0.236 > npm run architecture:check && node --import tsx scripts/widget-languages.ts && next build
+#12 0.236 
+#12 0.305 
+#12 0.305 > broneering-info@0.1.0 architecture:check
+#12 0.305 > node --import tsx scripts/architecture.ts
+#12 0.305 
+#12 1.078 Architecture boundaries passed (155 source files).
+#12 1.545 ▲ Next.js 16.3.4 (Turbopack)
+#12 1.585 ✓ Running next.config.ts took 39ms
+#12 1.592 
+#12 1.613   Creating an optimized production build ...
+#12 12.19 ✓ Compiled successfully in 10.4s
+#12 12.19   Running TypeScript ...
+#12 18.84   Finished TypeScript in 6.6s ...
+#12 18.84   Collecting page data using 2 workers ...
+#12 19.66   Generating static pages using 2 workers (0/17) ...
+#12 19.69   Generating static pages using 2 workers (4/17) 
+#12 19.78   Generating static pages using 2 workers (8/17) 
+#12 19.79   Generating static pages using 2 workers (12/17) 
+#12 19.80 ✓ Generating static pages using 2 workers (17/17) in 138ms
+#12 19.80   Finalizing page optimization ...
+#12 20.05 
+#12 20.06 Route (app)
+#12 20.06 ┌ ƒ /
+#12 20.06 ├ ƒ /_not-found
+#12 20.06 ├ ƒ /api/admin/[action]
+#12 20.06 ├ ƒ /api/admin/billing
+#12 20.06 ├ ƒ /api/admin/booking-policy
+#12 20.06 ├ ƒ /api/admin/bookings
+#12 20.06 ├ ƒ /api/admin/companies
+#12 20.06 ├ ƒ /api/admin/customers
+#12 20.06 ├ ƒ /api/admin/customers/privacy
+#12 20.06 ├ ƒ /api/admin/exit
+#12 20.06 ├ ƒ /api/admin/exports
+#12 20.06 ├ ƒ /api/admin/imports
+#12 20.06 ├ ƒ /api/admin/language
+#12 20.06 ├ ƒ /api/admin/notifications
+#12 20.06 ├ ƒ /api/admin/onboarding
+#12 20.06 ├ ƒ /api/admin/preview/[action]
+#12 20.06 ├ ƒ /api/admin/retention
+#12 20.06 ├ ƒ /api/admin/state
+#12 20.06 ├ ƒ /api/admin/subscription
+#12 20.06 ├ ƒ /api/admin/support
+#12 20.06 ├ ƒ /api/admin/translations
+#12 20.06 ├ ƒ /api/auth/[...all]
+#12 20.06 ├ ƒ /api/availability
+#12 20.06 ├ ƒ /api/booking/manage
+#12 20.06 ├ ƒ /api/bookings
+#12 20.06 ├ ƒ /api/catalog
+#12 20.06 ├ ƒ /api/health
+#12 20.06 ├ ƒ /api/payments/invoice
+#12 20.06 ├ ƒ /api/payments/makecommerce/notify
+#12 20.06 ├ ƒ /api/payments/makecommerce/return
+#12 20.06 ├ ƒ /api/ready
+#12 20.06 ├ ƒ /broneering
+#12 20.06 ├ ƒ /embed
+#12 20.06 ├ ƒ /pay
+#12 20.06 ├ ƒ /preview
+#12 20.06 ├ ƒ /robots.txt
+#12 20.06 └ ƒ /sitemap.xml
+#12 20.06 
+#12 20.06 
+#12 20.06 ƒ Proxy (Middleware)
+#12 20.06 
+#12 20.06 ƒ  (Dynamic)  server-rendered on demand
+#12 20.06 
+#12 DONE 20.2s
+
+#13 [web runner 3/8] RUN groupadd --system --gid 1001 booking && useradd --system --uid 1001 --gid booking booking && mkdir -p /data/private && chown booking:booking /data/private
+#13 CACHED
+
+#14 [web runner 4/8] COPY --from=builder --chown=booking:booking /app/.next/standalone ./
+#14 DONE 0.3s
+
+#15 [web runner 5/8] COPY --from=builder --chown=booking:booking /app/.next/static ./.next/static
+#15 DONE 0.0s
+
+#16 [web runner 6/8] COPY --from=builder --chown=booking:booking /app/public ./public
+#16 DONE 0.0s
+
+#17 [web runner 7/8] COPY --from=builder --chown=booking:booking /app/db/migrations ./db/migrations
+#17 DONE 0.1s
+
+#18 [web runner 8/8] COPY --from=dependencies --chown=booking:booking /app/THIRD-PARTY-NOTICES.txt ./THIRD-PARTY-NOTICES.txt
+#18 DONE 0.0s
+
+#19 [web] exporting to image
+#19 exporting layers
+#19 exporting layers 1.3s done
+#19 exporting manifest sha256:9f213e6ef95a9362eea4525488fd96787228b630d66052c1f7106aec8455cddf done
+#19 exporting config sha256:0a365f67fa96806d99965722edb0c0604d1a0a77c4bcc577d91bf43b802e76f4 done
+#19 exporting attestation manifest sha256:e2a8f7b01e394602ced5351b7f36244cabf7afc71123354bbb3c24ca9c4b38b2 done
+#19 exporting manifest list sha256:c5fbb6570b9635bb7b72de17db6cee37c2374fbc5e32ba7a80660b975001ee61 done
+#19 naming to docker.io/library/broneeringinfo-web:latest done
+#19 unpacking to docker.io/library/broneeringinfo-web:latest
+#19 unpacking to docker.io/library/broneeringinfo-web:latest 0.4s done
+#19 DONE 1.7s
+
+#20 [web] resolving provenance for metadata file
+#20 DONE 0.0s
+ web  Built
+ Container broneeringinfo-web-1  Recreate
+ Container broneeringinfo-web-1  Recreated
+ Container broneeringinfo-web-1  Starting
+ Container broneeringinfo-web-1  Started
+curl: (56) Recv failure: Connection reset by peer
+broneering.info root=200
+www.broneering.info root=200
+haldus.broneering.info root=200
+demo.broneering.info root=200
+demo2.broneering.info root=200
+{"status":"ready"}
+support anonymous=401
+support POST=405
+48
+{"status":"healthy"}
+{"status":"healthy"}
+NAME                              IMAGE                                                                                 COMMAND                  SERVICE          CREATED         STATUS                            PORTS
+broneeringinfo-billing-worker-1   broneeringinfo-billing-worker                                                         "docker-entrypoint.s…"   billing-worker   10 hours ago    Up 10 hours (healthy)             
+broneeringinfo-db-1               postgres:18@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280   "docker-entrypoint.s…"   db               42 hours ago    Up 42 hours (healthy)             5432/tcp
+broneeringinfo-export-worker-1    broneeringinfo-export-worker                                                          "docker-entrypoint.s…"   export-worker    10 hours ago    Up 10 hours (healthy)             
+broneeringinfo-web-1              broneeringinfo-web                                                                    "docker-entrypoint.s…"   web              4 seconds ago   Up 3 seconds (health: starting)   127.0.0.1:3107->3000/tcp
+96df0e2fb77f7305f01830f37af6b9a409fceb4b
+sha256:c5fbb6570b9635bb7b72de17db6cee37c2374fbc5e32ba7a80660b975001ee61
