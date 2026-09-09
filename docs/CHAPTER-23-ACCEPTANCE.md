@@ -1,5 +1,7 @@
 # Peatükk 23 — AT-01–AT-48 tõendite maatriks
 
+**Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on kohalikult teostatud ning API/andmebaasi/brauseriga kontrollitud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.
+
 **Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
 
 08.09.2026 auditeeritud tööpuu ja ühised keskkonnaandmed: [auditi põhiosa](CHAPTER-23.md). Katsete pealkirjad pärinevad lähteplaani peatükkidest 24–26. Kõik allpool viidatud automaattestid läbisid selle auditi käivituses; [JSON-raport](audits/chapter23-20260908/vitest.json) sisaldab täpseid testinimesid ja tulemusi.
@@ -44,7 +46,7 @@ Testija: Codex, kohalik koodi- ja käitumisaudit. Kõigi ridade omaniku kinnitaj
 | AT-20 Teise ettevõtte eksport või fail | Tehniline tõend | [exports.test.ts](../tests/exports.test.ts): teise ettevõtte ja tühistatud omaniku ligipääs keelatud, aegumine enne koristust; `private-files.ts` loetud | Päris allalaadimise brauseri/proksi vastuvõtt 23-G03 |
 | AT-21 Ettevõttekontekst ühenduste puulis | Tehniline tõend | `booking.test.ts`: eri kontekstid/ühendused; `data-model.test.ts`: kontekstita read varjatud; `db.test.ts`: rikutud ühendus kõrvaldatakse | Kontrollitud rakenduseroll ei ole superuser/BYPASSRLS |
 | AT-22 Avalik saadavuse päring | Tehniline tõend | `booking.test.ts` AT-19/21/22; `availability.ts` ja avalike API-de DTO-d: kliendikontaktid ei kuulu saadavusvastusesse | Üldine turva-/logimaatriks 23-G03 |
-| AT-23 Rolli piirang ja peidetud nupp | Osaline | [access.test.ts](../tests/access.test.ts), `admin-http.test.ts` ja valdkonnatestid kontrollivad värskeid õigusi serveris | Kõigi praeguste rollide/API-de maatriks ning puuduva tugivaate 23-G09 õigused; F-03 kohalik parandus kontrollitud |
+| AT-23 Rolli piirang ja peidetud nupp | Osaline | [access.test.ts](../tests/access.test.ts), `admin-http.test.ts` ja valdkonnatestid kontrollivad värskeid õigusi serveris | Kõigi praeguste rollide/API-de laiem maatriks jääb 23-G03; 23-G09 piiratud tugivaate API/andmebaasi/brauseri õigused kontrollitud 09.09 ([tõendid](SUPPORT-G09.md)); F-03 parandatud |
 | AT-24 Lahkunud töötaja sessioon | Tehniline tõend | Olemasolev sessioonitühistus ja F-03 parandatud kutse elutsükkel, samaaegne vastuvõtt/arhiveerimine ning legacy-migratsioon läbivad | Tootmises tuleb rakendada migratsioon 048; rolli/UI maatriks 23-G03 |
 | AT-25 Aegunud, tühistatud või võõras link | Osaline | `booking-management.test.ts`: tokenite piirid ja aegumine luku ootamisel; `booking-management-http.test.ts`: 410 koos kontakti juhisega | Kõigi vigade brauseris loetavus 23-G03 |
 | AT-26 Meiliskanner avab halduslingi | Tehniline tõend | `booking-management-http.test.ts`: GET kutsub ainult lugemist; `booking-management.test.ts`: kõrvaltoimeta lugemine | Kliendi kirjutus nõuab eraldi kinnitust ja kaitstud päringut |

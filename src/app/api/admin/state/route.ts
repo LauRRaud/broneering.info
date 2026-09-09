@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { getIdentity } from '@/lib/auth';
 import { isAccountMailConfigured } from '@/lib/auth-mail';
-import { listMemberships, listMembers, listPlatformTenants, requireMembership, requireOwnerInTransaction } from '@/lib/access';
+import { listMemberships, listMembers, listPlatformTenants, listSupportGrants, requireMembership, requireOwnerInTransaction } from '@/lib/access';
 import { listInvitations } from '@/lib/invitations';
 import { withTenant } from '@/lib/db';
 import { adminError, adminJson, assertAdminHost } from '@/lib/admin-http';
@@ -31,7 +31,7 @@ export async function GET(request: Request) {
     if (requestedId && !selected) throw new AppError(403, 'MEMBERSHIP_REQUIRED', 'Sul ei ole selle ettevõtte liikmesust.');
     if (selected) state.selected = selected;
     if(selected?.dataAccessExpired){
-      if(actor.isPlatformAdmin&&actor.twoFactorEnabled)state.platformTenants=await listPlatformTenants(actor);
+      if(actor.isPlatformAdmin&&actor.twoFactorEnabled){state.platformTenants=await listPlatformTenants(actor);state.supportGrants=await listSupportGrants(actor);}
       return adminJson(state);
     }
 
@@ -59,6 +59,7 @@ export async function GET(request: Request) {
     }
     if (actor.isPlatformAdmin && actor.twoFactorEnabled) {
       state.platformTenants = await listPlatformTenants(actor);
+      state.supportGrants = await listSupportGrants(actor);
     }
     if(selected && assuranceReady)state.schedules=await scheduleState(actor,selected.tenantId);
     return adminJson(state);

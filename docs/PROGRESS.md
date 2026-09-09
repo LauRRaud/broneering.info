@@ -1,5 +1,7 @@
 # Arendusplaani täitmise register
 
+**Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on kohalikult teostatud ning API/andmebaasi/brauseriga kontrollitud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.
+
 **Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
 
 Alus: `Broneerimisplatvorm_arendusplaan_v1_0.docx`, versioon 1.0, 06.09.2026. Esmane võrdlus tehti 07.09.2026 commit'i `7c89d6e` suhtes; **08.09.2026 värske tööpuu koodi- ja vastuvõtuaudit on [peatükis 23](CHAPTER-23.md)**. See register ei muuda lähteplaani ega asenda omaniku vastuvõttu. Varasemad peatükkide testiarvud kirjeldavad nende kontrollimise hetke, mitte tänast koguarvu.
@@ -21,7 +23,7 @@ Staatus **osaline** tähendab, et leidub teostus või tõend, kuid peatüki kõi
 | 01 | Toode ja esimese versiooni eesmärk | Osaline | Ühine rakendus ja kaks eraldatud demot. V1 tulemuste detailne võrdlus allpool. |
 | 02 | Ulatusest väljas ja järgmised versioonid | Piirid kirjeldatud | [ROADMAP](ROADMAP.md) jätab SMS-id, lõppkliendi teenuse ettemaksed, väliskalendrid ja mitu asukohta hilisemaks; omaniku kuutasu Maksekeskuse makselingi/püsimakse otsus on eraldi kehtiv täpsustus. Neid ei loeta valmis funktsioonideks. |
 | 03 | Lukustatud otsuste register | Osaline | D-01, D-04–08, D-10–12 ja D-14 põhimõtted kajastuvad mootoris. Isiklik otselink D-09 on teostatud peatükis 08 ja D-13 halduslink peatükis 10; D-16 kalender on kohalikult teostatud peatükis 11; D-20 arveldus on kohalikult teostamisel (19). D-15 kujundus on ootel. Õiguslike ja äriliste otsuste täitmist ei tõenda kood. |
-| 04 | Kasutajad, ettevõtted ja õigused | Osaline | [CHAPTER-04](CHAPTER-04.md): kutsega kontod, e-posti kinnitus, sessioonid, rollid, liikmesused, TOTP/varukoodid, ligipääsu sulgemine ja omaniku üleandmine. Kalendri-/kliendivaated on õigustega ühendatud. Auditi F-03 on kohalikult parandatud; kasutatav tugivaade 23-G09 puudub; tootmise kontode/SMTP vastuvõtt jääb avatuks. |
+| 04 | Kasutajad, ettevõtted ja õigused | Osaline | [CHAPTER-04](CHAPTER-04.md): kutsega kontod, e-posti kinnitus, sessioonid, rollid, liikmesused, TOTP/varukoodid, ligipääsu sulgemine ja omaniku üleandmine. Kalendri-/kliendivaated on õigustega ühendatud. Auditi F-03 on kohalikult parandatud; piiratud tugivaade 23-G09 on 09.09 kohalikult kontrollitud ([tõendid](SUPPORT-G09.md)); tootmise kontode/SMTP vastuvõtt jääb avatuks. |
 | 05 | Domeenid ja kodulehele lisamine | Osaline | [tenants.ts](../src/lib/tenants.ts), [SERVER](SERVER.md): [CHAPTER-05](CHAPTER-05.md): püsiv domeenireservatsioon, käitaja HTTPS-käsk, lubatud kodulehed, iframe ja modaal. Ettevõtte loomine/seadistamine on lisatud peatükis 18; laiem brauserimaatriks jääb avatuks. |
 | 06 | Teenused ja töötajate seosed | Osaline | [CHAPTER-06](CHAPTER-06.md): gruppide hierarhia, teenuste vaikeväärtused, töötajaprofiilid, pärimine/erisused, arhiveerimine, õigused, audit ja versioonikontroll. Peatükk 10 lisab peidetud teenuse käsitsi broneerimise ning lahkunud töötaja ligipääsu sulgemise ja lahendamist ootavad ajad. Täielik brauserimaatriks jääb avatuks. |
 | 07 | Töögraafik ja vabade aegade reeglid | Osaline | [CHAPTER-07](CHAPTER-07.md): asukoha/töötaja nädalagraafikud, perioodi erandid, õigused, reeglite haldus, versioonid, audit ja broneeringukonfliktid. Kliendi tingimused kontrollitakse uuesti; kontaktid säilivad. Kalender ja käsitsi erandid on hiljem lisatud; täielik brauserimaatriks jääb avatuks. |
@@ -66,7 +68,7 @@ Peatükk 01 on ülejäänud peatükkide koondnõue. Selle läbivaatamine ei täh
 | Kliendi iseteenindus | Omaniku poliitikaga vaatamis-, muutmis- ja tühistamislink ning versioonitud ICS (10) | Turva ja kasutatavuse tervikvastuvõtt (16, 25) |
 | Teavitused | Versioonitud outbox, saatja, meeldetuletused, rendid, korduskatsed ja saatmishetke kontroll olemas (17) | Päris SMTP vastuvõtt 23-G05 |
 | Veebilehele lisamine | Link, lubatud päritolud, iframe, modaal ja varulink olemas (05) | Laiem brauserite ja veebiehitajate vastuvõtt (12/25) |
-| Kuutasu ja platvormihaldus | 35 € plaan, perioodid, arved/kreeditarved, laekumised ja Maksekeskuse ühendus kohalikult olemas (19) | Paranduse tootmise paigaldus, 23-G09 tugivaade, pakkuja/SMTP pärisvastuvõtt |
+| Kuutasu ja platvormihaldus | 35 € plaan, perioodid, arved/kreeditarved, laekumised ja Maksekeskuse ühendus kohalikult olemas (19) | 23-G09 omaniku vastuvõtt, pakkuja/SMTP pärisvastuvõtt |
 | Käivitamine ja andmed | Viisard, testrežiim, import/eksport, audit, lahkumine ja kontaktide eemaldamine kohalikult olemas (18, 21) | Proksi muudatuse paigaldus, säilituse automaatika 23-G07 ning täielik üleandmine |
 | Turvalisus ja käitamine | RLS, rollid/MFA, oma taristu, kohalik taastamiskaitse ja seiretööriistad | Migratsioon 048 / paranduse paigaldus, väline varundus/hoiatused ootel, turva-/taastamis-/koormusvastuvõtt (23) |
 

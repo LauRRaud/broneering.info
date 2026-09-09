@@ -12,6 +12,8 @@ import RetentionSettings from './retention-settings';
 import OwnerInvitationRecovery from './owner-invitation-recovery';
 import SubscriptionManagement from './subscription-management';
 import BillingIssuer from './billing-issuer';
+import PlatformSupport from './platform-support';
+import type {SupportGrant} from '@/lib/access';
 import {localizedFetch as fetch} from '@/lib/client-fetch';
 import {useI18n} from '@/components/i18n-provider';
 
@@ -33,7 +35,7 @@ type AdminAppProps = {
   initialLogin?: boolean;
 };
 
-type AdminResponse = { ok?: boolean; error?: string; code?: string; tenantId?: string; conflicts?:ScheduleConflict[];total?:number; grant?: { id: string; expiresAt: string } };
+type AdminResponse = { ok?: boolean; error?: string; code?: string; tenantId?: string; conflicts?:ScheduleConflict[];total?:number; grant?: SupportGrant };
 
 function errorMessage(value: { error?: { message?: string; code?: string } | null; message?: string } | undefined, fallback: string) {
   return value?.error?.message || value?.message || fallback;
@@ -82,7 +84,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
   const [invitationActive, setInvitationActive] = useState(Boolean(invitationToken));
   const [resetHandled, setResetHandled] = useState(false);
   const [invitationError, setInvitationError] = useState("");
-  const [supportGrant, setSupportGrant] = useState<{ id: string; expiresAt: string } | null>(null);
+  const [supportGrant, setSupportGrant] = useState<SupportGrant | null>(null);
   const [inviteRole, setInviteRole] = useState<"receptionist" | "staff">("receptionist");
   const stateRequest = useRef(0);
   const stateAbort = useRef<AbortController | null>(null);
@@ -362,6 +364,12 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
       const response = await postAdmin(action, payload);
       if (response.error) throw new Error(readError(response, t("Toiming ebaõnnestus.")));
       if (action === "support-start" && response.grant) setSupportGrant(response.grant);
+      if (action === "support-stop") {
+        setSupportGrant(current=>current?.id===payload.grantId?null:current);
+        if(typeof BroadcastChannel!=='undefined'){
+          const channel=new BroadcastChannel('support-grants');channel.postMessage({revoked:payload.grantId});channel.close();
+        }
+      }
       setMessage(success);
       await loadState(selectedTenantId);
       return true;
@@ -543,7 +551,10 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
             </>}
           </>}
           </section>}
-          {state.user.isPlatformAdmin && <section aria-labelledby="platform-title"><h2 id="platform-title">{t("Platvorm")}</h2><p>{t("Platvormi tugi annab ajutise ainult lugemise ligipääsu valitud ettevõtte kontekstile.")}</p><ul>{(state.platformTenants || []).map((tenant) => <li key={tenant.id}>{tenant.name} ({tenant.slug}) · {tenant.active ? "aktiivne" : "peatatud"} <form onSubmit={(event) => { event.preventDefault(); const data = new FormData(event.currentTarget); void performAdminAction("support-start", { tenantId: tenant.id, reason: String(data.get("reason") || "") }, t("Toe ligipääs avati.")); }}><label htmlFor={`support-reason-${tenant.id}`}>{t("Põhjus")}</label><br /><input id={`support-reason-${tenant.id}`} name="reason" minLength={10} required /><button type="submit" disabled={!!busy}>{t("Alusta tuge")}</button></form></li>)}</ul>{supportGrant && <p>{t("Toe ligipääs: ")}{supportGrant.id}{t(", aegub ")}{supportGrant.expiresAt} <button type="button" onClick={() => { void performAdminAction("support-stop", { grantId: supportGrant.id }, t("Toe ligipääs lõpetati.")).then((ok) => { if (ok) setSupportGrant(null); }); }} disabled={!!busy}>{t("Lõpeta tugi")}</button></p>}</section>}
+          {state.user.isPlatformAdmin && <PlatformSupport tenants={state.platformTenants||[]} grants={state.supportGrants||[]} selected={supportGrant} busy={!!busy}
+            select={setSupportGrant}
+            start={(tenantId,reason)=>{void performAdminAction("support-start",{tenantId,reason},t("Toe ligipääs avati."));}}
+            stop={grantId=>{void performAdminAction("support-stop",{grantId},t("Toe ligipääs lõpetati."));}}/>}
         </>
       )}
     </main>

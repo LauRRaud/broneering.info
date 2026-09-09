@@ -267,6 +267,28 @@ export async function listPlatformTenants(actor: Actor): Promise<Array<{id:strin
 }
 
 export type SupportGrant = { id:string; tenantId:string; scope:'read_only'; reason:string; expiresAt:string; revokedAt:string|null };
+export async function listSupportGrants(actor:Actor):Promise<SupportGrant[]>{
+  const client=await pool().connect();
+  try{
+    await client.query('BEGIN');
+    await requirePlatformInClient(actor,client);
+    const rows=await client.query(`SELECT id,tenant_id,reason,expires_at FROM support_grants
+      WHERE platform_user_id=$1 AND scope='read_only' AND revoked_at IS NULL AND expires_at>clock_timestamp()
+      ORDER BY expires_at DESC,id`,[actor.id]);
+    await client.query('COMMIT');
+    return rows.rows.map(row=>({id:row.id,tenantId:row.tenant_id,scope:'read_only',reason:row.reason,expiresAt:new Date(row.expires_at).toISOString(),revokedAt:null}));
+  }catch(error){await client.query('ROLLBACK');throw error;}finally{client.release();}
+}
+/** Caller holds the transaction through the read and audit. Revocation uses the same row lock. */
+export async function requireSupportGrantInClient(actor: Actor, grantId: string, tenantId: string, client: PoolClient): Promise<SupportGrant> {
+  await requirePlatformInClient(actor,client);
+  const found=await client.query(`SELECT id,tenant_id,reason,expires_at FROM support_grants
+    WHERE id=$1 AND tenant_id=$2 AND platform_user_id=$3 AND scope='read_only'
+      AND revoked_at IS NULL AND expires_at>clock_timestamp() FOR UPDATE`,[grantId,tenantId,actor.id]);
+  if(!found.rowCount) fail('GRANT_NOT_FOUND','Aktiivset tugijuurdepääsu ei leitud.',404);
+  const row=found.rows[0];
+  return {id:row.id,tenantId:row.tenant_id,scope:'read_only',reason:row.reason,expiresAt:new Date(row.expires_at).toISOString(),revokedAt:null};
+}
 export async function createSupportGrant(actor: Actor, tenantId: string, reason: string): Promise<SupportGrant> {
   assertAuthEnabled();
   const cleanReason = reason.trim(); if (!cleanReason || cleanReason.length > 500) fail('INVALID_REASON','Toe põhjendus on vajalik.',400);

@@ -1,5 +1,7 @@
 # Peatükk 04 — kasutajad, ettevõtted ja õigused
 
+**Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on kohalikult teostatud ning API/andmebaasi/brauseriga kontrollitud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.
+
 Alustatud ja tehniline alus kontrollitud 07.09.2026 omaniku korraldusel. Alus: arendusplaani peatükk 04, rollimaatriks, D-01, D-04, D-13, D-19 ning peatüki 16 autentimisnõuded. Kujundus on ootel; vajalikud toimingud kasutavad HTML-i vaikevorme. See fail eristab kontrollitud teostust veel avatud vastuvõtust.
 
 ## Nõuded ja tööjaotus

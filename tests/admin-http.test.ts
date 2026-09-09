@@ -9,7 +9,7 @@ vi.mock('../src/lib/request-limits',()=>({limitTenant:vi.fn(async()=>{})}));
 
 vi.mock('../src/lib/auth', () => ({ getIdentity: vi.fn() }));
 vi.mock('../src/lib/auth-mail', () => ({ isAccountMailConfigured: () => false, sendAccountMail: vi.fn() }));
-vi.mock('../src/lib/access', () => ({listMemberships:vi.fn(),listMembers:vi.fn(),listPlatformTenants:vi.fn(),requireMembership:vi.fn(),requireOwnerInTransaction:vi.fn(),changeMemberRole:vi.fn(),createSupportGrant:vi.fn(),revokeMember:vi.fn(),revokeSupportGrant:vi.fn(),transferOwnership:vi.fn(),updateMemberPermissions:vi.fn()}));
+vi.mock('../src/lib/access', () => ({listMemberships:vi.fn(),listMembers:vi.fn(),listPlatformTenants:vi.fn(),listSupportGrants:vi.fn(async()=>[]),requireMembership:vi.fn(),requireOwnerInTransaction:vi.fn(),changeMemberRole:vi.fn(),createSupportGrant:vi.fn(),revokeMember:vi.fn(),revokeSupportGrant:vi.fn(),transferOwnership:vi.fn(),updateMemberPermissions:vi.fn()}));
 vi.mock('../src/lib/invitations', () => ({listInvitations:vi.fn(),acceptInvitation:vi.fn(),cancelInvitation:vi.fn(),inviteMember:vi.fn()}));
 vi.mock('../src/lib/schedule-management',async(importOriginal)=>({...await importOriginal<typeof import('../src/lib/schedule-management')>(),saveSchedule:vi.fn(),scheduleState:vi.fn()}));
 const tenantId='11111111-1111-4111-8111-111111111111';

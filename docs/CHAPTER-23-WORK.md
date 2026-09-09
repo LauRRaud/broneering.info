@@ -2,7 +2,7 @@
 
 **Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
 
-Seis 08.09.2026 pärast omaniku paranduskäsku: **23-F01–F05 on kohalikult parandatud ja kontrollitud**, [järelraport ja tõendid](CHAPTER-23-FIXES.md). **23-G01–G09 on avatud**; tootmise paigaldus ja omaniku etappide vastuvõtt jäävad eraldi. Audit ega selle register ei ole korraldus väliste teenuste tellimiseks või tootmise muutmiseks. Omaniku varasem kujunduse ning välise varunduse/hoiatuste edasilükkamine jääb kehtima. [Koodileiud ja tõendid](CHAPTER-23.md), [AT-maatriks](CHAPTER-23-ACCEPTANCE.md).
+Seis 08.09.2026 pärast omaniku paranduskäsku: **23-F01–F05 on kohalikult parandatud ja kontrollitud**, [järelraport ja tõendid](CHAPTER-23-FIXES.md). **23-G01–G08 on avatud; 23-G09 tehniline teostus ja kohalik kontroll on 09.09 valmis** ([tõendid](SUPPORT-G09.md)); tootmise paigaldus ja omaniku etappide vastuvõtt jäävad eraldi. Audit ega selle register ei ole korraldus väliste teenuste tellimiseks või tootmise muutmiseks. Omaniku varasem kujunduse ning välise varunduse/hoiatuste edasilükkamine jääb kehtima. [Koodileiud ja tõendid](CHAPTER-23.md), [AT-maatriks](CHAPTER-23-ACCEPTANCE.md).
 
 Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tähendab järgmise kirjeldatud piiritletud töö arendaja/testija tunde; välise teenuse ooteaeg, partnerite ajakulu ja pärast katset ilmnev parandustöö on eraldi. Hinnangud vajavad töö alustamisel täpsustamist. Kõigi tööde kinnitaja on toote omanik; vastuvõtu kuupäev on märkimata.
 
@@ -150,6 +150,8 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G09 — tegelik auditeeritud tugivaade
 
+**Seis 09.09.2026: piiratud kalendri/kliendikontaktide lugemisvoog on teostatud ja kohalikult kontrollitud.** [Teostus ning API, andmebaasi ja brauseri tõendid](SUPPORT-G09.md). Omaniku ja sõltumatu ülevaataja vastuvõtt on märkimata. Allpool on töö algne vastuvõtuleping.
+
 - **Seos / eesmärk:** ptk 04/19, E9. Platvormihaldur saab põhjendatud ajutise loa alusel ettevõtet aidata.
 - **Sisendid / eeltingimused:** olemasolev support grant, ettevõte ja nõutud lugemisvaadete selgelt piiratud loend.
 - **Põhikäik:** ühendada eraldi ainult lugemiseks tugivaade loa kontrolliga igal päringul; kuvada ettevõte, põhjendus ja aegumine; lõpetamine sulgeb ligipääsu kohe.
@@ -160,6 +162,6 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## Järjekord ja etappide sulgemine
 
-F-01–F-05 kohalik parandusring on lõpetatud. Järgmiste töödena jäävad 23-G09 ning 23-G03/G05/G06/G08 vastavad protokollid. Äriotsused, piloot ja õiguste ahel liiguvad omaniku tööna nende sõltuvustega samal ajal. Kujunduse ja tootmise varunduse edasilükkamist audit ei tühista.
+F-01–F-05 kohalik parandusring on lõpetatud. 23-G09 piiratud tugivaate tehniline teostus on 09.09 valmis. Järgmiste töödena jäävad 23-G03/G05/G06/G08 vastavad protokollid. Äriotsused, piloot ja õiguste ahel liiguvad omaniku tööna nende sõltuvustega samal ajal. Kujunduse ja tootmise varunduse edasilükkamist audit ei tühista.
 
 E2 kohalikule tehnilisele katsele on [värske tõend](CHAPTER-23.md) olemas ning eraldi koodimuudatust selle tõendi tekitamiseks vaja ei ole; lõplik omaniku vastuvõtt tuleb registreerida. E0–E10 muud piirid on põhiosa tabelis. Etappe ei märgita tervikuna valmis selle põhjal, et käesolev audit ja tööregister valmis said.

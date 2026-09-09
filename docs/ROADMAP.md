@@ -1,5 +1,7 @@
 # Järgmised arendustööd
 
+**Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on kohalikult teostatud ning API/andmebaasi/brauseriga kontrollitud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.
+
 **Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
 
 08.09.2026 ajakohane alus on [peatüki 23 koodi- ja vastuvõtuaudit](CHAPTER-23.md), [AT-01–48 maatriks](CHAPTER-23-ACCEPTANCE.md) ning [hinnatud tööregister](CHAPTER-23-WORK.md). Dokumendi peatükkide järjekord säilib [PROGRESS.md](PROGRESS.md) registris. Auditi valmimine ei tähenda V1 vastuvõttu.
@@ -10,7 +12,7 @@
 
 ## Puuduv teostus ja vastuvõtt
 
-Kohalikult on olemas kontod/õigused, teenused/graafikud, avalik broneerimine ja halduslingid, oma päeva-/nädalakalender, kliendid, teavitustöö, ettevõtte loomine/seadistamine, import/eksport/lahkumine, arveldus ja taastamistööriistad. Kasutatav auditeeritud tugivaade ning säilituskava automaatne täitmine on veel tegemata.
+Kohalikult on olemas kontod/õigused, teenused/graafikud, avalik broneerimine ja halduslingid, oma päeva-/nädalakalender, kliendid, teavitustöö, ettevõtte loomine/seadistamine, import/eksport/lahkumine, arveldus ja taastamistööriistad. Piiratud auditeeritud tugivaade on 09.09 teostatud ([tõendid](SUPPORT-G09.md)); säilituskava automaatne täitmine on veel tegemata.
 
 Järgmised vastuvõtud: päris SMTP ja Maksekeskuse ühendus, brauserite/klaviatuuri/ekraanilugeja ja rollide maatriks, lähtekoormus ja kalendri nähtavuse mõõtmine, piloot, sõltumatu paigaldus/taastamine ning õiguste/litsentside üleandmine. Iga töö täpsed eeltingimused ja tõend on tööregistris.
 

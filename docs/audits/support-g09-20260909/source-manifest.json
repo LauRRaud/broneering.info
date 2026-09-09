@@ -1,0 +1,57 @@
+{
+  "basis": "Git index bytes (LF-normalized source), checked on 2026-09-09",
+  "files": [
+    {
+      "path": "src/app/api/admin/state/route.ts",
+      "sha256": "2ef14c93d154606170f1ad1b8ec9c1993407b289be35ee53e7ccbee213c0a336"
+    },
+    {
+      "path": "src/app/api/admin/support/route.ts",
+      "sha256": "463871d7cab89c9da10340cb0f702639ff27d5ea69a72be705b5f616daa68dd8"
+    },
+    {
+      "path": "src/components/admin-app.tsx",
+      "sha256": "c888d9736303683426633dfdd82d68044c35907c0a3b1ac7a3efa13a0643b0e1"
+    },
+    {
+      "path": "src/components/platform-support.tsx",
+      "sha256": "872213273ffb8ad603f7192fa38abec5201675e78cf753b605b2902940bf8298"
+    },
+    {
+      "path": "src/components/support-view.tsx",
+      "sha256": "f4e4ff2ca2ba92bdc136f0f7aa9bf877ca211d43dd9e80fc37dbdd874f24b997"
+    },
+    {
+      "path": "src/lib/access.ts",
+      "sha256": "4403b1f7ab116eca2054f77dd1130101a2271f46ca7dd1d939cadec71f55f911"
+    },
+    {
+      "path": "src/lib/admin-contracts.ts",
+      "sha256": "403f0d1a2c776c35948b3838afde2af22297e0087beba41f19e79627f6a394ac"
+    },
+    {
+      "path": "src/lib/support-view.ts",
+      "sha256": "e94d0fd16917c4a361adad9b0c9bbee31b37c52d39ab2cfee0258c2cec5ed00d"
+    },
+    {
+      "path": "src/locales/en.json",
+      "sha256": "b76ba2da1156d07c6ba8a4b03c769175a62560ea084b87d439e18d73289c06b4"
+    },
+    {
+      "path": "src/locales/et.json",
+      "sha256": "bbd7626646c94a2008ee5003503662036139ad62b2a72ca23ba4a89ef962d199"
+    },
+    {
+      "path": "src/locales/ru.json",
+      "sha256": "4eae598d4aa846fae827ce91adb5634b32898c2f7e54776a8d97d8dac2f2f05d"
+    },
+    {
+      "path": "tests/admin-http.test.ts",
+      "sha256": "4abb7361fe00bcc37e22c851b7cd424260d5bfd8e0e0264df2f1ffa64b75c95b"
+    },
+    {
+      "path": "tests/support-view.test.ts",
+      "sha256": "05af3f31e2eb8fa62244c219139bf57669ebdb171db51365c0f2b30f0f1dfc3f"
+    }
+  ]
+}

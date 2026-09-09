@@ -1,5 +1,6 @@
 import type {ServiceManagementState} from './service-management-contracts';
 import type {ScheduleState} from './schedule-contracts';
+import type {SupportGrant} from './access';
 export type AdminRole = 'owner' | 'receptionist' | 'staff';
 export type AdminIdentity = {
   id: string;
@@ -45,6 +46,7 @@ export type AdminState = {
   schedules?:ScheduleState;
   embedding?: {origins:string[];domains:Array<{hostname:string;ready:boolean}>};
   platformTenants?: Array<{id: string; name: string; slug: string; active: boolean}>;
+  supportGrants?:SupportGrant[];
 };
 
 // These are the explicit owner-controlled exceptions from chapter 04, not a role editor.

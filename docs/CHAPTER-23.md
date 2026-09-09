@@ -1,5 +1,7 @@
 # Peatükk 23 — teostuse audit ja tööde vastuvõtt
 
+**Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on kohalikult teostatud ning API/andmebaasi/brauseriga kontrollitud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.
+
 **Paranduste järelseis 08.09.2026:** F-01–F-05 on kohalikult parandatud ja kontrollitud: [muudatused, 261 testi ning brauseri/proksi tõendid](CHAPTER-23-FIXES.md). Tootmise paigaldust ja ülejäänud 23-G01–G09 töid pole tehtud. Allpool olevad leiud ja E0–E10 tabel kirjeldavad auditi algseisu.
 
 **Auditi kuupäev: 08.09.2026. Järeldus: V1 tervikvastuvõtuks pole alust.** Kohalik teostus ulatub palju kaugemale esialgsest E2 katsest, kuid audit leidis viis parandamist vajavat viga: neli korrati katsetega ja üks kinnitati proksi seadistuse ning impordi lepingu võrdlusest. Lisaks puuduvad osa kasutatavuse, väliste ühenduste, koormuse ja üleandmise tõendeid. Läbivad automaattestid ei kõrvalda neid puudusi.

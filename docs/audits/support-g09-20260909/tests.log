@@ -1,0 +1,13 @@
+
+> broneering-info@0.1.0 test
+> node --env-file-if-exists=.env.local ./node_modules/vitest/vitest.mjs run
+
+
+ RUN  v4.1.11 C:/Users/rauds/Desktop/Projektid/Broneerimise SaaS/broneering.info
+
+
+ Test Files  41 passed (41)
+      Tests  286 passed (286)
+   Start at  09:23:07
+   Duration  104.32s (transform 2.13s, setup 0ms, import 13.48s, tests 79.89s, environment 6ms)
+

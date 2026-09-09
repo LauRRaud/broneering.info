@@ -1,5 +1,7 @@
 # Peatükk 19: kuutasu ja arveldus
 
+**Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on kohalikult teostatud ning API/andmebaasi/brauseriga kontrollitud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.
+
 ## Omaniku kinnitatud tingimused
 
 08.09.2026 vestluses kinnitatud: üks pakett, **35 € lõpphind kuus**, piiramatu töötajate arv ja **prooviperioodita**. Maksu olemasolul eraldatakse see lõpphinnast; käibemaksu ei lisata 35 eurole. Maksukäsitlus ja väljastaja andmed vajavad enne pärisarve väljastamist raamatupidamise kinnitatud seadistust.
