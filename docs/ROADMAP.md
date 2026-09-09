@@ -1,5 +1,7 @@
 # Järgmised arendustööd
 
+**23-G03 uuendus 09.09.2026:** [esimene HTTP-, brauseri- ja klaviatuurimaatriks](ACCEPTANCE-G03.md) on kontrollitud ning leitud WebKiti põhisisulingi viga parandatud. Edasi jääb protokollis nimetatud ülejäänud API/veateekondade, pärisseadmete ja ekraanilugejate vastuvõtt; G03 tervikuna jääb avatuks.
+
 **Uuendus 09.09.2026:** 23-G09 piiratud auditeeritud kalendri- ja kliendikontaktide tugivaade on API/andmebaasi/brauseriga kontrollitud ning serverisse paigaldatud. [Teostus, õiguste piirid ja tõendid](SUPPORT-G09.md). Allpool olevad 08.09 kirjeldused säilitavad oma ajaloolise kontrolliseisu.
 
 **Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.

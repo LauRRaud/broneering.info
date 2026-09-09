@@ -1,0 +1,69 @@
+
+> broneering-info@0.1.0 build
+> npm run architecture:check && node --import tsx scripts/widget-languages.ts && next build
+
+
+> broneering-info@0.1.0 architecture:check
+> node --import tsx scripts/architecture.ts
+
+Architecture boundaries passed (155 source files).
+▲ Next.js 16.3.4 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 46ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1614ms
+  Running TypeScript ...
+  Finished TypeScript in 5.1s ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/17) ...
+  Generating static pages using 15 workers (4/17) 
+  Generating static pages using 15 workers (8/17) 
+  Generating static pages using 15 workers (12/17) 
+✓ Generating static pages using 15 workers (17/17) in 351ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /api/admin/[action]
+├ ƒ /api/admin/billing
+├ ƒ /api/admin/booking-policy
+├ ƒ /api/admin/bookings
+├ ƒ /api/admin/companies
+├ ƒ /api/admin/customers
+├ ƒ /api/admin/customers/privacy
+├ ƒ /api/admin/exit
+├ ƒ /api/admin/exports
+├ ƒ /api/admin/imports
+├ ƒ /api/admin/language
+├ ƒ /api/admin/notifications
+├ ƒ /api/admin/onboarding
+├ ƒ /api/admin/preview/[action]
+├ ƒ /api/admin/retention
+├ ƒ /api/admin/state
+├ ƒ /api/admin/subscription
+├ ƒ /api/admin/support
+├ ƒ /api/admin/translations
+├ ƒ /api/auth/[...all]
+├ ƒ /api/availability
+├ ƒ /api/booking/manage
+├ ƒ /api/bookings
+├ ƒ /api/catalog
+├ ƒ /api/health
+├ ƒ /api/payments/invoice
+├ ƒ /api/payments/makecommerce/notify
+├ ƒ /api/payments/makecommerce/return
+├ ƒ /api/ready
+├ ƒ /broneering
+├ ƒ /embed
+├ ƒ /pay
+├ ƒ /preview
+├ ƒ /robots.txt
+└ ƒ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+ƒ  (Dynamic)  server-rendered on demand
+

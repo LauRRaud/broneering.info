@@ -19,4 +19,4 @@ export function useI18n(){return useContext(Context);}
 export function LanguageSwitcher(){
 const {locale,t,setLocale}=useI18n();return <div className="language-switcher"><label htmlFor="interface-language">{t("Keel")} </label><select id="interface-language" value={locale} onChange={e=>{setLocale(e.target.value as Locale);if(!document.querySelector('[data-live-language]'))window.location.reload();}}>{locales.map(language=><option key={language} value={language} lang={language}>{localeNames[language]}</option>)}</select></div>;}
 export function SkipLink(){
-const {t}=useI18n();return <a className="skip-link" href="#main-content">{t("Liigu põhisisu juurde")}</a>;}
+const {t}=useI18n();return <a className="skip-link" href="#main-content" tabIndex={0}>{t("Liigu põhisisu juurde")}</a>;}

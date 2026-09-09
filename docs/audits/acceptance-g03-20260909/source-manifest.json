@@ -1,0 +1,26 @@
+{
+  "at": "2026-09-09T06:57:45.782Z",
+  "format": "SHA-256 of Git index blob bytes",
+  "sources": [
+    {
+      "path": "src/components/i18n-provider.tsx",
+      "sha256": "81b852012455a3379fbd039d3fd4fdde4e436163b4c51c3dafe1c3fd2c480b2a"
+    },
+    {
+      "path": "scripts/acceptance-g03-fixture.ts",
+      "sha256": "d5df1752f676234ae2f708bd219e90ac02fdc16489b32abfec563ea1c3011816"
+    },
+    {
+      "path": "scripts/acceptance-g03-http.ts",
+      "sha256": "171927fdca09cf5a09b82414aaffe688db230627c964d2e6d59e5096d24ad688"
+    },
+    {
+      "path": "scripts/acceptance-g03-browser.js",
+      "sha256": "705d795411cd56649001791b37055df9673182b683718264901cd3ae86112e3b"
+    },
+    {
+      "path": "scripts/acceptance-g03-public.js",
+      "sha256": "05656557022da8e3b2219128dbf1755f90360b37a78ea2db714eca0ea0d7ba18"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+### Result
+{"engine":"webkit","version":"26.5","viewport":"390x844","keyboardOnly":true,"offer":"12:30 — G03 A töötaja 1, 30 min · 25,00 €","summaryMatches":true,"status":201,"confirmation":"Kohtumiseni, G03.","pass":true}
+### Ran Playwright code
+```js
+await (async (page) => {
+ const engine='webkit',dir='output/playwright/acceptance-g03';
+ const ensure=(condition,message)=>{if(!condition)throw Error(message);};
+ const tabTo=async target=>{
+  await target.waitFor();
+  for(let n=0;n<160;n++){
+   if(await target.evaluate(e=>e===document.activeElement))return;
+   await page.keyboard.press('Tab');
+  }
+  throw Error('Unreachable keyboard target');
+ };
+ await page.context().setStorageState({cookies:[],origins:[]});
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('http://g03-66c14a14-27e5-4f00-940c-fe8a920734f0.localhost:3108');
+ await page.waitForFunction(()=>document.activeElement.id==='booking-title');
+ await tabTo(page.getByRole('button',{name:'G03 lõikus',exact:true}));
+ await page.keyboard.press('Enter');
+ await page.getByRole('heading',{name:'Kes sind vastu võtab?',exact:true}).waitFor();
+ ensure(await page.evaluate(()=>document.activeElement.textContent)==='Kes sind vastu võtab?','Staff step focus');
+ await tabTo(page.getByRole('button',{name:'Töötaja pole oluline',exact:true}));
+ await page.keyboard.press('Enter');
+ await page.getByRole('heading',{name:'Vali endale hetk.',exact:true}).waitFor();
+ const offers=page.getByRole('list',{name:'Vabad ajad',exact:true});
+ const first=offers.getByRole('button').first();await first.waitFor();
+ const offer=await first.innerText();
+ ensure((await offers.innerText()).includes('G03 A töötaja 1')&&(await offers.innerText()).includes('G03 A töötaja 2'),'Both employees must have offers');
+ await tabTo(first);await page.keyboard.press('Enter');
+ await page.getByRole('heading',{name:'Veel mõned andmed.',exact:true}).waitFor();
+ ensure(await page.evaluate(()=>document.activeElement.textContent)==='Veel mõned andmed.','Details step focus');
+ const summary=await page.getByRole('complementary',{name:'Broneeringu kokkuvõte'}).innerText();
+ const selectedStaff=offer.includes('G03 A töötaja 1')?'G03 A töötaja 1':'G03 A töötaja 2';
+ ensure(summary.includes('25,00')&&summary.includes('30 min')&&summary.includes(selectedStaff),'Concrete offer summary');
+ await tabTo(page.getByRole('button',{name:'Kinnita broneering',exact:true}));
+ await page.keyboard.press('Enter');
+ // Browser native validation or the app must focus the first missing contact.
+ const name=page.getByRole('textbox',{name:'Teenuse saaja nimi *',exact:true});
+ await tabTo(name);await page.keyboard.insertText(`G03 ${engine} Keyboard`);
+ await page.keyboard.press('Tab');
+ ensure(await page.getByRole('textbox',{name:'Kontaktisiku e-post *',exact:true}).evaluate(e=>e===document.activeElement),'Email tab order');
+ await page.keyboard.insertText(`g03-${engine}@example.invalid`);
+ await tabTo(page.getByRole('button',{name:'Kinnita broneering',exact:true}));
+ const responsePromise=page.waitForResponse(r=>r.url().endsWith('/api/bookings')&&r.request().method()==='POST');
+ await page.keyboard.press('Enter');
+ const response=await responsePromise;ensure(response.status()===201,'Booking must return 201');
+ await page.getByRole('heading',{name:'Kohtumiseni, G03.',exact:true}).waitFor();
+ await page.screenshot({path:`${dir}/${engine}-public-confirmation.png`});
+ return {engine,version:page.context().browser().version(),viewport:'390x844',keyboardOnly:true,offer,summaryMatches:true,status:response.status(),confirmation:await page.getByRole('heading',{name:'Kohtumiseni, G03.',exact:true}).innerText(),pass:true};
+}
+
+)(page);
+```
+### Page
+- Page URL: http://g03-66c14a14-27e5-4f00-940c-fe8a920734f0.localhost:3108/
+- Page Title: broneering.info
+### Events
+- New console entries: .playwright-cli\console-2026-09-09T06-43-02-631Z.log#L67

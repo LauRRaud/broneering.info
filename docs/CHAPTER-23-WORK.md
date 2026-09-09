@@ -90,6 +90,8 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G03 — brauseri-, õiguste ja kasutatavuse vastuvõtt
 
+**Seis 09.09.2026: esimene automaatne põhimatriks valmis, tervikvastuvõtt avatud.** 240 päris HTTP-päringut ja äriandmete räsivõrdlus läbisid; kolm brauserimootorit × neli haldusrolli ning kolm klaviatuuriga avalikku broneerimist läbisid. Leitud WebKiti põhisisulingi Tab-viga parandatud. [Täpne ulatus, kordamise juhis, tõendid ja järgmise vooru protokoll](ACCEPTANCE-G03.md). Safari/pärisseadmed, ekraanilugejad, ülejäänud API-harud ja veateekonnad jäävad avatuks. Allpool on algne tööleping.
+
 - **Seos / eesmärk:** ptk 08–12/16/24/25, E3–E7/E10, eriti AT-01–08 ja AT-19–35. Mõõta tervikteekonda kokkulepitud brauserites ning rollidega.
 - **Sisendid / eeltingimused:** AT-maatriks, praegused API-d ja õigused; täpsed toetatud versioonid ning klaviatuuri/ekraanilugeja kombinatsioonid.
 - **Põhikäik:** järgmise sammuna koostada katseandmed ja automatiseeritav põhiteekond, rollide/HTTP negatiivne maatriks ning käsitsi kontrollide plaan; seejärel täita kogu kokkulepitud maatriks.
