@@ -1,6 +1,6 @@
 # 23-G03 — esimene HTTP-, brauseri- ja klaviatuurimaatriks
 
-**23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 506/506 HTTP-kontrolli, 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
+**23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 505 HTTP-päringut ja üks andmebaasi räsivõrdlus (506/506), 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
 
 **Järgnev voor 09.09.2026:** [teenusevalikute, otselingi, hinnamuutuse ja päriselt aegunud etteteatamispiiri kontroll](ACCEPTANCE-G03-VARIANTS.md) lisab 15 läbinud brauserifaasi ning täpsed AT-01/03/04/06/08 tõendid. Allpool olev esimene protokoll säilitab oma kontrolliseisu; osa siin järgmiseks tööks nimetatust on järgnevas voorus tehtud.
 

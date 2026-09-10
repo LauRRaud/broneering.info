@@ -8,7 +8,7 @@ See voor lõpetab [esimeses protokollis](ACCEPTANCE-G03.md) nimetatud laiendatud
 
 | Kontroll | Tulemus ja tõend |
 | --- | --- |
-| Laiendatud tegeliku HTTP õiguste maatriks | **506/506**; [päringute meetodid, rollid, teed ja staatused](audits/acceptance-g03-completion-20260909/extended-http-results.json) |
+| Laiendatud tegeliku HTTP õiguste maatriks | **505 HTTP-päringut + üks andmebaasi räsivõrdlus, 506/506 läbis**; [päringute meetodid, rollid, teed ja staatused](audits/acceptance-g03-completion-20260909/extended-http-results.json) |
 | Brauserid | **14/14 faasi, 356/356 kontrolli**; [masinloetav koond](audits/acceptance-g03-completion-20260909/results.json) |
 | Kõik olemasolevad automaattestid koos uue regressioonitestiga | **41 faili, 287/287 testi**, vahelejäetud teste pole; [logi](audits/acceptance-g03-completion-20260909/full-tests.log), [Vitesti JSON](audits/acceptance-g03-completion-20260909/vitest.json) |
 | Tootmisbuild | Läbis, sealhulgas TypeScript ja 155 lähtefaili arhitektuurikontroll; [logi](audits/acceptance-g03-completion-20260909/build.log) |
@@ -77,4 +77,6 @@ ASVS-i seos jääb [peatüki 16 kaardi](CHAPTER-16.md#asvs-i-jälgitavus) piires
 
 ## Paigaldus
 
-Kohalik testimine ja build on lõpetatud. Selle vooru tootmise paigalduse tõend lisatakse pärast tegelikku serverikontrolli.
+10.09.2026 paigaldati GitHubi `main` commit `ab35f39a9be989f675422832ed48930c0ef9ca52` serverisse `217.146.72.147`, `/srv/broneering.info`. Uuendati veebikonteiner; migratsioonide arv jäi 48 ja mõlemad töölised töötasid edasi. Veebipilt on `sha256:490a2733ac9770085de762a280bed50b4024c3b6a792b0dff414a83904addb3a`; eelmine pilt säilitati sildiga `broneeringinfo-web:before-g03-completion-20260910`.
+
+[Paigalduslogi](audits/acceptance-g03-completion-20260909/server-deploy.log): serveri build läbis, viis HTTPS-avalehte 200, readiness `ready`, anonüümne support GET 401 ja POST 405. Esimese taaskäivituseaegse readiness-päringu ühenduskatkestusele järgnes edukas valmisolekukontroll. [Järelkontroll](audits/acceptance-g03-completion-20260909/server-health.log) kinnitas, et web/db/export-worker/billing-worker on kõik `healthy`. [Avaliku widget'i kontroll](audits/acceptance-g03-completion-20260909/production-proof.json) võrdles kolmel tootmishostil HTTPS-ist saadud faili SHA-256 räsi paigaldatud commit'i failiga: kõik võrdsed, vastus 200. Hilisem dokumentatsioonimuudatus salvestab selle protokolli; rakenduspilt vastab ülal nimetatud lähtekoodiversioonile.

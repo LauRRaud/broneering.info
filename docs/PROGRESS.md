@@ -1,6 +1,6 @@
 # Arendusplaani täitmise register
 
-**23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 506/506 HTTP-kontrolli, 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
+**23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 505 HTTP-päringut ja üks andmebaasi räsivõrdlus (506/506), 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
 
 **23-G03 teine voor 09.09.2026:** [teenusevalikud, töötaja otselink, hinnamuutus ja päris ajapiiri aegumine](ACCEPTANCE-G03-VARIANTS.md) kontrollitud kolmes mootoris. Kõik 15 brauserifaasi läbisid; rakenduse koodi selles voorus muuta polnud vaja. G03 ülejäänud maatriks jääb avatuks.
 

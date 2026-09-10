@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-10T05:56:12.078Z",
+  "commit": "ab35f39a9be989f675422832ed48930c0ef9ca52",
+  "widget": [
+    {
+      "host": "broneering.info",
+      "status": 200,
+      "sha256": "7af55ab5db88baddaa6121a2c58bdc743e6ee68704a2b5f033967d6bf33fe8ad",
+      "cacheControl": "public, max-age=0",
+      "pass": true
+    },
+    {
+      "host": "demo.broneering.info",
+      "status": 200,
+      "sha256": "7af55ab5db88baddaa6121a2c58bdc743e6ee68704a2b5f033967d6bf33fe8ad",
+      "cacheControl": "public, max-age=0",
+      "pass": true
+    },
+    {
+      "host": "demo2.broneering.info",
+      "status": 200,
+      "sha256": "7af55ab5db88baddaa6121a2c58bdc743e6ee68704a2b5f033967d6bf33fe8ad",
+      "cacheControl": "public, max-age=0",
+      "pass": true
+    }
+  ],
+  "readiness": "ready"
+}

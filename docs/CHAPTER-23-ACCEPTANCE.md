@@ -1,6 +1,6 @@
 # Peatükk 23 — AT-01–AT-48 tõendite maatriks
 
-**23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 506/506 HTTP-kontrolli, 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
+**23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 505 HTTP-päringut ja üks andmebaasi räsivõrdlus (506/506), 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
 
 **23-G03 uuendus 09.09.2026:** [esimene automaatne põhimatriks](ACCEPTANCE-G03.md) lisab AT-02/05/19/22/23/24/32/35 piiratud uue HTTP- ja kolme brauserimootori tõendi. 241 kontrolli, 12 haldusrolli/mootori kombinatsiooni ja kolm klaviatuuriga avalikku broneerimist läbisid. WebKiti põhisisulingi viga parandatud. Allpoolsete ridade laiem vastuvõtt jääb avatuks vastavalt uue protokolli piiridele.
 

@@ -1,0 +1,8 @@
+Thu Sep 10 05:56:11 UTC 2026
+ab35f39a9be989f675422832ed48930c0ef9ca52
+NAME                              IMAGE                                                                                 COMMAND                  SERVICE          CREATED          STATUS                    PORTS
+broneeringinfo-billing-worker-1   broneeringinfo-billing-worker                                                         "docker-entrypoint.s…"   billing-worker   34 hours ago     Up 34 hours (healthy)     
+broneeringinfo-db-1               postgres:18@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280   "docker-entrypoint.s…"   db               2 days ago       Up 2 days (healthy)       5432/tcp
+broneeringinfo-export-worker-1    broneeringinfo-export-worker                                                          "docker-entrypoint.s…"   export-worker    34 hours ago     Up 34 hours (healthy)     
+broneeringinfo-web-1              broneeringinfo-web                                                                    "docker-entrypoint.s…"   web              36 seconds ago   Up 35 seconds (healthy)   127.0.0.1:3107->3000/tcp
+{"status":"ready"}

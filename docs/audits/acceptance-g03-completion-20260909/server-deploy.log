@@ -1,0 +1,315 @@
+From github.com:LauRRaud/broneering.info
+ * branch            main       -> FETCH_HEAD
+   a892b9d..ab35f39  main       -> origin/main
+Updating a892b9d..ab35f39
+Fast-forward
+ docs/ACCEPTANCE-G03-COMPLETION.md                  |   80 +
+ docs/ACCEPTANCE-G03.md                             |    2 +
+ docs/CHAPTER-23-ACCEPTANCE.md                      |   36 +-
+ docs/CHAPTER-23-COVERAGE.md                        |    2 +
+ docs/CHAPTER-23-WORK.md                            |    6 +-
+ docs/CHAPTER-23.md                                 |    2 +
+ docs/PROGRESS.md                                   |    2 +
+ docs/ROADMAP.md                                    |    2 +
+ .../acceptance-g03-completion-20260909/build.log   |   69 +
+ .../checkout-regression.log                        |   13 +
+ .../chrome-admin-conflict.png                      |  Bin 0 -> 74411 bytes
+ .../chrome-concurrency.log                         |   70 +
+ .../chrome-cookie-restricted.png                   |  Bin 0 -> 49142 bytes
+ .../chrome-cookie.log                              |   55 +
+ .../chrome-embed-confirmation.png                  |  Bin 0 -> 42519 bytes
+ .../chrome-embed-csp-denied.png                    |  Bin 0 -> 12086 bytes
+ .../chrome-embed.log                               |   85 +
+ .../chrome-expired-link.png                        |  Bin 0 -> 20864 bytes
+ .../chrome-layout.log                              |   55 +
+ .../chrome-owner-russian-320.png                   |  Bin 0 -> 36859 bytes
+ .../chrome-platform-russian-320.png                |  Bin 0 -> 29140 bytes
+ .../chrome-receptionist-russian-320.png            |  Bin 0 -> 40941 bytes
+ .../chrome-recovered-creation.png                  |  Bin 0 -> 32891 bytes
+ .../chrome-recovery.log                            |   78 +
+ .../chrome-staff-russian-320.png                   |  Bin 0 -> 40611 bytes
+ .../cleanup.json                                   |    7 +
+ .../database-proof.json                            |   49 +
+ .../extended-http-results.json                     | 5065 ++++++++++++++++++++
+ .../firefox-admin-conflict.png                     |  Bin 0 -> 73166 bytes
+ .../firefox-concurrency.log                        |   70 +
+ .../firefox-cookie-restricted.png                  |  Bin 0 -> 43176 bytes
+ .../firefox-cookie.log                             |   46 +
+ .../firefox-embed-confirmation.png                 |  Bin 0 -> 36937 bytes
+ .../firefox-embed-csp-denied.png                   |  Bin 0 -> 40310 bytes
+ .../firefox-embed.log                              |   84 +
+ .../firefox-expired-link.png                       |  Bin 0 -> 19509 bytes
+ .../firefox-layout.log                             |   55 +
+ .../firefox-owner-russian-320.png                  |  Bin 0 -> 34614 bytes
+ .../firefox-platform-russian-320.png               |  Bin 0 -> 27279 bytes
+ .../firefox-receptionist-russian-320.png           |  Bin 0 -> 39274 bytes
+ .../firefox-recovered-creation.png                 |  Bin 0 -> 31335 bytes
+ .../firefox-recovery.log                           |   78 +
+ .../firefox-staff-russian-320.png                  |  Bin 0 -> 38892 bytes
+ .../full-tests.log                                 |  148 +
+ .../modal-before-fix.log                           |    2 +
+ .../results.json                                   | 3120 ++++++++++++
+ .../source-manifest.json                           |   70 +
+ .../typecheck.log                                  |    4 +
+ .../acceptance-g03-completion-20260909/vitest.json |    1 +
+ .../webkit-admin-conflict.png                      |  Bin 0 -> 62436 bytes
+ .../webkit-concurrency.log                         |   70 +
+ .../webkit-embed-confirmation.png                  |  Bin 0 -> 34697 bytes
+ .../webkit-embed-csp-denied.png                    |  Bin 0 -> 9352 bytes
+ .../webkit-embed.log                               |   84 +
+ .../webkit-expired-link.png                        |  Bin 0 -> 17035 bytes
+ .../webkit-layout.log                              |   55 +
+ .../webkit-owner-russian-320.png                   |  Bin 0 -> 29267 bytes
+ .../webkit-platform-russian-320.png                |  Bin 0 -> 23983 bytes
+ .../webkit-receptionist-russian-320.png            |  Bin 0 -> 25991 bytes
+ .../webkit-recovered-creation.png                  |  Bin 0 -> 26841 bytes
+ .../webkit-recovery.log                            |   78 +
+ .../webkit-staff-russian-320.png                   |  Bin 0 -> 26310 bytes
+ public/widget/v1.js                                |    2 +-
+ scripts/acceptance-g03-admin-concurrency.js        |   58 +
+ scripts/acceptance-g03-completion-report.ts        |   48 +
+ scripts/acceptance-g03-cookie.js                   |   42 +
+ scripts/acceptance-g03-embed-server.mjs            |   13 +
+ scripts/acceptance-g03-embed.js                    |   72 +
+ scripts/acceptance-g03-extended-http.ts            |  145 +
+ scripts/acceptance-g03-firefox-cookies.json        |    1 +
+ scripts/acceptance-g03-fixture.ts                  |    2 +-
+ scripts/acceptance-g03-layout.js                   |   43 +
+ scripts/acceptance-g03-link-fixture.ts             |   19 +
+ scripts/acceptance-g03-recovery.js                 |   66 +
+ src/lib/payment-checkout.ts                        |   11 +-
+ tests/payment-checkout-freshness.test.ts           |    8 +
+ 76 files changed, 10146 insertions(+), 27 deletions(-)
+ create mode 100644 docs/ACCEPTANCE-G03-COMPLETION.md
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/build.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/checkout-regression.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-admin-conflict.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-concurrency.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-cookie-restricted.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-cookie.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-embed-confirmation.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-embed-csp-denied.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-embed.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-expired-link.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-layout.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-owner-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-platform-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-receptionist-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-recovered-creation.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-recovery.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/chrome-staff-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/cleanup.json
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/database-proof.json
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/extended-http-results.json
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-admin-conflict.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-concurrency.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-cookie-restricted.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-cookie.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-embed-confirmation.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-embed-csp-denied.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-embed.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-expired-link.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-layout.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-owner-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-platform-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-receptionist-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-recovered-creation.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-recovery.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/firefox-staff-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/full-tests.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/modal-before-fix.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/results.json
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/source-manifest.json
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/typecheck.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/vitest.json
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-admin-conflict.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-concurrency.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-embed-confirmation.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-embed-csp-denied.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-embed.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-expired-link.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-layout.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-owner-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-platform-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-receptionist-russian-320.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-recovered-creation.png
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-recovery.log
+ create mode 100644 docs/audits/acceptance-g03-completion-20260909/webkit-staff-russian-320.png
+ create mode 100644 scripts/acceptance-g03-admin-concurrency.js
+ create mode 100644 scripts/acceptance-g03-completion-report.ts
+ create mode 100644 scripts/acceptance-g03-cookie.js
+ create mode 100644 scripts/acceptance-g03-embed-server.mjs
+ create mode 100644 scripts/acceptance-g03-embed.js
+ create mode 100644 scripts/acceptance-g03-extended-http.ts
+ create mode 100644 scripts/acceptance-g03-firefox-cookies.json
+ create mode 100644 scripts/acceptance-g03-layout.js
+ create mode 100644 scripts/acceptance-g03-link-fixture.ts
+ create mode 100644 scripts/acceptance-g03-recovery.js
+time="2026-09-10T08:55:13+03:00" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [web internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.65kB done
+#1 DONE 0.0s
+
+#2 [web internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#2 DONE 0.7s
+
+#3 [web internal] load .dockerignore
+#3 transferring context: 161B done
+#3 DONE 0.0s
+
+#4 [web dependencies 1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#4 resolve docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e done
+#4 DONE 0.0s
+
+#5 [web internal] load build context
+#5 transferring context: 2.69MB 0.0s done
+#5 DONE 0.0s
+
+#6 [web dependencies 4/6] RUN npm ci --no-fund
+#6 CACHED
+
+#7 [web dependencies 5/6] COPY scripts/licenses.ts ./scripts/licenses.ts
+#7 CACHED
+
+#8 [web dependencies 2/6] WORKDIR /app
+#8 CACHED
+
+#9 [web dependencies 3/6] COPY --chmod=644 package.json package-lock.json ./
+#9 CACHED
+
+#10 [web dependencies 6/6] RUN mkdir -p docs && npm run licenses && cp docs/THIRD-PARTY-NOTICES.txt /app/THIRD-PARTY-NOTICES.txt
+#10 CACHED
+
+#11 [web builder 1/2] COPY . .
+#11 DONE 0.1s
+
+#12 [web builder 2/2] RUN npm run build
+#12 0.277 
+#12 0.277 > broneering-info@0.1.0 build
+#12 0.277 > npm run architecture:check && node --import tsx scripts/widget-languages.ts && next build
+#12 0.277 
+#12 0.357 
+#12 0.357 > broneering-info@0.1.0 architecture:check
+#12 0.357 > node --import tsx scripts/architecture.ts
+#12 0.357 
+#12 1.130 Architecture boundaries passed (155 source files).
+#12 1.552 ▲ Next.js 16.3.4 (Turbopack)
+#12 1.581 ✓ Running next.config.ts took 28ms
+#12 1.587 
+#12 1.609   Creating an optimized production build ...
+#12 11.39 ✓ Compiled successfully in 9.6s
+#12 11.39   Running TypeScript ...
+#12 17.69   Finished TypeScript in 6.3s ...
+#12 17.70   Collecting page data using 2 workers ...
+#12 18.44   Generating static pages using 2 workers (0/17) ...
+#12 18.45   Generating static pages using 2 workers (4/17) 
+#12 18.51   Generating static pages using 2 workers (8/17) 
+#12 18.53   Generating static pages using 2 workers (12/17) 
+#12 18.54 ✓ Generating static pages using 2 workers (17/17) in 103ms
+#12 18.54   Finalizing page optimization ...
+#12 18.80 
+#12 18.80 Route (app)
+#12 18.80 ┌ ƒ /
+#12 18.80 ├ ƒ /_not-found
+#12 18.80 ├ ƒ /api/admin/[action]
+#12 18.80 ├ ƒ /api/admin/billing
+#12 18.80 ├ ƒ /api/admin/booking-policy
+#12 18.80 ├ ƒ /api/admin/bookings
+#12 18.80 ├ ƒ /api/admin/companies
+#12 18.80 ├ ƒ /api/admin/customers
+#12 18.80 ├ ƒ /api/admin/customers/privacy
+#12 18.80 ├ ƒ /api/admin/exit
+#12 18.80 ├ ƒ /api/admin/exports
+#12 18.80 ├ ƒ /api/admin/imports
+#12 18.80 ├ ƒ /api/admin/language
+#12 18.80 ├ ƒ /api/admin/notifications
+#12 18.80 ├ ƒ /api/admin/onboarding
+#12 18.80 ├ ƒ /api/admin/preview/[action]
+#12 18.80 ├ ƒ /api/admin/retention
+#12 18.80 ├ ƒ /api/admin/state
+#12 18.80 ├ ƒ /api/admin/subscription
+#12 18.80 ├ ƒ /api/admin/support
+#12 18.80 ├ ƒ /api/admin/translations
+#12 18.80 ├ ƒ /api/auth/[...all]
+#12 18.80 ├ ƒ /api/availability
+#12 18.80 ├ ƒ /api/booking/manage
+#12 18.80 ├ ƒ /api/bookings
+#12 18.80 ├ ƒ /api/catalog
+#12 18.80 ├ ƒ /api/health
+#12 18.80 ├ ƒ /api/payments/invoice
+#12 18.80 ├ ƒ /api/payments/makecommerce/notify
+#12 18.80 ├ ƒ /api/payments/makecommerce/return
+#12 18.80 ├ ƒ /api/ready
+#12 18.80 ├ ƒ /broneering
+#12 18.80 ├ ƒ /embed
+#12 18.80 ├ ƒ /pay
+#12 18.80 ├ ƒ /preview
+#12 18.80 ├ ƒ /robots.txt
+#12 18.80 └ ƒ /sitemap.xml
+#12 18.80 
+#12 18.80 
+#12 18.80 ƒ Proxy (Middleware)
+#12 18.80 
+#12 18.80 ƒ  (Dynamic)  server-rendered on demand
+#12 18.80 
+#12 DONE 18.9s
+
+#13 [web runner 3/8] RUN groupadd --system --gid 1001 booking && useradd --system --uid 1001 --gid booking booking && mkdir -p /data/private && chown booking:booking /data/private
+#13 CACHED
+
+#14 [web runner 4/8] COPY --from=builder --chown=booking:booking /app/.next/standalone ./
+#14 DONE 0.3s
+
+#15 [web runner 5/8] COPY --from=builder --chown=booking:booking /app/.next/static ./.next/static
+#15 DONE 0.0s
+
+#16 [web runner 6/8] COPY --from=builder --chown=booking:booking /app/public ./public
+#16 DONE 0.0s
+
+#17 [web runner 7/8] COPY --from=builder --chown=booking:booking /app/db/migrations ./db/migrations
+#17 DONE 0.0s
+
+#18 [web runner 8/8] COPY --from=dependencies --chown=booking:booking /app/THIRD-PARTY-NOTICES.txt ./THIRD-PARTY-NOTICES.txt
+#18 DONE 0.0s
+
+#19 [web] exporting to image
+#19 exporting layers
+#19 exporting layers 1.2s done
+#19 exporting manifest sha256:0e87fd12caac142c6c19c9a65dc97204c9efd8025531eba12a12b2b160367df2
+#19 exporting manifest sha256:0e87fd12caac142c6c19c9a65dc97204c9efd8025531eba12a12b2b160367df2 done
+#19 exporting config sha256:d530d19a1a88d7df893c716cad3e111798ee8ae2d2d0d57584fee7371ccaaca8 done
+#19 exporting attestation manifest sha256:87332419633a1e245f25ffa38545d90f2524f0bce56ce2140c594f6f9edcb16b done
+#19 exporting manifest list sha256:490a2733ac9770085de762a280bed50b4024c3b6a792b0dff414a83904addb3a done
+#19 naming to docker.io/library/broneeringinfo-web:latest done
+#19 unpacking to docker.io/library/broneeringinfo-web:latest
+#19 unpacking to docker.io/library/broneeringinfo-web:latest 0.4s done
+#19 DONE 1.6s
+
+#20 [web] resolving provenance for metadata file
+#20 DONE 0.0s
+ web  Built
+ Container broneeringinfo-web-1  Recreate
+ Container broneeringinfo-web-1  Recreated
+ Container broneeringinfo-web-1  Starting
+ Container broneeringinfo-web-1  Started
+curl: (56) Recv failure: Connection reset by peer
+broneering.info root=200
+www.broneering.info root=200
+haldus.broneering.info root=200
+demo.broneering.info root=200
+demo2.broneering.info root=200
+{"status":"ready"}
+support anonymous=401
+support POST=405
+48
+{"status":"healthy"}
+{"status":"healthy"}
+NAME                              IMAGE                                                                                 COMMAND                  SERVICE          CREATED         STATUS                            PORTS
+broneeringinfo-billing-worker-1   broneeringinfo-billing-worker                                                         "docker-entrypoint.s…"   billing-worker   33 hours ago    Up 33 hours (healthy)             
+broneeringinfo-db-1               postgres:18@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280   "docker-entrypoint.s…"   db               2 days ago      Up 2 days (healthy)               5432/tcp
+broneeringinfo-export-worker-1    broneeringinfo-export-worker                                                          "docker-entrypoint.s…"   export-worker    33 hours ago    Up 33 hours (healthy)             
+broneeringinfo-web-1              broneeringinfo-web                                                                    "docker-entrypoint.s…"   web              3 seconds ago   Up 3 seconds (health: starting)   127.0.0.1:3107->3000/tcp
+ab35f39a9be989f675422832ed48930c0ef9ca52
+sha256:490a2733ac9770085de762a280bed50b4024c3b6a792b0dff414a83904addb3a

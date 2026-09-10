@@ -1,6 +1,6 @@
 # Peatükk 23 — paranduste ja vastuvõtu tööregister
 
-**23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 506/506 HTTP-kontrolli, 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
+**23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 505 HTTP-päringut ja üks andmebaasi räsivõrdlus (506/506), 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
 
 **Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
 
@@ -92,7 +92,7 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G03 — brauseri-, õiguste ja kasutatavuse vastuvõtt
 
-**Seis 10.09.2026: kirjeldatud automaatne maatriks lõpetatud, sõltumatu tervikvastuvõtt avatud.** [Lõpparuanne, kahe paranduse vastunäited, kordamise juhis ja tõendid](ACCEPTANCE-G03-COMPLETION.md). 506 päris HTTP-kontrolli, 14 brauserifaasi, 287 automaattesti ja build läbisid. Ülejäänud vastuvõtt nõuab päris Safari/iOS/Androidi seadmeid, ekraanilugejaid ning sõltumatut kasutajat; lõpliku kujunduse järel tuleb ligipääsetavuse kordusvoor. [Esimene voor](ACCEPTANCE-G03.md) ja [valikute/aegumise voor](ACCEPTANCE-G03-VARIANTS.md) säilitavad eraldi tõendid. Allpool on algne tööleping.
+**Seis 10.09.2026: kirjeldatud automaatne maatriks lõpetatud, sõltumatu tervikvastuvõtt avatud.** [Lõpparuanne, kahe paranduse vastunäited, kordamise juhis ja tõendid](ACCEPTANCE-G03-COMPLETION.md). 505 päris HTTP-päringut ja üks andmebaasi räsivõrdlus, 14 brauserifaasi, 287 automaattesti ja build läbisid. Ülejäänud vastuvõtt nõuab päris Safari/iOS/Androidi seadmeid, ekraanilugejaid ning sõltumatut kasutajat; lõpliku kujunduse järel tuleb ligipääsetavuse kordusvoor. [Esimene voor](ACCEPTANCE-G03.md) ja [valikute/aegumise voor](ACCEPTANCE-G03-VARIANTS.md) säilitavad eraldi tõendid. Allpool on algne tööleping.
 
 - **Seos / eesmärk:** ptk 08–12/16/24/25, E3–E7/E10, eriti AT-01–08 ja AT-19–35. Mõõta tervikteekonda kokkulepitud brauserites ning rollidega.
 - **Sisendid / eeltingimused:** AT-maatriks, praegused API-d ja õigused; täpsed toetatud versioonid ning klaviatuuri/ekraanilugeja kombinatsioonid.
