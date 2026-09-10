@@ -85,4 +85,6 @@ Runner kontrollib iga faasi tegelikku `pass` tulemust ja käivitab koristuse ka 
 
 ## Paigaldus
 
-Kohalik testimine on lõpetatud. Paranduse tootmise paigalduse tegelik tõend lisatakse serverikontrolli järel.
+Parandus ja testiprotokoll avaldati GitHubi `main` harus commit'iga `c1cb4964d8f7af418936b4c2d661ee75993709f9` ning paigaldati 10.09.2026 tootmisse. Uuendati veebikonteinerit; andmebaasimigratsioone ega töötajate taaskäivitusi polnud vaja. Veebi image on `sha256:617c21b4532e64931a76d83514a37c1b81221c535cea81f368188657aa0b320f`; eelmise versiooni tag on `broneeringinfo-web:before-chapter24-20260910`.
+
+[Paigaldusprotokoll](audits/chapter24-20260910/server-deploy.log) kinnitab viie HTTPS-aadressi avalehe 200 vastuse, valmisoleku, anonüümse tugipäringu 401 ja keelatud POST-i 405 ning 48 olemasolevat migratsiooni. [Järelkontroll 06:38:35 UTC](audits/chapter24-20260910/server-health.log) kinnitab, et veeb, andmebaas ning ekspordi- ja arveldustöötaja on kõik `healthy`. Tootmise kontroll oli valmisoleku ja paigalduse kontroll; ülaltoodud sünteetiliste andmetega vastuvõtukatsed tehti kohalikus testikeskkonnas.

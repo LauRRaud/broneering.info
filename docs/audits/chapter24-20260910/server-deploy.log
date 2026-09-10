@@ -1,0 +1,273 @@
+From github.com:LauRRaud/broneering.info
+ * branch            main       -> FETCH_HEAD
+   abfe82d..c1cb496  main       -> origin/main
+Updating abfe82d..c1cb496
+Fast-forward
+ docs/CHAPTER-23-ACCEPTANCE.md                      |   38 +-
+ docs/CHAPTER-23-COVERAGE.md                        |    2 +
+ docs/CHAPTER-23-WORK.md                            |    2 +
+ docs/CHAPTER-23.md                                 |    2 +
+ docs/CHAPTER-24.md                                 |   88 ++
+ docs/PROGRESS.md                                   |    4 +-
+ docs/ROADMAP.md                                    |    2 +
+ docs/audits/chapter24-20260910/build.log           |   69 +
+ .../chapter24-20260910/chrome-admin-conflict.png   |  Bin 0 -> 49019 bytes
+ docs/audits/chapter24-20260910/chrome-admin.log    |  112 ++
+ .../chapter24-20260910/chrome-archived-service.png |  Bin 0 -> 58265 bytes
+ .../chapter24-20260910/chrome-archived-staff.png   |  Bin 0 -> 65515 bytes
+ docs/audits/chapter24-20260910/chrome-cleanup.json |    7 +
+ .../chapter24-20260910/chrome-concurrency.log      |   70 +
+ .../chapter24-20260910/chrome-database-proof.json  |   44 +
+ .../chapter24-20260910/chrome-failed-move.png      |  Bin 0 -> 82329 bytes
+ .../chapter24-20260910/chrome-public-controls.png  |  Bin 0 -> 37771 bytes
+ docs/audits/chapter24-20260910/chrome-public.log   |   54 +
+ .../failed-move-before-fix-snapshot.log            |  621 +++++++++
+ .../chapter24-20260910/failed-move-before-fix.log  |    5 +
+ .../chapter24-20260910/firefox-admin-conflict.png  |  Bin 0 -> 49061 bytes
+ docs/audits/chapter24-20260910/firefox-admin.log   |  111 ++
+ .../firefox-archived-service.png                   |  Bin 0 -> 67934 bytes
+ .../chapter24-20260910/firefox-archived-staff.png  |  Bin 0 -> 65804 bytes
+ .../audits/chapter24-20260910/firefox-cleanup.json |    7 +
+ .../chapter24-20260910/firefox-concurrency.log     |   70 +
+ .../chapter24-20260910/firefox-database-proof.json |   44 +
+ .../chapter24-20260910/firefox-failed-move.png     |  Bin 0 -> 63475 bytes
+ .../chapter24-20260910/firefox-public-controls.png |  Bin 0 -> 36290 bytes
+ docs/audits/chapter24-20260910/firefox-public.log  |   53 +
+ docs/audits/chapter24-20260910/full-tests.log      |  148 +++
+ docs/audits/chapter24-20260910/requirements.json   |   98 ++
+ docs/audits/chapter24-20260910/results.json        | 1405 ++++++++++++++++++++
+ .../audits/chapter24-20260910/source-manifest.json |   78 ++
+ docs/audits/chapter24-20260910/typecheck.log       |    4 +
+ docs/audits/chapter24-20260910/vitest.json         |    1 +
+ .../chapter24-20260910/webkit-admin-conflict.png   |  Bin 0 -> 41553 bytes
+ docs/audits/chapter24-20260910/webkit-admin.log    |  112 ++
+ .../chapter24-20260910/webkit-archived-service.png |  Bin 0 -> 56469 bytes
+ .../chapter24-20260910/webkit-archived-staff.png   |  Bin 0 -> 55474 bytes
+ docs/audits/chapter24-20260910/webkit-cleanup.json |    7 +
+ .../chapter24-20260910/webkit-concurrency.log      |   70 +
+ .../chapter24-20260910/webkit-database-proof.json  |   44 +
+ .../chapter24-20260910/webkit-failed-move.png      |  Bin 0 -> 53007 bytes
+ .../chapter24-20260910/webkit-public-controls.png  |  Bin 0 -> 30499 bytes
+ docs/audits/chapter24-20260910/webkit-public.log   |   53 +
+ scripts/chapter24-admin.js                         |   99 ++
+ scripts/chapter24-fixture.ts                       |   61 +
+ scripts/chapter24-public.js                        |   41 +
+ scripts/chapter24-report.mjs                       |  102 ++
+ scripts/chapter24-run.ps1                          |   45 +
+ src/components/booking-management.tsx              |   15 +-
+ tests/booking-management.test.ts                   |   12 +
+ tests/booking.test.ts                              |   16 +
+ 54 files changed, 3791 insertions(+), 25 deletions(-)
+ create mode 100644 docs/CHAPTER-24.md
+ create mode 100644 docs/audits/chapter24-20260910/build.log
+ create mode 100644 docs/audits/chapter24-20260910/chrome-admin-conflict.png
+ create mode 100644 docs/audits/chapter24-20260910/chrome-admin.log
+ create mode 100644 docs/audits/chapter24-20260910/chrome-archived-service.png
+ create mode 100644 docs/audits/chapter24-20260910/chrome-archived-staff.png
+ create mode 100644 docs/audits/chapter24-20260910/chrome-cleanup.json
+ create mode 100644 docs/audits/chapter24-20260910/chrome-concurrency.log
+ create mode 100644 docs/audits/chapter24-20260910/chrome-database-proof.json
+ create mode 100644 docs/audits/chapter24-20260910/chrome-failed-move.png
+ create mode 100644 docs/audits/chapter24-20260910/chrome-public-controls.png
+ create mode 100644 docs/audits/chapter24-20260910/chrome-public.log
+ create mode 100644 docs/audits/chapter24-20260910/failed-move-before-fix-snapshot.log
+ create mode 100644 docs/audits/chapter24-20260910/failed-move-before-fix.log
+ create mode 100644 docs/audits/chapter24-20260910/firefox-admin-conflict.png
+ create mode 100644 docs/audits/chapter24-20260910/firefox-admin.log
+ create mode 100644 docs/audits/chapter24-20260910/firefox-archived-service.png
+ create mode 100644 docs/audits/chapter24-20260910/firefox-archived-staff.png
+ create mode 100644 docs/audits/chapter24-20260910/firefox-cleanup.json
+ create mode 100644 docs/audits/chapter24-20260910/firefox-concurrency.log
+ create mode 100644 docs/audits/chapter24-20260910/firefox-database-proof.json
+ create mode 100644 docs/audits/chapter24-20260910/firefox-failed-move.png
+ create mode 100644 docs/audits/chapter24-20260910/firefox-public-controls.png
+ create mode 100644 docs/audits/chapter24-20260910/firefox-public.log
+ create mode 100644 docs/audits/chapter24-20260910/full-tests.log
+ create mode 100644 docs/audits/chapter24-20260910/requirements.json
+ create mode 100644 docs/audits/chapter24-20260910/results.json
+ create mode 100644 docs/audits/chapter24-20260910/source-manifest.json
+ create mode 100644 docs/audits/chapter24-20260910/typecheck.log
+ create mode 100644 docs/audits/chapter24-20260910/vitest.json
+ create mode 100644 docs/audits/chapter24-20260910/webkit-admin-conflict.png
+ create mode 100644 docs/audits/chapter24-20260910/webkit-admin.log
+ create mode 100644 docs/audits/chapter24-20260910/webkit-archived-service.png
+ create mode 100644 docs/audits/chapter24-20260910/webkit-archived-staff.png
+ create mode 100644 docs/audits/chapter24-20260910/webkit-cleanup.json
+ create mode 100644 docs/audits/chapter24-20260910/webkit-concurrency.log
+ create mode 100644 docs/audits/chapter24-20260910/webkit-database-proof.json
+ create mode 100644 docs/audits/chapter24-20260910/webkit-failed-move.png
+ create mode 100644 docs/audits/chapter24-20260910/webkit-public-controls.png
+ create mode 100644 docs/audits/chapter24-20260910/webkit-public.log
+ create mode 100644 scripts/chapter24-admin.js
+ create mode 100644 scripts/chapter24-fixture.ts
+ create mode 100644 scripts/chapter24-public.js
+ create mode 100644 scripts/chapter24-report.mjs
+ create mode 100644 scripts/chapter24-run.ps1
+time="2026-09-10T09:36:46+03:00" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [web internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.65kB done
+#1 DONE 0.0s
+
+#2 [web internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#2 DONE 0.7s
+
+#3 [web internal] load .dockerignore
+#3 transferring context: 161B done
+#3 DONE 0.0s
+
+#4 [web dependencies 1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#4 resolve docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e done
+#4 DONE 0.0s
+
+#5 [web internal] load build context
+#5 transferring context: 1.40MB 0.0s done
+#5 DONE 0.0s
+
+#6 [web dependencies 2/6] WORKDIR /app
+#6 CACHED
+
+#7 [web dependencies 4/6] RUN npm ci --no-fund
+#7 CACHED
+
+#8 [web dependencies 3/6] COPY --chmod=644 package.json package-lock.json ./
+#8 CACHED
+
+#9 [web dependencies 5/6] COPY scripts/licenses.ts ./scripts/licenses.ts
+#9 CACHED
+
+#10 [web dependencies 6/6] RUN mkdir -p docs && npm run licenses && cp docs/THIRD-PARTY-NOTICES.txt /app/THIRD-PARTY-NOTICES.txt
+#10 CACHED
+
+#11 [web builder 1/2] COPY . .
+#11 DONE 0.2s
+
+#12 [web builder 2/2] RUN npm run build
+#12 0.241 
+#12 0.241 > broneering-info@0.1.0 build
+#12 0.241 > npm run architecture:check && node --import tsx scripts/widget-languages.ts && next build
+#12 0.241 
+#12 0.313 
+#12 0.313 > broneering-info@0.1.0 architecture:check
+#12 0.313 > node --import tsx scripts/architecture.ts
+#12 0.313 
+#12 1.063 Architecture boundaries passed (155 source files).
+#12 1.456 ▲ Next.js 16.3.4 (Turbopack)
+#12 1.485 ✓ Running next.config.ts took 29ms
+#12 1.493 
+#12 1.512   Creating an optimized production build ...
+#12 11.77 ✓ Compiled successfully in 10.1s
+#12 11.78   Running TypeScript ...
+#12 18.55   Finished TypeScript in 6.8s ...
+#12 18.55   Collecting page data using 2 workers ...
+#12 19.38   Generating static pages using 2 workers (0/17) ...
+#12 19.41   Generating static pages using 2 workers (4/17) 
+#12 19.47   Generating static pages using 2 workers (8/17) 
+#12 19.48   Generating static pages using 2 workers (12/17) 
+#12 19.49 ✓ Generating static pages using 2 workers (17/17) in 109ms
+#12 19.50   Finalizing page optimization ...
+#12 19.77 
+#12 19.77 Route (app)
+#12 19.77 ┌ ƒ /
+#12 19.77 ├ ƒ /_not-found
+#12 19.77 ├ ƒ /api/admin/[action]
+#12 19.77 ├ ƒ /api/admin/billing
+#12 19.77 ├ ƒ /api/admin/booking-policy
+#12 19.77 ├ ƒ /api/admin/bookings
+#12 19.77 ├ ƒ /api/admin/companies
+#12 19.77 ├ ƒ /api/admin/customers
+#12 19.77 ├ ƒ /api/admin/customers/privacy
+#12 19.77 ├ ƒ /api/admin/exit
+#12 19.77 ├ ƒ /api/admin/exports
+#12 19.77 ├ ƒ /api/admin/imports
+#12 19.77 ├ ƒ /api/admin/language
+#12 19.77 ├ ƒ /api/admin/notifications
+#12 19.77 ├ ƒ /api/admin/onboarding
+#12 19.77 ├ ƒ /api/admin/preview/[action]
+#12 19.77 ├ ƒ /api/admin/retention
+#12 19.77 ├ ƒ /api/admin/state
+#12 19.77 ├ ƒ /api/admin/subscription
+#12 19.77 ├ ƒ /api/admin/support
+#12 19.77 ├ ƒ /api/admin/translations
+#12 19.77 ├ ƒ /api/auth/[...all]
+#12 19.77 ├ ƒ /api/availability
+#12 19.77 ├ ƒ /api/booking/manage
+#12 19.77 ├ ƒ /api/bookings
+#12 19.77 ├ ƒ /api/catalog
+#12 19.77 ├ ƒ /api/health
+#12 19.77 ├ ƒ /api/payments/invoice
+#12 19.77 ├ ƒ /api/payments/makecommerce/notify
+#12 19.77 ├ ƒ /api/payments/makecommerce/return
+#12 19.77 ├ ƒ /api/ready
+#12 19.77 ├ ƒ /broneering
+#12 19.77 ├ ƒ /embed
+#12 19.77 ├ ƒ /pay
+#12 19.77 ├ ƒ /preview
+#12 19.77 ├ ƒ /robots.txt
+#12 19.77 └ ƒ /sitemap.xml
+#12 19.77 
+#12 19.77 
+#12 19.77 ƒ Proxy (Middleware)
+#12 19.77 
+#12 19.77 ƒ  (Dynamic)  server-rendered on demand
+#12 19.77 
+#12 DONE 19.9s
+
+#13 [web runner 3/8] RUN groupadd --system --gid 1001 booking && useradd --system --uid 1001 --gid booking booking && mkdir -p /data/private && chown booking:booking /data/private
+#13 CACHED
+
+#14 [web runner 4/8] COPY --from=builder --chown=booking:booking /app/.next/standalone ./
+#14 DONE 0.3s
+
+#15 [web runner 5/8] COPY --from=builder --chown=booking:booking /app/.next/static ./.next/static
+#15 DONE 0.0s
+
+#16 [web runner 6/8] COPY --from=builder --chown=booking:booking /app/public ./public
+#16 DONE 0.0s
+
+#17 [web runner 7/8] COPY --from=builder --chown=booking:booking /app/db/migrations ./db/migrations
+#17 DONE 0.0s
+
+#18 [web runner 8/8] COPY --from=dependencies --chown=booking:booking /app/THIRD-PARTY-NOTICES.txt ./THIRD-PARTY-NOTICES.txt
+#18 DONE 0.0s
+
+#19 [web] exporting to image
+#19 exporting layers
+#19 exporting layers 1.3s done
+#19 exporting manifest sha256:4faf5ca911350b43eb5c4bd2b31a1adfdabf28019fe0dae0ffdbb7c3b857a009
+#19 exporting manifest sha256:4faf5ca911350b43eb5c4bd2b31a1adfdabf28019fe0dae0ffdbb7c3b857a009 done
+#19 exporting config sha256:26c8f85f20d16522d2b9955701cc4ddf4d65d092c3fc78131f35c5b4188d3242 done
+#19 exporting attestation manifest sha256:327dbadb13b48f30a2bf7d70c7e02b98f7f7fddfb32132fcd6d774adf19e00e4 done
+#19 exporting manifest list sha256:617c21b4532e64931a76d83514a37c1b81221c535cea81f368188657aa0b320f done
+#19 naming to docker.io/library/broneeringinfo-web:latest done
+#19 unpacking to docker.io/library/broneeringinfo-web:latest
+#19 unpacking to docker.io/library/broneeringinfo-web:latest 0.4s done
+#19 DONE 1.8s
+ web  Built
+
+#20 [web] resolving provenance for metadata file
+#20 DONE 0.0s
+ Container broneeringinfo-web-1  Recreate
+ Container broneeringinfo-web-1  Recreated
+ Container broneeringinfo-web-1  Starting
+ Container broneeringinfo-web-1  Started
+curl: (56) Recv failure: Connection reset by peer
+broneering.info root=200
+www.broneering.info root=200
+haldus.broneering.info root=200
+demo.broneering.info root=200
+demo2.broneering.info root=200
+{"status":"ready"}
+support anonymous=401
+support POST=405
+48
+{"status":"healthy"}
+{"status":"healthy"}
+NAME                              IMAGE                                                                                 COMMAND                  SERVICE          CREATED         STATUS                            PORTS
+broneeringinfo-billing-worker-1   broneeringinfo-billing-worker                                                         "docker-entrypoint.s…"   billing-worker   34 hours ago    Up 34 hours (healthy)             
+broneeringinfo-db-1               postgres:18@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280   "docker-entrypoint.s…"   db               2 days ago      Up 2 days (healthy)               5432/tcp
+broneeringinfo-export-worker-1    broneeringinfo-export-worker                                                          "docker-entrypoint.s…"   export-worker    34 hours ago    Up 34 hours (healthy)             
+broneeringinfo-web-1              broneeringinfo-web                                                                    "docker-entrypoint.s…"   web              4 seconds ago   Up 3 seconds (health: starting)   127.0.0.1:3107->3000/tcp
+c1cb4964d8f7af418936b4c2d661ee75993709f9
+sha256:617c21b4532e64931a76d83514a37c1b81221c535cea81f368188657aa0b320f
