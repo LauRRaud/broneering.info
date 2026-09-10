@@ -1,0 +1,55 @@
+### Result
+{"engine":"firefox","version":"155.0","results":[{"role":"owner","locale":"et","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":169,"unnamed":[],"duplicates":[]},"pass":true},{"role":"owner","locale":"et","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":169,"unnamed":[],"duplicates":[]},"pass":true},{"role":"owner","locale":"et","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":169,"unnamed":[],"duplicates":[]},"pass":true},{"role":"owner","locale":"en","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":169,"unnamed":[],"duplicates":[]},"pass":true},{"role":"owner","locale":"en","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":169,"unnamed":[],"duplicates":[]},"pass":true},{"role":"owner","locale":"en","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":169,"unnamed":[],"duplicates":[]},"pass":true},{"role":"owner","locale":"ru","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":169,"unnamed":[],"duplicates":[]},"pass":true},{"role":"owner","locale":"ru","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":169,"unnamed":[],"duplicates":[]},"pass":true},{"role":"owner","locale":"ru","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":169,"unnamed":[],"duplicates":[]},"pass":true},{"role":"receptionist","locale":"et","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":76,"unnamed":[],"duplicates":[]},"pass":true},{"role":"receptionist","locale":"et","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":76,"unnamed":[],"duplicates":[]},"pass":true},{"role":"receptionist","locale":"et","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":76,"unnamed":[],"duplicates":[]},"pass":true},{"role":"receptionist","locale":"en","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":76,"unnamed":[],"duplicates":[]},"pass":true},{"role":"receptionist","locale":"en","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":76,"unnamed":[],"duplicates":[]},"pass":true},{"role":"receptionist","locale":"en","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":76,"unnamed":[],"duplicates":[]},"pass":true},{"role":"receptionist","locale":"ru","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":76,"unnamed":[],"duplicates":[]},"pass":true},{"role":"receptionist","locale":"ru","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":76,"unnamed":[],"duplicates":[]},"pass":true},{"role":"receptionist","locale":"ru","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":76,"unnamed":[],"duplicates":[]},"pass":true},{"role":"staff","locale":"et","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":37,"unnamed":[],"duplicates":[]},"pass":true},{"role":"staff","locale":"et","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":37,"unnamed":[],"duplicates":[]},"pass":true},{"role":"staff","locale":"et","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":37,"unnamed":[],"duplicates":[]},"pass":true},{"role":"staff","locale":"en","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":37,"unnamed":[],"duplicates":[]},"pass":true},{"role":"staff","locale":"en","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":37,"unnamed":[],"duplicates":[]},"pass":true},{"role":"staff","locale":"en","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":37,"unnamed":[],"duplicates":[]},"pass":true},{"role":"staff","locale":"ru","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":37,"unnamed":[],"duplicates":[]},"pass":true},{"role":"staff","locale":"ru","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":37,"unnamed":[],"duplicates":[]},"pass":true},{"role":"staff","locale":"ru","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":37,"unnamed":[],"duplicates":[]},"pass":true},{"role":"platform","locale":"et","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":28,"unnamed":[],"duplicates":[]},"pass":true},{"role":"platform","locale":"et","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":28,"unnamed":[],"duplicates":[]},"pass":true},{"role":"platform","locale":"et","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":28,"unnamed":[],"duplicates":[]},"pass":true},{"role":"platform","locale":"en","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":28,"unnamed":[],"duplicates":[]},"pass":true},{"role":"platform","locale":"en","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":28,"unnamed":[],"duplicates":[]},"pass":true},{"role":"platform","locale":"en","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":28,"unnamed":[],"duplicates":[]},"pass":true},{"role":"platform","locale":"ru","viewport":{"width":320,"height":700},"evidence":{"width":320,"viewport":320,"controls":28,"unnamed":[],"duplicates":[]},"pass":true},{"role":"platform","locale":"ru","viewport":{"width":844,"height":390},"evidence":{"width":844,"viewport":844,"controls":28,"unnamed":[],"duplicates":[]},"pass":true},{"role":"platform","locale":"ru","viewport":{"width":1280,"height":900},"evidence":{"width":1280,"viewport":1280,"controls":28,"unnamed":[],"duplicates":[]},"pass":true},{"role":"public","locale":"et","viewport":{"width":320,"height":700},"width":320,"pass":true},{"role":"public","locale":"et","viewport":{"width":844,"height":390},"width":844,"pass":true},{"role":"public","locale":"en","viewport":{"width":320,"height":700},"width":320,"pass":true},{"role":"public","locale":"en","viewport":{"width":844,"height":390},"width":844,"pass":true},{"role":"public","locale":"ru","viewport":{"width":320,"height":700},"width":320,"pass":true},{"role":"public","locale":"ru","viewport":{"width":844,"height":390},"width":844,"pass":true}],"pass":true}
+### Ran Playwright code
+```js
+await (async (page) => {
+ const engine='firefox',directory='output/playwright/acceptance-g03',results=[];
+ for(const role of ['owner','receptionist','staff','platform']){
+  await page.context().setStorageState(`${directory}/${role}-state.json`);
+  await page.goto('http://haldus.localhost:3108');
+  await page.getByRole('heading',{name:role==='platform'?'Platvorm':'G03 ettevõte A',exact:true}).waitFor();
+  if(role!=='platform'){
+   await page.getByRole('textbox',{name:'Kuupäev',exact:true}).fill('2026-09-16');
+   await page.getByRole('list',{name:'Broneeringute loend'}).getByRole('button').first().waitFor();
+  }
+  for(const locale of ['et','en','ru']){
+   await page.locator('select').first().selectOption(locale);
+   await page.waitForFunction(language=>document.documentElement.lang===language,locale);
+   for(const viewport of [{width:320,height:700},{width:844,height:390},{width:1280,height:900}]){
+    await page.setViewportSize(viewport);
+    const evidence=await page.evaluate(()=>{
+     const controls=[...document.querySelectorAll('input:not([type=hidden]),select,textarea')];
+     const unnamed=controls.filter(element=>!element.labels?.length&&!element.getAttribute('aria-label')&&!element.getAttribute('aria-labelledby')).map(element=>element.outerHTML.slice(0,180));
+     const identifiers=[...document.querySelectorAll('[id]')].map(element=>element.id);
+     return {width:document.documentElement.scrollWidth,viewport:innerWidth,controls:controls.length,unnamed,duplicates:identifiers.filter((id,index)=>identifiers.indexOf(id)!==index)};
+    });
+    if(evidence.width>viewport.width+1||evidence.unnamed.length||evidence.duplicates.length)throw Error(JSON.stringify({role,locale,viewport,evidence}));
+    results.push({role,locale,viewport,evidence,pass:true});
+   }
+  }
+  await page.setViewportSize({width:320,height:700});
+  await page.screenshot({path:`${directory}/${engine}-${role}-russian-320.png`});
+ }
+ await page.context().setStorageState({cookies:[],origins:[]});
+ for(const locale of ['et','en','ru']){
+  await page.goto('http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108/');
+  await page.waitForFunction(()=>document.activeElement.id==='booking-title');
+  await page.locator('select').first().selectOption(locale);
+  await page.waitForFunction(language=>document.documentElement.lang===language,locale);
+  for(const viewport of [{width:320,height:700},{width:844,height:390}]){
+   await page.setViewportSize(viewport);
+   const width=await page.evaluate(()=>document.documentElement.scrollWidth);
+   if(width>viewport.width+1)throw Error(`Public ${locale} overflow ${width}`);
+   results.push({role:'public',locale,viewport,width,pass:true});
+  }
+ }
+ return {engine,version:page.context().browser().version(),results,pass:true};
+}
+
+)(page);
+```
+### Page
+- Page URL: http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108/
+- Page Title: broneering.info
+### Events
+- New console entries: .playwright-cli\console-2026-09-09T15-42-11-563Z.log#L14-L1603

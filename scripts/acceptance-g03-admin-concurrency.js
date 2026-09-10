@@ -1,0 +1,58 @@
+async (page) => {
+ const engine='__ENGINE__',directory='output/playwright/acceptance-g03',results=[];
+ const ensure=(condition,message)=>{if(!condition)throw Error(message);results.push({check:message,pass:true});};
+ await page.context().setStorageState(`${directory}/owner-state.json`);
+ await page.goto('http://haldus.localhost:3108');
+ await page.getByRole('heading',{name:'G03 ettevõte A',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Lisa broneering käsitsi',exact:true}).click();
+ const create=page.locator('form').filter({has:page.getByRole('heading',{name:'Lisa broneering käsitsi',exact:true})});
+ await create.getByRole('textbox',{name:'Kuupäev',exact:true}).fill('__DAY__');
+ await create.getByRole('list',{name:'Haldaja vabad ajad',exact:true}).getByRole('button').first().click();
+ const customer=`G03 ${engine} Concurrency`;
+ await create.getByRole('textbox',{name:'Kliendi nimi',exact:true}).fill(customer);
+ await create.getByRole('checkbox',{name:'Saada kliendile e-kiri',exact:true}).uncheck();
+ const pending=page.waitForResponse(response=>response.url().endsWith('/api/admin/bookings')&&response.request().method()==='POST');
+ await create.getByRole('button',{name:'Kinnita käsitsi broneering',exact:true}).click();
+ const response=await pending;ensure(response.status()===200,'Owner manual booking succeeds');
+ const created=await response.json();
+ const secondContext=await page.context().browser().newContext({storageState:`${directory}/receptionist-state.json`});
+ const second=await secondContext.newPage();
+ try{
+  await second.goto('http://haldus.localhost:3108');
+  await second.getByRole('heading',{name:'G03 ettevõte A',exact:true}).waitFor();
+  for(const tab of [page,second]){
+   await tab.getByRole('textbox',{name:'Kuupäev',exact:true}).fill('__DAY__');
+   await tab.getByRole('list',{name:'Broneeringute loend'}).getByRole('button').filter({hasText:customer}).click();
+   await tab.getByRole('button',{name:'Muuda broneeringut',exact:true}).click();
+   const form=tab.locator('form').filter({has:tab.getByRole('heading',{name:'Vali uus pakkumine',exact:true})});
+   await form.getByRole('textbox',{name:'Kuupäev',exact:true}).fill('__DAY__');
+   await form.getByRole('list',{name:'Haldaja vabad ajad'}).getByRole('button').nth(tab===page?2:4).click();
+   await form.getByRole('textbox',{name:'Muudatuse põhjus (soovi korral)',exact:true}).fill(tab===page?'G03 first editor':'G03 preserved second reason');
+  }
+  const firstSave=page.waitForResponse(response=>response.url().endsWith('/api/admin/bookings')&&response.request().method()==='POST');
+  await page.getByRole('button',{name:'Kinnita uus aeg ja hind',exact:true}).click();
+  const saved=await firstSave;ensure(saved.status()===200,'First editor reschedules successfully');
+  const winning=await saved.json();
+  const staleSave=second.waitForResponse(response=>response.url().endsWith('/api/admin/bookings')&&response.request().method()==='POST');
+  await second.getByRole('button',{name:'Kinnita uus aeg ja hind',exact:true}).click();
+  const rejected=await staleSave;ensure(rejected.status()===409&&(await rejected.json()).code==='VERSION_CONFLICT','Second editor cannot overwrite a stale version');
+  ensure(await second.getByRole('textbox',{name:'Muudatuse põhjus (soovi korral)',exact:true}).inputValue()==='G03 preserved second reason','Stale editor retains the typed reason');
+  await second.getByRole('button',{name:'Ava uus versioon',exact:true}).click();
+  await second.getByRole('button',{name:'Muuda broneeringut',exact:true}).waitFor();
+  await second.screenshot({path:`${directory}/${engine}-admin-conflict.png`});
+  await second.getByRole('button',{name:'Tühista broneering',exact:true}).click();
+  const commandKeys=[];let calls=0;
+  await second.route('**/api/admin/bookings',async route=>{
+   if(route.request().method()!=='POST'){await route.continue();return;}
+   commandKeys.push(route.request().headers()['idempotency-key']);calls++;
+   if(calls===1){const committed=await route.fetch();ensure(committed.status()===200,'Lost cancellation reply follows a real commit');await route.abort('failed');}
+   else await route.continue();
+  });
+  await second.getByRole('button',{name:'Kinnita toiming',exact:true}).click();
+  await second.getByRole('button',{name:'Kontrolli sama toimingu tulemust',exact:true}).click();
+  await second.getByRole('status').filter({hasText:'Salvestatud:'}).waitFor();
+  ensure(commandKeys.length===2&&commandKeys[0]===commandKeys[1],'Cancellation recovery preserves one command key');
+  await second.unroute('**/api/admin/bookings');
+  return {engine,version:page.context().browser().version(),createdBookingId:created.id,winningVersion:winning.version,results,pass:true};
+ }finally{await secondContext.close();}
+}

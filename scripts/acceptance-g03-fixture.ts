@@ -33,7 +33,7 @@ try{
  }else if(process.argv[2]==='cleanup'){
   const f=JSON.parse(await readFile(`${dir}/fixture.json`,'utf8'));
   await db.query('BEGIN');
-  for(const table of ['booking_requests','booking_commands','outbox','booking_events','booking_management_tokens','access_audit_log','bookings','customers','support_grants','memberships','schedule_versions','schedule_exceptions','weekly_hours','staff_services','staff','services','tenant_domains','domain_reservations'])await db.query(`DELETE FROM ${table} WHERE tenant_id=ANY($1::uuid[])`,[f.tenants.map((t:any)=>t.id)]);
+  for(const table of ['booking_requests','booking_commands','outbox','booking_events','booking_management_tokens','access_audit_log','bookings','customers','support_grants','memberships','schedule_versions','schedule_exceptions','weekly_hours','staff_services','staff','service_translations','services','tenant_embed_origins','tenant_domains','domain_reservations'])await db.query(`DELETE FROM ${table} WHERE tenant_id=ANY($1::uuid[])`,[f.tenants.map((t:any)=>t.id)]);
   await db.query('DELETE FROM tenants WHERE id=ANY($1::uuid[])',[f.tenants.map((t:any)=>t.id)]);
   await db.query('DELETE FROM auth_user WHERE id=ANY($1::text[])',[Object.values(f.users).map((u:any)=>u.id)]);
   await db.query('COMMIT');

@@ -42,6 +42,14 @@ async function fixture(){
  return {tenantId,invoice,request,context,partial};
 }
 function providerReply(options:RequestInit){const body=JSON.parse(String(options.body)),id=randomUUID();return {id,status:'CREATED',amount:body.transaction.amount,currency:'EUR',reference:body.transaction.reference,merchant_data:body.transaction.merchant_data,payment_methods:{other:[{name:'redirect',url:'https://payment.test.maksekeskus.ee/pay.html?trx='+id}]}};}
+it('checks ownership before disabled provider configuration and creates no payment attempt',async()=>{
+ const data=await fixture();vi.stubEnv('MAKECOMMERCE_MODE','disabled');
+ const fetcher=vi.fn();vi.stubGlobal('fetch',fetcher);
+ await expect(beginInvoiceCheckout(admin,data.request,data.context)).rejects.toMatchObject({status:403,code:'MEMBERSHIP_REQUIRED'});
+ await expect(beginInvoiceCheckout(owner,data.request,data.context)).rejects.toMatchObject({status:503,code:'PAYMENTS_UNAVAILABLE'});
+ expect(fetcher).not.toHaveBeenCalled();
+ expect((await db.query('SELECT id FROM payment_attempts WHERE tenant_id=$1',[data.tenantId])).rowCount).toBe(0);
+});
 it('withholds stale checkout capabilities on all replay/read paths without losing provider receipts',async()=>{
  const f=await fixture();vi.stubEnv('MAKECOMMERCE_MODE','live');
  // Exercise live receipt semantics with a fully stubbed transport and synthetic keys.

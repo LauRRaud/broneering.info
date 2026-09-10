@@ -1,0 +1,3120 @@
+{
+  "at": "2026-09-09T17:37:30.491Z",
+  "http": {
+    "total": 506,
+    "passed": 506
+  },
+  "browserPhases": 14,
+  "browserChecks": 356,
+  "databaseProof": [
+    {
+      "engine": "chrome",
+      "phase": "recovery",
+      "bookingId": "cf7cf3f0-015a-446e-8254-9fc1bd5769ce",
+      "status": "confirmed",
+      "version": 1,
+      "events": [
+        {
+          "action": "booking.created",
+          "count": 1
+        }
+      ],
+      "outbox": 1,
+      "skipped": 0,
+      "commands": 0,
+      "pass": true
+    },
+    {
+      "engine": "chrome",
+      "phase": "concurrency",
+      "bookingId": "0977db3c-35fc-4138-a840-bd6ac64fabc9",
+      "status": "cancelled",
+      "version": 3,
+      "events": [
+        {
+          "action": "booking.cancel",
+          "count": 1
+        },
+        {
+          "action": "booking.created",
+          "count": 1
+        },
+        {
+          "action": "booking.reschedule",
+          "count": 1
+        }
+      ],
+      "outbox": 3,
+      "skipped": 3,
+      "commands": 3,
+      "pass": true
+    },
+    {
+      "engine": "firefox",
+      "phase": "recovery",
+      "bookingId": "82f57014-48dd-469a-8465-b19b4f6bac27",
+      "status": "confirmed",
+      "version": 1,
+      "events": [
+        {
+          "action": "booking.created",
+          "count": 1
+        }
+      ],
+      "outbox": 1,
+      "skipped": 0,
+      "commands": 0,
+      "pass": true
+    },
+    {
+      "engine": "firefox",
+      "phase": "concurrency",
+      "bookingId": "4eb8296a-2094-4eb1-b5d5-1a0ece1220b4",
+      "status": "cancelled",
+      "version": 3,
+      "events": [
+        {
+          "action": "booking.cancel",
+          "count": 1
+        },
+        {
+          "action": "booking.created",
+          "count": 1
+        },
+        {
+          "action": "booking.reschedule",
+          "count": 1
+        }
+      ],
+      "outbox": 3,
+      "skipped": 3,
+      "commands": 3,
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "phase": "recovery",
+      "bookingId": "3dc02c80-6fe8-43df-9398-0407983da479",
+      "status": "confirmed",
+      "version": 1,
+      "events": [
+        {
+          "action": "booking.created",
+          "count": 1
+        }
+      ],
+      "outbox": 1,
+      "skipped": 0,
+      "commands": 0,
+      "pass": true
+    },
+    {
+      "engine": "webkit",
+      "phase": "concurrency",
+      "bookingId": "fb4f00fa-4b54-49b9-ac4e-a3f7958eb3ce",
+      "status": "cancelled",
+      "version": 3,
+      "events": [
+        {
+          "action": "booking.cancel",
+          "count": 1
+        },
+        {
+          "action": "booking.created",
+          "count": 1
+        },
+        {
+          "action": "booking.reschedule",
+          "count": 1
+        }
+      ],
+      "outbox": 3,
+      "skipped": 3,
+      "commands": 3,
+      "pass": true
+    }
+  ],
+  "browserResults": [
+    {
+      "phase": "embed",
+      "engine": "chrome",
+      "version": "152.0.7977.83",
+      "viewport": "390x844",
+      "parent": "http://127.0.0.1:3110",
+      "child": "http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108",
+      "cspErrors": [
+        "Framing 'http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108/' violates the following Content Security Policy directive: \"frame-ancestors http://127.0.0.1:3110\". The request has been blocked.\n"
+      ],
+      "results": [
+        {
+          "check": "Cross-site iframe handshake and resize",
+          "pass": true
+        },
+        {
+          "check": "Cross-site iframe creates a real booking",
+          "pass": true
+        },
+        {
+          "check": "Embedded booking sends no cookies",
+          "pass": true
+        },
+        {
+          "check": "Messages contain layout fields only",
+          "pass": true
+        },
+        {
+          "check": "Modal initial focus stays inside dialog",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 0",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 1",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 2",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 3",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 4",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 5",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 6",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 7",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 8",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 9",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 10",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 11",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 12",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 13",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 14",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 15",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 16",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 17",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 18",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 19",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 20",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 21",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 22",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 23",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 24",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 25",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 26",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 27",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 28",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 29",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 30",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 31",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 32",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 33",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 34",
+          "pass": true
+        },
+        {
+          "check": "Wrong-source resize ignored",
+          "pass": true
+        },
+        {
+          "check": "Wrong-channel close ignored",
+          "pass": true
+        },
+        {
+          "check": "Iframe Escape restores opener and scrolling",
+          "pass": true
+        },
+        {
+          "check": "Cached modal reopens and parent Escape restores opener",
+          "pass": true
+        },
+        {
+          "check": "Browser reports CSP frame-ancestors rejection",
+          "pass": true
+        },
+        {
+          "check": "CSP denial keeps fallback link",
+          "pass": true
+        },
+        {
+          "check": "Missing widget script preserves ordinary booking link",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "chrome-embed.log"
+    },
+    {
+      "phase": "recovery",
+      "engine": "chrome",
+      "version": "152.0.7977.83",
+      "createdBookingId": "cf7cf3f0-015a-446e-8254-9fc1bd5769ce",
+      "results": [
+        {
+          "check": "Lost reply follows real committed HTTP 201",
+          "pass": true
+        },
+        {
+          "check": "Uncertain creation locks original contact 0",
+          "pass": true
+        },
+        {
+          "check": "Uncertain creation locks original contact 1",
+          "pass": true
+        },
+        {
+          "check": "Uncertain creation locks original contact 2",
+          "pass": true
+        },
+        {
+          "check": "Lost response, JSON 429 and HTML 403 preserve one request",
+          "pass": true
+        },
+        {
+          "check": "Recovered creation shows original booking reference",
+          "pass": true
+        },
+        {
+          "check": "expired management link returns 410",
+          "pass": true
+        },
+        {
+          "check": "expired link shows contact guidance",
+          "pass": true
+        },
+        {
+          "check": "expired link exposes no mutation controls",
+          "pass": true
+        },
+        {
+          "check": "expired link exposes no booking contact",
+          "pass": true
+        },
+        {
+          "check": "revoked management link returns 410",
+          "pass": true
+        },
+        {
+          "check": "revoked link shows contact guidance",
+          "pass": true
+        },
+        {
+          "check": "revoked link exposes no mutation controls",
+          "pass": true
+        },
+        {
+          "check": "revoked link exposes no booking contact",
+          "pass": true
+        },
+        {
+          "check": "foreign management link returns 410",
+          "pass": true
+        },
+        {
+          "check": "foreign link shows contact guidance",
+          "pass": true
+        },
+        {
+          "check": "foreign link exposes no mutation controls",
+          "pass": true
+        },
+        {
+          "check": "foreign link exposes no booking contact",
+          "pass": true
+        },
+        {
+          "check": "Delayed iframe preserves fallback link",
+          "pass": true
+        },
+        {
+          "check": "Late iframe readiness restores the booking frame",
+          "pass": true
+        },
+        {
+          "check": "Blocked widget request preserves ordinary navigation",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "chrome-recovery.log"
+    },
+    {
+      "phase": "concurrency",
+      "engine": "chrome",
+      "version": "152.0.7977.83",
+      "createdBookingId": "0977db3c-35fc-4138-a840-bd6ac64fabc9",
+      "winningVersion": 2,
+      "results": [
+        {
+          "check": "Owner manual booking succeeds",
+          "pass": true
+        },
+        {
+          "check": "First editor reschedules successfully",
+          "pass": true
+        },
+        {
+          "check": "Second editor cannot overwrite a stale version",
+          "pass": true
+        },
+        {
+          "check": "Stale editor retains the typed reason",
+          "pass": true
+        },
+        {
+          "check": "Lost cancellation reply follows a real commit",
+          "pass": true
+        },
+        {
+          "check": "Cancellation recovery preserves one command key",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "chrome-concurrency.log"
+    },
+    {
+      "phase": "layout",
+      "engine": "chrome",
+      "version": "152.0.7977.83",
+      "results": [
+        {
+          "role": "owner",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "width": 320,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "width": 844,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "width": 320,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "width": 844,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "width": 320,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "width": 844,
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "chrome-layout.log"
+    },
+    {
+      "phase": "cookie",
+      "engine": "chrome",
+      "version": "152.0.7977.83",
+      "results": [
+        {
+          "check": "Probe cookie available as first party",
+          "pass": true
+        },
+        {
+          "check": "SameSite=None probe cookie blocked in third-party iframe",
+          "pass": true
+        },
+        {
+          "check": "Cookie-restricted iframe commits real booking",
+          "pass": true
+        },
+        {
+          "check": "Cookie-restricted booking request excludes the probe cookie",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "chrome-cookie.log"
+    },
+    {
+      "phase": "embed",
+      "engine": "firefox",
+      "version": "155.0",
+      "viewport": "390x844",
+      "parent": "http://127.0.0.1:3110",
+      "child": "http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108",
+      "cspErrors": [
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (frame-ancestors) at <unknown> because it violates the following directive: “frame-ancestors http://127.0.0.1:3110”\" {file: \"chrome://juggler/content/NetworkObserver.js\" line: 414}]"
+      ],
+      "results": [
+        {
+          "check": "Cross-site iframe handshake and resize",
+          "pass": true
+        },
+        {
+          "check": "Cross-site iframe creates a real booking",
+          "pass": true
+        },
+        {
+          "check": "Embedded booking sends no cookies",
+          "pass": true
+        },
+        {
+          "check": "Messages contain layout fields only",
+          "pass": true
+        },
+        {
+          "check": "Modal initial focus stays inside dialog",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 0",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 1",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 2",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 3",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 4",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 5",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 6",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 7",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 8",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 9",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 10",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 11",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 12",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 13",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 14",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 15",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 16",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 17",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 18",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 19",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 20",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 21",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 22",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 23",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 24",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 25",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 26",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 27",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 28",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 29",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 30",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 31",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 32",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 33",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 34",
+          "pass": true
+        },
+        {
+          "check": "Wrong-source resize ignored",
+          "pass": true
+        },
+        {
+          "check": "Wrong-channel close ignored",
+          "pass": true
+        },
+        {
+          "check": "Iframe Escape restores opener and scrolling",
+          "pass": true
+        },
+        {
+          "check": "Cached modal reopens and parent Escape restores opener",
+          "pass": true
+        },
+        {
+          "check": "Browser reports CSP frame-ancestors rejection",
+          "pass": true
+        },
+        {
+          "check": "CSP denial keeps fallback link",
+          "pass": true
+        },
+        {
+          "check": "Missing widget script preserves ordinary booking link",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "firefox-embed.log"
+    },
+    {
+      "phase": "recovery",
+      "engine": "firefox",
+      "version": "155.0",
+      "createdBookingId": "82f57014-48dd-469a-8465-b19b4f6bac27",
+      "results": [
+        {
+          "check": "Lost reply follows real committed HTTP 201",
+          "pass": true
+        },
+        {
+          "check": "Uncertain creation locks original contact 0",
+          "pass": true
+        },
+        {
+          "check": "Uncertain creation locks original contact 1",
+          "pass": true
+        },
+        {
+          "check": "Uncertain creation locks original contact 2",
+          "pass": true
+        },
+        {
+          "check": "Lost response, JSON 429 and HTML 403 preserve one request",
+          "pass": true
+        },
+        {
+          "check": "Recovered creation shows original booking reference",
+          "pass": true
+        },
+        {
+          "check": "expired management link returns 410",
+          "pass": true
+        },
+        {
+          "check": "expired link shows contact guidance",
+          "pass": true
+        },
+        {
+          "check": "expired link exposes no mutation controls",
+          "pass": true
+        },
+        {
+          "check": "expired link exposes no booking contact",
+          "pass": true
+        },
+        {
+          "check": "revoked management link returns 410",
+          "pass": true
+        },
+        {
+          "check": "revoked link shows contact guidance",
+          "pass": true
+        },
+        {
+          "check": "revoked link exposes no mutation controls",
+          "pass": true
+        },
+        {
+          "check": "revoked link exposes no booking contact",
+          "pass": true
+        },
+        {
+          "check": "foreign management link returns 410",
+          "pass": true
+        },
+        {
+          "check": "foreign link shows contact guidance",
+          "pass": true
+        },
+        {
+          "check": "foreign link exposes no mutation controls",
+          "pass": true
+        },
+        {
+          "check": "foreign link exposes no booking contact",
+          "pass": true
+        },
+        {
+          "check": "Delayed iframe preserves fallback link",
+          "pass": true
+        },
+        {
+          "check": "Late iframe readiness restores the booking frame",
+          "pass": true
+        },
+        {
+          "check": "Blocked widget request preserves ordinary navigation",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "firefox-recovery.log"
+    },
+    {
+      "phase": "concurrency",
+      "engine": "firefox",
+      "version": "155.0",
+      "createdBookingId": "4eb8296a-2094-4eb1-b5d5-1a0ece1220b4",
+      "winningVersion": 2,
+      "results": [
+        {
+          "check": "Owner manual booking succeeds",
+          "pass": true
+        },
+        {
+          "check": "First editor reschedules successfully",
+          "pass": true
+        },
+        {
+          "check": "Second editor cannot overwrite a stale version",
+          "pass": true
+        },
+        {
+          "check": "Stale editor retains the typed reason",
+          "pass": true
+        },
+        {
+          "check": "Lost cancellation reply follows a real commit",
+          "pass": true
+        },
+        {
+          "check": "Cancellation recovery preserves one command key",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "firefox-concurrency.log"
+    },
+    {
+      "phase": "layout",
+      "engine": "firefox",
+      "version": "155.0",
+      "results": [
+        {
+          "role": "owner",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "width": 320,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "width": 844,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "width": 320,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "width": 844,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "width": 320,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "width": 844,
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "firefox-layout.log"
+    },
+    {
+      "phase": "cookie",
+      "engine": "firefox",
+      "version": "155.0",
+      "results": [
+        {
+          "check": "Probe cookie available as first party",
+          "pass": true
+        },
+        {
+          "check": "SameSite=None probe cookie blocked in third-party iframe",
+          "pass": true
+        },
+        {
+          "check": "Cookie-restricted iframe commits real booking",
+          "pass": true
+        },
+        {
+          "check": "Cookie-restricted booking request contains no cookies",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "firefox-cookie.log"
+    },
+    {
+      "phase": "embed",
+      "engine": "webkit",
+      "version": "26.5",
+      "viewport": "390x844",
+      "parent": "http://127.0.0.1:3110",
+      "child": "http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108",
+      "cspErrors": [
+        "Refused to load http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108/embed?parent=http%3A%2F%2Flocalhost%3A3110 because it does not appear in the frame-ancestors directive of the Content Security Policy."
+      ],
+      "results": [
+        {
+          "check": "Cross-site iframe handshake and resize",
+          "pass": true
+        },
+        {
+          "check": "Cross-site iframe creates a real booking",
+          "pass": true
+        },
+        {
+          "check": "Embedded booking sends no cookies",
+          "pass": true
+        },
+        {
+          "check": "Messages contain layout fields only",
+          "pass": true
+        },
+        {
+          "check": "Modal initial focus stays inside dialog",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 0",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 1",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 2",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 3",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 4",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 5",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 6",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 7",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 8",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 9",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 10",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 11",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 12",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 13",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 14",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 15",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 16",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 17",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 18",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 19",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 20",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 21",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 22",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 23",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 24",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 25",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 26",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 27",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 28",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 29",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 30",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 31",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 32",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 33",
+          "pass": true
+        },
+        {
+          "check": "Native modal contains keyboard focus 34",
+          "pass": true
+        },
+        {
+          "check": "Wrong-source resize ignored",
+          "pass": true
+        },
+        {
+          "check": "Wrong-channel close ignored",
+          "pass": true
+        },
+        {
+          "check": "Iframe Escape restores opener and scrolling",
+          "pass": true
+        },
+        {
+          "check": "Cached modal reopens and parent Escape restores opener",
+          "pass": true
+        },
+        {
+          "check": "Browser reports CSP frame-ancestors rejection",
+          "pass": true
+        },
+        {
+          "check": "CSP denial keeps fallback link",
+          "pass": true
+        },
+        {
+          "check": "Missing widget script preserves ordinary booking link",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "webkit-embed.log"
+    },
+    {
+      "phase": "recovery",
+      "engine": "webkit",
+      "version": "26.5",
+      "createdBookingId": "3dc02c80-6fe8-43df-9398-0407983da479",
+      "results": [
+        {
+          "check": "Lost reply follows real committed HTTP 201",
+          "pass": true
+        },
+        {
+          "check": "Uncertain creation locks original contact 0",
+          "pass": true
+        },
+        {
+          "check": "Uncertain creation locks original contact 1",
+          "pass": true
+        },
+        {
+          "check": "Uncertain creation locks original contact 2",
+          "pass": true
+        },
+        {
+          "check": "Lost response, JSON 429 and HTML 403 preserve one request",
+          "pass": true
+        },
+        {
+          "check": "Recovered creation shows original booking reference",
+          "pass": true
+        },
+        {
+          "check": "expired management link returns 410",
+          "pass": true
+        },
+        {
+          "check": "expired link shows contact guidance",
+          "pass": true
+        },
+        {
+          "check": "expired link exposes no mutation controls",
+          "pass": true
+        },
+        {
+          "check": "expired link exposes no booking contact",
+          "pass": true
+        },
+        {
+          "check": "revoked management link returns 410",
+          "pass": true
+        },
+        {
+          "check": "revoked link shows contact guidance",
+          "pass": true
+        },
+        {
+          "check": "revoked link exposes no mutation controls",
+          "pass": true
+        },
+        {
+          "check": "revoked link exposes no booking contact",
+          "pass": true
+        },
+        {
+          "check": "foreign management link returns 410",
+          "pass": true
+        },
+        {
+          "check": "foreign link shows contact guidance",
+          "pass": true
+        },
+        {
+          "check": "foreign link exposes no mutation controls",
+          "pass": true
+        },
+        {
+          "check": "foreign link exposes no booking contact",
+          "pass": true
+        },
+        {
+          "check": "Delayed iframe preserves fallback link",
+          "pass": true
+        },
+        {
+          "check": "Late iframe readiness restores the booking frame",
+          "pass": true
+        },
+        {
+          "check": "Blocked widget request preserves ordinary navigation",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "webkit-recovery.log"
+    },
+    {
+      "phase": "concurrency",
+      "engine": "webkit",
+      "version": "26.5",
+      "createdBookingId": "fb4f00fa-4b54-49b9-ac4e-a3f7958eb3ce",
+      "winningVersion": 2,
+      "results": [
+        {
+          "check": "Owner manual booking succeeds",
+          "pass": true
+        },
+        {
+          "check": "First editor reschedules successfully",
+          "pass": true
+        },
+        {
+          "check": "Second editor cannot overwrite a stale version",
+          "pass": true
+        },
+        {
+          "check": "Stale editor retains the typed reason",
+          "pass": true
+        },
+        {
+          "check": "Lost cancellation reply follows a real commit",
+          "pass": true
+        },
+        {
+          "check": "Cancellation recovery preserves one command key",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "webkit-concurrency.log"
+    },
+    {
+      "phase": "layout",
+      "engine": "webkit",
+      "version": "26.5",
+      "results": [
+        {
+          "role": "owner",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "owner",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 169,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "receptionist",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 76,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "staff",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 37,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "et",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "evidence": {
+            "width": 320,
+            "viewport": 320,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "evidence": {
+            "width": 844,
+            "viewport": 844,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "platform",
+          "locale": "ru",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "evidence": {
+            "width": 1280,
+            "viewport": 1280,
+            "controls": 28,
+            "unnamed": [],
+            "duplicates": []
+          },
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "et",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "width": 320,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "et",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "width": 844,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "en",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "width": 320,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "en",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "width": 844,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "ru",
+          "viewport": {
+            "width": 320,
+            "height": 700
+          },
+          "width": 320,
+          "pass": true
+        },
+        {
+          "role": "public",
+          "locale": "ru",
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "width": 844,
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "webkit-layout.log"
+    }
+  ]
+}

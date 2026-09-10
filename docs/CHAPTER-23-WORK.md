@@ -1,5 +1,7 @@
 # Peatükk 23 — paranduste ja vastuvõtu tööregister
 
+**23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 506/506 HTTP-kontrolli, 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
+
 **Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
 
 Seis 08.09.2026 pärast omaniku paranduskäsku: **23-F01–F05 on kohalikult parandatud ja kontrollitud**, [järelraport ja tõendid](CHAPTER-23-FIXES.md). **23-G01–G08 on avatud; 23-G09 tehniline teostus ja kohalik kontroll on 09.09 valmis** ([tõendid](SUPPORT-G09.md)); tootmise paigaldus ja omaniku etappide vastuvõtt jäävad eraldi. Audit ega selle register ei ole korraldus väliste teenuste tellimiseks või tootmise muutmiseks. Omaniku varasem kujunduse ning välise varunduse/hoiatuste edasilükkamine jääb kehtima. [Koodileiud ja tõendid](CHAPTER-23.md), [AT-maatriks](CHAPTER-23-ACCEPTANCE.md).
@@ -90,9 +92,7 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G03 — brauseri-, õiguste ja kasutatavuse vastuvõtt
 
-**Teine voor 09.09.2026:** [AT-01/03/04/06/08 teenusevalikud ja avatud vormi aegumine](ACCEPTANCE-G03-VARIANTS.md) läbisid 15 brauserifaasi Chrome'is, Firefoxis ja WebKitis. Kontaktid säilisid nii hinna muutumisel kui ka päris etteteatamispiiri möödumisel; keelatud kinnitamised ei loonud kõrvalkirjeid. Katmata harud ja sõltumatu vastuvõtt jäävad avatuks.
-
-**Seis 09.09.2026: esimene automaatne põhimatriks valmis, tervikvastuvõtt avatud.** 240 päris HTTP-päringut ja äriandmete räsivõrdlus läbisid; kolm brauserimootorit × neli haldusrolli ning kolm klaviatuuriga avalikku broneerimist läbisid. Leitud WebKiti põhisisulingi Tab-viga parandatud. [Täpne ulatus, kordamise juhis, tõendid ja järgmise vooru protokoll](ACCEPTANCE-G03.md). Safari/pärisseadmed, ekraanilugejad, ülejäänud API-harud ja veateekonnad jäävad avatuks. Allpool on algne tööleping.
+**Seis 10.09.2026: kirjeldatud automaatne maatriks lõpetatud, sõltumatu tervikvastuvõtt avatud.** [Lõpparuanne, kahe paranduse vastunäited, kordamise juhis ja tõendid](ACCEPTANCE-G03-COMPLETION.md). 506 päris HTTP-kontrolli, 14 brauserifaasi, 287 automaattesti ja build läbisid. Ülejäänud vastuvõtt nõuab päris Safari/iOS/Androidi seadmeid, ekraanilugejaid ning sõltumatut kasutajat; lõpliku kujunduse järel tuleb ligipääsetavuse kordusvoor. [Esimene voor](ACCEPTANCE-G03.md) ja [valikute/aegumise voor](ACCEPTANCE-G03-VARIANTS.md) säilitavad eraldi tõendid. Allpool on algne tööleping.
 
 - **Seos / eesmärk:** ptk 08–12/16/24/25, E3–E7/E10, eriti AT-01–08 ja AT-19–35. Mõõta tervikteekonda kokkulepitud brauserites ning rollidega.
 - **Sisendid / eeltingimused:** AT-maatriks, praegused API-d ja õigused; täpsed toetatud versioonid ning klaviatuuri/ekraanilugeja kombinatsioonid.

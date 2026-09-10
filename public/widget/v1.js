@@ -89,7 +89,7 @@
       if(activeDialog)activeDialog.close();
       document.body.append(dialog);dialog.showModal();activeDialog=dialog;dialogs.set(anchor,dialog);
       document.documentElement.style.overflow='hidden';close.focus();
-      disconnect=connect(frame,url,()=>{status.textContent='';},()=>{status.textContent=t('Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht.');frame.hidden=true;},()=>dialog.close());
+      disconnect=connect(frame,url,()=>{frame.hidden=false;status.textContent='';},()=>{status.textContent=t('Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht.');frame.hidden=true;},()=>dialog.close());
       return true;
     }catch{disconnect();dialog.remove();document.documentElement.style.overflow=oldOverflow;activeDialog=null;return false;}
   }

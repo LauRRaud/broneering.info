@@ -1,0 +1,49 @@
+{
+  "at": "2026-09-09T17:37:30.728Z",
+  "bookings": [
+    {
+      "is_test": false,
+      "source": "online",
+      "count": 4,
+      "synthetic_contacts": true
+    },
+    {
+      "is_test": true,
+      "source": "manual",
+      "count": 3,
+      "synthetic_contacts": null
+    },
+    {
+      "is_test": true,
+      "source": "online",
+      "count": 19,
+      "synthetic_contacts": true
+    }
+  ],
+  "outbox": [
+    {
+      "status": "pending",
+      "recipient_kind": "customer",
+      "count": 19
+    },
+    {
+      "status": "skipped",
+      "recipient_kind": "customer",
+      "count": 9
+    }
+  ],
+  "events": [
+    {
+      "action": "booking.cancel",
+      "count": 3
+    },
+    {
+      "action": "booking.created",
+      "count": 22
+    },
+    {
+      "action": "booking.reschedule",
+      "count": 3
+    }
+  ]
+}

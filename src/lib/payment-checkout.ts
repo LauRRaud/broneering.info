@@ -26,13 +26,14 @@ export async function beginInvoiceCheckout(actor:Actor,raw:unknown,context:{ip:s
  return beginCheckout(actor,raw,context);
 }
 async function beginCheckout(actor:Actor|null,raw:unknown,context:{ip:string;locale:Locale},publicToken?:string):Promise<CheckoutView>{
- const parsed=schema.safeParse(raw);if(!parsed.success)throw new AppError(400,'INVALID_PAYMENT_REQUEST','Kontrolli makse andmeid.');const d=parsed.data,c=makeCommerceConfig();
+ const parsed=schema.safeParse(raw);if(!parsed.success)throw new AppError(400,'INVALID_PAYMENT_REQUEST','Kontrolli makse andmeid.');const d=parsed.data;
  const reserved=await withTenant(d.tenantId,async client=>{
   if(actor)await requireOwnerInTransaction(actor,d.tenantId,client);
   else{
    await client.query('SELECT id FROM tenants WHERE id=$1 FOR UPDATE',[d.tenantId]);
    if(d.method!=='link'||!publicToken||(await invoiceForPaymentLink(client,d.tenantId,publicToken))!==d.invoiceId)throw new AppError(404,'PAYMENT_LINK_NOT_FOUND','Arve makselinki ei leitud.');
   }
+  const config=makeCommerceConfig();
   const hash=tokenHash(JSON.stringify(d)),old=(await client.query('SELECT * FROM payment_attempts WHERE tenant_id=$1 AND request_key=$2',[d.tenantId,d.requestKey])).rows[0];
   const invoice=await invoiceInClient(client,d.tenantId,d.invoiceId);
   if(old){if(old.payload_hash!==hash)throw new AppError(409,'IDEMPOTENCY_MISMATCH','Sama päringu tunnusega saadeti erinevad andmed.');return {existing:view(old,invoice)};}
@@ -47,16 +48,16 @@ async function beginCheckout(actor:Actor|null,raw:unknown,context:{ip:string;loc
    if(!subscription||subscription.plan_id!==STANDARD_PLAN.id||subscription.monthly_price!==recurringTerms.amount||subscription.ends_at)throw new AppError(409,'RECURRING_TERMS_CHANGED','Püsimakse tingimused vajavad uut kinnitust.');
    if((await client.query("SELECT id FROM payment_mandates WHERE tenant_id=$1 AND status IN ('pending','active')",[d.tenantId])).rowCount)throw new AppError(409,'MANDATE_EXISTS','Püsimakse on juba seadistatud või kinnitamisel.');subscriptionId=subscription.id;
   }
-  await client.query('INSERT INTO payment_attempts(id,tenant_id,invoice_id,request_key,payload_hash,method,environment,shop_id,amount,reference,created_by) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)',[id,d.tenantId,d.invoiceId,d.requestKey,hash,d.method,c.mode,c.shopId,amount,invoice.number,actor?.id??null]);
+  await client.query('INSERT INTO payment_attempts(id,tenant_id,invoice_id,request_key,payload_hash,method,environment,shop_id,amount,reference,created_by) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)',[id,d.tenantId,d.invoiceId,d.requestKey,hash,d.method,config.mode,config.shopId,amount,invoice.number,actor?.id??null]);
   if(subscriptionId)await client.query('INSERT INTO payment_mandates(tenant_id,subscription_id,setup_attempt_id,consent_by,terms) VALUES($1,$2,$3,$4,$5)',[d.tenantId,subscriptionId,id,actor!.id,JSON.stringify(recurringTerms)]);
-  await audit(client,d.tenantId,actor?.id??null,'payment.checkout.started',undefined,id,{invoiceId:d.invoiceId,amount,environment:c.mode});
+  await audit(client,d.tenantId,actor?.id??null,'payment.checkout.started',undefined,id,{invoiceId:d.invoiceId,amount,environment:config.mode});
   if(subscriptionId)await audit(client,d.tenantId,actor!.id,'payment.mandate.consented',undefined,id,{terms:recurringTerms});
-  return {created:{id,amount,reference:invoice.number,email:invoice.recipient.email}};
+  return {created:{id,amount,reference:invoice.number,email:invoice.recipient.email,config}};
  });
  if(reserved.existing)return reserved.existing;
  const attempt=reserved.created!;
  try{
-  const result=await createProviderTransaction({tenantId:d.tenantId,attemptId:attempt.id,amount:attempt.amount,reference:attempt.reference,email:attempt.email,ip:context.ip,locale:context.locale,recurring:d.method==='enroll'},c);
+  const result=await createProviderTransaction({tenantId:d.tenantId,attemptId:attempt.id,amount:attempt.amount,reference:attempt.reference,email:attempt.email,ip:context.ip,locale:context.locale,recurring:d.method==='enroll'},attempt.config);
   return withTenant(d.tenantId,async client=>{
    await client.query('SELECT id FROM tenants WHERE id=$1 FOR UPDATE',[d.tenantId]);
    // A callback may already have completed this exact attempt while the HTTP request was returning.

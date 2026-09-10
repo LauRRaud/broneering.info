@@ -1,0 +1,85 @@
+### Result
+{"engine":"chrome","version":"152.0.7977.83","viewport":"390x844","parent":"http://127.0.0.1:3110","child":"http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108","cspErrors":["Framing 'http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108/' violates the following Content Security Policy directive: \"frame-ancestors http://127.0.0.1:3110\". The request has been blocked.\n"],"results":[{"check":"Cross-site iframe handshake and resize","pass":true},{"check":"Cross-site iframe creates a real booking","pass":true},{"check":"Embedded booking sends no cookies","pass":true},{"check":"Messages contain layout fields only","pass":true},{"check":"Modal initial focus stays inside dialog","pass":true},{"check":"Native modal contains keyboard focus 0","pass":true},{"check":"Native modal contains keyboard focus 1","pass":true},{"check":"Native modal contains keyboard focus 2","pass":true},{"check":"Native modal contains keyboard focus 3","pass":true},{"check":"Native modal contains keyboard focus 4","pass":true},{"check":"Native modal contains keyboard focus 5","pass":true},{"check":"Native modal contains keyboard focus 6","pass":true},{"check":"Native modal contains keyboard focus 7","pass":true},{"check":"Native modal contains keyboard focus 8","pass":true},{"check":"Native modal contains keyboard focus 9","pass":true},{"check":"Native modal contains keyboard focus 10","pass":true},{"check":"Native modal contains keyboard focus 11","pass":true},{"check":"Native modal contains keyboard focus 12","pass":true},{"check":"Native modal contains keyboard focus 13","pass":true},{"check":"Native modal contains keyboard focus 14","pass":true},{"check":"Native modal contains keyboard focus 15","pass":true},{"check":"Native modal contains keyboard focus 16","pass":true},{"check":"Native modal contains keyboard focus 17","pass":true},{"check":"Native modal contains keyboard focus 18","pass":true},{"check":"Native modal contains keyboard focus 19","pass":true},{"check":"Native modal contains keyboard focus 20","pass":true},{"check":"Native modal contains keyboard focus 21","pass":true},{"check":"Native modal contains keyboard focus 22","pass":true},{"check":"Native modal contains keyboard focus 23","pass":true},{"check":"Native modal contains keyboard focus 24","pass":true},{"check":"Native modal contains keyboard focus 25","pass":true},{"check":"Native modal contains keyboard focus 26","pass":true},{"check":"Native modal contains keyboard focus 27","pass":true},{"check":"Native modal contains keyboard focus 28","pass":true},{"check":"Native modal contains keyboard focus 29","pass":true},{"check":"Native modal contains keyboard focus 30","pass":true},{"check":"Native modal contains keyboard focus 31","pass":true},{"check":"Native modal contains keyboard focus 32","pass":true},{"check":"Native modal contains keyboard focus 33","pass":true},{"check":"Native modal contains keyboard focus 34","pass":true},{"check":"Wrong-source resize ignored","pass":true},{"check":"Wrong-channel close ignored","pass":true},{"check":"Iframe Escape restores opener and scrolling","pass":true},{"check":"Cached modal reopens and parent Escape restores opener","pass":true},{"check":"Browser reports CSP frame-ancestors rejection","pass":true},{"check":"CSP denial keeps fallback link","pass":true},{"check":"Missing widget script preserves ordinary booking link","pass":true}],"pass":true}
+### Ran Playwright code
+```js
+await (async (page) => {
+ const engine='chrome',directory='output/playwright/acceptance-g03';
+ const results=[];
+ const ensure=(condition,message)=>{if(!condition)throw Error(message);results.push({check:message,pass:true});};
+ const messages=[];
+ const cspErrors=[];
+ page.on('console',message=>{if(/frame-ancestors|Content-Security-Policy/i.test(message.text()))cspErrors.push(message.text());});
+ page.setDefaultTimeout(15000);
+ await page.context().setStorageState({cookies:[],origins:[]});
+ await page.setViewportSize({width:390,height:844});
+ await page.exposeFunction('recordEmbedMessage',data=>messages.push(data));
+ await page.addInitScript(()=>window.addEventListener('message',event=>{
+  if(event.data?.type?.startsWith('broneering:'))window.recordEmbedMessage({origin:event.origin,data:event.data});
+ }));
+ await page.goto('http://127.0.0.1:3110/inline');
+ const inline=page.frameLocator('iframe');
+ await inline.getByRole('button',{name:'G03 lõikus',exact:true}).waitFor();
+ await page.waitForFunction(()=>document.querySelector('[role=status]').textContent==='');
+ ensure(Number(await page.locator('iframe').getAttribute('height'))>=100,'Cross-site iframe handshake and resize');
+ await inline.getByRole('button',{name:'G03 lõikus',exact:true}).click();
+ await inline.getByRole('button',{name:'Töötaja pole oluline',exact:true}).click();
+ await inline.getByRole('textbox',{name:'Valitud kuupäev',exact:true}).fill('2026-09-16');
+ await inline.getByRole('list',{name:'Vabad ajad',exact:true}).getByRole('button').first().click();
+ await page.frames().find(frame=>frame.url().includes('/embed?')).waitForFunction(()=>document.activeElement.id==='booking-title'&&document.activeElement.textContent==='Veel mõned andmed.');
+ await inline.getByRole('textbox',{name:'Teenuse saaja nimi *',exact:true}).fill(`G03 ${engine} Embed`);
+ await inline.getByRole('textbox',{name:'Kontaktisiku e-post *',exact:true}).fill(`g03-embed-${engine}@example.invalid`);
+ const pending=page.waitForResponse(response=>response.url().endsWith('/api/bookings')&&response.request().method()==='POST');
+ await inline.getByRole('button',{name:'Kinnita broneering',exact:true}).click();
+ const response=await pending;
+ ensure(response.status()===201,'Cross-site iframe creates a real booking');
+ await inline.getByRole('heading',{name:'Kohtumiseni, G03.',exact:true}).waitFor();
+ ensure(!response.request().headers().cookie,'Embedded booking sends no cookies');
+ ensure(messages.length>0&&messages.every(message=>Object.keys(message.data).every(key=>['type','version','channel','height'].includes(key))),'Messages contain layout fields only');
+ await page.screenshot({path:`${directory}/${engine}-embed-confirmation.png`,fullPage:true});
+ await page.goto('http://127.0.0.1:3110/');
+ await page.locator('#opener').click();
+ const dialog=page.getByRole('dialog');
+ await dialog.waitFor();
+ await page.waitForFunction(()=>document.querySelector('dialog [role=status]').textContent==='');
+ ensure(await page.evaluate(()=>!!document.activeElement.closest('dialog')),'Modal initial focus stays inside dialog');
+ for(let index=0;index<35;index++){
+  await page.keyboard.press('Tab');
+  ensure(await page.evaluate(()=>document.activeElement===document.body||!!document.activeElement.closest('dialog')),'Native modal contains keyboard focus '+index);
+ }
+ const before=await dialog.locator('iframe').getAttribute('height');
+ await page.evaluate(()=>window.postMessage({type:'broneering:resize',version:1,channel:'a'.repeat(32),height:19999},location.origin));
+ ensure(await dialog.locator('iframe').getAttribute('height')===before,'Wrong-source resize ignored');
+ const modalFrame=page.frames().find(frame=>frame.url().includes('/embed?'));
+ await modalFrame.evaluate(()=>parent.postMessage({type:'broneering:close',version:1,channel:'a'.repeat(32)},'*'));
+ ensure(await dialog.isVisible(),'Wrong-channel close ignored');
+ await modalFrame.getByRole('button',{name:'G03 lõikus',exact:true}).click();
+ await page.keyboard.press('Escape');
+ await dialog.waitFor({state:'hidden'});
+ await page.waitForFunction(()=>document.activeElement.id==='opener'&&document.documentElement.style.overflow!=='hidden');
+ ensure(await page.evaluate(()=>document.documentElement.style.overflow!=='hidden'),'Iframe Escape restores opener and scrolling');
+ await page.keyboard.press('Enter');
+ await dialog.waitFor();
+ await page.keyboard.press('Escape');
+ await dialog.waitFor({state:'hidden'});
+ await page.waitForFunction(()=>document.activeElement.id==='opener');
+ ensure(true,'Cached modal reopens and parent Escape restores opener');
+ await page.goto('http://localhost:3110/inline');
+ await page.getByRole('status').filter({hasText:'Manustatud vaadet ei õnnestunud avada.'}).waitFor({timeout:20000});
+ ensure(cspErrors.length>0,'Browser reports CSP frame-ancestors rejection');
+ ensure(await page.locator('#fallback').isVisible(),'CSP denial keeps fallback link');
+ await page.screenshot({path:`${directory}/${engine}-embed-csp-denied.png`});
+ await page.goto('http://127.0.0.1:3110/no-script');
+ await page.locator('#opener').click();
+ await page.waitForURL('http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108/');
+ ensure(await page.getByRole('button',{name:'G03 lõikus',exact:true}).isVisible(),'Missing widget script preserves ordinary booking link');
+ return {engine,version:page.context().browser().version(),viewport:'390x844',parent:'http://127.0.0.1:3110',child:'http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108',cspErrors,results,pass:true};
+}
+
+)(page);
+```
+### Page
+- Page URL: http://g03-b173db90-f80f-48d7-b4c1-7cf6c1da7258.localhost:3108/
+- Page Title: broneering.info
+- Console: 1 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli\console-2026-09-09T17-36-02-481Z.log#L1-L11

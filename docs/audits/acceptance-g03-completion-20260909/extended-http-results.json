@@ -1,0 +1,5065 @@
+{
+  "at": "2026-09-09T17:31:16.616Z",
+  "realHttp": true,
+  "authMocked": false,
+  "total": 506,
+  "passed": 506,
+  "results": [
+    {
+      "label": "onboarding own",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "translations own",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&customerId=6def8c09-0bee-45d5-88cb-a0ad0596ed14",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=invoice&id=c040f940-775b-4632-bb07-37d615b35a8a",
+      "expected": 404,
+      "pass": true,
+      "status": 404,
+      "code": "INVOICE_NOT_FOUND"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payment-link&id=b5a7a795-57b2-493b-9482-c3619c72afd7",
+      "expected": 404,
+      "pass": true,
+      "status": 404,
+      "code": "INVOICE_NOT_FOUND"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payments&id=7db46c31-b48d-4bcf-8048-71f163350872",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=checkout&id=f402f1e7-31f0-4f10-ad52-4fbb12c7898f",
+      "expected": 404,
+      "pass": true,
+      "status": 404,
+      "code": "INVOICE_NOT_FOUND"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=print&id=1471de8f-3d6f-4a0a-be01-fd181ee6efe9",
+      "expected": 404,
+      "pass": true,
+      "status": 404,
+      "code": "INVOICE_NOT_FOUND"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=issuer",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 409,
+      "pass": true,
+      "status": 409,
+      "code": "PREVIEW_CLOSED"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&serviceId=9b362f61-e17a-4063-9cee-ce575cdf25d3&date=2026-09-16",
+      "expected": 409,
+      "pass": true,
+      "status": 409,
+      "code": "PREVIEW_CLOSED"
+    },
+    {
+      "label": "Export download access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=a2644aeb-a92d-4812-a71a-71b466149acd",
+      "expected": 410,
+      "pass": true,
+      "status": 410,
+      "code": "EXPORT_UNAVAILABLE"
+    },
+    {
+      "label": "Subscription creation denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/subscription",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform billing override denied",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform subscription override denied",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/subscription?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice issue denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice credit denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice mail retry denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment record denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment reversal denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Owner invitation renewal denied",
+      "role": "owner",
+      "method": "PATCH",
+      "path": "/api/admin/companies",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "onboarding own",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "translations own",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&customerId=6def8c09-0bee-45d5-88cb-a0ad0596ed14",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=invoice&id=f284c4f0-6412-4d3a-b0f2-b7738bc3674a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payment-link&id=651d9fdd-c81a-4c07-a7b7-2fc82f9bfe9d",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payments&id=532b9b29-fcfd-489f-be33-efdc96729cee",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=checkout&id=378565f8-81f0-439d-801b-6a14bab93760",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=print&id=84497497-1073-4784-b5ab-6d3267b8ceba",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=issuer",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&serviceId=9b362f61-e17a-4063-9cee-ce575cdf25d3&date=2026-09-16",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Export download access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=f055e991-2987-44e0-b88b-103e0e459cc9",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-service denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-service",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-staff denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-staff",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-assignment denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-assignment",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-weekly denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-weekly",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining reset-exception denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/reset-exception",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-booking-rules denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-booking-rules",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining cancel-invitation denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/cancel-invitation",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining change-role denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/change-role",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining transfer-owner denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/transfer-owner",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Exit cancel denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Exit schedule denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Notification retry denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Notification feedback denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Privacy export denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Privacy erasure denied",
+      "role": "receptionist",
+      "method": "DELETE",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Onboarding publish denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Onboarding pause denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Onboarding profile denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Translation save denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Translation publish denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Translation generate denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import upload denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/imports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&kind=customers",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import preview denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import commit denied",
+      "role": "receptionist",
+      "method": "PUT",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import cancel denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import enable-reminders denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import discard-source denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Preview booking denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/preview/bookings?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing recipient denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing checkout denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing mandate revocation denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Subscription creation denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/subscription",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform billing override denied",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform subscription override denied",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/subscription?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice issue denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice credit denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice mail retry denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment record denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment reversal denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Owner invitation renewal denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/companies",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "onboarding own",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "translations own",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&customerId=6def8c09-0bee-45d5-88cb-a0ad0596ed14",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=invoice&id=892916b7-54fd-4edc-9a48-61e946444039",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payment-link&id=d808eb47-0883-4324-9bcd-275e1c21f8c6",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payments&id=7d4b58d2-ec5e-43a1-9129-3e5f6bb9e43f",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=checkout&id=9e03105b-0c19-4e54-8db5-a7a868ab8a38",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=print&id=a955ab92-bd65-4df8-acfd-67e28dc86f91",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=issuer",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&serviceId=9b362f61-e17a-4063-9cee-ce575cdf25d3&date=2026-09-16",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Export download access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=16c3e10d-55fc-4f09-8f31-c9558bf52597",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-service denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-service",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-staff denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-staff",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-assignment denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-assignment",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-weekly denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-weekly",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining reset-exception denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/reset-exception",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining save-booking-rules denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-booking-rules",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining cancel-invitation denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/cancel-invitation",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining change-role denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/change-role",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remaining transfer-owner denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/transfer-owner",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Exit cancel denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Exit schedule denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Notification retry denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Notification feedback denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Privacy export denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Privacy erasure denied",
+      "role": "staff",
+      "method": "DELETE",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Onboarding publish denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Onboarding pause denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Onboarding profile denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Translation save denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Translation publish denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Translation generate denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import upload denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/imports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&kind=customers",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import preview denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import commit denied",
+      "role": "staff",
+      "method": "PUT",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import cancel denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import enable-reminders denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Import discard-source denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Preview booking denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/preview/bookings?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing recipient denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing checkout denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Billing mandate revocation denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Subscription creation denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/subscription",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform billing override denied",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform subscription override denied",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/subscription?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice issue denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice credit denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice mail retry denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment record denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment reversal denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Owner invitation renewal denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/companies",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "onboarding own",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "translations own",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&customerId=6def8c09-0bee-45d5-88cb-a0ad0596ed14",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=invoice&id=66712c9c-6b8c-48d7-8cea-02aeeda21538",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payment-link&id=d82ed07e-ad8a-4fbc-8265-2dc6682c473b",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payments&id=2d673d43-5836-4e47-bedf-767087007283",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=checkout&id=20e67464-9489-4562-adff-1d96e0661962",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=print&id=49fa9e1e-1d75-4fa2-8fbb-357d8b180f60",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=issuer",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&serviceId=9b362f61-e17a-4063-9cee-ce575cdf25d3&date=2026-09-16",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Export download access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=5a5a8b77-36a9-4f01-8a4b-579ab1f5b7ad",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-service denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-service",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-staff denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-staff",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-assignment denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-assignment",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-weekly denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-weekly",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining reset-exception denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/reset-exception",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-booking-rules denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-booking-rules",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining cancel-invitation denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/cancel-invitation",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining change-role denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/change-role",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining transfer-owner denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/transfer-owner",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit cancel denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit schedule denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification retry denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification feedback denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy export denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy erasure denied",
+      "role": "platform",
+      "method": "DELETE",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding publish denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding pause denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding profile denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation save denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation publish denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation generate denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import upload denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/imports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&kind=customers",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import preview denied",
+      "role": "platform",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import commit denied",
+      "role": "platform",
+      "method": "PUT",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import cancel denied",
+      "role": "platform",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import enable-reminders denied",
+      "role": "platform",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import discard-source denied",
+      "role": "platform",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview booking denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/preview/bookings?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing recipient denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing mandate revocation denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "onboarding own",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "translations own",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&customerId=6def8c09-0bee-45d5-88cb-a0ad0596ed14",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=invoice&id=720fcf20-3ee4-4f5d-94d9-d9c58fa86dd9",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payment-link&id=ecbe109a-93c5-4c4f-a5c8-adfc737a4469",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=payments&id=57b4f4af-3f55-4a0e-ad6b-e464e5fe5f10",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=checkout&id=00dfd278-3ff7-41cd-8867-04b1d03c8c27",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=print&id=420e7597-372a-43f1-b2af-f984cb39545a",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=issuer",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&serviceId=9b362f61-e17a-4063-9cee-ce575cdf25d3&date=2026-09-16",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Export download access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=2735a4ab-30e4-447b-952a-1460eb410825",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-service denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-service",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-staff denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-staff",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-assignment denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-assignment",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-weekly denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-weekly",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining reset-exception denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/reset-exception",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-booking-rules denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-booking-rules",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining cancel-invitation denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/cancel-invitation",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining change-role denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/change-role",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining transfer-owner denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/transfer-owner",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Exit cancel denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Exit schedule denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Notification retry denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Notification feedback denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Privacy export denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Privacy erasure denied",
+      "role": "anonymous",
+      "method": "DELETE",
+      "path": "/api/admin/customers/privacy",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Onboarding publish denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Onboarding pause denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Onboarding profile denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Translation save denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Translation publish denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Translation generate denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import upload denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/imports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&kind=customers",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import preview denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import commit denied",
+      "role": "anonymous",
+      "method": "PUT",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import cancel denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import enable-reminders denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import discard-source denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Preview booking denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/preview/bookings?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing recipient denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing checkout denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing mandate revocation denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Subscription creation denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/subscription",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Platform billing override denied",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&platform=true",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Platform subscription override denied",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/subscription?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&platform=true",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Invoice issue denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Invoice credit denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Invoice mail retry denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Payment record denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Payment reversal denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Owner invitation renewal denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/companies",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "onboarding foreign",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "translations foreign",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&customerId=1b814506-e7e5-4a79-a9c3-ae9459148f7a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=invoice&id=515c7932-a311-4908-9384-c9601df8ebb0",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payment-link&id=1c91679d-2947-4644-80a9-745c1bb931b3",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payments&id=46194494-b53e-4c24-97e5-979477be68a0",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=checkout&id=14df3555-dc8c-4b9f-ad02-c5fb9dfff7c7",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=print&id=ce5fc55b-c4a3-4fa4-9f67-7d2bc85a3e67",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=issuer",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&serviceId=437bb984-8f4d-46a5-ad34-3fcdc08d1142&date=2026-09-16",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Export download access",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&download=2e1dd466-89e4-4733-a912-a0d0da9f162b",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-service denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/save-service",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-staff denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/save-staff",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-assignment denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/save-assignment",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-weekly denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/save-weekly",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining reset-exception denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/reset-exception",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-booking-rules denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/save-booking-rules",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining cancel-invitation denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/cancel-invitation",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining change-role denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/change-role",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining transfer-owner denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/transfer-owner",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit cancel denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit schedule denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification retry denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification feedback denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy export denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy erasure denied",
+      "role": "owner",
+      "method": "DELETE",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding publish denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding pause denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding profile denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation save denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation publish denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation generate denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import upload denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/imports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&kind=customers",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import preview denied",
+      "role": "owner",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import commit denied",
+      "role": "owner",
+      "method": "PUT",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import cancel denied",
+      "role": "owner",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import enable-reminders denied",
+      "role": "owner",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import discard-source denied",
+      "role": "owner",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview booking denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/preview/bookings?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing recipient denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing mandate revocation denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Subscription creation denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/subscription",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform billing override denied",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform subscription override denied",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/subscription?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice issue denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice credit denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice mail retry denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment record denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment reversal denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Owner invitation renewal denied",
+      "role": "owner",
+      "method": "PATCH",
+      "path": "/api/admin/companies",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "onboarding foreign",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "translations foreign",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&customerId=1b814506-e7e5-4a79-a9c3-ae9459148f7a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=invoice&id=7ed6994f-ebd5-44bb-8e2b-48aa2cea0b06",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payment-link&id=9b436cf6-0df2-489b-ab94-487731754b86",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payments&id=acb8df03-3a6b-441a-824f-ad89bf045f2c",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=checkout&id=2adc10fa-70bf-4ac2-86c7-ff6dc758f799",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=print&id=fb0c6662-48fd-45a1-a3e2-087f82d612f3",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=issuer",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&serviceId=437bb984-8f4d-46a5-ad34-3fcdc08d1142&date=2026-09-16",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Export download access",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&download=00117a87-99f3-41f5-b4b5-2de5d6fd3ed5",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-service denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-service",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-staff denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-staff",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-assignment denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-assignment",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-weekly denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-weekly",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining reset-exception denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/reset-exception",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-booking-rules denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-booking-rules",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining cancel-invitation denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/cancel-invitation",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining change-role denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/change-role",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining transfer-owner denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/transfer-owner",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit cancel denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit schedule denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification retry denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification feedback denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy export denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy erasure denied",
+      "role": "receptionist",
+      "method": "DELETE",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding publish denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding pause denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding profile denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation save denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation publish denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation generate denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import upload denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/imports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&kind=customers",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import preview denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import commit denied",
+      "role": "receptionist",
+      "method": "PUT",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import cancel denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import enable-reminders denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import discard-source denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview booking denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/preview/bookings?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing recipient denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing mandate revocation denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Subscription creation denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/subscription",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform billing override denied",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform subscription override denied",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/subscription?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice issue denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice credit denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice mail retry denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment record denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment reversal denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Owner invitation renewal denied",
+      "role": "receptionist",
+      "method": "PATCH",
+      "path": "/api/admin/companies",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "onboarding foreign",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "translations foreign",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&customerId=1b814506-e7e5-4a79-a9c3-ae9459148f7a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=invoice&id=b0e806ee-246d-4b91-99fa-fbbfced1d432",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payment-link&id=cc42fe98-1b0e-4094-b38a-e85996a6cd17",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payments&id=2e51e45e-4164-4138-9a3a-8e017200dfe2",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=checkout&id=9870589c-451f-46b6-ab63-043ba1c13e2c",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=print&id=07347283-eb1a-4de4-b0be-8101942dca02",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=issuer",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&serviceId=437bb984-8f4d-46a5-ad34-3fcdc08d1142&date=2026-09-16",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Export download access",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&download=726d239d-5942-49d8-a55b-1856dc2f5ffa",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-service denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-service",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-staff denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-staff",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-assignment denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-assignment",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-weekly denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-weekly",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining reset-exception denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/reset-exception",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-booking-rules denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/save-booking-rules",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining cancel-invitation denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/cancel-invitation",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining change-role denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/change-role",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining transfer-owner denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/transfer-owner",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit cancel denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit schedule denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification retry denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification feedback denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy export denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy erasure denied",
+      "role": "staff",
+      "method": "DELETE",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding publish denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding pause denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding profile denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation save denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation publish denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation generate denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import upload denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/imports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&kind=customers",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import preview denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import commit denied",
+      "role": "staff",
+      "method": "PUT",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import cancel denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import enable-reminders denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import discard-source denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview booking denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/preview/bookings?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing recipient denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing mandate revocation denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Subscription creation denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/subscription",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform billing override denied",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Platform subscription override denied",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/subscription?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&platform=true",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice issue denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice credit denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Invoice mail retry denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment record denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Payment reversal denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Owner invitation renewal denied",
+      "role": "staff",
+      "method": "PATCH",
+      "path": "/api/admin/companies",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "onboarding foreign",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "translations foreign",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&customerId=1b814506-e7e5-4a79-a9c3-ae9459148f7a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=invoice&id=45808136-a8ac-4d23-83bb-5d3bb8762354",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payment-link&id=1a1ddfb0-736a-43df-862f-f7fee1e65664",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payments&id=e35459bb-54a8-4023-84c4-5d194b80aaa6",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=checkout&id=33dc8485-948b-44af-b3e3-3a456ffa04c3",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=print&id=b955d2b3-0d0d-4ffc-a46b-87af00b5c487",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=issuer",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&serviceId=437bb984-8f4d-46a5-ad34-3fcdc08d1142&date=2026-09-16",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Export download access",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&download=3cd6ba79-98e0-41a7-9e52-b2e89a27c81b",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-service denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-service",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-staff denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-staff",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-assignment denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-assignment",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-weekly denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-weekly",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining reset-exception denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/reset-exception",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining save-booking-rules denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/save-booking-rules",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining cancel-invitation denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/cancel-invitation",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining change-role denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/change-role",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Remaining transfer-owner denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/transfer-owner",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit cancel denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Exit schedule denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification retry denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Notification feedback denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy export denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Privacy erasure denied",
+      "role": "platform",
+      "method": "DELETE",
+      "path": "/api/admin/customers/privacy",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding publish denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding pause denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Onboarding profile denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation save denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation publish denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Translation generate denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import upload denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/imports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&kind=customers",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import preview denied",
+      "role": "platform",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import commit denied",
+      "role": "platform",
+      "method": "PUT",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import cancel denied",
+      "role": "platform",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import enable-reminders denied",
+      "role": "platform",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Import discard-source denied",
+      "role": "platform",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Preview booking denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/preview/bookings?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing recipient denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing checkout denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Billing mandate revocation denied",
+      "role": "platform",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "onboarding foreign",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/onboarding?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "translations foreign",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Customer privacy preview",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/customers/privacy?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&customerId=1b814506-e7e5-4a79-a9c3-ae9459148f7a",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Company invitation state is platform only",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/companies?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing invoice object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=invoice&id=8afe4f13-7c2a-47cc-9b9a-1357b2537817",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing payment-link object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payment-link&id=c94da091-f5f7-4192-a5fb-68f986fe35c3",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing payments object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=payments&id=e74c18af-139c-4360-ba1b-aef4f6a52ded",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing checkout object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=checkout&id=edb0c160-9596-4130-a12a-054c8b9f9a4a",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing print object access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=print&id=4628d484-c26d-4d3a-a0d8-413efd62494c",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing issuer is platform only",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&view=issuer",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Preview catalog access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/preview/catalog?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Preview availability access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/preview/availability?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&serviceId=437bb984-8f4d-46a5-ad34-3fcdc08d1142&date=2026-09-16",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Export download access",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&download=d453d023-48fe-489b-afed-97609ed32f8a",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-service denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-service",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-staff denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-staff",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-assignment denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-assignment",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-weekly denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-weekly",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining reset-exception denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/reset-exception",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining save-booking-rules denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/save-booking-rules",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining cancel-invitation denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/cancel-invitation",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining change-role denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/change-role",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Remaining transfer-owner denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/transfer-owner",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Exit cancel denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Exit schedule denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/exit",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Notification retry denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Notification feedback denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/notifications",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Privacy export denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Privacy erasure denied",
+      "role": "anonymous",
+      "method": "DELETE",
+      "path": "/api/admin/customers/privacy",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Onboarding publish denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Onboarding pause denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Onboarding profile denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/onboarding",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Translation save denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Translation publish denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Translation generate denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/translations",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import upload denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/imports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&kind=customers",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import preview denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import commit denied",
+      "role": "anonymous",
+      "method": "PUT",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import cancel denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import enable-reminders denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Import discard-source denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/imports",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Preview booking denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/preview/bookings?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing recipient denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing checkout denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing mandate revocation denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Subscription creation denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/subscription",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Platform billing override denied",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/billing?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&platform=true",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Platform subscription override denied",
+      "role": "anonymous",
+      "method": "GET",
+      "path": "/api/admin/subscription?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&platform=true",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Invoice issue denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Invoice credit denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Invoice mail retry denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Payment record denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Payment reversal denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Owner invitation renewal denied",
+      "role": "anonymous",
+      "method": "PATCH",
+      "path": "/api/admin/companies",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Company provisioning denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/companies",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Billing issuer write denied",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Company provisioning denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/companies",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Billing issuer write denied",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Company provisioning denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/companies",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Billing issuer write denied",
+      "role": "staff",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "PLATFORM_MFA_REQUIRED"
+    },
+    {
+      "label": "Company provisioning denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/companies",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Billing issuer write denied",
+      "role": "anonymous",
+      "method": "POST",
+      "path": "/api/admin/billing",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Negative writes preserve all scoped business data and global issuer",
+      "before": "1362918f76cf4d72fbcd5ec7fad935ba0709cf8be2b9ed6d2f9e6ee0a14538f1",
+      "after": "1362918f76cf4d72fbcd5ec7fad935ba0709cf8be2b9ed6d2f9e6ee0a14538f1",
+      "pass": true
+    },
+    {
+      "label": "Customer export successful control",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Foreign customer export ID",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/customers/privacy",
+      "expected": 404,
+      "pass": true,
+      "status": 404,
+      "code": "CUSTOMER_NOT_FOUND"
+    },
+    {
+      "label": "Grant receptionist catalog permission",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/update-permissions",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Granted pricing write same session",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-pricing",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Translation remains owner only despite services permission",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/translations?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Remove receptionist catalog permission",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/update-permissions",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Revoked pricing write same session",
+      "role": "receptionist",
+      "method": "POST",
+      "path": "/api/admin/save-pricing",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "MFA-unverified session rejected",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/customers?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    },
+    {
+      "label": "Export request successful control",
+      "role": "owner",
+      "method": "POST",
+      "path": "/api/admin/exports",
+      "expected": 202,
+      "pass": true,
+      "status": 202,
+      "code": null
+    },
+    {
+      "label": "Ready export download",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=c192ea32-a822-4602-9398-c4a31165c097",
+      "expected": 200,
+      "pass": true,
+      "status": 200,
+      "code": null
+    },
+    {
+      "label": "Ready file with foreign tenant context",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=551ca0f0-153f-4703-b69f-2bc6e7da8d1a&download=c192ea32-a822-4602-9398-c4a31165c097",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Ready file denied role",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=c192ea32-a822-4602-9398-c4a31165c097",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Ready file denied role",
+      "role": "receptionist",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=c192ea32-a822-4602-9398-c4a31165c097",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "label": "Ready file denied role",
+      "role": "platform",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=c192ea32-a822-4602-9398-c4a31165c097",
+      "expected": 403,
+      "pass": true,
+      "status": 403,
+      "code": "MEMBERSHIP_REQUIRED"
+    },
+    {
+      "label": "Expired file denied",
+      "role": "owner",
+      "method": "GET",
+      "path": "/api/admin/exports?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&download=c192ea32-a822-4602-9398-c4a31165c097",
+      "expected": 410,
+      "pass": true,
+      "status": 410,
+      "code": "EXPORT_UNAVAILABLE"
+    },
+    {
+      "label": "Expired session rejected",
+      "role": "staff",
+      "method": "GET",
+      "path": "/api/admin/bookings?tenantId=3b489520-c0dc-4c0f-8958-61b7e6228599&view=list&day=2026-09-16",
+      "expected": 401,
+      "pass": true,
+      "status": 401,
+      "code": "UNAUTHENTICATED"
+    }
+  ]
+}

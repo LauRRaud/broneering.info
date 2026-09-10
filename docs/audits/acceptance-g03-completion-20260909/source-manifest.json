@@ -1,0 +1,70 @@
+[
+  {
+    "path": "public/widget/v1.js",
+    "sha256": "7af55ab5db88baddaa6121a2c58bdc743e6ee68704a2b5f033967d6bf33fe8ad"
+  },
+  {
+    "path": "src/lib/payment-checkout.ts",
+    "sha256": "58dead4d245a19a364a5ace7003abc3d2edd86e01b1cd1cb49c4099b3c4a670a"
+  },
+  {
+    "path": "tests/payment-checkout-freshness.test.ts",
+    "sha256": "452bc324a872501c1bf5f2eee7936902d455487684c30f7474cafc7fa03fe77a"
+  },
+  {
+    "path": "scripts/acceptance-g03-admin-concurrency.js",
+    "sha256": "5045d2bf22f9378238d512eccad0c6edb43e35d7abadd9f6e94a1c8fa5ace71f"
+  },
+  {
+    "path": "scripts/acceptance-g03-browser.js",
+    "sha256": "705d795411cd56649001791b37055df9673182b683718264901cd3ae86112e3b"
+  },
+  {
+    "path": "scripts/acceptance-g03-completion-report.ts",
+    "sha256": "a41c09e9a718fe76ba42a65445521de81a3b43f62c6894a9bece5d444018305a"
+  },
+  {
+    "path": "scripts/acceptance-g03-cookie.js",
+    "sha256": "78b05af8c55cffa3b16451bbd16941ea33e8cc31fb95f646294353e5d919cda6"
+  },
+  {
+    "path": "scripts/acceptance-g03-embed-server.mjs",
+    "sha256": "200de29f6727161845704ab9bf67f392d0477567006cbdea2a9140e7c76bd2e7"
+  },
+  {
+    "path": "scripts/acceptance-g03-embed.js",
+    "sha256": "c807c69a367532ea1978046e7203bea7406dff99878a05ecc73864d3b965ca60"
+  },
+  {
+    "path": "scripts/acceptance-g03-extended-http.ts",
+    "sha256": "e6d1f846c1d6c6369272befd1a12ea9746c764605edffa53153ebd74246fe4df"
+  },
+  {
+    "path": "scripts/acceptance-g03-firefox-cookies.json",
+    "sha256": "707d59871cc936d6695b744ae9075ad4bb37a9506b875ec5a3c54b3e56b7f21c"
+  },
+  {
+    "path": "scripts/acceptance-g03-fixture.ts",
+    "sha256": "84d9cc96e30d3b2a4feff8650bb1d247b2db6646a3becbe80d149b3f7f7da5f0"
+  },
+  {
+    "path": "scripts/acceptance-g03-http.ts",
+    "sha256": "171927fdca09cf5a09b82414aaffe688db230627c964d2e6d59e5096d24ad688"
+  },
+  {
+    "path": "scripts/acceptance-g03-layout.js",
+    "sha256": "2dfb95eb63e57e66e7d5210a6f13d6846ba0fd2d9a601788e61f2a3f7f2712d4"
+  },
+  {
+    "path": "scripts/acceptance-g03-link-fixture.ts",
+    "sha256": "b89121f6e28bb794de9776b57fbb99e17462671ccfe4d738d5a3a4be44365318"
+  },
+  {
+    "path": "scripts/acceptance-g03-public.js",
+    "sha256": "05656557022da8e3b2219128dbf1755f90360b37a78ea2db714eca0ea0d7ba18"
+  },
+  {
+    "path": "scripts/acceptance-g03-recovery.js",
+    "sha256": "a5a4c02372da4187034cdcc63fc9a81fd1c36f631842235f5eb489b37ef91ec2"
+  }
+]
