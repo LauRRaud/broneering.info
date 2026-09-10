@@ -2,7 +2,7 @@ import {translator} from './i18n';
 import {localeFromHeaders} from './locales';
 import { AppError } from './errors';
 import {recordSecurityRejection} from './security-log';
-export {limitTenant} from './request-limits';
+export {limitTenant,trustedClientIp} from './request-limits';
 
 export function json(value: unknown, status=200) {
   return Response.json(value,{status,headers:{'Cache-Control':'no-store','Vary':'Host, Cookie, X-Booking-Language'}});
