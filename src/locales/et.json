@@ -1271,5 +1271,9 @@
   "Kalender": "Kalender",
   "Otsi": "Otsi",
   "aktiivne": "aktiivne",
-  "peatatud": "peatatud"
+  "peatatud": "peatatud",
+  "Palun kinnita, et sa ei ole robot.": "Palun kinnita, et sa ei ole robot.",
+  "Broneeringu turvakontroll pole hetkel kättesaadav.": "Broneeringu turvakontroll pole hetkel kättesaadav.",
+  "Turvakontroll ebaõnnestus. Palun proovi uuesti.": "Turvakontroll ebaõnnestus. Palun proovi uuesti.",
+  "Botikontroll": "Botikontroll"
 }

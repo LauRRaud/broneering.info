@@ -8,6 +8,7 @@ import { catalogFor } from '@/lib/availability';
 import { AppError } from '@/lib/errors';
 import type { Metadata } from 'next';
 import { searchPageForHost } from '@/lib/search';
+import {bookingChallengeSiteKey} from '@/lib/booking-challenge';
 
 export const dynamic='force-dynamic';
 export async function generateMetadata(): Promise<Metadata> {
@@ -53,7 +54,7 @@ export default async function Page({searchParams}: {searchParams: Promise<Record
     const query=await searchParams;
     const tenant=await tenantForHost(host,'existing');
     if(tenant.public_state!=='published')return <main id="main-content" tabIndex={-1}><h1>{tenant.name}</h1><p>{t('Ettevõte ei võta praegu broneeringuid vastu.')}</p><p>{t('Olemasoleva broneeringu kohta võta ettevõttega ühendust või kasuta oma halduslinki.')}</p>{tenant.contact_email&&<p><a href={'mailto:'+tenant.contact_email}>{tenant.contact_email}</a></p>}{tenant.contact_phone&&<p><a href={'tel:'+tenant.contact_phone.replace(/[^+\d]/g,'')}>{tenant.contact_phone}</a></p>}</main>;
-    return <BookingFlow catalog={await catalogFor(tenant,query.staff===undefined?undefined:typeof query.staff==='string'?query.staff:'')} />;
+    return <BookingFlow catalog={await catalogFor(tenant,query.staff===undefined?undefined:typeof query.staff==='string'?query.staff:'')} challengeSiteKey={bookingChallengeSiteKey()} />;
   }
   catch(error) {
     if(error instanceof AppError && error.code==='STAFF_UNAVAILABLE')return <main id="main-content" tabIndex={-1}><h1>{t("Töötaja link ei ole kasutatav")}</h1><p>{t("Töötaja ei võta selle lingi kaudu praegu broneeringuid vastu.")}</p><a href="/">{t("Vaata ettevõtte teenuseid ja töötajaid")}</a></main>;

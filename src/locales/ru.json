@@ -1271,5 +1271,9 @@
   "Kalender": "Календарь",
   "Otsi": "Найти",
   "aktiivne": "активна",
-  "peatatud": "приостановлена"
+  "peatatud": "приостановлена",
+  "Palun kinnita, et sa ei ole robot.": "Подтвердите, что вы не робот.",
+  "Broneeringu turvakontroll pole hetkel kättesaadav.": "Проверка безопасности бронирования временно недоступна.",
+  "Turvakontroll ebaõnnestus. Palun proovi uuesti.": "Проверка безопасности не пройдена. Повторите попытку.",
+  "Botikontroll": "Проверка на робота"
 }
