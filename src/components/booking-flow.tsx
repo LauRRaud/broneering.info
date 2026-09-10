@@ -285,7 +285,7 @@ function shortDateLabel(value: string) {
   async function submitBooking(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (submitLockRef.current || catalogLoading || !offer || !service) return;
-    if(challengeSiteKey&&!challengeToken){setSubmitState('error');setSubmitError(t('Palun kinnita, et sa ei ole robot.'));return;}
+    if(challengeSiteKey&&!challengeToken){setSubmitState(state=>state==='uncertain'?'uncertain':'error');setSubmitError(t('Palun kinnita, et sa ei ole robot.'));return;}
     if(submitState !== 'uncertain'){const errors=contactErrors(form);setFieldErrors(errors);if(Object.keys(errors).length){setValidationAttempt(value=>value+1);return;}}
     submitLockRef.current = true;
     setSubmitState("submitting");
@@ -330,6 +330,14 @@ function shortDateLabel(value: string) {
         return;
       }
       if (!response.ok) {
+        if(challengeSiteKey&&response.status===403&&(body.code==='CHALLENGE_REQUIRED'||body.code==='CHALLENGE_REJECTED')){
+          // Admission failure cannot rule out an earlier committed request.
+          // Refresh only the challenge; keep the command and its inputs locked.
+          setChallengeToken('');setChallengeReset(value=>value+1);
+          setSubmitState('uncertain');
+          setSubmitError(t('Turvakontroll ebaõnnestus. Palun proovi uuesti.'));
+          return;
+        }
         if (!isDefinitiveBookingRejection(response.status,body.code)) {
           setSubmitState("uncertain");
           setSubmitError(t("Server ei andnud lõplikku vastust. Proovi sama taotlusega uuesti."));

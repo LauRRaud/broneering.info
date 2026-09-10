@@ -60,7 +60,11 @@ DB_APP_PASSWORD=asenda_teise_juhusliku_hex_vaartusega
 WEB_PORT=3107
 AUTH_SECRET=asenda_kolmanda_juhusliku_hex_vaartusega
 AUTH_MAIL_MODE=disabled
+TURNSTILE_SITE_KEY=asenda_selle_keskkonna_avaliku_votmega
+TURNSTILE_SECRET_KEY=asenda_selle_keskkonna_salajase_votmega
 ```
+
+Turnstile'i võtmed edastatakse veebikonteinerisse selle käivitamisel. Serveri Docker-kujutis kasutab `NODE_ENV=production` ka staging-keskkonnas; see on Node'i käitusrežiim, mitte kinnitus, et teenus on päris kasutuseks avatud. Selles režiimis vajab avalik broneerimine mõlemat võtit. Loo testserverile eraldi Turnstile'i vidin ja luba selle broneerimisdomeenid. Võtmed lisa ainult serveri kaitstud `.env.server` faili. Kohalik `npm run dev` töötab ilma võtmeteta. Kui võtmed on määratud, kontrollitakse ka arenduses tokeni hostinime ja `booking` tegevust.
 
 Fail on `.gitignore` ja `.dockerignore` järgi välja jäetud. Paroolide muutmine failis ei muuda juba loodud PostgreSQL-i rollide paroole; hilisem vahetamine on eraldi kontrollitud toiming. `AUTH_SECRET` peab olema vähemalt 32 märki ja püsima taaskäivituste vahel samana. Selle vahetamine mõjutab sessioone ning krüpteeritud MFA saladuste loetavust. Kontokirjade lubamiseks sea `AUTH_MAIL_MODE=smtp` ja `.env.example` SMTP muutujad; ainult domeeni e-posti edasisuunamine ei anna saatmiseks SMTP ligipääsu.
 

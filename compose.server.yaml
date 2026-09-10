@@ -41,6 +41,8 @@ services:
       DATABASE_URL: postgresql://booking_app:${DB_APP_PASSWORD:?Set DB_APP_PASSWORD}@db:5432/booking
       AUTH_BASE_URL: https://haldus.broneering.info
       AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET}
+      TURNSTILE_SITE_KEY: ${TURNSTILE_SITE_KEY:-}
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:-}
       AUTH_MAIL_MODE: ${AUTH_MAIL_MODE:-disabled}
       BOOKING_MAIL_MODE: ${BOOKING_MAIL_MODE:-disabled}
       PRIVATE_STORAGE_DIR: /data/private
