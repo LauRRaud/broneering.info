@@ -1,5 +1,7 @@
 # Peatükk 23 — AT-01–AT-48 tõendite maatriks
 
+**Peatüki 25 otsus 10.09.2026:** pärisseadmete ja sõltumatu kasutaja vastuvõtt pärast kujunduse valmimist; ekraanilugejat testib pime inimene. [Katsesammud ja tulemuse vorm](CHAPTER-25.md). Tehnilised tõendid säilivad, kasutajavastuvõtt on ootel.
+
 **Peatükk 24 lõpetatud 10.09.2026:** [AT-01–18 tehniline vastuvõtt ja viis lisakontrolli](CHAPTER-24.md) läbisid. Värske tulemus: 290/290 automaattesti, 9/9 brauserifaasi ja build. Parandatud on nurjunud ajamuutuse järel kadunud vorm/põhjendus. Peatükkide 25–26 ja kogu V1 omaniku vastuvõtt jääb eraldi.
 
 **23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 505 HTTP-päringut ja üks andmebaasi räsivõrdlus (506/506), 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.

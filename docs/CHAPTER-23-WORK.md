@@ -94,6 +94,8 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G03 — brauseri-, õiguste ja kasutatavuse vastuvõtt
 
+**Omaniku täpsustus 10.09.2026:** pärisseadmete ja sõltumatu kasutaja katsed tehakse pärast kujunduse valmimist; ekraanilugejat testib pime inimene. [Peatüki 25 katsesammud ja tulemuse vorm](CHAPTER-25.md). Kasutajavastuvõttu praegu ei käivitata ega märgita läbituks.
+
 **Seis 10.09.2026: kirjeldatud automaatne maatriks lõpetatud, sõltumatu tervikvastuvõtt avatud.** [Lõpparuanne, kahe paranduse vastunäited, kordamise juhis ja tõendid](ACCEPTANCE-G03-COMPLETION.md). 505 päris HTTP-päringut ja üks andmebaasi räsivõrdlus, 14 brauserifaasi, 287 automaattesti ja build läbisid. Ülejäänud vastuvõtt nõuab päris Safari/iOS/Androidi seadmeid, ekraanilugejaid ning sõltumatut kasutajat; lõpliku kujunduse järel tuleb ligipääsetavuse kordusvoor. [Esimene voor](ACCEPTANCE-G03.md) ja [valikute/aegumise voor](ACCEPTANCE-G03-VARIANTS.md) säilitavad eraldi tõendid. Allpool on algne tööleping.
 
 - **Seos / eesmärk:** ptk 08–12/16/24/25, E3–E7/E10, eriti AT-01–08 ja AT-19–35. Mõõta tervikteekonda kokkulepitud brauserites ning rollidega.
