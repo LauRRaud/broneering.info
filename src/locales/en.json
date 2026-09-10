@@ -1271,5 +1271,9 @@
   "Kalender": "Calendar",
   "Otsi": "Search",
   "aktiivne": "active",
-  "peatatud": "paused"
+  "peatatud": "paused",
+  "Palun kinnita, et sa ei ole robot.": "Please confirm that you are not a robot.",
+  "Broneeringu turvakontroll pole hetkel kättesaadav.": "The booking security check is currently unavailable.",
+  "Turvakontroll ebaõnnestus. Palun proovi uuesti.": "The security check failed. Please try again.",
+  "Botikontroll": "Bot check"
 }

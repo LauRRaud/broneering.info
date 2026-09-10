@@ -12,11 +12,12 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import type { BookingInput, BookingResult, Catalog, NextAvailability, Offer, Service, Staff } from "../lib/contracts";
 
 import {downloadBookingCalendar} from '@/lib/booking-calendar';
+import Turnstile from '@/components/turnstile';
 
 type Step = "service" | "staff" | "time" | "details";
 type AvailabilityState = "idle" | "loading" | "ready" | "empty" | "error";
 
-export default function BookingFlow({ catalog:initialCatalog,previewTenantId }: { catalog: Catalog;previewTenantId?:string }) {
+export default function BookingFlow({ catalog:initialCatalog,previewTenantId,challengeSiteKey }: { catalog: Catalog;previewTenantId?:string;challengeSiteKey?:string }) {
   const endpoint=(action:string,query='')=>previewTenantId?`/api/admin/preview/${action}?tenantId=${encodeURIComponent(previewTenantId)}${query?'&'+query:''}`:`/api/${action}${query?'?'+query:''}`;
   const {t,locale}=useI18n();
 const stepLabels: Array<{ id: Step; label: string; short: string }> = [
@@ -109,6 +110,8 @@ function shortDateLabel(value: string) {
   const [submitState, setSubmitState] = useState<"idle" | "submitting" | "uncertain" | "error">("idle");
   const [submitError, setSubmitError] = useState("");
   const [result, setResult] = useState<BookingResult | null>(null);
+  const [challengeToken,setChallengeToken]=useState('');
+  const [challengeReset,setChallengeReset]=useState(0);
   const requestNumber = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
   const keyRef = useRef("");
@@ -282,6 +285,7 @@ function shortDateLabel(value: string) {
   async function submitBooking(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (submitLockRef.current || catalogLoading || !offer || !service) return;
+    if(challengeSiteKey&&!challengeToken){setSubmitState(state=>state==='uncertain'?'uncertain':'error');setSubmitError(t('Palun kinnita, et sa ei ole robot.'));return;}
     if(submitState !== 'uncertain'){const errors=contactErrors(form);setFieldErrors(errors);if(Object.keys(errors).length){setValidationAttempt(value=>value+1);return;}}
     submitLockRef.current = true;
     setSubmitState("submitting");
@@ -309,7 +313,7 @@ function shortDateLabel(value: string) {
       try {
         response = await fetch(endpoint('bookings'), {
           method: "POST",
-          headers: { "Content-Type": "application/json", "Idempotency-Key": keyRef.current },
+          headers: { "Content-Type": "application/json", "Idempotency-Key": keyRef.current,...(challengeToken?{'CF-Turnstile-Response':challengeToken}:{}) },
           body: serialized,
         });
       } catch {
@@ -326,11 +330,20 @@ function shortDateLabel(value: string) {
         return;
       }
       if (!response.ok) {
+        if(challengeSiteKey&&response.status===403&&(body.code==='CHALLENGE_REQUIRED'||body.code==='CHALLENGE_REJECTED')){
+          // Admission failure cannot rule out an earlier committed request.
+          // Refresh only the challenge; keep the command and its inputs locked.
+          setChallengeToken('');setChallengeReset(value=>value+1);
+          setSubmitState('uncertain');
+          setSubmitError(t('Turvakontroll ebaõnnestus. Palun proovi uuesti.'));
+          return;
+        }
         if (!isDefinitiveBookingRejection(response.status,body.code)) {
           setSubmitState("uncertain");
           setSubmitError(t("Server ei andnud lõplikku vastust. Proovi sama taotlusega uuesti."));
           return;
         }
+        if(challengeSiteKey){setChallengeToken('');setChallengeReset(value=>value+1);}
         if(body.code==='RULES_CHANGED'||body.code==='STAFF_UNAVAILABLE'){
           keyRef.current='';payloadRef.current='';
           try{
@@ -496,6 +509,7 @@ function shortDateLabel(value: string) {
                 <p><label htmlFor="email">{t("Kontaktisiku e-post *")}</label><br /><input id="email" aria-invalid={!!fieldErrors.email} aria-describedby={fieldErrors.email?"email-error contact-help":"contact-help"} name="email" type="email" autoComplete="email" maxLength={254} value={form.email} onChange={(event) => updateField("email", event.target.value)} required disabled={bookingLocked} placeholder={t("sina@näide.ee")} />{fieldErrors.email&&<span className="field-error" id="email-error">{t(fieldErrors.email!)}</span>}</p>
                 <p><label htmlFor="phone">{t("Kontaktisiku telefon (soovi korral)")}</label><br /><input id="phone" aria-invalid={!!fieldErrors.phone} aria-describedby={fieldErrors.phone?"phone-error contact-help":"contact-help"} name="phone" type="tel" autoComplete="tel" maxLength={30} value={form.phone} onChange={(event) => updateField("phone", event.target.value)} disabled={bookingLocked} placeholder="+372 …" />{fieldErrors.phone&&<span className="field-error" id="phone-error">{t(fieldErrors.phone!)}</span>}</p>
                 <p id="contact-help">{t("Kontot pole vaja. Teisele inimesele broneerides sisesta tema nimi ja enda kontaktandmed. Kasutame neid andmeid ainult broneeringuga seoses.")}</p>
+                {challengeSiteKey&&<Turnstile siteKey={challengeSiteKey} onToken={setChallengeToken} resetSignal={challengeReset} label={t("Botikontroll")}/>}
                 {submitState === "uncertain" && <p role="alert"><strong>{t("Kontrollime kinnituse tulemust.")}</strong> {t(submitError)} {t("Kinnitus loetakse õnnestunuks alles serveri vastuse järel.")}</p>}
                 {submitState === "error" && <p role="alert"><strong>{t("Broneeringut ei saanud kinnitada.")}</strong> {t(submitError)} {t("Kontrolli andmeid ja proovi uuesti.")}</p>}
               </form>
