@@ -1,6 +1,14 @@
 import {createHash} from 'node:crypto';
+import {isIP} from 'node:net';
 import {pool} from './db';
 import {AppError} from './errors';
+
+/** Nginx replaces this header with the socket peer address before proxying. */
+export function trustedClientIp(request:Request) {
+  const ip=process.env.NODE_ENV==='production'?request.headers.get('x-real-ip')??'':request.headers.get('x-real-ip')??'127.0.0.1';
+  if(!isIP(ip))throw new AppError(503,'CLIENT_IP_MISSING','Teenus on hetkel hõivatud.');
+  return ip;
+}
 
 /** Scopes must come from a resolved tenant or authenticated user, not raw headers. */
 export async function limitTenant(key:string,maximum:number) {
