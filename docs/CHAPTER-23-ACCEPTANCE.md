@@ -1,5 +1,7 @@
 # Peatükk 23 — AT-01–AT-48 tõendite maatriks
 
+**Peatükk 24 lõpetatud 10.09.2026:** [AT-01–18 tehniline vastuvõtt ja viis lisakontrolli](CHAPTER-24.md) läbisid. Värske tulemus: 290/290 automaattesti, 9/9 brauserifaasi ja build. Parandatud on nurjunud ajamuutuse järel kadunud vorm/põhjendus. Peatükkide 25–26 ja kogu V1 omaniku vastuvõtt jääb eraldi.
+
 **23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 505 HTTP-päringut ja üks andmebaasi räsivõrdlus (506/506), 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
 
 **23-G03 uuendus 09.09.2026:** [esimene automaatne põhimatriks](ACCEPTANCE-G03.md) lisab AT-02/05/19/22/23/24/32/35 piiratud uue HTTP- ja kolme brauserimootori tõendi. 241 kontrolli, 12 haldusrolli/mootori kombinatsiooni ja kolm klaviatuuriga avalikku broneerimist läbisid. WebKiti põhisisulingi viga parandatud. Allpoolsete ridade laiem vastuvõtt jääb avatuks vastavalt uue protokolli piiridele.
@@ -23,24 +25,24 @@ Testija: Codex, kohalik koodi- ja käitumisaudit. Kõigi ridade omaniku kinnitaj
 
 | ID ja lähteplaani katse | Seis | Tegelik tõend | Puuduv vastuvõtt / parandus |
 | --- | --- | --- | --- |
-| AT-01 Teenuse järgi töötajate valik | Tehniline ja piiratud brauseritõend | `booking.test.ts` ning [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): ühe ja kahe töötajaga teenuse lubatud valikud kolmes mootoris | Laiem teenuste/veaseisude ja sõltumatu vastuvõtt |
-| AT-02 Vigane töötaja otse API-s | Tehniline ja HTTP-tõend | `booking.test.ts` ning [G03 esimene HTTP-voor](ACCEPTANCE-G03.md): võõras töötaja 409 `STAFF_UNAVAILABLE`, lisatud ettevõtte ID 400 | Sõltumatu vastuvõtt |
-| AT-03 Teenusel ainult üks töötaja | Tehniline ja brauseritõend | [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): töötaja samm puudub, õige töötaja/hind/kestus kokkuvõttes; Chrome/Firefox/WebKit | Pärisseadmete ja sõltumatu vastuvõtt |
-| AT-04 Töötaja isiklik otselink | Tehniline ja brauseritõend | [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): otselink välistab teise teenuse/töötaja ning näitab isiklikku hinda/kestust; kolm mootorit | Aegunud otselingi UI ja pärisseadmete vastuvõtt |
-| AT-05 „Töötaja pole oluline” | Tehniline ja brauseritõend | `booking.test.ts` ning [G03 esimene voor](ACCEPTANCE-G03.md): ühissaadavus ja kolm ainult klaviatuuriga kinnitatud broneeringut | Pärisseadmete ja sõltumatu kasutaja vastuvõtt |
-| AT-06 Erinev hind/kestus samal ajal | Tehniline ja brauseritõend | [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): samal ajal 25 €/30 min ja 35 €/45 min; hinna muutus → 409 → uus valik → 201; kontaktid säilivad kõigis kolmes mootoris | Pärisseadmete ja sõltumatu vastuvõtt |
-| AT-07 Etteteatamine 2 h, praegu 13.00 | Tehniline tõend | `booking.test.ts`, [schedule-management.test.ts](../tests/schedule-management.test.ts): kahe tunni piir saadavusel ja kinnitamisel | Omaniku lõplik vaikeväärtus/katseversioon fikseerida |
-| AT-08 Etteteatamispiir möödub vormis | Tehniline ja brauseritõend | [G03 valikuvoor](ACCEPTANCE-G03-VARIANTS.md): päris ajapiir möödub avatud vormis; 409, vana aeg kaob, nimi/e-post/telefon säilivad kolmes mootoris; kõrvalkirjeid ei lisandu | Pärisseadmete ja sõltumatu vastuvõtt |
-| AT-09 Teenuse puhver ja kõrvalbroneering | Tehniline tõend | `booking.test.ts`, `schedule-management.test.ts`: puhvrid, pausid ja ainult puhvrit puudutavad konfliktid | Tõend kohaliku mootori/DB piirist |
-| AT-10 Tööpaus, puhkus ja erandpäev | Tehniline tõend | `booking.test.ts`, `schedule-management.test.ts`: suletud/asendatud päev, puhkus ning asukoha/töötaja ühisosa | Tõend kohaliku mootori/DB piirist |
-| AT-11 50 sama aja samaaegset taotlust | Tehniline tõend | `booking.test.ts`: 50 konkureerivat päris DB toimingut → 1 broneering ja 1 outbox-sündmus | Ei ole 20 HTTP saadavuspäringu/s ega tootmiskoormuse katse; AT-48 eraldi |
-| AT-12 Sama päringu kordus | Tehniline ja brauseritõend | [G03 lõppvoor](ACCEPTANCE-G03-COMPLETION.md): päris 201 vastus kaob, järgnevad 429 ja HTML 403, lõplik kordus taastab algse kinnituse; kolm mootorit, DB-s üks loomine | Sõltumatu kasutaja vastuvõtt |
-| AT-13 Sama tunnus, erinev sisu | Tehniline tõend | `booking.test.ts`: muutunud sisu konflikt; [booking-management.test.ts](../tests/booking-management.test.ts): muutmiskäskude kordused | Invariant säilib F-02 paranduse järel |
-| AT-14 Graafiku sulgemine ja broneerimine | Tehniline tõend | `schedule-management.test.ts`: ühine lukustus sulgemise/kinnitamise võistluses; `booking.test.ts`: päris ummikust taastumine | Lähtekoormuse pikk katse 23-G06 |
-| AT-15 Aja muutmine ebaõnnestub | Tehniline tõend | `booking-management.test.ts`: vana hõivamine ja teavitused säilivad aegunud hinna/reegli/saadavuse korral | Kasutajale nähtav veateekond 23-G03 |
-| AT-16 Kaks administraatorit muudavad | Tehniline ja brauseritõend | [G03 lõppvoor](ACCEPTANCE-G03-COMPLETION.md): owner/receptionist eraldi brauserikontekstides; esimene muutus 200, vana vorm 409, põhjus säilib ja uus versioon avaneb; kolm mootorit | Koormuse ja kalendri nähtavuse mõõtmine 23-G06; sõltumatu vastuvõtt |
-| AT-17 Kellakeeramine ja ajavöönd | Tehniline tõend | `booking.test.ts`: Tallinna kevadine puuduv ja sügisene mitmetähenduslik kellaaeg; kalendri nädalapiirid; [import-fields.test.ts](../tests/import-fields.test.ts): eksplitsiitse nihkega import | Teised kasutusele võetavad ajavööndid fikseerida katsemaatriksis |
-| AT-18 Teenuse või töötaja arhiveerimine | Tehniline tõend | `service-management.test.ts`, `booking-management.test.ts`: valikud, ajalugu ja tulevased ajad; F-03 uued kutse-/taasaktiveerimis-/migratsioonikatsed läbivad | Tervikliku rolli/UI lahkumise vastuvõtt 23-G03 |
+| AT-01 Teenuse järgi töötajate valik | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-02 Vigane töötaja otse API-s | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-03 Teenusel ainult üks töötaja | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-04 Töötaja isiklik otselink | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-05 „Töötaja pole oluline” | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-06 Erinev hind/kestus samal ajal | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-07 Etteteatamine 2 h, praegu 13.00 | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-08 Etteteatamispiir möödub vormis | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-09 Teenuse puhver ja kõrvalbroneering | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-10 Tööpaus, puhkus ja erandpäev | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-11 50 sama aja samaaegset taotlust | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-12 Sama päringu kordus | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-13 Sama tunnus, erinev sisu | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-14 Graafiku sulgemine ja broneerimine | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-15 Aja muutmine ebaõnnestub | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-16 Kaks administraatorit muudavad | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-17 Kellakeeramine ja ajavöönd | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
+| AT-18 Teenuse või töötaja arhiveerimine | Läbitud tehniline vastuvõtt 10.09.2026 | [Peatüki 24 koond, täpsed testinimed ja varasemate/uute tõendite eristus](CHAPTER-24.md) | Ptk 25–26 ning V1 omaniku vastuvõtt eraldi |
 
 ## Turve ja kasutatavus
 

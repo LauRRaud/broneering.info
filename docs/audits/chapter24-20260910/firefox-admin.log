@@ -1,0 +1,111 @@
+### Result
+{"engine":"firefox","phase":"admin","version":"155.0","oldBookingId":"650bb56d-c938-4145-b53e-3eb79eb9e383","blockerId":"b0315b8a-181f-4525-8e58-46db370508c5","results":[{"check":"AT-15: only one reschedule command is submitted","pass":true},{"check":"AT-15: another real booking occupies the selected target before rescheduling","pass":true},{"check":"AT-15: server rejects a target occupied after selection","pass":true},{"check":"AT-15: failed move refreshes available offers","pass":true},{"check":"AT-15: occupied target is absent from the refreshed offers","pass":true},{"check":"AT-15: rejected move preserves the typed reason","pass":true},{"check":"AT-15: another offer must be selected before confirmation","pass":true},{"check":"AT-15: failed move is explained visibly","pass":true},{"check":"AT-15: original booking remains visible at 10:00","pass":true},{"check":"Regression: changing the calendar scope removes the former booking rows","pass":true},{"check":"AT-18: owner archives staff through the actual form and API","pass":true},{"check":"AT-18: archived staff future booking is listed for resolution","pass":true},{"check":"AT-18: future booking shows the staff archive reason","pass":true},{"check":"AT-04/18: unavailable personal link renders its guidance page","pass":true},{"check":"AT-04/18: unavailable personal link offers a company fallback","pass":true},{"check":"AT-04/18: archived employee catalogue API rejects the link","pass":true},{"check":"AT-04/18: archived employee link offers no booking controls","pass":true},{"check":"AT-01/18: service without an active eligible employee disappears","pass":true},{"check":"AT-03/18: only the remaining employee is eligible","pass":true},{"check":"AT-18: owner archives service through the actual form and API","pass":true},{"check":"AT-18: archived service remains in existing booking history","pass":true},{"check":"AT-18: public catalogue still responds after archival","pass":true},{"check":"AT-18: archived service is excluded from public catalogue","pass":true},{"check":"Regression: a rejected session refresh clears protected booking details","pass":true}],"pass":true}
+### Ran Playwright code
+```js
+await (async (page) => {
+ const engine='firefox',results=[],stateDirectory='output/playwright/acceptance-g03';
+ page.setDefaultTimeout(15000);
+ const ensure=(condition,message)=>{if(!condition)throw Error(message);results.push({check:message,pass:true});};
+ await page.context().setStorageState(`${stateDirectory}/owner-state.json`);
+ await page.setViewportSize({width:1280,height:900});
+ await page.goto('http://haldus.localhost:3108');
+ await page.getByRole('heading',{name:'G03 ettevõte A',exact:true}).waitFor();
+ await page.getByRole('textbox',{name:'Kuupäev',exact:true}).fill('2026-09-17');
+ await page.getByRole('list',{name:'Broneeringute loend'}).getByRole('button').filter({hasText:'G03 A klient 2'}).click();
+ await page.getByRole('button',{name:'Muuda broneeringut',exact:true}).click();
+ const form=page.locator('form').filter({has:page.getByRole('heading',{name:'Vali uus pakkumine',exact:true})});
+ await form.getByRole('textbox',{name:'Kuupäev',exact:true}).fill('2026-09-17');
+ await form.getByRole('list',{name:'Haldaja vabad ajad'}).getByRole('button').last().click();
+ const reason=`P24 ${engine} reason must survive`;
+ await form.getByRole('textbox',{name:'Muudatuse põhjus (soovi korral)',exact:true}).fill(reason);
+ let blockerId,oldBookingId,occupiedStart,calls=0;
+ await page.route('**/api/admin/bookings',async route=>{
+  if(route.request().method()!=='POST'){await route.continue();return;}
+  calls++;ensure(calls===1,'AT-15: only one reschedule command is submitted');
+  const command=route.request().postDataJSON();oldBookingId=command.bookingId;occupiedStart=command.start;
+  const key=await page.evaluate(()=>crypto.randomUUID());
+  const blocker=await page.request.post('http://g03-fa6d35a8-f2bb-4ad8-b9f3-57e2298c6bad.localhost:3108/api/bookings',{headers:{origin:'http://g03-fa6d35a8-f2bb-4ad8-b9f3-57e2298c6bad.localhost:3108','idempotency-key':key},data:{serviceId:command.serviceId,staffId:command.staffId,start:command.start,expectedPrice:command.expectedPrice,expectedDuration:command.expectedDuration,expectedRulesVersion:command.expectedRulesVersion,name:`P24 ${engine} occupied target`,email:`p24-blocker-${engine}@example.invalid`}});
+  ensure(blocker.status()===201,'AT-15: another real booking occupies the selected target before rescheduling');
+  blockerId=(await blocker.json()).id;await route.continue();
+ });
+ const rejection=page.waitForResponse(response=>response.url().endsWith('/api/admin/bookings')&&response.request().method()==='POST');
+ const refreshedOffers=page.waitForResponse(response=>response.url().includes('/api/admin/bookings?view=offers')&&response.request().method()==='GET');
+ await form.getByRole('button',{name:'Kinnita uus aeg ja hind',exact:true}).click();
+ const response=await rejection;const body=await response.json();ensure(response.status()===409&&body.code==='SLOT_UNAVAILABLE','AT-15: server rejects a target occupied after selection');
+ const fresh=await refreshedOffers;ensure(fresh.status()===200,'AT-15: failed move refreshes available offers');
+ ensure(!(await fresh.json()).offers.some(offer=>offer.start===occupiedStart),'AT-15: occupied target is absent from the refreshed offers');
+ await page.unroute('**/api/admin/bookings');
+ ensure(await form.getByRole('textbox',{name:'Muudatuse põhjus (soovi korral)',exact:true}).inputValue()===reason,'AT-15: rejected move preserves the typed reason');
+ ensure(await form.getByRole('button',{name:'Kinnita uus aeg ja hind',exact:true}).isDisabled(),'AT-15: another offer must be selected before confirmation');
+ ensure(await page.getByRole('alert').filter({hasText:body.error}).isVisible(),'AT-15: failed move is explained visibly');
+ await page.screenshot({path:`output/playwright/chapter24/${engine}-failed-move.png`});
+ await form.getByRole('button',{name:'Loobu',exact:true}).click();
+ await page.getByRole('button',{name:'Värskenda broneeringuid',exact:true}).click();
+ await page.getByRole('list',{name:'Broneeringute loend'}).getByRole('button').filter({hasText:'G03 A klient 2'}).click();
+ const oldRow=page.getByRole('list',{name:'Broneeringute loend'}).getByRole('button').filter({hasText:'G03 A klient 2'});
+ ensure((await oldRow.innerText()).includes('10:00'),'AT-15: original booking remains visible at 10:00');
+ await page.getByRole('textbox',{name:'Kuupäev',exact:true}).fill('2026-09-18');
+ await page.getByText('Valitud vahemikus broneeringuid pole.',{exact:true}).waitFor();
+ ensure(await page.getByRole('list',{name:'Broneeringute loend'}).getByRole('button').count()===0,'Regression: changing the calendar scope removes the former booking rows');
+ await page.getByRole('textbox',{name:'Kuupäev',exact:true}).fill('2026-09-17');
+ await oldRow.waitFor();
+
+ const catalogSection=page.getByRole('region',{name:'Teenused ja töötajad',exact:true});
+ const staffDetails=catalogSection.locator('details').filter({has:page.locator('summary').filter({hasText:/^G03 A töötaja 1$/})});
+ await staffDetails.locator('summary').click();
+ await staffDetails.getByRole('checkbox',{name:'Aktiivne (märge maha = arhiveeritud)',exact:true}).uncheck();
+ const archive=page.waitForResponse(response=>response.url().endsWith('/api/admin/save-staff')&&response.request().method()==='POST');
+ await staffDetails.getByRole('button',{name:'Salvesta töötaja',exact:true}).click();
+ ensure((await archive).status()===200,'AT-18: owner archives staff through the actual form and API');
+ await page.getByRole('checkbox',{name:'Lahendamist ootavad tulevased broneeringud',exact:true}).check();
+ const pending=page.getByRole('list',{name:'Broneeringute loend'}).getByRole('button').filter({hasText:'G03 A klient 1'});
+ await pending.filter({hasText:'Vajab lahendamist'}).waitFor();ensure((await pending.innerText()).includes('Vajab lahendamist'),'AT-18: archived staff future booking is listed for resolution');
+ await pending.click();const archiveReason=page.getByRole('status').filter({hasText:'Töötaja on arhiveeritud'});await archiveReason.waitFor();ensure(await archiveReason.isVisible(),'AT-18: future booking shows the staff archive reason');
+ await page.screenshot({path:`output/playwright/chapter24/${engine}-archived-staff.png`});
+
+ const anonymous=await page.context().browser().newContext();const publicPage=await anonymous.newPage();
+ try{
+  const linked=await publicPage.goto('http://g03-fa6d35a8-f2bb-4ad8-b9f3-57e2298c6bad.localhost:3108/?staff=ae2cc3cf-3f32-44b5-a80c-cc69d2384ee6');
+  ensure(linked.status()===200,'AT-04/18: unavailable personal link renders its guidance page');
+  await publicPage.getByRole('heading',{name:'Töötaja link ei ole kasutatav',exact:true}).waitFor();
+  ensure(await publicPage.getByRole('link',{name:'Vaata ettevõtte teenuseid ja töötajaid',exact:true}).getAttribute('href')==='/','AT-04/18: unavailable personal link offers a company fallback');
+  const unavailable=await publicPage.request.get('http://g03-fa6d35a8-f2bb-4ad8-b9f3-57e2298c6bad.localhost:3108/api/catalog?staff=ae2cc3cf-3f32-44b5-a80c-cc69d2384ee6');
+  ensure(unavailable.status()===404&&(await unavailable.json()).code==='STAFF_UNAVAILABLE','AT-04/18: archived employee catalogue API rejects the link');
+  ensure(await publicPage.getByRole('button',{name:'G03 lõikus',exact:true}).count()===0,'AT-04/18: archived employee link offers no booking controls');
+  await publicPage.goto('http://g03-fa6d35a8-f2bb-4ad8-b9f3-57e2298c6bad.localhost:3108/');
+  await publicPage.waitForFunction(()=>document.activeElement.id==='booking-title');
+  await publicPage.getByRole('button',{name:'G03 lõikus',exact:true}).waitFor();
+  ensure(await publicPage.getByRole('button',{name:'G03 ainuteenuse valik',exact:true}).count()===0,'AT-01/18: service without an active eligible employee disappears');
+  await publicPage.getByRole('button',{name:'G03 lõikus',exact:true}).click();
+  await publicPage.getByRole('heading',{name:'Vali endale hetk.',exact:true}).waitFor();
+  ensure(await publicPage.getByRole('button',{name:'Töötaja pole oluline',exact:true}).count()===0,'AT-03/18: only the remaining employee is eligible');
+ }finally{await anonymous.close();}
+
+ const serviceDetails=catalogSection.locator('details').filter({has:page.locator('summary').filter({hasText:/^G03 lõikus · 25\.00 € · 30 min$/})});
+ await serviceDetails.locator('summary').click();
+ await serviceDetails.getByRole('checkbox',{name:'Aktiivne (märge maha = arhiveeritud)',exact:true}).uncheck();
+ const serviceArchive=page.waitForResponse(response=>response.url().endsWith('/api/admin/save-service')&&response.request().method()==='POST');
+ await serviceDetails.getByRole('button',{name:'Salvesta teenus',exact:true}).click();
+ ensure((await serviceArchive).status()===200,'AT-18: owner archives service through the actual form and API');
+ await page.getByRole('checkbox',{name:'Lahendamist ootavad tulevased broneeringud',exact:true}).uncheck();
+ await page.getByRole('textbox',{name:'Kuupäev',exact:true}).fill('2026-09-17');
+ await oldRow.waitFor();ensure((await oldRow.innerText()).includes('G03 lõikus'),'AT-18: archived service remains in existing booking history');
+ await page.screenshot({path:`output/playwright/chapter24/${engine}-archived-service.png`});
+ const catalog=await page.request.get('http://g03-fa6d35a8-f2bb-4ad8-b9f3-57e2298c6bad.localhost:3108/api/catalog');ensure(catalog.status()===200,'AT-18: public catalogue still responds after archival');
+ const data=await catalog.json();ensure(!data.services.some(service=>service.id==='93935a4c-83de-4627-b645-dcfd994c4487'),'AT-18: archived service is excluded from public catalogue');
+ await page.context().clearCookies();
+ const deniedRead=page.waitForResponse(response=>response.url().includes('/api/admin/bookings?view=list')&&response.status()===401);
+ await page.getByRole('button',{name:'Värskenda broneeringuid',exact:true}).click();await deniedRead;
+ const bookingSection=page.getByRole('region',{name:'Broneeringud',exact:true});
+ await bookingSection.getByRole('list',{name:'Broneeringute loend'}).waitFor({state:'detached'});
+ ensure(await bookingSection.locator('article').count()===0,'Regression: a rejected session refresh clears protected booking details');
+ return {engine,phase:'admin',version:page.context().browser().version(),oldBookingId,blockerId,results,pass:true};
+}
+
+)(page);
+```
+### Page
+- Page URL: http://haldus.localhost:3108/
+- Page Title: broneering.info
+### Events
+- New console entries: .playwright-cli\console-2026-09-10T06-23-48-373Z.log#L931-L1760

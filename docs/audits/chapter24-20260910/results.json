@@ -1,0 +1,1405 @@
+{
+  "at": "2026-09-10T06:35:53.889Z",
+  "chapter": 24,
+  "source": "Broneerimisplatvorm_arendusplaan_v1_0.docx",
+  "sourceSha256": "327f393d10da62d84fc76db4c684014698fca88cfe0837cd29894109dabcc3a0",
+  "baseCommit": "abfe82d9ee4c5b7698cf5ad2688ede721001dfa9",
+  "technicalAcceptance": "passed",
+  "ownerAcceptance": null,
+  "total": 18,
+  "passed": 18,
+  "suite": {
+    "files": 41,
+    "tests": 290,
+    "passed": 290,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browserPhases": 9,
+  "browserChecks": 126,
+  "screenshots": 15,
+  "publicSourcesUnchangedSincePreviousEvidence": [
+    "src/components/booking-flow.tsx",
+    "src/lib/bookings.ts",
+    "src/lib/availability.ts",
+    "src/lib/booking-mutation-outcome.ts"
+  ],
+  "cases": [
+    {
+      "id": "AT-01",
+      "test": "Teenuse järgi töötajate valik.",
+      "expected": "„Meeste lõikus” näitab ainult kehtiva seosega sobivaid töötajaid.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core 09/AT-01: service eligibility remains distinct from a worker having no free hours",
+          "status": "passed",
+          "durationMs": 153.88630000000012
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/chapter24-20260910/chrome-admin.log",
+          "engine": "chrome",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/firefox-admin.log",
+          "engine": "firefox",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/webkit-admin.log",
+          "engine": "webkit",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/acceptance-g03-variants-20260909/results.json",
+          "phase": "prepare",
+          "at": "2026-09-09T10:24:31.167Z",
+          "engines": [
+            "chrome",
+            "firefox",
+            "webkit"
+          ],
+          "reused": true
+        }
+      ]
+    },
+    {
+      "id": "AT-02",
+      "test": "Vigane töötaja otse API-s.",
+      "expected": "Server lükkab sobimatu töötaja broneeringu tagasi.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core AT-02/19: forged cross-tenant service or staff fails",
+          "status": "passed",
+          "durationMs": 115.31940000000031
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/acceptance-g03-20260909/http-results.json",
+          "at": "2026-09-09T06:53:00.443Z",
+          "reused": true
+        }
+      ]
+    },
+    {
+      "id": "AT-03",
+      "test": "Teenusel ainult üks töötaja.",
+      "expected": "Töötajasamm jäetakse vahele; nimi on enne kinnitamist nähtav.",
+      "status": "passed",
+      "tests": [],
+      "browser": [
+        {
+          "path": "docs/audits/chapter24-20260910/chrome-admin.log",
+          "engine": "chrome",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/firefox-admin.log",
+          "engine": "firefox",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/webkit-admin.log",
+          "engine": "webkit",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/acceptance-g03-variants-20260909/results.json",
+          "phase": "prepare",
+          "at": "2026-09-09T10:24:31.167Z",
+          "engines": [
+            "chrome",
+            "firefox",
+            "webkit"
+          ],
+          "reused": true
+        }
+      ]
+    },
+    {
+      "id": "AT-04",
+      "test": "Töötaja isiklik otselink.",
+      "expected": "Valikus on ainult selle töötaja sobivad teenused.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core 08/D-09: personal catalog uses only linked staff services and their concrete price and duration",
+          "status": "passed",
+          "durationMs": 144.62329999999974
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/chapter24-20260910/chrome-admin.log",
+          "engine": "chrome",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/firefox-admin.log",
+          "engine": "firefox",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/webkit-admin.log",
+          "engine": "webkit",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/acceptance-g03-variants-20260909/results.json",
+          "phase": "prepare",
+          "at": "2026-09-09T10:24:31.167Z",
+          "engines": [
+            "chrome",
+            "firefox",
+            "webkit"
+          ],
+          "reused": true
+        }
+      ]
+    },
+    {
+      "id": "AT-05",
+      "test": "„Töötaja pole oluline”.",
+      "expected": "Näidatakse koondsaadavust; aega ei valita ega broneerita automaatselt.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core 09/AT-05: any-worker offers are the exact union of concrete workers, including equal and different prices",
+          "status": "passed",
+          "durationMs": 175.63709999999992
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/chapter24-20260910/chrome-public.log",
+          "engine": "chrome",
+          "phase": "public",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/firefox-public.log",
+          "engine": "firefox",
+          "phase": "public",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/webkit-public.log",
+          "engine": "webkit",
+          "phase": "public",
+          "reused": false
+        }
+      ]
+    },
+    {
+      "id": "AT-06",
+      "test": "Erinev hind/kestus samal ajal.",
+      "expected": "Konkreetne pakkumine ja töötaja on enne kinnitamist ühesed.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core 09/AT-06: changed price or duration cannot select a cheaper or shorter colleague instead",
+          "status": "passed",
+          "durationMs": 147.9031
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/acceptance-g03-variants-20260909/results.json",
+          "phase": "prepare",
+          "at": "2026-09-09T10:24:31.167Z",
+          "engines": [
+            "chrome",
+            "firefox",
+            "webkit"
+          ],
+          "reused": true
+        },
+        {
+          "path": "docs/audits/acceptance-g03-variants-20260909/results.json",
+          "phase": "reject",
+          "at": "2026-09-09T10:24:31.167Z",
+          "engines": [
+            "chrome",
+            "firefox",
+            "webkit"
+          ],
+          "reused": true
+        },
+        {
+          "path": "docs/audits/acceptance-g03-variants-20260909/results.json",
+          "phase": "confirm",
+          "at": "2026-09-09T10:24:31.167Z",
+          "engines": [
+            "chrome",
+            "firefox",
+            "webkit"
+          ],
+          "reused": true
+        }
+      ]
+    },
+    {
+      "id": "AT-07",
+      "test": "Etteteatamine 2 h, praegu 13.00.",
+      "expected": "Varasemat algust kui 15.00 ei pakuta ega kinnitata.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/schedule-management.test.ts",
+          "name": "AT-07/08 rechecks the two-hour lead time after the user spends time in the form",
+          "status": "passed",
+          "durationMs": 123.33570000000009
+        },
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core AT-07/08: server lead time applies at availability and confirmation",
+          "status": "passed",
+          "durationMs": 119.87950000000001
+        }
+      ],
+      "browser": []
+    },
+    {
+      "id": "AT-08",
+      "test": "Etteteatamispiir möödub vormis.",
+      "expected": "Kinnitamist kontrollitakse uuesti; kontaktandmed säilivad.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/schedule-management.test.ts",
+          "name": "AT-07/08 rechecks the two-hour lead time after the user spends time in the form",
+          "status": "passed",
+          "durationMs": 123.33570000000009
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/acceptance-g03-variants-20260909/results.json",
+          "phase": "deadline-prepare",
+          "at": "2026-09-09T10:24:31.167Z",
+          "engines": [
+            "chrome",
+            "firefox",
+            "webkit"
+          ],
+          "reused": true
+        },
+        {
+          "path": "docs/audits/acceptance-g03-variants-20260909/results.json",
+          "phase": "deadline-reject",
+          "at": "2026-09-09T10:24:31.167Z",
+          "engines": [
+            "chrome",
+            "firefox",
+            "webkit"
+          ],
+          "reused": true
+        }
+      ]
+    },
+    {
+      "id": "AT-09",
+      "test": "Teenuse puhver ja kõrvalbroneering.",
+      "expected": "Kogu hõivamine peab mahtuma; ainult teenindusaja sobivusest ei piisa.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core AT-09/10: buffers and lunch break are included in availability",
+          "status": "passed",
+          "durationMs": 132.90369999999984
+        },
+        {
+          "file": "tests/schedule-management.test.ts",
+          "name": "detects buffer-only conflicts and rejects restoring a closed weekly day beneath an existing exception booking",
+          "status": "passed",
+          "durationMs": 208.95190000000002
+        }
+      ],
+      "browser": []
+    },
+    {
+      "id": "AT-10",
+      "test": "Tööpaus, puhkus ja erandpäev.",
+      "expected": "Saadavus vastab korduva graafiku ja erandite kombinatsioonile.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core AT-10: closed and replacement day schedules override weekly intervals",
+          "status": "passed",
+          "durationMs": 113.9412999999995
+        },
+        {
+          "file": "tests/schedule-management.test.ts",
+          "name": "adds a vacation period without creating fake bookings and restores the weekly plan",
+          "status": "passed",
+          "durationMs": 168.29640000000006
+        },
+        {
+          "file": "tests/schedule-management.test.ts",
+          "name": "uses a changed-hours exception instead of the regular day and still respects a location closure",
+          "status": "passed",
+          "durationMs": 137.66679999999997
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/chapter24-20260910/chrome-public.log",
+          "engine": "chrome",
+          "phase": "public",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/firefox-public.log",
+          "engine": "firefox",
+          "phase": "public",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/webkit-public.log",
+          "engine": "webkit",
+          "phase": "public",
+          "reused": false
+        }
+      ]
+    },
+    {
+      "id": "AT-11",
+      "test": "50 sama aja samaaegset taotlust.",
+      "expected": "Sama töötaja sama hõivamise kohta õnnestub ainult üks uus broneering.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core AT-11: 50 competing requests create exactly one booking and one outbox event",
+          "status": "passed",
+          "durationMs": 528.0538000000001
+        }
+      ],
+      "browser": []
+    },
+    {
+      "id": "AT-12",
+      "test": "Sama päringu kordus.",
+      "expected": "Sama tunnus/sisu tagastab sama tulemuse, mitte uue broneeringu.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core AT-12/13: concurrent retries share one result; changed body conflicts",
+          "status": "passed",
+          "durationMs": 148.85120000000006
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/chapter24-20260910/chrome-concurrency.log",
+          "engine": "chrome",
+          "phase": "concurrency",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/firefox-concurrency.log",
+          "engine": "firefox",
+          "phase": "concurrency",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/webkit-concurrency.log",
+          "engine": "webkit",
+          "phase": "concurrency",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/acceptance-g03-completion-20260909/results.json",
+          "phase": "recovery",
+          "at": "2026-09-09T17:37:30.491Z",
+          "engines": [
+            "chrome",
+            "firefox",
+            "webkit"
+          ],
+          "reused": true
+        }
+      ]
+    },
+    {
+      "id": "AT-13",
+      "test": "Sama tunnus, erinev sisu.",
+      "expected": "Konflikt lükatakse tagasi; vana toimingu sisu ei kirjutata üle.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core AT-12/13: concurrent retries share one result; changed body conflicts",
+          "status": "passed",
+          "durationMs": 148.85120000000006
+        }
+      ],
+      "browser": []
+    },
+    {
+      "id": "AT-14",
+      "test": "Graafiku sulgemine ja broneerimine.",
+      "expected": "Tulemused on kooskõlas ühise lukustusreegliga; keelatud aega ei teki.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/schedule-management.test.ts",
+          "name": "serializes simultaneous closing and booking without creating a booking outside working hours",
+          "status": "passed",
+          "durationMs": 136.34220000000005
+        }
+      ],
+      "browser": []
+    },
+    {
+      "id": "AT-15",
+      "test": "Aja muutmine ebaõnnestub.",
+      "expected": "Vana aeg jääb alles; kumbki poolik muudatus ei rakendu.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking-management.test.ts",
+          "name": "leaves the old booking and notices intact when the new price, rules or availability are stale",
+          "status": "passed",
+          "durationMs": 158.60730000000012
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/chapter24-20260910/chrome-admin.log",
+          "engine": "chrome",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/firefox-admin.log",
+          "engine": "firefox",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/webkit-admin.log",
+          "engine": "webkit",
+          "phase": "admin",
+          "reused": false
+        }
+      ]
+    },
+    {
+      "id": "AT-16",
+      "test": "Kaks administraatorit muudavad.",
+      "expected": "Vananenud versioon ei kirjuta uuemat muudatust üle.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking-management.test.ts",
+          "name": "accepts exactly one of two administrators editing the same version",
+          "status": "passed",
+          "durationMs": 110.3144000000002
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/chapter24-20260910/chrome-concurrency.log",
+          "engine": "chrome",
+          "phase": "concurrency",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/firefox-concurrency.log",
+          "engine": "firefox",
+          "phase": "concurrency",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/webkit-concurrency.log",
+          "engine": "webkit",
+          "phase": "concurrency",
+          "reused": false
+        }
+      ]
+    },
+    {
+      "id": "AT-17",
+      "test": "Kellakeeramine ja ajavöönd.",
+      "expected": "Kohalik aeg ja tegelik hetk vastavad reeglitele; olematu aeg pole pakutav.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "AT-17: Europe/Tallinn daylight saving AT-17: real schedule offers across 2026-03-29 keep valid wall times and physical durations",
+          "status": "passed",
+          "durationMs": 127.84770000000026
+        },
+        {
+          "file": "tests/booking.test.ts",
+          "name": "AT-17: Europe/Tallinn daylight saving AT-17: real schedule offers across 2026-10-25 keep valid wall times and physical durations",
+          "status": "passed",
+          "durationMs": 106.28459999999995
+        },
+        {
+          "file": "tests/booking.test.ts",
+          "name": "AT-17: Europe/Tallinn daylight saving skips nonexistent spring and ambiguous autumn wall times",
+          "status": "passed",
+          "durationMs": 108.36319999999978
+        }
+      ],
+      "browser": []
+    },
+    {
+      "id": "AT-18",
+      "test": "Teenuse või töötaja arhiveerimine.",
+      "expected": "Uued valikud sulguvad; ajalugu säilib ja tulevased ajad tuleb lahendada.",
+      "status": "passed",
+      "tests": [
+        {
+          "file": "tests/service-management.test.ts",
+          "name": "retains historical price, names, duration and inherited buffers after editing and archiving",
+          "status": "passed",
+          "durationMs": 158.0011000000004
+        },
+        {
+          "file": "tests/booking-management.test.ts",
+          "name": "archives departing staff, revokes company access and sessions, keeps history and queues future bookings",
+          "status": "passed",
+          "durationMs": 123.59779999999955
+        }
+      ],
+      "browser": [
+        {
+          "path": "docs/audits/chapter24-20260910/chrome-admin.log",
+          "engine": "chrome",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/firefox-admin.log",
+          "engine": "firefox",
+          "phase": "admin",
+          "reused": false
+        },
+        {
+          "path": "docs/audits/chapter24-20260910/webkit-admin.log",
+          "engine": "webkit",
+          "phase": "admin",
+          "reused": false
+        }
+      ]
+    }
+  ],
+  "supplementary": [
+    {
+      "test": "Service changes clear the old offer and preserve contacts",
+      "browser": [
+        "public"
+      ],
+      "status": "passed"
+    },
+    {
+      "test": "Changed prices require a new explicit confirmation",
+      "previous": [
+        "variants:reject",
+        "variants:confirm"
+      ],
+      "status": "passed"
+    },
+    {
+      "test": "An empty day offers a later day without choosing a time",
+      "browser": [
+        "public"
+      ],
+      "tests": [
+        {
+          "file": "tests/booking.test.ts",
+          "name": "PostgreSQL booking core 08: next free day skips closed dates without creating or choosing a booking",
+          "status": "passed",
+          "durationMs": 161.97659999999996
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "test": "Interrupted connections check the original operation",
+      "browser": [
+        "concurrency"
+      ],
+      "previous": [
+        "recovery"
+      ],
+      "status": "passed"
+    },
+    {
+      "test": "Manual bookings apply the same eligibility, overlap and buffer rules",
+      "tests": [
+        {
+          "file": "tests/booking-management.test.ts",
+          "name": "15: manual and public creation compete for the same allocation",
+          "status": "passed",
+          "durationMs": 97.75220000000002
+        },
+        {
+          "file": "tests/booking-management.test.ts",
+          "name": "24: manual creation rejects ineligible staff and buffer-only overlaps without side effects",
+          "status": "passed",
+          "durationMs": 102.57590000000005
+        }
+      ],
+      "status": "passed"
+    }
+  ],
+  "browser": [
+    {
+      "phase": "public",
+      "engine": "chrome",
+      "version": "152.0.7977.83",
+      "results": [
+        {
+          "check": "Supplement: closed day offers no times",
+          "pass": true
+        },
+        {
+          "check": "Supplement: next available day uses the real API",
+          "pass": true
+        },
+        {
+          "check": "Supplement: search advances past the closed day",
+          "pass": true
+        },
+        {
+          "check": "AT-05: next-day search stays on the time selection step",
+          "pass": true
+        },
+        {
+          "check": "AT-05: next-day search does not select an offer",
+          "pass": true
+        },
+        {
+          "check": "AT-05: next-day search does not create a booking",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change returns to choosing a time",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change clears the previous selected offer",
+          "pass": true
+        },
+        {
+          "check": "Supplement: previous offer cannot reopen confirmation after changing service",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change preserves the customer name",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change preserves the email",
+          "pass": true
+        },
+        {
+          "check": "Supplement: changing service and selecting another offer creates no booking before confirmation",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "chrome-public.log"
+    },
+    {
+      "phase": "concurrency",
+      "engine": "chrome",
+      "version": "152.0.7977.83",
+      "createdBookingId": "9c2e3e54-142c-4865-8edb-407bd7d422c1",
+      "winningVersion": 2,
+      "results": [
+        {
+          "check": "Owner manual booking succeeds",
+          "pass": true
+        },
+        {
+          "check": "First editor reschedules successfully",
+          "pass": true
+        },
+        {
+          "check": "Second editor cannot overwrite a stale version",
+          "pass": true
+        },
+        {
+          "check": "Stale editor retains the typed reason",
+          "pass": true
+        },
+        {
+          "check": "Lost cancellation reply follows a real commit",
+          "pass": true
+        },
+        {
+          "check": "Cancellation recovery preserves one command key",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "chrome-concurrency.log"
+    },
+    {
+      "phase": "admin",
+      "engine": "chrome",
+      "version": "152.0.7977.83",
+      "oldBookingId": "41d0ed85-4a6e-4c33-a046-8ee3363aa5e8",
+      "blockerId": "07a59961-09f5-489d-b8dd-7364fc4a2f24",
+      "results": [
+        {
+          "check": "AT-15: only one reschedule command is submitted",
+          "pass": true
+        },
+        {
+          "check": "AT-15: another real booking occupies the selected target before rescheduling",
+          "pass": true
+        },
+        {
+          "check": "AT-15: server rejects a target occupied after selection",
+          "pass": true
+        },
+        {
+          "check": "AT-15: failed move refreshes available offers",
+          "pass": true
+        },
+        {
+          "check": "AT-15: occupied target is absent from the refreshed offers",
+          "pass": true
+        },
+        {
+          "check": "AT-15: rejected move preserves the typed reason",
+          "pass": true
+        },
+        {
+          "check": "AT-15: another offer must be selected before confirmation",
+          "pass": true
+        },
+        {
+          "check": "AT-15: failed move is explained visibly",
+          "pass": true
+        },
+        {
+          "check": "AT-15: original booking remains visible at 10:00",
+          "pass": true
+        },
+        {
+          "check": "Regression: changing the calendar scope removes the former booking rows",
+          "pass": true
+        },
+        {
+          "check": "AT-18: owner archives staff through the actual form and API",
+          "pass": true
+        },
+        {
+          "check": "AT-18: archived staff future booking is listed for resolution",
+          "pass": true
+        },
+        {
+          "check": "AT-18: future booking shows the staff archive reason",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: unavailable personal link renders its guidance page",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: unavailable personal link offers a company fallback",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: archived employee catalogue API rejects the link",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: archived employee link offers no booking controls",
+          "pass": true
+        },
+        {
+          "check": "AT-01/18: service without an active eligible employee disappears",
+          "pass": true
+        },
+        {
+          "check": "AT-03/18: only the remaining employee is eligible",
+          "pass": true
+        },
+        {
+          "check": "AT-18: owner archives service through the actual form and API",
+          "pass": true
+        },
+        {
+          "check": "AT-18: archived service remains in existing booking history",
+          "pass": true
+        },
+        {
+          "check": "AT-18: public catalogue still responds after archival",
+          "pass": true
+        },
+        {
+          "check": "AT-18: archived service is excluded from public catalogue",
+          "pass": true
+        },
+        {
+          "check": "Regression: a rejected session refresh clears protected booking details",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "chrome-admin.log"
+    },
+    {
+      "phase": "public",
+      "engine": "firefox",
+      "version": "155.0",
+      "results": [
+        {
+          "check": "Supplement: closed day offers no times",
+          "pass": true
+        },
+        {
+          "check": "Supplement: next available day uses the real API",
+          "pass": true
+        },
+        {
+          "check": "Supplement: search advances past the closed day",
+          "pass": true
+        },
+        {
+          "check": "AT-05: next-day search stays on the time selection step",
+          "pass": true
+        },
+        {
+          "check": "AT-05: next-day search does not select an offer",
+          "pass": true
+        },
+        {
+          "check": "AT-05: next-day search does not create a booking",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change returns to choosing a time",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change clears the previous selected offer",
+          "pass": true
+        },
+        {
+          "check": "Supplement: previous offer cannot reopen confirmation after changing service",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change preserves the customer name",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change preserves the email",
+          "pass": true
+        },
+        {
+          "check": "Supplement: changing service and selecting another offer creates no booking before confirmation",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "firefox-public.log"
+    },
+    {
+      "phase": "concurrency",
+      "engine": "firefox",
+      "version": "155.0",
+      "createdBookingId": "06dc87e5-bdb2-408c-8f39-99898e53ef54",
+      "winningVersion": 2,
+      "results": [
+        {
+          "check": "Owner manual booking succeeds",
+          "pass": true
+        },
+        {
+          "check": "First editor reschedules successfully",
+          "pass": true
+        },
+        {
+          "check": "Second editor cannot overwrite a stale version",
+          "pass": true
+        },
+        {
+          "check": "Stale editor retains the typed reason",
+          "pass": true
+        },
+        {
+          "check": "Lost cancellation reply follows a real commit",
+          "pass": true
+        },
+        {
+          "check": "Cancellation recovery preserves one command key",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "firefox-concurrency.log"
+    },
+    {
+      "phase": "admin",
+      "engine": "firefox",
+      "version": "155.0",
+      "oldBookingId": "650bb56d-c938-4145-b53e-3eb79eb9e383",
+      "blockerId": "b0315b8a-181f-4525-8e58-46db370508c5",
+      "results": [
+        {
+          "check": "AT-15: only one reschedule command is submitted",
+          "pass": true
+        },
+        {
+          "check": "AT-15: another real booking occupies the selected target before rescheduling",
+          "pass": true
+        },
+        {
+          "check": "AT-15: server rejects a target occupied after selection",
+          "pass": true
+        },
+        {
+          "check": "AT-15: failed move refreshes available offers",
+          "pass": true
+        },
+        {
+          "check": "AT-15: occupied target is absent from the refreshed offers",
+          "pass": true
+        },
+        {
+          "check": "AT-15: rejected move preserves the typed reason",
+          "pass": true
+        },
+        {
+          "check": "AT-15: another offer must be selected before confirmation",
+          "pass": true
+        },
+        {
+          "check": "AT-15: failed move is explained visibly",
+          "pass": true
+        },
+        {
+          "check": "AT-15: original booking remains visible at 10:00",
+          "pass": true
+        },
+        {
+          "check": "Regression: changing the calendar scope removes the former booking rows",
+          "pass": true
+        },
+        {
+          "check": "AT-18: owner archives staff through the actual form and API",
+          "pass": true
+        },
+        {
+          "check": "AT-18: archived staff future booking is listed for resolution",
+          "pass": true
+        },
+        {
+          "check": "AT-18: future booking shows the staff archive reason",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: unavailable personal link renders its guidance page",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: unavailable personal link offers a company fallback",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: archived employee catalogue API rejects the link",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: archived employee link offers no booking controls",
+          "pass": true
+        },
+        {
+          "check": "AT-01/18: service without an active eligible employee disappears",
+          "pass": true
+        },
+        {
+          "check": "AT-03/18: only the remaining employee is eligible",
+          "pass": true
+        },
+        {
+          "check": "AT-18: owner archives service through the actual form and API",
+          "pass": true
+        },
+        {
+          "check": "AT-18: archived service remains in existing booking history",
+          "pass": true
+        },
+        {
+          "check": "AT-18: public catalogue still responds after archival",
+          "pass": true
+        },
+        {
+          "check": "AT-18: archived service is excluded from public catalogue",
+          "pass": true
+        },
+        {
+          "check": "Regression: a rejected session refresh clears protected booking details",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "firefox-admin.log"
+    },
+    {
+      "phase": "public",
+      "engine": "webkit",
+      "version": "26.5",
+      "results": [
+        {
+          "check": "Supplement: closed day offers no times",
+          "pass": true
+        },
+        {
+          "check": "Supplement: next available day uses the real API",
+          "pass": true
+        },
+        {
+          "check": "Supplement: search advances past the closed day",
+          "pass": true
+        },
+        {
+          "check": "AT-05: next-day search stays on the time selection step",
+          "pass": true
+        },
+        {
+          "check": "AT-05: next-day search does not select an offer",
+          "pass": true
+        },
+        {
+          "check": "AT-05: next-day search does not create a booking",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change returns to choosing a time",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change clears the previous selected offer",
+          "pass": true
+        },
+        {
+          "check": "Supplement: previous offer cannot reopen confirmation after changing service",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change preserves the customer name",
+          "pass": true
+        },
+        {
+          "check": "Supplement: service change preserves the email",
+          "pass": true
+        },
+        {
+          "check": "Supplement: changing service and selecting another offer creates no booking before confirmation",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "webkit-public.log"
+    },
+    {
+      "phase": "concurrency",
+      "engine": "webkit",
+      "version": "26.5",
+      "createdBookingId": "13d0f13f-e0a5-413f-b4de-9ff2c9b1d60f",
+      "winningVersion": 2,
+      "results": [
+        {
+          "check": "Owner manual booking succeeds",
+          "pass": true
+        },
+        {
+          "check": "First editor reschedules successfully",
+          "pass": true
+        },
+        {
+          "check": "Second editor cannot overwrite a stale version",
+          "pass": true
+        },
+        {
+          "check": "Stale editor retains the typed reason",
+          "pass": true
+        },
+        {
+          "check": "Lost cancellation reply follows a real commit",
+          "pass": true
+        },
+        {
+          "check": "Cancellation recovery preserves one command key",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "webkit-concurrency.log"
+    },
+    {
+      "phase": "admin",
+      "engine": "webkit",
+      "version": "26.5",
+      "oldBookingId": "cd3d8a72-bc41-460e-8043-c294c45b43ea",
+      "blockerId": "d5a1ab67-b389-49f1-bd14-c441e0912357",
+      "results": [
+        {
+          "check": "AT-15: only one reschedule command is submitted",
+          "pass": true
+        },
+        {
+          "check": "AT-15: another real booking occupies the selected target before rescheduling",
+          "pass": true
+        },
+        {
+          "check": "AT-15: server rejects a target occupied after selection",
+          "pass": true
+        },
+        {
+          "check": "AT-15: failed move refreshes available offers",
+          "pass": true
+        },
+        {
+          "check": "AT-15: occupied target is absent from the refreshed offers",
+          "pass": true
+        },
+        {
+          "check": "AT-15: rejected move preserves the typed reason",
+          "pass": true
+        },
+        {
+          "check": "AT-15: another offer must be selected before confirmation",
+          "pass": true
+        },
+        {
+          "check": "AT-15: failed move is explained visibly",
+          "pass": true
+        },
+        {
+          "check": "AT-15: original booking remains visible at 10:00",
+          "pass": true
+        },
+        {
+          "check": "Regression: changing the calendar scope removes the former booking rows",
+          "pass": true
+        },
+        {
+          "check": "AT-18: owner archives staff through the actual form and API",
+          "pass": true
+        },
+        {
+          "check": "AT-18: archived staff future booking is listed for resolution",
+          "pass": true
+        },
+        {
+          "check": "AT-18: future booking shows the staff archive reason",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: unavailable personal link renders its guidance page",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: unavailable personal link offers a company fallback",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: archived employee catalogue API rejects the link",
+          "pass": true
+        },
+        {
+          "check": "AT-04/18: archived employee link offers no booking controls",
+          "pass": true
+        },
+        {
+          "check": "AT-01/18: service without an active eligible employee disappears",
+          "pass": true
+        },
+        {
+          "check": "AT-03/18: only the remaining employee is eligible",
+          "pass": true
+        },
+        {
+          "check": "AT-18: owner archives service through the actual form and API",
+          "pass": true
+        },
+        {
+          "check": "AT-18: archived service remains in existing booking history",
+          "pass": true
+        },
+        {
+          "check": "AT-18: public catalogue still responds after archival",
+          "pass": true
+        },
+        {
+          "check": "AT-18: archived service is excluded from public catalogue",
+          "pass": true
+        },
+        {
+          "check": "Regression: a rejected session refresh clears protected booking details",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "evidence": "webkit-admin.log"
+    }
+  ],
+  "databaseProof": [
+    {
+      "at": "2026-09-10T06:23:43.635Z",
+      "engine": "chrome",
+      "oldBookingUnchanged": true,
+      "oldEvents": 0,
+      "oldNotices": 0,
+      "archivedStaffBooking": {
+        "id": "317e2c87-e56e-4605-b2a6-6480aca8b462",
+        "status": "confirmed",
+        "version": 2,
+        "service_name": "G03 lõikus",
+        "staff_name": "G03 A töötaja 1",
+        "start_at": "2026-09-17T07:00:00.000Z",
+        "end_at": "2026-09-17T07:30:00.000Z",
+        "price": 2500,
+        "duration": 30,
+        "attention_reason": "Töötaja on arhiveeritud"
+      },
+      "attentionEvents": 1,
+      "membershipActive": false,
+      "remainingStaffSessions": 0,
+      "blocker": {
+        "id": "07a59961-09f5-489d-b8dd-7364fc4a2f24",
+        "status": "confirmed",
+        "source": "online",
+        "is_test": true,
+        "customer_email": "p24-blocker-chrome@example.invalid"
+      },
+      "concurrentBooking": {
+        "id": "9c2e3e54-142c-4865-8edb-407bd7d422c1",
+        "status": "cancelled",
+        "version": 3
+      },
+      "concurrentCounts": {
+        "commands": 3,
+        "events": 3,
+        "skippednotices": 3
+      },
+      "totals": {
+        "bookings": 4,
+        "notices": 4
+      },
+      "pass": true
+    },
+    {
+      "at": "2026-09-10T06:24:02.566Z",
+      "engine": "firefox",
+      "oldBookingUnchanged": true,
+      "oldEvents": 0,
+      "oldNotices": 0,
+      "archivedStaffBooking": {
+        "id": "5e4c310b-8fd4-44f3-8842-3dbc29504d6d",
+        "status": "confirmed",
+        "version": 2,
+        "service_name": "G03 lõikus",
+        "staff_name": "G03 A töötaja 1",
+        "start_at": "2026-09-17T07:00:00.000Z",
+        "end_at": "2026-09-17T07:30:00.000Z",
+        "price": 2500,
+        "duration": 30,
+        "attention_reason": "Töötaja on arhiveeritud"
+      },
+      "attentionEvents": 1,
+      "membershipActive": false,
+      "remainingStaffSessions": 0,
+      "blocker": {
+        "id": "b0315b8a-181f-4525-8e58-46db370508c5",
+        "status": "confirmed",
+        "source": "online",
+        "is_test": true,
+        "customer_email": "p24-blocker-firefox@example.invalid"
+      },
+      "concurrentBooking": {
+        "id": "06dc87e5-bdb2-408c-8f39-99898e53ef54",
+        "status": "cancelled",
+        "version": 3
+      },
+      "concurrentCounts": {
+        "commands": 3,
+        "events": 3,
+        "skippednotices": 3
+      },
+      "totals": {
+        "bookings": 4,
+        "notices": 4
+      },
+      "pass": true
+    },
+    {
+      "at": "2026-09-10T06:24:29.566Z",
+      "engine": "webkit",
+      "oldBookingUnchanged": true,
+      "oldEvents": 0,
+      "oldNotices": 0,
+      "archivedStaffBooking": {
+        "id": "ab15e5a4-7959-4251-bcff-72a754fdbc43",
+        "status": "confirmed",
+        "version": 2,
+        "service_name": "G03 lõikus",
+        "staff_name": "G03 A töötaja 1",
+        "start_at": "2026-09-17T07:00:00.000Z",
+        "end_at": "2026-09-17T07:30:00.000Z",
+        "price": 2500,
+        "duration": 30,
+        "attention_reason": "Töötaja on arhiveeritud"
+      },
+      "attentionEvents": 1,
+      "membershipActive": false,
+      "remainingStaffSessions": 0,
+      "blocker": {
+        "id": "d5a1ab67-b389-49f1-bd14-c441e0912357",
+        "status": "confirmed",
+        "source": "online",
+        "is_test": true,
+        "customer_email": "p24-blocker-webkit@example.invalid"
+      },
+      "concurrentBooking": {
+        "id": "13d0f13f-e0a5-413f-b4de-9ff2c9b1d60f",
+        "status": "cancelled",
+        "version": 3
+      },
+      "concurrentCounts": {
+        "commands": 3,
+        "events": 3,
+        "skippednotices": 3
+      },
+      "totals": {
+        "bookings": 4,
+        "notices": 4
+      },
+      "pass": true
+    }
+  ]
+}

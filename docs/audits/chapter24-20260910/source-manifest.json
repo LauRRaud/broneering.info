@@ -1,0 +1,78 @@
+[
+  {
+    "path": "src/components/booking-management.tsx",
+    "sha256": "33d4860257dcac43065271d69d63d09a93fcb93d556427e29ab69738e238c9d6"
+  },
+  {
+    "path": "src/components/booking-flow.tsx",
+    "sha256": "b604c1a89d5db8f0f3e48309b44389b264b6778b2cbf2f05a18ad200d46d9059"
+  },
+  {
+    "path": "src/lib/bookings.ts",
+    "sha256": "a0e27c67c7f5b4039970039d004b299ff318245c616bd4c04f5f958e5bc07138"
+  },
+  {
+    "path": "src/lib/availability.ts",
+    "sha256": "a3e923c850ef5251ad7a3534b4fcadf12c5571d32e739bddb16e886b917ae80e"
+  },
+  {
+    "path": "src/lib/booking-mutation-outcome.ts",
+    "sha256": "6844baa41ef3d779749da60221892f85ff8499b8abf31da06eb08c89627c4bdf"
+  },
+  {
+    "path": "src/lib/booking-management.ts",
+    "sha256": "0c3867b1c86d7d2dad7465e285ab5bc0053be1130b8440e52c581910ebb9e7e5"
+  },
+  {
+    "path": "src/lib/service-management.ts",
+    "sha256": "504819b101cf2d0711e703760d468f32e90f6c00a52c462fff7b21e8429a528b"
+  },
+  {
+    "path": "src/lib/schedule-management.ts",
+    "sha256": "1b31f61c94147dfcc87adca3a103d879e4cb9806e82848f404273603bc7c96a7"
+  },
+  {
+    "path": "tests/booking.test.ts",
+    "sha256": "d78f28b70dc66de1be67fc5fa3e33c9a0d7702337670d86668fb63ba95b0d239"
+  },
+  {
+    "path": "tests/schedule-management.test.ts",
+    "sha256": "fcce7b219d5f7c9468a72e1036b4deb231e3b5503adb5bc18a6a3792cb338678"
+  },
+  {
+    "path": "tests/booking-management.test.ts",
+    "sha256": "0087743cd9a3cbda8342da25194698c9103dd274f3b758cb3c9c3add442e85dd"
+  },
+  {
+    "path": "tests/service-management.test.ts",
+    "sha256": "1f3eed44d8708287928477e5b561d25460ebfb86739fae6dae80bacf6c99fd75"
+  },
+  {
+    "path": "scripts/chapter24-admin.js",
+    "sha256": "ef754afad020093e50131a7734331646d7816f640f37964200440e250ec2bd73"
+  },
+  {
+    "path": "scripts/chapter24-fixture.ts",
+    "sha256": "ede7f6e8df13925521ea2d3950cfb7ba76bfdeb77e0f0b04049b2f4d10813826"
+  },
+  {
+    "path": "scripts/chapter24-public.js",
+    "sha256": "3bb554e67769727cc75eea29b18a843cb1b22fd22aff04774f22c04fa4994b04"
+  },
+  {
+    "path": "scripts/chapter24-report.mjs",
+    "sha256": "63c1921dbcbdac88f41b961b97617cea43a7b1a34aba5cea3137ef438776fc82"
+  },
+  {
+    "path": "scripts/chapter24-run.ps1",
+    "sha256": "8742ac3a1f29e38c0cdd00b386eaeb22905ec0f519448d60ae1580f8453a9da2"
+  },
+  {
+    "path": "scripts/acceptance-g03-fixture.ts",
+    "sha256": "84d9cc96e30d3b2a4feff8650bb1d247b2db6646a3becbe80d149b3f7f7da5f0"
+  },
+  {
+    "path": "scripts/acceptance-g03-admin-concurrency.js",
+    "sha256": "5045d2bf22f9378238d512eccad0c6edb43e35d7abadd9f6e94a1c8fa5ace71f"
+  }
+]

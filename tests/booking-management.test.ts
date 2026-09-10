@@ -81,6 +81,18 @@ it('15: manual and public creation compete for the same allocation',async()=>{
   expect((await db.query('SELECT count(*)::int n FROM bookings WHERE tenant_id=$1',[tenant.id])).rows[0].n).toBe(1);
   expect((await db.query('SELECT count(*)::int n FROM outbox WHERE tenant_id=$1',[tenant.id])).rows[0].n).toBe(1);
 });
+it('24: manual creation rejects ineligible staff and buffer-only overlaps without side effects',async()=>{
+  const offer=await first(),existing=await createBooking(tenant,input(offer),randomUUID());
+  const before=await rawBooking(existing.id),beforeCounts=await counts(existing.id);
+  await db.query('UPDATE staff_services SET active=false WHERE tenant_id=$1 AND staff_id=$2',[tenant.id,otherStaffId]);
+  const command={tenantId:tenant.id,action:'manual-create',...input(offer)};
+  await expect(admin(owner,{...command,staffId:otherStaffId},randomUUID())).rejects.toMatchObject({code:'SLOT_UNAVAILABLE'});
+  // The service intervals only touch; the preparation/cleanup allocation still overlaps.
+  await expect(admin(owner,{...command,start:existing.end},randomUUID())).rejects.toMatchObject({code:'SLOT_UNAVAILABLE'});
+  expect(await rawBooking(existing.id)).toEqual(before);expect(await counts(existing.id)).toEqual(beforeCounts);
+  expect((await db.query('SELECT count(*)::int n FROM bookings WHERE tenant_id=$1',[tenant.id])).rows[0].n).toBe(1);
+  expect((await db.query('SELECT count(*)::int n FROM booking_commands WHERE tenant_id=$1',[tenant.id])).rows[0].n).toBe(0);
+});
 it('15: two bookings racing for one new slot move only one and preserve the losing allocation',async()=>{
   const a=await createBooking(tenant,input(await first()),randomUUID());
   const b=await createBooking(tenant,input(await first()),randomUUID());

@@ -1,0 +1,53 @@
+### Result
+{"engine":"firefox","phase":"public","version":"155.0","results":[{"check":"Supplement: closed day offers no times","pass":true},{"check":"Supplement: next available day uses the real API","pass":true},{"check":"Supplement: search advances past the closed day","pass":true},{"check":"AT-05: next-day search stays on the time selection step","pass":true},{"check":"AT-05: next-day search does not select an offer","pass":true},{"check":"AT-05: next-day search does not create a booking","pass":true},{"check":"Supplement: service change returns to choosing a time","pass":true},{"check":"Supplement: service change clears the previous selected offer","pass":true},{"check":"Supplement: previous offer cannot reopen confirmation after changing service","pass":true},{"check":"Supplement: service change preserves the customer name","pass":true},{"check":"Supplement: service change preserves the email","pass":true},{"check":"Supplement: changing service and selecting another offer creates no booking before confirmation","pass":true}],"pass":true}
+### Ran Playwright code
+```js
+await (async (page) => {
+ const engine='firefox',results=[];
+ page.setDefaultTimeout(15000);
+ const ensure=(condition,message)=>{if(!condition)throw Error(message);results.push({check:message,pass:true});};
+ await page.context().setStorageState({cookies:[],origins:[]});
+ await page.setViewportSize({width:390,height:844});
+ let writes=0;page.on('request',request=>{if(request.url().endsWith('/api/bookings')&&request.method()==='POST')writes++;});
+ await page.goto('http://g03-fa6d35a8-f2bb-4ad8-b9f3-57e2298c6bad.localhost:3108/');
+ await page.waitForFunction(()=>document.activeElement.id==='booking-title');
+ await page.getByRole('button',{name:'G03 lõikus',exact:true}).click();
+ await page.getByRole('button',{name:'Töötaja pole oluline',exact:true}).click();
+ await page.getByRole('textbox',{name:'Valitud kuupäev',exact:true}).fill('2026-09-18');
+ await page.getByText('Sel päeval vabu aegu ei ole.',{exact:true}).waitFor();
+ ensure(await page.getByRole('list',{name:'Vabad ajad',exact:true}).getByRole('button').count()===0,'Supplement: closed day offers no times');
+ const nextResponse=page.waitForResponse(response=>response.url().includes('/api/availability?')&&response.url().includes('next=1'));
+ await page.getByRole('button',{name:'Leia järgmine vaba päev',exact:true}).click();
+ const next=await nextResponse;ensure(next.status()===200,'Supplement: next available day uses the real API');
+ const found=await next.json();ensure(found.date>'2026-09-18','Supplement: search advances past the closed day');
+ await page.waitForFunction(date=>document.querySelector('input[type=date]').value===date,found.date);
+ await page.getByRole('list',{name:'Vabad ajad',exact:true}).getByRole('button').first().waitFor();
+ ensure(await page.getByRole('heading',{name:'Vali endale hetk.',exact:true}).isVisible(),'AT-05: next-day search stays on the time selection step');
+ ensure(await page.getByRole('list',{name:'Vabad ajad',exact:true}).getByRole('button',{pressed:true}).count()===0,'AT-05: next-day search does not select an offer');
+ ensure(writes===0,'AT-05: next-day search does not create a booking');
+ await page.getByRole('list',{name:'Vabad ajad',exact:true}).getByRole('button').first().click();
+ await page.waitForFunction(()=>document.activeElement.id==='booking-title'&&document.activeElement.textContent==='Veel mõned andmed.');
+ await page.getByRole('textbox',{name:'Teenuse saaja nimi *',exact:true}).fill(`P24 ${engine} Preserved`);
+ await page.getByRole('textbox',{name:'Kontaktisiku e-post *',exact:true}).fill(`p24-${engine}@example.invalid`);
+ await page.getByRole('navigation',{name:'Broneerimise sammud',exact:true}).getByRole('button',{name:'Tehtud: Teenus',exact:true}).click();
+ await page.getByRole('button',{name:'G03 ainuteenuse valik',exact:true}).click();
+ await page.getByRole('list',{name:'Vabad ajad',exact:true}).getByRole('button').first().waitFor();
+ ensure(await page.getByRole('heading',{name:'Vali endale hetk.',exact:true}).isVisible(),'Supplement: service change returns to choosing a time');
+ ensure(await page.getByRole('list',{name:'Vabad ajad',exact:true}).getByRole('button',{pressed:true}).count()===0,'Supplement: service change clears the previous selected offer');
+ ensure(await page.getByRole('navigation',{name:'Broneerimise sammud',exact:true}).getByRole('button',{name:'3. Sinu andmed',exact:true}).isDisabled(),'Supplement: previous offer cannot reopen confirmation after changing service');
+ await page.getByRole('list',{name:'Vabad ajad',exact:true}).getByRole('button').first().click();
+ await page.waitForFunction(()=>document.activeElement.id==='booking-title'&&document.activeElement.textContent==='Veel mõned andmed.');
+ ensure(await page.getByRole('textbox',{name:'Teenuse saaja nimi *',exact:true}).inputValue()===`P24 ${engine} Preserved`,'Supplement: service change preserves the customer name');
+ ensure(await page.getByRole('textbox',{name:'Kontaktisiku e-post *',exact:true}).inputValue()===`p24-${engine}@example.invalid`,'Supplement: service change preserves the email');
+ ensure(writes===0,'Supplement: changing service and selecting another offer creates no booking before confirmation');
+ await page.screenshot({path:`output/playwright/chapter24/${engine}-public-controls.png`});
+ return {engine,phase:'public',version:page.context().browser().version(),results,pass:true};
+}
+
+)(page);
+```
+### Page
+- Page URL: http://g03-fa6d35a8-f2bb-4ad8-b9f3-57e2298c6bad.localhost:3108/
+- Page Title: broneering.info
+### Events
+- New console entries: .playwright-cli\console-2026-09-10T06-23-48-373Z.log#L83-L396

@@ -1,0 +1,621 @@
+### Page
+- Page URL: http://haldus.localhost:3108/
+- Page Title: broneering.info
+- Console: 1 errors, 0 warnings
+### Snapshot
+```yaml
+- generic [ref=f2e1]:
+  - link "Liigu põhisisu juurde" [ref=f2e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f2e3]:
+    - generic [ref=f2e4]: Keel
+    - combobox "Keel" [ref=f2e5]:
+      - option "Eesti" [selected]
+      - option "English"
+      - option "Русский"
+  - main [ref=f2e6]:
+    - generic [ref=f2e7]:
+      - heading "Haldus" [level=1] [ref=f2e8]
+      - paragraph [ref=f2e9]: G03 owner · g03-177e0723-1b06-449b-8db7-40601e3ab834@example.invalid
+      - button "Logi välja" [ref=f2e10]
+    - region [ref=f2e11]:
+      - heading "Turvalisus" [level=2] [ref=f2e12]
+      - generic [ref=f2e13]:
+        - heading "Vaheta autentimisrakendus" [level=3] [ref=f2e14]
+        - paragraph [ref=f2e15]: Keelamine nõuab praegust parooli. Pärast seda saad uue rakenduse kohe registreerida.
+        - paragraph [ref=f2e16]:
+          - text: Praegune parool
+          - textbox "Praegune parool" [ref=f2e17]
+        - button "Keela ja registreeri uus" [ref=f2e18]
+      - generic [ref=f2e19]:
+        - heading "Muuda parooli" [level=3] [ref=f2e20]
+        - paragraph [ref=f2e21]:
+          - text: Praegune parool
+          - textbox "Praegune parool" [ref=f2e22]
+        - paragraph [ref=f2e23]:
+          - text: Uus parool (vähemalt 12 märki)
+          - textbox "Uus parool (vähemalt 12 märki)" [ref=f2e24]
+        - paragraph [ref=f2e25]:
+          - text: Korda uut parooli
+          - textbox "Korda uut parooli" [ref=f2e26]
+        - button "Muuda parooli" [ref=f2e27]
+    - region [ref=f2e28]:
+      - heading "Minu ettevõtted" [level=2] [ref=f2e29]
+      - text: Vali enda kontekst
+      - combobox "Vali enda kontekst" [ref=f2e30]:
+        - option "G03 ettevõte A (Omanik)" [selected]
+    - region [ref=f2e31]:
+      - heading "G03 ettevõte A" [level=2] [ref=f2e32]
+      - paragraph [ref=f2e33]: "Roll: Omanik"
+      - paragraph [ref=f2e34]:
+        - button "Laadi haldus uuesti" [ref=f2e35]
+        - text: (salvestamata vormid lähtestatakse)
+      - region [ref=f2e36]:
+        - heading "Kliendikontaktide säilituskava" [level=3] [ref=f2e37]
+        - paragraph [ref=f2e38]: Tähtaega arvestatakse viimasest broneeringust. Tühi väli tähendab kinnitamata tähtaega. Arvete säilitamine otsustatakse eraldi.
+        - status [ref=f2e39]: Automaatne kontaktide eemaldamine ei ole veel kasutusel. Kava salvestamine ei kustuta andmeid.
+        - group [ref=f2e41]:
+          - generic [ref=f2e42]:
+            - text: Säilitamise päevade arv
+            - spinbutton "Säilitamise päevade arv" [ref=f2e43]
+          - paragraph [ref=f2e44]:
+            - generic [ref=f2e45]:
+              - checkbox "Peata kontaktide eemaldamine säilitamiskohustuse tõttu" [ref=f2e46]
+              - text: Peata kontaktide eemaldamine säilitamiskohustuse tõttu
+          - paragraph [ref=f2e47]:
+            - generic [ref=f2e48]:
+              - checkbox "Kinnitan, et säilituskava vastab ettevõtte põhjendatud vajadusele." [ref=f2e49]
+              - text: Kinnitan, et säilituskava vastab ettevõtte põhjendatud vajadusele.
+          - button "Salvesta säilituskava" [disabled] [ref=f2e50]
+      - region [ref=f2e51]:
+        - heading "Teenusest lahkumine" [level=3] [ref=f2e52]
+        - paragraph [ref=f2e53]: Lahkumiskava tähtajad peavad vastama lepingule. Olemasolevad broneeringud säilivad ning vana alamdomeen jääb reserveerituks. Andmete kustutamine toimub eraldi säilituskava järgi.
+        - paragraph [ref=f2e54]:
+          - text: "Säilivad tulevased broneeringud: 2."
+          - link "Ekspordi ettevõtte andmed" [ref=f2e55] [cursor=pointer]:
+            - /url: "#export-title"
+        - group "Kokkulepitud lahkumiskava" [ref=f2e57]:
+          - paragraph [ref=f2e59]: Sisesta täpsed ajatemplid koos ajavööndi nihkega (ISO 8601). Tähtajad järgivad allolevat järjekorda.
+          - paragraph [ref=f2e60]:
+            - generic [ref=f2e61]:
+              - text: Uute broneeringute peatamise aeg
+              - textbox "Uute broneeringute peatamise aeg" [ref=f2e62]:
+                - /placeholder: 2030-01-15T10:00:00+02:00
+          - paragraph [ref=f2e63]:
+            - generic [ref=f2e64]:
+              - text: Tellimuse lõpp
+              - textbox "Tellimuse lõpp" [ref=f2e65]:
+                - /placeholder: 2030-01-15T10:00:00+02:00
+          - paragraph [ref=f2e66]:
+            - generic [ref=f2e67]:
+              - text: Ajutise andmeligipääsu lõpp
+              - textbox "Ajutise andmeligipääsu lõpp" [ref=f2e68]:
+                - /placeholder: 2030-01-15T10:00:00+02:00
+          - paragraph [ref=f2e69]:
+            - generic [ref=f2e70]:
+              - text: Varaseim andmete kustutamise aeg
+              - textbox "Varaseim andmete kustutamise aeg" [ref=f2e71]:
+                - /placeholder: 2030-01-15T10:00:00+02:00
+          - paragraph [ref=f2e72]:
+            - generic [ref=f2e73]:
+              - text: Lahkumiskokkuleppe viide
+              - textbox "Lahkumiskokkuleppe viide" [ref=f2e74]
+          - paragraph [ref=f2e75]:
+            - generic [ref=f2e76]:
+              - checkbox "Kinnitan, et need tähtajad ja andmete tagastamise kord on kokku lepitud." [ref=f2e77]
+              - text: Kinnitan, et need tähtajad ja andmete tagastamise kord on kokku lepitud.
+          - button "Salvesta lahkumiskava" [disabled] [ref=f2e78]
+      - region [ref=f2e79]:
+        - heading "Keele-eelistused" [level=3] [ref=f2e80]
+        - generic [ref=f2e81]:
+          - paragraph [ref=f2e82]: "Minu halduskeel: Eesti"
+          - generic [ref=f2e83]:
+            - text: Ettevõtte vaikekeel
+            - combobox "Ettevõtte vaikekeel" [ref=f2e84]:
+              - option "Eesti" [selected]
+              - option "English"
+              - option "Русский"
+          - paragraph [ref=f2e85]: Kliendi valitud keel on ettevõtte vaikekeele ees. Teenuste sisu tõlkeid see seadistus ei loo.
+          - button "Salvesta keele-eelistused" [ref=f2e86]
+          - status
+      - region [ref=f2e87]:
+        - heading "Broneeringud" [level=2] [ref=f2e88]
+        - paragraph [ref=f2e89]:
+          - generic [ref=f2e90]:
+            - text: Vaade
+            - combobox "Vaade" [ref=f2e91]:
+              - option "Päev" [selected]
+              - option "Nädal"
+              - option "Nimekiri"
+          - generic [ref=f2e92]:
+            - text: Töötaja
+            - combobox "Töötaja" [ref=f2e93]:
+              - option "Kõik lubatud töötajad" [selected]
+              - option "G03 A töötaja 1"
+              - option "G03 A töötaja 2"
+        - paragraph [ref=f2e94]:
+          - generic [ref=f2e95]:
+            - text: Kuupäev
+            - textbox "Kuupäev" [ref=f2e96]: 2026-09-17
+          - generic [ref=f2e97]:
+            - checkbox "Lahendamist ootavad tulevased broneeringud" [ref=f2e98]
+            - text: Lahendamist ootavad tulevased broneeringud
+        - paragraph [ref=f2e99]:
+          - button "Lisa broneering käsitsi" [ref=f2e100]
+          - button "Värskenda broneeringuid" [ref=f2e101]
+        - paragraph [ref=f2e102]: "Viimati uuendatud: 09:13:39 Aktiivset vaadet värskendatakse iga 5 sekundi järel."
+        - alert [ref=f2e103]: Valitud uus aeg ei ole enam vaba. Vana broneering jäi alles.
+        - paragraph [ref=f2e104]: "Valitud vahemik ja töötajafilter: 3 broneeringut, 0 teenindatud, 0 tühistatud. Tühistamata teenuste hinnakirjaline väärtus: 85,00 € (ei ole tegelik käive)."
+        - 'region "Kalender: kellaaeg vertikaalselt" [ref=f2e105]':
+          - generic [ref=f2e106]:
+            - generic [ref=f2e107]:
+              - generic [ref=f2e108]: Kell
+              - generic [ref=f2e109]:
+                - generic [ref=f2e110]: 00:00
+                - generic [ref=f2e111]: 01:00
+                - generic [ref=f2e112]: 02:00
+                - generic [ref=f2e113]: 03:00
+                - generic [ref=f2e114]: 04:00
+                - generic [ref=f2e115]: 05:00
+                - generic [ref=f2e116]: 06:00
+                - generic [ref=f2e117]: 07:00
+                - generic [ref=f2e118]: 08:00
+                - generic [ref=f2e119]: 09:00
+                - generic [ref=f2e120]: 10:00
+                - generic [ref=f2e121]: 11:00
+                - generic [ref=f2e122]: 12:00
+                - generic [ref=f2e123]: 13:00
+                - generic [ref=f2e124]: 14:00
+                - generic [ref=f2e125]: 15:00
+                - generic [ref=f2e126]: 16:00
+                - generic [ref=f2e127]: 17:00
+                - generic [ref=f2e128]: 18:00
+                - generic [ref=f2e129]: 19:00
+                - generic [ref=f2e130]: 20:00
+                - generic [ref=f2e131]: 21:00
+                - generic [ref=f2e132]: 22:00
+                - generic [ref=f2e133]: 23:00
+            - generic [ref=f2e134]:
+              - generic [ref=f2e135]:
+                - text: G03 A töötaja 117.09.2026
+                - button "Lisa broneering" [ref=f2e136]
+              - generic "G03 A töötaja 1, 2026-09-17" [ref=f2e137]:
+                - generic [ref=f2e138]: Tööväline aeg
+                - generic [ref=f2e139]: Tööaeg 09:00–18:00
+                - button "10:00 +03:00–10:30 +03:00 · G03 A klient 1 G03 lõikus · Kinnitatud" [ref=f2e140]: 10:00 +03:00–10:30 +03:00 · G03 A klient 1G03 lõikus · Kinnitatud
+            - generic [ref=f2e141]:
+              - generic [ref=f2e142]:
+                - text: G03 A töötaja 217.09.2026
+                - button "Lisa broneering" [ref=f2e143]
+              - generic "G03 A töötaja 2, 2026-09-17" [ref=f2e144]:
+                - generic [ref=f2e145]: Tööväline aeg
+                - generic [ref=f2e146]: Tööaeg 09:00–18:00
+                - button "10:00 +03:00–10:30 +03:00 · G03 A klient 2 G03 lõikus · Kinnitatud" [ref=f2e147]: 10:00 +03:00–10:30 +03:00 · G03 A klient 2G03 lõikus · Kinnitatud
+                - button "17:15 +03:00–18:00 +03:00 · P24 chrome occupied target G03 lõikus · Kinnitatud" [ref=f2e148]: 17:15 +03:00–18:00 +03:00 · P24 chrome occupied targetG03 lõikus · Kinnitatud
+        - paragraph [ref=f2e149]: Telefonis kasuta allolevat nimekirja. Kalender näitab selle lehekülje tühistamata broneeringuid; tööaeg ei tähenda vaba broneeritavat aega.
+        - list "Broneeringute loend" [ref=f2e150]:
+          - listitem [ref=f2e151]:
+            - button "17. sept 2026, 10:00 · G03 A klient 2 · G03 lõikus · G03 A töötaja 2 · Kinnitatud" [pressed] [ref=f2e152]
+          - listitem [ref=f2e153]:
+            - button "17. sept 2026, 10:00 · G03 A klient 1 · G03 lõikus · G03 A töötaja 1 · Kinnitatud" [ref=f2e154]
+          - listitem [ref=f2e155]:
+            - button "17. sept 2026, 17:15 · P24 chrome occupied target · G03 lõikus · G03 A töötaja 2 · Kinnitatud" [ref=f2e156]
+        - paragraph [ref=f2e157]:
+          - text: Lehekülg 1 (kuni 2000 broneeringut).
+          - button "Eelmine lehekülg" [disabled] [ref=f2e158]
+          - button "Järgmine lehekülg" [disabled] [ref=f2e159]
+        - article [ref=f2e160]:
+          - heading "G03-15abccaa-dca3-4cfd-89bf-2bd2b2f782b2 · Kinnitatud" [active] [level=3] [ref=f2e161]
+          - generic [ref=f2e162]:
+            - term [ref=f2e163]: Klient
+            - definition [ref=f2e164]: G03 A klient 2
+            - term [ref=f2e165]: Kontakt
+            - definition [ref=f2e166]:
+              - link "g03-A-1@example.invalid" [ref=f2e167] [cursor=pointer]:
+                - /url: mailto:g03-A-1@example.invalid
+            - term [ref=f2e168]: Teenus ja töötaja
+            - definition [ref=f2e169]: G03 lõikus · G03 A töötaja 2
+            - term [ref=f2e170]: Aeg
+            - definition [ref=f2e171]: 17. sept 2026, 10:00 – 17. sept 2026, 10:30
+            - term [ref=f2e172]: Kokkulepitud hind ja kestus
+            - definition [ref=f2e173]: 25,00 € · 30 min
+            - term [ref=f2e174]: Päritolu
+            - definition [ref=f2e175]: Veebist broneeritud
+          - paragraph [ref=f2e176]: "Muutmise ja tühistamise tähtaeg: 16. sept 2026, 10:00."
+          - paragraph [ref=f2e177]: Muudatuse teavitus salvestatakse saatmise järjekorda.
+          - paragraph [ref=f2e178]: "Teavituse seisund: Selle versiooni teavitust pole"
+          - paragraph [ref=f2e179]: Uue halduslingi väljastamine muudab varasema lingi kehtetuks.
+          - paragraph [ref=f2e180]:
+            - button "Muuda broneeringut" [ref=f2e181]
+            - button "Tühista broneering" [ref=f2e182]
+            - button "Muuda seisundit" [ref=f2e183]
+            - button "Loo uus halduslink" [disabled] [ref=f2e184]
+            - button "Tühista halduslink" [ref=f2e185]
+          - group [ref=f2e186]:
+            - generic "Muudatuste ajalugu" [ref=f2e187]
+        - group [ref=f2e188]:
+          - generic "Ettevõtte kontakt ja halduslinkide poliitika" [ref=f2e189]
+      - region [ref=f2e190]:
+        - heading "Kliendid" [level=2] [ref=f2e191]
+        - generic [ref=f2e192]:
+          - generic [ref=f2e193]:
+            - text: Otsi nime, e-posti või telefoni järgi
+            - textbox "Otsi nime, e-posti või telefoni järgi" [ref=f2e194]
+          - button "Otsi kliente" [ref=f2e195]
+        - paragraph [ref=f2e196]: Kliendid koondatakse ainult täielikult kattuvate algsete nime- ja kontaktandmete järgi. Kontaktita broneeringud jäävad eraldi. Parandus muudab kliendikaarti; varasemate broneeringute kontaktid ja teavitused säilivad.
+        - list [ref=f2e197]:
+          - listitem [ref=f2e198]:
+            - button "G03 A klient 1 · g03-A-0@example.invalid · Telefon puudub" [ref=f2e199]
+          - listitem [ref=f2e200]:
+            - button "G03 A klient 2 · g03-A-1@example.invalid · Telefon puudub" [ref=f2e201]
+        - paragraph [ref=f2e202]:
+          - link "Ekspordi otsingu kliendid CSV-failina" [ref=f2e203] [cursor=pointer]:
+            - /url: /api/admin/customers?tenantId=eabc30a5-9519-47b6-a9ed-7a8ff5a3f1c3&search=&format=csv
+        - paragraph [ref=f2e204]:
+          - text: Lehekülg 1.
+          - button "Eelmine" [disabled] [ref=f2e205]
+          - button "Järgmine" [disabled] [ref=f2e206]
+      - region [ref=f2e207]:
+        - heading "Töögraafikud ja saadavus" [level=3] [ref=f2e208]
+        - paragraph [ref=f2e209]: Broneeritav aeg peab mahtuma nii asukoha lahtiolekuajasse kui ka töötaja graafikusse koos teenuse puhvritega. Pausi jaoks kasuta eraldi töövahemikke. Üle südaöö kestev töö jaga kahe päeva vahel; päeva lõpp võib olla 24:00.
+        - group "Graafikute haldus" [ref=f2e210]:
+          - group [ref=f2e212]:
+            - generic "Broneerimisreeglid" [ref=f2e213]
+          - group [ref=f2e214]:
+            - generic "Asukoha lahtiolekuajad" [ref=f2e215]
+            - option "Puhkus"
+            - option "Haigus"
+            - option "Lisatööpäev"
+            - option "Muu erand" [selected]
+          - group [ref=f2e216]:
+            - generic "G03 A töötaja 1" [ref=f2e217]
+            - option "Puhkus"
+            - option "Haigus"
+            - option "Lisatööpäev"
+            - option "Muu erand" [selected]
+          - group [ref=f2e218]:
+            - generic "G03 A töötaja 2" [ref=f2e219]
+            - option "Puhkus"
+            - option "Haigus"
+            - option "Lisatööpäev"
+            - option "Muu erand" [selected]
+      - region [ref=f2e220]:
+        - heading "Teenused ja töötajad" [level=3] [ref=f2e221]
+        - paragraph [ref=f2e222]: Hinnad on eurodes. Arhiveerimine ja hinnakirja muutmine säilitab varasemate broneeringute ajad ja hinnad. Töötaja arhiveerimine sulgeb tema ettevõtte ligipääsu ja sessioonid ning lisab tulevased broneeringud lahendamist ootavate loendisse. Uuesti aktiveerimine ligipääsu ei taasta. Grupi arhiveerimine peidab ka selle alamgrupid ja teenused. Veebis peidetud aktiivseid teenuseid saab lisada käsitsi broneeringute vaates.
+        - group "Hinnakiri" [ref=f2e223]:
+          - heading "Teenusegrupid" [level=4] [ref=f2e225]
+          - paragraph [ref=f2e226]: Loo põhikategooriad ja vajaduse korral nende alamgrupid. Broneeritav teenus kuulub valitud gruppi.
+          - group [ref=f2e227]:
+            - generic "P24 testteenused" [ref=f2e228]
+            - option "Põhikategooria" [selected]
+          - group [ref=f2e229]:
+            - generic "Lisa teenusegrupp" [ref=f2e230]
+            - option "Põhikategooria" [selected]
+            - option "P24 testteenused"
+          - heading "Teenused" [level=4] [ref=f2e231]
+          - group [ref=f2e232]:
+            - generic "G03 ainuteenuse valik · 15.00 € · 15 min" [ref=f2e233]
+            - option "Vali grupp"
+            - option "P24 testteenused" [selected]
+            - option "Eesti" [selected]
+            - option "English"
+            - option "Русский"
+          - group [ref=f2e234]:
+            - generic "G03 lõikus · 25.00 € · 30 min" [ref=f2e235]
+            - option "Vali grupp"
+            - option "P24 testteenused" [selected]
+            - option "Eesti" [selected]
+            - option "English"
+            - option "Русский"
+          - group [ref=f2e236]:
+            - generic "Lisa teenus" [ref=f2e237]
+            - option "Vali grupp" [selected]
+            - option "P24 testteenused"
+            - option "Eesti" [selected]
+            - option "English"
+            - option "Русский"
+          - heading "Töötajad" [level=4] [ref=f2e238]
+          - paragraph [ref=f2e239]: Profiil ei vaja sisselogimiskontot. Siia lisa ainult avalik tutvustus. Graafikuid saad hallata töögraafikute jaotises.
+          - group [ref=f2e240]:
+            - generic "G03 A töötaja 1" [ref=f2e241]
+          - group [ref=f2e242]:
+            - generic "G03 A töötaja 2" [ref=f2e243]
+          - group [ref=f2e244]:
+            - generic "Lisa töötaja" [ref=f2e245]
+          - heading "Töötaja teenused" [level=4] [ref=f2e246]
+          - paragraph [ref=f2e247]: Tühi erandiväli pärib teenuse vaikeväärtuse, ka pärast vaikeväärtuse muutmist. Täidetud väli jääb eraldi määratud väärtuseks.
+          - group [ref=f2e248]:
+            - generic "G03 lõikus — G03 A töötaja 1" [ref=f2e249]
+          - group [ref=f2e250]:
+            - generic "G03 lõikus — G03 A töötaja 2" [ref=f2e251]
+          - group [ref=f2e252]:
+            - generic "G03 ainuteenuse valik — G03 A töötaja 1" [ref=f2e253]
+          - group [ref=f2e254]:
+            - generic "Seo töötaja teenusega" [ref=f2e255]
+            - option "Vali teenus" [selected]
+            - option "G03 ainuteenuse valik"
+            - option "G03 lõikus"
+            - option "Vali töötaja" [selected]
+            - option "G03 A töötaja 1"
+            - option "G03 A töötaja 2"
+      - region [ref=f2e256]:
+        - heading "Ettevõtte seadistamine ja avaldamine" [level=3] [ref=f2e257]
+        - paragraph [ref=f2e258]: "Avaliku lehe seisund: Avaldatud"
+        - list [ref=f2e259]:
+          - listitem [ref=f2e260]: "Ettevõtte andmed ja avalik kontakt: Vajab seadistamist"
+          - listitem [ref=f2e261]: "Broneeritav teenus ja sobiv töötaja: Valmis"
+          - listitem [ref=f2e262]: "Ettevõtte ja töötaja graafik: Valmis"
+          - listitem [ref=f2e263]: "Broneerimistingimused ja halduslingi poliitika: Vajab seadistamist"
+          - listitem [ref=f2e264]: "Kehtiv proovibroneering avalikus broneerimisvoos: Vajab seadistamist"
+          - listitem [ref=f2e265]: "Kehtiv pakett ja kasutusõigus: Vajab seadistamist"
+          - listitem [ref=f2e266]: "Seadistatud veebiaadress: Valmis"
+        - paragraph [ref=f2e267]: Kontaktid ja halduslingi poliitika määra broneeringute seadetes. Teenused, töötajad ja graafikud seadista allpool.
+        - generic [ref=f2e268]:
+          - paragraph [ref=f2e269]:
+            - generic [ref=f2e270]:
+              - text: Ettevõtte nimi
+              - textbox "Ettevõtte nimi" [ref=f2e271]: G03 ettevõte A
+          - paragraph [ref=f2e272]:
+            - generic [ref=f2e273]:
+              - text: Aadress
+              - textbox "Aadress" [ref=f2e274]: Synthetic test address
+          - paragraph [ref=f2e275]:
+            - generic [ref=f2e276]:
+              - text: Kirjeldus
+              - textbox "Kirjeldus" [ref=f2e277]
+          - paragraph [ref=f2e278]:
+            - generic [ref=f2e279]:
+              - text: Broneerimistingimused
+              - textbox "Broneerimistingimused" [ref=f2e280]
+          - paragraph [ref=f2e281]:
+            - generic [ref=f2e282]:
+              - checkbox "Olen broneerimisreeglid ja tingimused üle kontrollinud." [ref=f2e283]
+              - text: Olen broneerimisreeglid ja tingimused üle kontrollinud.
+          - button "Salvesta ettevõtte andmed" [ref=f2e284]
+        - paragraph [ref=f2e285]: Avaldamisel tühistatakse proovibroneeringud ja nende halduslingid. Pärisbroneeringud säilivad.
+        - button "Värskenda kontrollnimekirja" [ref=f2e286]
+        - generic [ref=f2e287]:
+          - paragraph [ref=f2e288]:
+            - generic [ref=f2e289]:
+              - text: Uute broneeringute peatamise põhjus
+              - textbox "Uute broneeringute peatamise põhjus" [ref=f2e290]
+          - button "Peata uued broneeringud" [ref=f2e291]
+      - region [ref=f2e292]:
+        - heading "Ettevõtte andmete eksport" [level=3] [ref=f2e293]
+        - paragraph [ref=f2e294]: JSONL-fail sisaldab ettevõtte seadeid, teenuseid, töötajaid, graafikuid, kliente, broneeringuid ja arveldusandmeid. Iga rida on JSON-kirje; seosed säilivad tunnuste kaudu.
+        - paragraph [ref=f2e295]: Fail koostatakse taustal ja on allalaaditav ainult sisselogitud omanikule. Aegumisaeg algab tellimisest. Ühe faili piir on 512 MiB.
+        - generic [ref=f2e296]:
+          - paragraph [ref=f2e297]:
+            - generic [ref=f2e298]:
+              - text: Faili kehtivus tundides
+              - spinbutton "Faili kehtivus tundides" [ref=f2e299]: "24"
+          - button "Telli andmete eksport" [ref=f2e300]
+        - list
+      - generic [ref=f2e301]:
+        - heading "Kuutasu ja tellimus" [level=3] [ref=f2e302]
+        - paragraph [ref=f2e303]: Ettevõttel pole veel tellimust.
+      - region [ref=f2e304]:
+        - heading "CSV-import" [level=3] [ref=f2e305]
+        - paragraph [ref=f2e306]: Laadi üles UTF-8 CSV-fail (kuni 5 MiB ja 10 000 rida). Hinnad on sentides ning kestused minutites. Teenused ja töötajad lisatakse veebis peidetuna; kasutajakontosid import ei loo.
+        - paragraph [ref=f2e307]: Broneeringute ajad peavad sisaldama ajavööndi nihet, näiteks 2030-01-15T10:00:00+02:00. Teenuse ja töötaja seos peab olema enne importi seadistatud. Algseid kinnituskirju ei saadeta.
+        - group "Uus import" [ref=f2e309]:
+          - generic [ref=f2e311]:
+            - text: Andmete liik
+            - combobox "Andmete liik" [ref=f2e312]:
+              - option "Teenused"
+              - option "Töötajad"
+              - option "Kliendid" [selected]
+              - option "Broneeringud"
+          - link "Laadi CSV-mall alla" [ref=f2e313] [cursor=pointer]:
+            - /url: /api/admin/imports?tenantId=eabc30a5-9519-47b6-a9ed-7a8ff5a3f1c3&template=customers
+          - paragraph [ref=f2e314]:
+            - generic [ref=f2e315]:
+              - text: Eraldaja
+              - combobox "Eraldaja" [ref=f2e316]:
+                - option "Koma" [selected]
+                - option "Semikoolon"
+          - paragraph [ref=f2e317]:
+            - generic [ref=f2e318]:
+              - text: CSV-fail
+              - button "CSV-fail" [ref=f2e319]
+          - button "Laadi fail eelvaatesse" [disabled] [ref=f2e320]
+        - group [ref=f2e321]:
+          - generic "Mallides kasutatavad tunnused" [ref=f2e322]
+        - paragraph [ref=f2e323]:
+          - generic [ref=f2e324]:
+            - text: Impordipartii
+            - combobox "Impordipartii" [ref=f2e325]:
+              - option "Vali import" [selected]
+      - region [ref=f2e326]:
+        - heading "E-kirjad ja meeldetuletused" [level=3] [ref=f2e327]
+        - paragraph [ref=f2e328]: E-kirjade saatmine ei ole veel seadistatud.
+        - paragraph [ref=f2e329]: Demorežiimis päris e-kirju ei saadeta.
+        - group [ref=f2e331]:
+          - generic [ref=f2e332]:
+            - text: Ettevõtte teavituste e-post
+            - textbox "Ettevõtte teavituste e-post" [ref=f2e333]
+          - paragraph [ref=f2e334]: Tühja aadressi korral ettevõttele broneeringute koopiaid ei saadeta.
+          - generic [ref=f2e335]:
+            - text: Meeldetuletus minutites enne aega
+            - spinbutton "Meeldetuletus minutites enne aega" [ref=f2e336]
+          - paragraph [ref=f2e337]: Tühi väärtus keelab meeldetuletused. Muudatus rakendub ka saatmata tulevastele meeldetuletustele.
+          - button "Salvesta teavituste seaded" [ref=f2e338]
+          - button "Loobu muutustest ja laadi uuesti" [ref=f2e339]
+        - paragraph [ref=f2e340]: SMTP-le edastamine ei tõenda kirja kohaletoimetamist ega lugemist.
+        - generic [ref=f2e341]:
+          - text: Korduskatse või tagasiside põhjendus
+          - textbox "Korduskatse või tagasiside põhjendus" [ref=f2e342]
+        - region "Teavituste järjekord" [ref=f2e343]:
+          - table [ref=f2e344]:
+            - rowgroup [ref=f2e345]:
+              - row [ref=f2e346]:
+                - columnheader "Broneeringu number" [ref=f2e347]
+                - columnheader "Teavitus" [ref=f2e348]
+                - columnheader "Saaja" [ref=f2e349]
+                - columnheader "Seisund" [ref=f2e350]
+                - columnheader "Katsed" [ref=f2e351]
+                - columnheader "Järgmine katse" [ref=f2e352]
+                - columnheader "Tagasiside" [ref=f2e353]
+                - columnheader "Toimingud" [ref=f2e354]
+            - rowgroup [ref=f2e355]:
+              - row [ref=f2e356]:
+                - cell "BR-F025063092F1" [ref=f2e357]
+                - cell "Broneering on kinnitatud" [ref=f2e358]
+                - cell "Klient" [ref=f2e359]
+                - cell "Saatmise ootel" [ref=f2e360]
+                - cell "0/8" [ref=f2e361]
+                - cell "10.9.2026, 09:12:09" [ref=f2e362]
+                - cell "Teadmata" [ref=f2e363]
+                - cell [ref=f2e364]
+        - button "Eelmine lehekülg" [disabled] [ref=f2e365]
+        - button "Järgmine lehekülg" [disabled] [ref=f2e366]
+      - region [ref=f2e367]:
+        - heading "Teenuste tõlked" [level=3] [ref=f2e368]
+        - paragraph [ref=f2e369]: Tõlgi teenuse nimi ja kirjeldus. Automaattõlge on mustand; kliendile avaldatakse ainult kinnitatud tõlge. Algteksti muutmisel tuleb tõlked uuesti üle vaadata.
+        - status
+        - paragraph [ref=f2e370]: "Ülevaatamist vajavaid teenuseid: 2"
+        - generic [ref=f2e371]:
+          - checkbox "Näita ainult puuduvaid ja ülevaatamist vajavaid tõlkeid" [checked] [ref=f2e372]
+          - text: Näita ainult puuduvaid ja ülevaatamist vajavaid tõlkeid
+        - list [ref=f2e373]:
+          - listitem [ref=f2e374]:
+            - button "G03 ainuteenuse valik" [ref=f2e375]
+            - text: "— English: Tõlge puudub · Русский: Tõlge puudub"
+          - listitem [ref=f2e376]:
+            - button "G03 lõikus" [ref=f2e377]
+            - text: "— English: Tõlge puudub · Русский: Tõlge puudub"
+        - button "Värskenda tõlgete seisu" [ref=f2e378]
+      - region [ref=f2e379]:
+        - heading "Kodulehele lisamine" [level=3] [ref=f2e380]
+        - paragraph [ref=f2e381]: Lisa iga lubatud kodulehe täpne algusaadress eraldi reale, näiteks https://salong.ee ja https://www.salong.ee. Teekondi ega metamärke ei kasutata.
+        - generic [ref=f2e382]:
+          - text: Lubatud kodulehed (kuni 10)
+          - textbox "Lubatud kodulehed (kuni 10)" [ref=f2e383]
+          - button "Salvesta kodulehed" [ref=f2e384]
+        - paragraph [ref=f2e385]:
+          - text: "Broneerimisleht:"
+          - link "http://g03-a477087d-469d-4a66-b343-67f8932fa7ac.localhost:3108/" [ref=f2e386] [cursor=pointer]:
+            - /url: http://g03-a477087d-469d-4a66-b343-67f8932fa7ac.localhost:3108/
+        - paragraph [ref=f2e387]: Kodulehe platvorm peab lubama iframe-i ja skripti. Tavaline link töötab ka ilma skriptita. Modaalis sulgemine ei kinnita ega tühista broneeringut.
+      - heading "Liikmed" [level=3] [ref=f2e388]
+      - region "Liikmed" [ref=f2e389]:
+        - table [ref=f2e390]:
+          - rowgroup [ref=f2e391]:
+            - row [ref=f2e392]:
+              - columnheader "Nimi" [ref=f2e393]
+              - columnheader "E-post" [ref=f2e394]
+              - columnheader "Roll" [ref=f2e395]
+              - columnheader "Aktiivne" [ref=f2e396]
+              - columnheader "MFA" [ref=f2e397]
+              - columnheader "Toimingud" [ref=f2e398]
+          - rowgroup [ref=f2e399]:
+            - row [ref=f2e400]:
+              - cell "G03 owner" [ref=f2e401]
+              - cell "g03-177e0723-1b06-449b-8db7-40601e3ab834@example.invalid" [ref=f2e402]
+              - cell "Omanik" [ref=f2e403]
+              - cell "jah" [ref=f2e404]
+              - cell "jah" [ref=f2e405]
+              - cell "Omaniku konto" [ref=f2e406]
+            - row [ref=f2e407]:
+              - cell "G03 receptionist" [ref=f2e408]
+              - cell "g03-a5828a44-1725-4a25-8a3a-57b9e11f6717@example.invalid" [ref=f2e409]
+              - cell "Vastuvõtt" [ref=f2e410]
+              - cell "jah" [ref=f2e411]
+              - cell "jah" [ref=f2e412]
+              - cell [ref=f2e413]:
+                - generic [ref=f2e414]:
+                  - generic [ref=f2e415]:
+                    - text: Roll
+                    - combobox "Roll" [ref=f2e416]:
+                      - option "Vastuvõtt" [selected]
+                      - option "Töötaja"
+                  - generic [ref=f2e417]:
+                    - text: Töötaja
+                    - combobox "Töötaja" [ref=f2e418]:
+                      - option "Puudub" [selected]
+                      - option "G03 A töötaja 1"
+                      - option "G03 A töötaja 2"
+                  - button "Salvesta roll" [ref=f2e419]
+                - generic [ref=f2e420]:
+                  - text: "Õigused:"
+                  - generic [ref=f2e421]:
+                    - checkbox "Teenuste hinna ja kestuse muutmine" [ref=f2e422]
+                    - text: Teenuste hinna ja kestuse muutmine
+                  - generic [ref=f2e423]:
+                    - checkbox "Kõigi graafikute muutmine" [ref=f2e424]
+                    - text: Kõigi graafikute muutmine
+                  - generic [ref=f2e425]:
+                    - checkbox "Kujunduse avaldamine" [ref=f2e426]
+                    - text: Kujunduse avaldamine
+                  - button "Salvesta õigused" [ref=f2e427]
+                - button "Tühista juurdepääs" [ref=f2e428]
+            - row [ref=f2e429]:
+              - cell "G03 staff" [ref=f2e430]
+              - cell "g03-23d32a6a-58e9-4b9a-804a-8f89470beeeb@example.invalid" [ref=f2e431]
+              - cell "Töötaja" [ref=f2e432]
+              - cell "jah" [ref=f2e433]
+              - cell "jah" [ref=f2e434]
+              - cell [ref=f2e435]:
+                - generic [ref=f2e436]:
+                  - generic [ref=f2e437]:
+                    - text: Roll
+                    - combobox "Roll" [ref=f2e438]:
+                      - option "Vastuvõtt"
+                      - option "Töötaja" [selected]
+                  - generic [ref=f2e439]:
+                    - text: Töötaja
+                    - combobox "Töötaja" [ref=f2e440]:
+                      - option "Puudub"
+                      - option "G03 A töötaja 1" [selected]
+                      - option "G03 A töötaja 2"
+                  - button "Salvesta roll" [ref=f2e441]
+                - generic [ref=f2e442]:
+                  - text: "Õigused:"
+                  - generic [ref=f2e443]:
+                    - checkbox "Oma graafiku muutmine" [ref=f2e444]
+                    - text: Oma graafiku muutmine
+                  - button "Salvesta õigused" [ref=f2e445]
+                - button "Tühista juurdepääs" [ref=f2e446]
+      - heading "Kutsu liige" [level=3] [ref=f2e447]
+      - generic [ref=f2e448]:
+        - paragraph [ref=f2e449]:
+          - text: E-post
+          - textbox "E-post" [ref=f2e450]
+        - paragraph [ref=f2e451]:
+          - text: Roll
+          - combobox "Roll" [ref=f2e452]:
+            - option "Vastuvõtt" [selected]
+            - option "Töötaja"
+        - paragraph [ref=f2e453]:
+          - text: Töötaja profiil
+          - combobox "Töötaja profiil" [ref=f2e454]:
+            - option "Puudub" [selected]
+            - option "G03 A töötaja 1"
+            - option "G03 A töötaja 2"
+        - generic [ref=f2e455]:
+          - checkbox "Teenuste hinna ja kestuse muutmine" [ref=f2e456]
+          - text: Teenuste hinna ja kestuse muutmine
+        - generic [ref=f2e457]:
+          - checkbox "Kõigi graafikute muutmine" [ref=f2e458]
+          - text: Kõigi graafikute muutmine
+        - generic [ref=f2e459]:
+          - checkbox "Kujunduse avaldamine" [ref=f2e460]
+          - text: Kujunduse avaldamine
+        - paragraph [ref=f2e461]:
+          - button "Saada kutse" [ref=f2e462]
+      - heading "Kutsed" [level=3] [ref=f2e463]
+      - list
+      - heading "Omaniku üleandmine" [level=3] [ref=f2e464]
+      - generic [ref=f2e465]:
+        - generic [ref=f2e466]:
+          - text: Uus omanik
+          - combobox "Uus omanik" [ref=f2e467]:
+            - option "Vali liige" [selected]
+            - option "G03 receptionist (g03-a5828a44-1725-4a25-8a3a-57b9e11f6717@example.invalid)"
+            - option "G03 staff (g03-23d32a6a-58e9-4b9a-804a-8f89470beeeb@example.invalid)"
+        - button "Anna üle" [ref=f2e468]
+  - button "Open Next.js Dev Tools" [ref=f2e474] [cursor=pointer]
+  - alert [ref=f2e478]
+```
+### Events
+- New console entries: .playwright-cli\console-2026-09-10T06-12-02-591Z.log#L8-L16

@@ -1,0 +1,98 @@
+{
+  "source": "Broneerimisplatvorm_arendusplaan_v1_0.docx",
+  "sha256": "327f393d10da62d84fc76db4c684014698fca88cfe0837cd29894109dabcc3a0",
+  "chapter": 24,
+  "cases": [
+    {
+      "id": "AT-01",
+      "test": "Teenuse järgi töötajate valik.",
+      "expected": "„Meeste lõikus” näitab ainult kehtiva seosega sobivaid töötajaid."
+    },
+    {
+      "id": "AT-02",
+      "test": "Vigane töötaja otse API-s.",
+      "expected": "Server lükkab sobimatu töötaja broneeringu tagasi."
+    },
+    {
+      "id": "AT-03",
+      "test": "Teenusel ainult üks töötaja.",
+      "expected": "Töötajasamm jäetakse vahele; nimi on enne kinnitamist nähtav."
+    },
+    {
+      "id": "AT-04",
+      "test": "Töötaja isiklik otselink.",
+      "expected": "Valikus on ainult selle töötaja sobivad teenused."
+    },
+    {
+      "id": "AT-05",
+      "test": "„Töötaja pole oluline”.",
+      "expected": "Näidatakse koondsaadavust; aega ei valita ega broneerita automaatselt."
+    },
+    {
+      "id": "AT-06",
+      "test": "Erinev hind/kestus samal ajal.",
+      "expected": "Konkreetne pakkumine ja töötaja on enne kinnitamist ühesed."
+    },
+    {
+      "id": "AT-07",
+      "test": "Etteteatamine 2 h, praegu 13.00.",
+      "expected": "Varasemat algust kui 15.00 ei pakuta ega kinnitata."
+    },
+    {
+      "id": "AT-08",
+      "test": "Etteteatamispiir möödub vormis.",
+      "expected": "Kinnitamist kontrollitakse uuesti; kontaktandmed säilivad."
+    },
+    {
+      "id": "AT-09",
+      "test": "Teenuse puhver ja kõrvalbroneering.",
+      "expected": "Kogu hõivamine peab mahtuma; ainult teenindusaja sobivusest ei piisa."
+    },
+    {
+      "id": "AT-10",
+      "test": "Tööpaus, puhkus ja erandpäev.",
+      "expected": "Saadavus vastab korduva graafiku ja erandite kombinatsioonile."
+    },
+    {
+      "id": "AT-11",
+      "test": "50 sama aja samaaegset taotlust.",
+      "expected": "Sama töötaja sama hõivamise kohta õnnestub ainult üks uus broneering."
+    },
+    {
+      "id": "AT-12",
+      "test": "Sama päringu kordus.",
+      "expected": "Sama tunnus/sisu tagastab sama tulemuse, mitte uue broneeringu."
+    },
+    {
+      "id": "AT-13",
+      "test": "Sama tunnus, erinev sisu.",
+      "expected": "Konflikt lükatakse tagasi; vana toimingu sisu ei kirjutata üle."
+    },
+    {
+      "id": "AT-14",
+      "test": "Graafiku sulgemine ja broneerimine.",
+      "expected": "Tulemused on kooskõlas ühise lukustusreegliga; keelatud aega ei teki."
+    },
+    {
+      "id": "AT-15",
+      "test": "Aja muutmine ebaõnnestub.",
+      "expected": "Vana aeg jääb alles; kumbki poolik muudatus ei rakendu."
+    },
+    {
+      "id": "AT-16",
+      "test": "Kaks administraatorit muudavad.",
+      "expected": "Vananenud versioon ei kirjuta uuemat muudatust üle."
+    },
+    {
+      "id": "AT-17",
+      "test": "Kellakeeramine ja ajavöönd.",
+      "expected": "Kohalik aeg ja tegelik hetk vastavad reeglitele; olematu aeg pole pakutav."
+    },
+    {
+      "id": "AT-18",
+      "test": "Teenuse või töötaja arhiveerimine.",
+      "expected": "Uued valikud sulguvad; ajalugu säilib ja tulevased ajad tuleb lahendada."
+    }
+  ],
+  "supplementary": "Teenuse muutus tühistab vana ajavaliku, hinna muutus vajab uut kinnitamist, vaba ajata päeval pakutakse uut päeva ning katkestatud ühendus käivitab tulemuse kontrolli. Administraatori käsitsi broneering läbib samad kattumise ja sobivuse testid."
+}

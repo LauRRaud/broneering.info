@@ -175,7 +175,10 @@ describe('PostgreSQL booking core',()=>{
     const data=input(await firstOffer()),key=randomUUID();
     const results=await Promise.all(Array.from({length:12},()=>createBooking(first.tenant,data,key)));
     expect(new Set(results.map(r=>r.id)).size).toBe(1);
+    const before=(await admin.query('SELECT to_jsonb(b) AS snapshot FROM bookings b WHERE tenant_id=$1',[first.tenant.id])).rows;
     await expect(createBooking(first.tenant,{...data,name:'Different Client'},key)).rejects.toMatchObject({code:'IDEMPOTENCY_CONFLICT'});
+    expect((await admin.query('SELECT to_jsonb(b) AS snapshot FROM bookings b WHERE tenant_id=$1',[first.tenant.id])).rows).toEqual(before);
+    expect(await createBooking(first.tenant,data,key)).toEqual(results[0]);
   });
   it('AT-19/21/22: tenant data and connection contexts stay separate',async()=>{
     const a=await catalogFor(first.tenant),b=await catalogFor(second.tenant);
@@ -248,6 +251,19 @@ describe('PostgreSQL booking core',()=>{
 });
 
 describe('AT-17: Europe/Tallinn daylight saving',()=>{
+  it.each([['2026-03-29','01:30'],['2026-10-25','02:30']])('AT-17: real schedule offers across %s keep valid wall times and physical durations',async(transitionDay,expectedUtc)=>{
+    await admin.query('DELETE FROM weekly_hours WHERE tenant_id=$1',[first.tenant.id]);
+    for(const staff of [null,first.staffId])await admin.query('INSERT INTO weekly_hours(tenant_id,staff_id,weekday,start_minute,end_minute) VALUES($1,$2,$3,120,360)',[first.tenant.id,staff,DateTime.fromISO(transitionDay).weekday]);
+    await admin.query('UPDATE staff_services SET buffer_before=0,buffer_after=0,duration=30 WHERE tenant_id=$1',[first.tenant.id]);
+    const now=DateTime.fromISO(transitionDay,{zone:first.tenant.timezone}).minus({days:1});
+    const offers=await withTenant(first.tenant.id,client=>offersInTransaction(client,first.tenant,first.serviceId,transitionDay,first.staffId,now));
+    expect(offers.length).toBeGreaterThan(0);
+    expect(offers.every(offer=>DateTime.fromISO(offer.start).setZone(first.tenant.timezone).hour!==3)).toBe(true);
+    expect(new Set(offers.map(offer=>offer.start)).size).toBe(offers.length);
+    expect(offers.every(offer=>Date.parse(offer.end)-Date.parse(offer.start)===30*60000)).toBe(true);
+    const local0430=offers.find(offer=>DateTime.fromISO(offer.start).setZone(first.tenant.timezone).toFormat('HH:mm')==='04:30');
+    expect(local0430).toBeDefined();expect(DateTime.fromISO(local0430!.start).toUTC().toFormat('HH:mm')).toBe(expectedUtc);
+  });
   it('skips nonexistent spring and ambiguous autumn wall times',()=>{
     expect(localInstant('2026-03-29',210,'Europe/Tallinn')).toBeNull();
     expect(localInstant('2026-10-25',210,'Europe/Tallinn')).toBeNull();

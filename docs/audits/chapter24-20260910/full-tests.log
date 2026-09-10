@@ -1,0 +1,148 @@
+
+> broneering-info@0.1.0 test
+> node --env-file-if-exists=.env.local ./node_modules/vitest/vitest.mjs run --reporter=default --reporter=json --outputFile=output/playwright/chapter24/vitest.json
+
+
+ RUN  v4.1.11 C:/Users/rauds/Desktop/Projektid/Broneerimise SaaS/broneering.info
+
+stderr | tests/auth-flow.test.ts > Invited account lifecycle through real handlers > verifies email, enrolls MFA, consumes backup codes and revokes sessions on password reset
+{"event":"security.rejected","code":"INVITATION_REQUIRED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:29:28.950Z"}
+
+stderr | tests/auth-flow.test.ts > Invited account lifecycle through real handlers > verifies email, enrolls MFA, consumes backup codes and revokes sessions on password reset
+{"event":"security.rejected","code":"AUTH_REJECTED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:29:28.953Z"}
+
+stderr | tests/auth-flow.test.ts > Invited account lifecycle through real handlers > verifies email, enrolls MFA, consumes backup codes and revokes sessions on password reset
+{"event":"security.rejected","code":"AUTH_REJECTED","status":403,"count":2,"windowEndsAt":"2026-09-10T06:29:28.953Z"}
+
+stderr | tests/auth-flow.test.ts > Invited account lifecycle through real handlers > verifies email, enrolls MFA, consumes backup codes and revokes sessions on password reset
+{"event":"security.rejected","code":"AUTH_REJECTED","status":401,"count":1,"windowEndsAt":"2026-09-10T06:29:39.792Z"}
+
+ ✓ tests/auth-flow.test.ts (1 test) 11186ms
+     ✓ verifies email, enrolls MFA, consumes backup codes and revokes sessions on password reset  11053ms
+ ✓ tests/booking-management.test.ts (30 tests) 5935ms
+   ✓ 15: rejects a management link that expires while its command waits for the tenant lock  2246ms
+ ✓ tests/booking.test.ts (24 tests) 5349ms
+     ✓ 15: recovers from a real PostgreSQL deadlock by rerunning the losing transaction  1193ms
+     ✓ 15: limits aborted transaction retries and does not retry business or timeout failures  343ms
+     ✓ 08: next free day search is bounded, resumable, and respects the current booking window  346ms
+     ✓ AT-11: 50 competing requests create exactly one booking and one outbox event  528ms
+ ✓ tests/import-management.test.ts (9 tests) 1166ms
+ ✓ tests/service-management.test.ts (20 tests) 2720ms
+stderr | tests/support-view.test.ts > support HTTP boundary > requires a session
+{"event":"security.rejected","code":"UNAUTHENTICATED","status":401,"count":1,"windowEndsAt":"2026-09-10T06:29:56.965Z"}
+
+stderr | tests/support-view.test.ts > support real API/database boundaries > rechecks fresh account flag disabled despite a stale identity
+{"event":"security.rejected","code":"ACCOUNT_DISABLED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:29:57.111Z"}
+
+stderr | tests/support-view.test.ts > support real API/database boundaries > rechecks fresh account flag email_verified despite a stale identity
+{"event":"security.rejected","code":"EMAIL_UNVERIFIED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:29:57.118Z"}
+
+stderr | tests/support-view.test.ts > support real API/database boundaries > rechecks fresh account flag two_factor_enabled despite a stale identity
+{"event":"security.rejected","code":"PLATFORM_MFA_REQUIRED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:29:57.126Z"}
+
+stderr | tests/support-view.test.ts > support real API/database boundaries > rechecks fresh account flag is_platform_admin despite a stale identity
+{"event":"security.rejected","code":"PLATFORM_MFA_REQUIRED","status":403,"count":2,"windowEndsAt":"2026-09-10T06:29:57.126Z"}
+
+stderr | tests/support-view.test.ts > support real API/database boundaries > blocks ended company data access
+{"event":"security.rejected","code":"DATA_ACCESS_ENDED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:29:57.140Z"}
+
+stderr | tests/support-view.test.ts > support real API/database boundaries > does not turn a support grant into any member permission or write access
+{"event":"security.rejected","code":"MEMBERSHIP_REQUIRED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:29:57.202Z"}
+
+stderr | tests/support-view.test.ts > support real API/database boundaries > does not turn a support grant into any member permission or write access
+{"event":"security.rejected","code":"MEMBERSHIP_REQUIRED","status":403,"count":2,"windowEndsAt":"2026-09-10T06:29:57.202Z"}
+
+ ✓ tests/support-view.test.ts (25 tests) 2414ms
+     ✓ discards data when a grant expires while the read waits for a database lock  2074ms
+ ✓ tests/schedule-management.test.ts (13 tests) 2065ms
+ ✓ tests/payments.test.ts (7 tests) 814ms
+ ✓ tests/notifications.test.ts (10 tests) 1469ms
+ ✓ tests/invoices.test.ts (14 tests) 1509ms
+ ✓ tests/recovery-reconcile.test.ts (1 test) 1062ms
+   ✓ replays a later removal on an isolated older database without erasing unrelated contacts  1061ms
+ ✓ tests/exports.test.ts (7 tests) 942ms
+ ✓ tests/payment-checkout-freshness.test.ts (6 tests) 855ms
+ ✓ tests/customer-merge.test.ts (6 tests) 617ms
+ ✓ tests/onboarding.test.ts (4 tests) 635ms
+ ✓ tests/architecture.test.ts (3 tests) 473ms
+   ✓ keeps the real browser graph free of server libraries and reverse UI dependencies  464ms
+ ✓ tests/data-model.test.ts (7 tests) 354ms
+ ✓ tests/company-exit.test.ts (4 tests) 333ms
+ ✓ tests/company-provisioning.test.ts (5 tests) 337ms
+ ✓ tests/access.test.ts (11 tests) 277ms
+ ✓ tests/subscriptions.test.ts (2 tests) 176ms
+ ✓ tests/embed.test.ts (8 tests) 152ms
+ ✓ tests/request-limits.test.ts (5 tests) 108ms
+stderr | tests/auth.test.ts > authentication route boundary > uses only the configured origin for CSRF
+{"event":"security.rejected","code":"AUTH_REJECTED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:30:17.425Z"}
+
+stderr | tests/auth.test.ts > authoritative session identity > reads the live session and stops accepting it after disabling the user
+{"event":"security.rejected","code":"AUTH_REJECTED","status":401,"count":1,"windowEndsAt":"2026-09-10T06:30:17.497Z"}
+
+ ✓ tests/auth.test.ts (4 tests) 112ms
+ ✓ tests/locales.test.ts (4 tests) 87ms
+ ✓ tests/billing-rules.test.ts (6 tests) 31ms
+stderr | tests/admin-http.test.ts > Administration API boundaries > rejects writes from another origin before resolving identity
+{"event":"security.rejected","code":"ORIGIN_REJECTED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:30:18.362Z"}
+
+stderr | tests/admin-http.test.ts > Administration API boundaries > rejects selecting a company without membership
+{"event":"security.rejected","code":"MEMBERSHIP_REQUIRED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:30:18.366Z"}
+
+stderr | tests/admin-http.test.ts > Administration API boundaries > requires identity and strict payloads for member changes
+{"event":"security.rejected","code":"UNAUTHENTICATED","status":401,"count":1,"windowEndsAt":"2026-09-10T06:30:18.369Z"}
+
+ ✓ tests/admin-http.test.ts (9 tests) 41ms
+ ✓ tests/recovery-artifact.test.ts (2 tests) 53ms
+stderr | tests/booking-management-http.test.ts > returns a clear 410 contact instruction for expired links and never uses a token from the URL
+{"event":"security.rejected","code":"LINK_UNAVAILABLE","status":410,"count":1,"windowEndsAt":"2026-09-10T06:30:18.937Z"}
+
+stderr | tests/booking-management-http.test.ts > requires a same-origin explicit write and passes its idempotency key unchanged
+{"event":"security.rejected","code":"ORIGIN_REJECTED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:30:18.940Z"}
+
+stderr | tests/booking-management-http.test.ts > requires a same-origin explicit write and passes its idempotency key unchanged
+{"event":"security.rejected","code":"ORIGIN_REJECTED","status":403,"count":2,"windowEndsAt":"2026-09-10T06:30:18.940Z"}
+
+stderr | tests/booking-management-http.test.ts > keeps admin routes on the exact admin host and origin, before identity lookup
+{"event":"security.rejected","code":"ORIGIN_REJECTED","status":403,"count":4,"windowEndsAt":"2026-09-10T06:30:18.940Z"}
+
+stderr | tests/booking-management-http.test.ts > requires a session and validates strict read filters and pagination
+{"event":"security.rejected","code":"UNAUTHENTICATED","status":401,"count":1,"windowEndsAt":"2026-09-10T06:30:18.944Z"}
+
+ ✓ tests/booking-management-http.test.ts (6 tests) 32ms
+ ✓ tests/import-csv.test.ts (5 tests) 39ms
+ ✓ tests/makecommerce.test.ts (6 tests) 29ms
+stderr | tests/customer-privacy-http.test.ts > gates contact disclosure and removal by host, session and exact origin
+{"event":"security.rejected","code":"ORIGIN_REJECTED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:30:19.593Z"}
+
+stderr | tests/customer-privacy-http.test.ts > gates contact disclosure and removal by host, session and exact origin
+{"event":"security.rejected","code":"ORIGIN_REJECTED","status":403,"count":2,"windowEndsAt":"2026-09-10T06:30:19.593Z"}
+
+stderr | tests/customer-privacy-http.test.ts > gates contact disclosure and removal by host, session and exact origin
+{"event":"security.rejected","code":"UNAUTHENTICATED","status":401,"count":1,"windowEndsAt":"2026-09-10T06:30:19.596Z"}
+
+stderr | tests/customer-privacy-http.test.ts > returns a non-cacheable attachment and keeps preview read-only
+Request failed TypeError
+
+ ✓ tests/customer-privacy-http.test.ts (2 tests) 24ms
+stderr | tests/customer-management-http.test.ts > protects customer reads and writes with exact host, session and same-origin gates
+{"event":"security.rejected","code":"ORIGIN_REJECTED","status":403,"count":1,"windowEndsAt":"2026-09-10T06:30:19.896Z"}
+
+stderr | tests/customer-management-http.test.ts > protects customer reads and writes with exact host, session and same-origin gates
+{"event":"security.rejected","code":"UNAUTHENTICATED","status":401,"count":1,"windowEndsAt":"2026-09-10T06:30:19.898Z"}
+
+ ✓ tests/customer-management-http.test.ts (2 tests) 20ms
+ ✓ tests/translation-provider.test.ts (6 tests) 24ms
+ ✓ tests/import-fields.test.ts (2 tests) 21ms
+ ✓ tests/operations-health.test.ts (5 tests) 22ms
+ ✓ tests/worker-health.test.ts (1 test) 13ms
+ ✓ tests/search.test.ts (4 tests) 5ms
+ ✓ tests/widget.test.ts (1 test) 4ms
+ ✓ tests/db.test.ts (1 test) 4ms
+ ✓ tests/booking-mutation-outcome.test.ts (2 tests) 2ms
+
+ Test Files  41 passed (41)
+      Tests  290 passed (290)
+   Start at  09:28:27
+   Duration  53.79s (transform 1.09s, setup 0ms, import 6.87s, tests 41.51s, environment 3ms)
+
+JSON report written to C:/Users/rauds/Desktop/Projektid/Broneerimise SaaS/broneering.info/output/playwright/chapter24/vitest.json

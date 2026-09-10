@@ -22,12 +22,15 @@ export default function BookingManagement({tenantId,userId}:{tenantId:string;use
 
   const [state,setState]=useState<AdminBookingsState|null>(null),[day,setDay]=useState(()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Tallinn'}).format(new Date())),[attention,setAttention]=useState(false),[selected,setSelected]=useState(''),[creating,setCreating]=useState(false),[loading,setLoading]=useState(true),[error,setError]=useState(''),[notice,setNotice]=useState(''),[revision,setRevision]=useState(0),[page,setPage]=useState(0);
   const [view,setView]=useState<'list'|'day'|'week'>('day'),[staffFilter,setStaffFilter]=useState(''),[lastUpdated,setLastUpdated]=useState(''),[offline,setOffline]=useState(false),[editor,setEditor]=useState<BookingDetail|null>(null),[createContext,setCreateContext]=useState<{day:string;staffId:string}|null>(null);
-  const initialDay=useRef(false);
+  const initialDay=useRef(false),readContext=useRef('');
 
   const mutation=useBookingMutation('admin:'+tenantId+':'+userId,'/api/admin/bookings'),locked=mutation.locked||loading||offline,booking=editor;
   useEffect(()=>{
     let disposed=false,running=false,controller:AbortController|undefined;
-    setState(null);setLoading(true);setError('');setLastUpdated('');
+    const context=JSON.stringify([tenantId,userId,day,attention,page,view,staffFilter]);
+    // Refreshing the same scope must not unmount an open editor and erase its draft.
+    if(readContext.current!==context){readContext.current=context;setState(null);}
+    setLoading(true);setError('');setLastUpdated('');
     async function refresh(){
       if(running||disposed)return;
       running=true;controller=new AbortController();const timeout=setTimeout(()=>controller?.abort(),8000);
@@ -44,7 +47,7 @@ export default function BookingManagement({tenantId,userId}:{tenantId:string;use
     const online=()=>void refresh(),lost=()=>setOffline(true),visible=()=>{if(document.visibilityState==='visible')void refresh();};
     window.addEventListener('online',online);window.addEventListener('offline',lost);document.addEventListener('visibilitychange',visible);
     return()=>{disposed=true;controller?.abort();clearInterval(timer);window.removeEventListener('online',online);window.removeEventListener('offline',lost);document.removeEventListener('visibilitychange',visible);};
-  },[tenantId,day,attention,revision,page,view,staffFilter]);
+  },[tenantId,userId,day,attention,revision,page,view,staffFilter]);
   useEffect(()=>{if(['VERSION_CONFLICT','CUTOFF_PASSED','SLOT_UNAVAILABLE','OFFER_CHANGED','RULES_CHANGED'].includes(mutation.code))setRevision(value=>value+1);},[mutation.code]);
   async function submit(payload?:unknown){const result=await mutation.send(payload);if(result){setNotice(result.currentVersion?t("Toiming oli salvestatud, kuid broneeringut on pärast seda muudetud. Värskendasime loendi; ava kehtiv detail."):t("Salvestatud: ")+result.reference+' · '+(t(statusNames[result.status])||result.status)+'.');setCreating(false);setEditor(null);if(!attention&&!result.currentVersion&&state){setDay(new Intl.DateTimeFormat('sv-SE',{timeZone:state.timezone}).format(new Date(result.start)));setPage(0);setSelected(result.id);}setRevision(value=>value+1);}}
   const managementUrl=mutation.result?.managementUrl&&state?.publicHostname?`${state.publicHostname.endsWith('.localhost')?'http':'https'}://${state.publicHostname}${state.publicHostname.endsWith('.localhost')&&window.location.port?':'+window.location.port:''}${mutation.result.managementUrl}`:null;
@@ -65,12 +68,12 @@ export default function BookingManagement({tenantId,userId}:{tenantId:string;use
       <ul aria-label={t("Broneeringute loend")}>{state.bookings.map(item=><li key={item.id}><button type="button" disabled={locked} aria-pressed={item.id===selected} onClick={()=>{setSelected(item.id);setEditor(item);setCreating(false);}}>{moment(item.start,state.timezone)} · {item.name} · {item.serviceName} · {item.staffName} · {t(statusNames[item.status])}{item.attentionReason?t(" · Vajab lahendamist"):''}</button></li>)}</ul>
       <p>{t("Lehekülg ")}{page+1} {t("(kuni ")}{state.pageSize??100} {t("broneeringut). ")}<button type="button" disabled={locked||page===0} onClick={()=>{setSelected('');setPage(value=>value-1);}}>{t("Eelmine lehekülg")}</button> <button type="button" disabled={locked||!state.hasMore||page>=10000} onClick={()=>{setSelected('');setPage(value=>value+1);}}>{t("Järgmine lehekülg")}</button></p>
       {creating&&<OfferForm initialDay={createContext?.day} initialStaffId={createContext?.staffId} key={JSON.stringify(createContext)} refresh={revision} tenantId={tenantId} state={state} locked={locked} submit={submit} close={()=>setCreating(false)}/>}
-      {booking&&<BookingEditor key={booking.id+':'+booking.version} tenantId={tenantId} state={state} booking={{...booking,noticeStatus:state.bookings.find(b=>b.id===booking.id&&b.version===booking.version)?.noticeStatus??booking.noticeStatus}} locked={locked} submit={submit}/>}
+      {booking&&<BookingEditor key={booking.id+':'+booking.version} tenantId={tenantId} state={state} booking={{...booking,noticeStatus:state.bookings.find(b=>b.id===booking.id&&b.version===booking.version)?.noticeStatus??booking.noticeStatus}} locked={locked} submit={submit} refresh={revision}/>}
       <PolicyForm key={state.policy.version} tenantId={tenantId} policy={state.policy} locked={locked} reload={()=>setRevision(value=>value+1)}/>
     </>}
   </section>;
 }
-function BookingEditor({tenantId,state,booking,locked,submit}:EditorProps&{booking:BookingDetail}){
+function BookingEditor({tenantId,state,booking,locked,submit,refresh}:EditorProps&{booking:BookingDetail;refresh:number}){
   const {t,locale}=useI18n();
   const titleRef=useRef<HTMLHeadingElement>(null);
   useEffect(()=>{titleRef.current?.focus();},[]);
@@ -85,7 +88,7 @@ function BookingEditor({tenantId,state,booking,locked,submit}:EditorProps&{booki
     {booking.attentionReason&&<p role="status">{t("Vajab lahendamist: ")}{booking.attentionReason}{t(". Vana aeg on alles. Lepi kliendiga uus aeg kokku või tühista broneering.")}</p>}
     <p>{booking.deadline?t("Muutmise ja tühistamise tähtaeg: ")+moment(booking.deadline,state.timezone)+'.':t("Varasemad muutmistingimused puuduvad.")} {!booking.canChange&&booking.status==='confirmed'?t("Tähtajajärgne muudatus nõuab volitatud haldaja erandit ja põhjendust."):''}</p><p>{t(booking.notice)}</p><p>{t("Teavituse seisund: ")}{({pending:t("Saatmise ootel"),sending:t("Edastamisel"),sent:t("SMTP-le edastatud"),failed:t("Saatmine ebaõnnestus"),skipped:t("Jäeti saatmata"),superseded:t("Asendatud uuema muudatusega")} as Record<string,string>)[booking.noticeStatus??'']||t("Selle versiooni teavitust pole")}</p><p>{t("Uue halduslingi väljastamine muudab varasema lingi kehtetuks.")}</p>
     {mode==='view'&&<p><button type="button" disabled={locked||!canChange} onClick={()=>setMode('reschedule')}>{t("Muuda broneeringut")}</button> <button type="button" disabled={locked||!canChange} onClick={()=>setMode('cancel')}>{t("Tühista broneering")}</button> <button type="button" disabled={locked||booking.status==='cancelled'} onClick={()=>setMode('status')}>{t("Muuda seisundit")}</button> <button type="button" disabled={locked||state.policy.linkHours===null||Date.parse(booking.end)+(state.policy.linkHours??0)*3600000<=Date.now()} onClick={()=>submit({...base,action:'issue-link'})}>{t("Loo uus halduslink")}</button> <button type="button" disabled={locked} onClick={()=>setMode('revoke')}>{t("Tühista halduslink")}</button></p>}
-    {mode==='reschedule'&&<OfferForm tenantId={tenantId} state={state} booking={booking} locked={locked} submit={submit} close={()=>setMode('view')}/>}
+    {mode==='reschedule'&&<OfferForm tenantId={tenantId} state={state} booking={booking} locked={locked} submit={submit} refresh={refresh} close={()=>setMode('view')}/>}
     {['cancel','status','revoke'].includes(mode)&&<form onSubmit={event=>{event.preventDefault();void submit({...base,action:mode==='revoke'?'revoke-link':mode,reason,...(mode==='cancel'?{overrideDeadline:override}:mode==='status'?{status}:{})});}}><h4>{mode==='cancel'?t("Kinnita broneeringu tühistamine"):mode==='revoke'?t("Kinnita halduslingi tühistamine"):t("Paranda broneeringu seisund")}</h4>
       {mode==='status'&&<label>{t("Uus seisund ")}<select value={status} disabled={locked} onChange={event=>setStatus(event.target.value)}><option value="completed">{t("Teenindatud")}</option><option value="no_show">{t("Ei ilmunud")}</option><option value="confirmed">{t("Kinnitatud")}</option></select></label>}
       <label>{t("Põhjus ")}{mode==='cancel'&&booking.canChange?t("(soovi korral)"):''}<textarea value={reason} maxLength={500} minLength={mode==='cancel'&&booking.canChange?0:3} required={mode!=='cancel'||!booking.canChange} disabled={locked} onChange={event=>setReason(event.target.value)}/></label>

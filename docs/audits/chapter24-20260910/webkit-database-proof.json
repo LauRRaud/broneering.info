@@ -1,0 +1,44 @@
+{
+  "at": "2026-09-10T06:24:29.566Z",
+  "engine": "webkit",
+  "oldBookingUnchanged": true,
+  "oldEvents": 0,
+  "oldNotices": 0,
+  "archivedStaffBooking": {
+    "id": "ab15e5a4-7959-4251-bcff-72a754fdbc43",
+    "status": "confirmed",
+    "version": 2,
+    "service_name": "G03 lõikus",
+    "staff_name": "G03 A töötaja 1",
+    "start_at": "2026-09-17T07:00:00.000Z",
+    "end_at": "2026-09-17T07:30:00.000Z",
+    "price": 2500,
+    "duration": 30,
+    "attention_reason": "Töötaja on arhiveeritud"
+  },
+  "attentionEvents": 1,
+  "membershipActive": false,
+  "remainingStaffSessions": 0,
+  "blocker": {
+    "id": "d5a1ab67-b389-49f1-bd14-c441e0912357",
+    "status": "confirmed",
+    "source": "online",
+    "is_test": true,
+    "customer_email": "p24-blocker-webkit@example.invalid"
+  },
+  "concurrentBooking": {
+    "id": "13d0f13f-e0a5-413f-b4de-9ff2c9b1d60f",
+    "status": "cancelled",
+    "version": 3
+  },
+  "concurrentCounts": {
+    "commands": 3,
+    "events": 3,
+    "skippednotices": 3
+  },
+  "totals": {
+    "bookings": 4,
+    "notices": 4
+  },
+  "pass": true
+}
