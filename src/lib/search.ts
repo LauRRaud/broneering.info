@@ -6,10 +6,10 @@ type SearchPage = { url: string; title: string; description: string };
 // Only verified public hosts qualify. Preview hosts, demos and administration stay noindex.
 export async function searchPageForHost(host: string): Promise<SearchPage | null> {
   const hostname = hostnameFromHost(host);
-  if (hostname === 'broneering.info' || hostname === 'www.broneering.info') {
+  if (['ajasta.ee', 'www.ajasta.ee', 'broneering.info', 'www.broneering.info'].includes(hostname)) {
     return {
-      url: 'https://broneering.info/',
-      title: 'Broneering.info – broneerimissüsteem teenusepakkujatele',
+      url: 'https://ajasta.ee/',
+      title: 'Ajasta – broneerimissüsteem teenusepakkujatele',
       description: 'Paindlik veebipõhine broneerimissüsteem teenusepakkujatele. Oma broneerimisleht, teenused ja kliendi enda valitud aeg. Tutvu võimalustega ja proovi demot.',
     };
   }

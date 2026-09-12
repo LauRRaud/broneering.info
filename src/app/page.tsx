@@ -9,6 +9,7 @@ import { AppError } from '@/lib/errors';
 import type { Metadata } from 'next';
 import { searchPageForHost } from '@/lib/search';
 import {bookingChallengeSiteKey} from '@/lib/booking-challenge';
+import AjastaHome from '@/components/marketing/ajasta-home';
 
 export const dynamic='force-dynamic';
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: page.description,
     robots: { index: true, follow: true },
     alternates: { canonical: page.url },
-    openGraph: { title: page.title, description: page.description, url: page.url, siteName: 'broneering.info', locale: 'et_EE', type: 'website' },
+    openGraph: { title: page.title, description: page.description, url: page.url, siteName: page.url === 'https://ajasta.ee/' ? 'Ajasta' : 'broneering.info', locale: 'et_EE', type: 'website' },
   };
 }
 export default async function Page({searchParams}: {searchParams: Promise<Record<string, string | string[] | undefined>>}) {
@@ -29,20 +30,7 @@ export default async function Page({searchParams}: {searchParams: Promise<Record
   const hostname=hostnameFromHost(host);
   const local=['localhost','127.0.0.1'].includes(hostname)||hostname.endsWith('.localhost');
   const port=host.match(/:(\d+)$/)?.[0]??'';
-  if(['localhost','127.0.0.1','broneering.info','www.broneering.info'].includes(hostname)) return (
-    <main id="main-content" tabIndex={-1}>
-      <h1>{t("broneering.info")}</h1>
-      <p>{t("Paindlik broneerimissüsteem teenusepakkujatele.")}</p>
-      <p>{t("Ilu ja heaolu, konsultatsioonid ning teised teenindusettevõtted: klient valib teenuse, teenindaja ja sobiva aja.")}</p>
-      <p>{t("Rakendus on arenduses. Demodes saad proovida praegu toimivat broneerimisteekonda.")}</p>
-      <h2>{t("Proovi broneerimist")}</h2>
-      <ul>
-        <li><a href={local?`http://ilutegu.localhost${port}`:'https://demo.broneering.info'}>{t("Ilutegu demo")}</a></li>
-        <li><a href={local?`http://teine.localhost${port}`:'https://demo2.broneering.info'}>{t("Teine demo")}</a></li>
-      </ul>
-      <p><a href={local?`http://haldus.localhost${port}`:'https://haldus.broneering.info'}>{t("Ettevõtte haldus")}</a></p>
-    </main>
-  );
+  if(['localhost','127.0.0.1','ajasta.ee','www.ajasta.ee','broneering.info','www.broneering.info'].includes(hostname)) return <AjastaHome t={t} local={local} port={port} />;
   if(['haldus.broneering.info','haldus.localhost'].includes(hostname)) {
     const query = await searchParams;
     const invitationToken = typeof query.invitation === 'string' && query.invitation.length <= 256 ? query.invitation : undefined;

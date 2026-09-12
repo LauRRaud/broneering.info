@@ -12,12 +12,13 @@ beforeEach(() => lookup.mockReset());
 
 describe('Search visibility', () => {
   it('indexes the public site with one canonical www/non-www URL', async () => {
-    expect((await searchPageForHost('broneering.info'))?.url).toBe('https://broneering.info/');
-    expect((await searchPageForHost('www.broneering.info'))?.url).toBe('https://broneering.info/');
+    for (const host of ['ajasta.ee', 'www.ajasta.ee', 'broneering.info', 'www.broneering.info']) {
+      expect(await searchPageForHost(host)).toMatchObject({url:'https://ajasta.ee/', title:'Ajasta – broneerimissüsteem teenusepakkujatele'});
+    }
     expect(lookup).not.toHaveBeenCalled();
   });
   it('excludes administration, demos, local previews and foreign hosts', async () => {
-    for (const host of ['haldus.broneering.info', 'demo.broneering.info', 'demo2.broneering.info', 'localhost:3107', 'ilutegu.localhost:3107', 'broneering.info.example.com']) {
+    for (const host of ['haldus.broneering.info', 'demo.broneering.info', 'demo2.broneering.info', 'localhost:3107', 'ilutegu.localhost:3107', 'broneering.info.example.com', 'ajasta.ee.example.com', 'salong.ajasta.ee']) {
       expect(await searchPageForHost(host)).toBeNull();
     }
     expect(lookup).not.toHaveBeenCalled();
