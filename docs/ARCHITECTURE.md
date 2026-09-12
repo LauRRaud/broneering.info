@@ -1,5 +1,7 @@
 # Arhitektuur ja otsused
 
+**Hilisem nime- ja veebisuund 12.09.2026:** omanik kinnitas toote nime **Ajasta**, `ajasta.ee` avalehe ning `broneering.info` avalehe edasisuunamise. Klientide alamdomeenid säilivad; avaleht jääb omaniku kujundust ootama. [Veebilehe ja domeenikorralduse kava](AJASTA-WEBSITE-PLAN.md). Allpoolne 07.09 domeenikirjeldus kajastab olemasolevat tehnilist lahendust; halduse ja ettevõtete aadresside kolimist pole otsustatud. React/Next.js/TypeScripti alus on olemas, lõplik avalik veeb ja kujundus on tegemata.
+
 ## Kasutaja kinnitatud suund 7. september 2026
 
 - Põhidomeen `broneering.info`, VPS aadress `217.146.72.147`, Ubuntu; server ei ole uueks projektiks ette valmistatud.
@@ -68,7 +70,7 @@ API vead sisaldavad `{error, code}`. Olulisemad: `SLOT_UNAVAILABLE`, `OFFER_CHAN
 
 ### Otsingumootorite nähtavus
 
-Kasutaja täpsustas 7. septembril 2026: avalik veebileht peab olema otsingus nähtav ning hiljem ka ettevõtete päris broneerimislehed. Avaleht on `index, follow` ja selle kanooniline aadress on `https://broneering.info/`, ka www-aadressil. `robots.txt` lubab avaliku HTML-i lugemist ning viitab hostipõhisele saidikaardile.
+Kasutaja täpsustas 7. septembril 2026: avalik veebileht peab olema otsingus nähtav ning hiljem ka ettevõtete päris broneerimislehed. Avaleht on `index, follow` ja selle kanooniline aadress oli `https://broneering.info/`, ka www-aadressil. 12.09 Ajasta muudatuses on avaliku tootelehe kanooniline aadress `https://ajasta.ee/`. `robots.txt` lubab avaliku HTML-i lugemist ning viitab hostipõhisele saidikaardile.
 
 Ettevõtte kontrollitud `*.broneering.info` domeen indekseeritakse, kui ettevõte on aktiivne ja `demo=false`. Demod, haldus, kohalikud eelvaated ja tundmatud domeenid jäävad `noindex, nofollow`; nende saidikaart on tühi. Robotitele jäetakse HTML-i lugemine lubatuks, et nad näeksid noindex-märgist. API teekond on robots.txt-s välistatud. Hostipõhised metainfo ja saidikaardi päringud on dünaamilised, et ettevõtete andmed vahemälus ei seguneks. See on indekseerimise lubamine, mitte otsingumootori indeksi või positsiooni garantii.
 

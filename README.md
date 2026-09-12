@@ -2,6 +2,8 @@
 
 Reacti, Next.js-i ja TypeScripti baasil isemajutatava broneerimisplatvormi arendustööpuu. Andmebaas on PostgreSQL. Veebileht ja broneerimisvaade kasutavad ühist rakendust.
 
+[Juhendite sisukord ja valmimise seis](docs/README.md) · [V1 allesjäänud tööd ja otsused](docs/REMAINING-WORK.md). Lõppkasutaja juhend ja sõltumatu üleandmise vastuvõtt on veel tegemata.
+
 
 
 ## Avaldatud tehniline demo

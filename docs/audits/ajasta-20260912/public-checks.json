@@ -1,0 +1,100 @@
+{
+  "checkedAt": "2026-09-12T11:30:39.527263+00:00",
+  "checks": [
+    {
+      "url": "https://ajasta.ee/",
+      "status": 200,
+      "location": null,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://www.ajasta.ee/",
+      "status": 302,
+      "location": "https://ajasta.ee/",
+      "contentType": "text/html"
+    },
+    {
+      "url": "https://broneering.info/",
+      "status": 302,
+      "location": "https://ajasta.ee/",
+      "contentType": "text/html"
+    },
+    {
+      "url": "https://www.broneering.info/",
+      "status": 302,
+      "location": "https://ajasta.ee/",
+      "contentType": "text/html"
+    },
+    {
+      "url": "https://broneering.info/?source=check",
+      "status": 302,
+      "location": "https://ajasta.ee/?source=check",
+      "contentType": "text/html"
+    },
+    {
+      "url": "http://ajasta.ee/",
+      "status": 301,
+      "location": "https://ajasta.ee/",
+      "contentType": "text/html"
+    },
+    {
+      "url": "https://broneering.info/widget/v1.js",
+      "status": 200,
+      "location": null,
+      "contentType": "application/javascript; charset=UTF-8"
+    },
+    {
+      "url": "https://broneering.info/api/ready",
+      "status": 200,
+      "location": null,
+      "contentType": "application/json",
+      "readiness": {
+        "status": "ready"
+      }
+    },
+    {
+      "url": "https://haldus.broneering.info/",
+      "status": 200,
+      "location": null,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://demo.broneering.info/",
+      "status": 200,
+      "location": null,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://demo2.broneering.info/",
+      "status": 200,
+      "location": null,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://demo.broneering.info/api/catalog",
+      "status": 200,
+      "location": null,
+      "contentType": "application/json",
+      "serviceCount": 4
+    },
+    {
+      "url": "https://demo2.broneering.info/api/catalog",
+      "status": 200,
+      "location": null,
+      "contentType": "application/json",
+      "serviceCount": 4
+    },
+    {
+      "url": "https://ajasta.ee/sitemap.xml",
+      "status": 200,
+      "location": null,
+      "contentType": "application/xml"
+    },
+    {
+      "url": "https://ajasta.ee/robots.txt",
+      "status": 200,
+      "location": null,
+      "contentType": "text/plain"
+    }
+  ]
+}

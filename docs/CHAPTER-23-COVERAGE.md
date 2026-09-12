@@ -1,5 +1,7 @@
 # Peatükk 23 — nõuete ja failide läbivaatuse katvus
 
+**12.09.2026 täpsustus:** allpoolne failikatvuse tabel säilitab 08.09 auditi ajaloolised järeldused. Praegused staatused on [allesjäänud tööde ja otsuste registris](REMAINING-WORK.md); algse plaani peatükid 27–30 on seal uuesti nõuete kaupa võrreldud. See ei ole uus koodiaudit ega litsentsiinventuur.
+
 **Peatükk 26, 12.09.2026:** [serveri tehniline vastuvõtt](CHAPTER-26.md) läbis: 12 000 päringut p95 19,2 ms, 30/30 kalendrimuudatust kuni 5,006 s, konkurents, import/eksport, sisemine arveldus, lahkumistähtajad ning 53 tabeli ja privaatfailide taastamine. SMTP, Maksekeskus ja väline varukoopia on omaniku juhisel hilisemaks; inimvastuvõtt ja päris säilitusleping jäävad eraldi.
 
 **Peatükk 24 lõpetatud 10.09.2026:** [AT-01–18 tehniline vastuvõtt ja viis lisakontrolli](CHAPTER-24.md) läbisid. Värske tulemus: 290/290 automaattesti, 9/9 brauserifaasi ja build. Parandatud on nurjunud ajamuutuse järel kadunud vorm/põhjendus. Peatükkide 25–26 ja kogu V1 omaniku vastuvõtt jääb eraldi.

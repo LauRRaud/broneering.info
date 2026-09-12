@@ -1,0 +1,21 @@
+{
+  "review_date": "2026-09-12",
+  "baseline_commit": "c1b0d4dbf5d38b5f2b28ee1ef5156752a5d821a5",
+  "checks": {
+    "changed_markdown_files": 11,
+    "local_links": 259,
+    "decision_rows": 20,
+    "open_decision_rows": 12,
+    "work_rows": 9,
+    "progress_chapters": 30,
+    "acceptance_rows": 48,
+    "original_docx_hash_unchanged": true,
+    "duplicate_headings": 0,
+    "missing_links": 0,
+    "invalid_unicode_replacement_characters": 0
+  },
+  "limitations": [
+    "Documentation and source-code comparison only; no new application, browser, owner or external-service acceptance tests.",
+    "No server inspection, new license inventory, design or configuration changes."
+  ]
+}

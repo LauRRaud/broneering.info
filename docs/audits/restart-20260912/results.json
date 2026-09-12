@@ -1,0 +1,178 @@
+{
+  "date": "2026-09-12",
+  "test_initiator": "User reported performing server restart",
+  "observer": "Codex",
+  "result": "passed within documented scope",
+  "before": {
+    "observed_at_utc": "2026-09-12T11:11:05Z",
+    "boot_id": "c95b45cc-43ca-41fd-8a00-f8670a94c92b",
+    "boot_started_server_local": "2026-09-12 02:00:09",
+    "head": "c1b0d4dbf5d38b5f2b28ee1ef5156752a5d821a5",
+    "containers": {
+      "/broneeringinfo-billing-worker-1": {
+        "id": "db36121eb7dea23c9b205240f47c75a3f2d6e0347298f5c280e5af39e270f814",
+        "image": "sha256:022e2011ef1dadd1bef53ff15fe54ae9904e496e1fb437359430f52f3bebd9ae",
+        "started": "2026-09-11T23:00:20.881890263Z",
+        "status": "running",
+        "health": "healthy",
+        "restart": "unless-stopped",
+        "restarts": "0",
+        "mounts": []
+      },
+      "/broneeringinfo-db-1": {
+        "id": "cf53153466c27fe5d356b0cd6649e77be143b99d051d03fb429a814175924240",
+        "image": "sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280",
+        "started": "2026-09-11T23:00:20.891613054Z",
+        "status": "running",
+        "health": "healthy",
+        "restart": "unless-stopped",
+        "restarts": "0",
+        "mounts": [
+          "bind:/srv/broneering.info/infra/server-init.sh:/docker-entrypoint-initdb.d/01-app-role.sh",
+          "volume:/var/lib/docker/volumes/broneeringinfo_server_database/_data:/var/lib/postgresql"
+        ]
+      },
+      "/broneeringinfo-export-worker-1": {
+        "id": "f480e3931f43862dc5a0dd57bc6a03e1ffc025033d904caec8a5d7bb80304588",
+        "image": "sha256:72c91cfd8758cc1521ae56ccac66d076b2905967bcbd53b43fc3d914ce27a027",
+        "started": "2026-09-11T23:00:20.880111176Z",
+        "status": "running",
+        "health": "healthy",
+        "restart": "unless-stopped",
+        "restarts": "0",
+        "mounts": [
+          "volume:/var/lib/docker/volumes/broneeringinfo_private_files/_data:/data/private"
+        ]
+      },
+      "/broneeringinfo-web-1": {
+        "id": "872cfa75a655ae6cf576c7313bc7c2ad7b71ade6c913b7582d531e483b9f39ae",
+        "image": "sha256:df1d159c16a38d1343d5bccd1253d56e026c0a11a59adc050a5afc47fd569158",
+        "started": "2026-09-11T23:00:20.888252102Z",
+        "status": "running",
+        "health": "healthy",
+        "restart": "unless-stopped",
+        "restarts": "0",
+        "mounts": [
+          "volume:/var/lib/docker/volumes/broneeringinfo_private_files/_data:/data/private"
+        ]
+      }
+    },
+    "counts": {
+      "tenants": 3,
+      "bookings": 3,
+      "invoices": 0,
+      "subscriptions": 0
+    },
+    "http": {
+      "broneering.info": "200",
+      "www.broneering.info": "200",
+      "haldus.broneering.info": "200",
+      "demo.broneering.info": "200",
+      "demo2.broneering.info": "200"
+    },
+    "ready": true
+  },
+  "after": {
+    "observed_at_utc": "2026-09-12T11:16:19Z",
+    "boot_id": "1eab7d9a-f610-4db0-9780-1d4d08a94c0c",
+    "boot_started_server_local": "2026-09-12 14:14:50",
+    "head": "c1b0d4dbf5d38b5f2b28ee1ef5156752a5d821a5",
+    "containers": {
+      "/broneeringinfo-billing-worker-1": {
+        "id": "db36121eb7dea23c9b205240f47c75a3f2d6e0347298f5c280e5af39e270f814",
+        "image": "sha256:022e2011ef1dadd1bef53ff15fe54ae9904e496e1fb437359430f52f3bebd9ae",
+        "started": "2026-09-12T11:15:02.271249265Z",
+        "status": "running",
+        "health": "healthy",
+        "restart": "unless-stopped",
+        "restarts": "0",
+        "mounts": []
+      },
+      "/broneeringinfo-db-1": {
+        "id": "cf53153466c27fe5d356b0cd6649e77be143b99d051d03fb429a814175924240",
+        "image": "sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280",
+        "started": "2026-09-12T11:15:02.288986729Z",
+        "status": "running",
+        "health": "healthy",
+        "restart": "unless-stopped",
+        "restarts": "0",
+        "mounts": [
+          "bind:/srv/broneering.info/infra/server-init.sh:/docker-entrypoint-initdb.d/01-app-role.sh",
+          "volume:/var/lib/docker/volumes/broneeringinfo_server_database/_data:/var/lib/postgresql"
+        ]
+      },
+      "/broneeringinfo-export-worker-1": {
+        "id": "f480e3931f43862dc5a0dd57bc6a03e1ffc025033d904caec8a5d7bb80304588",
+        "image": "sha256:72c91cfd8758cc1521ae56ccac66d076b2905967bcbd53b43fc3d914ce27a027",
+        "started": "2026-09-12T11:15:02.271745063Z",
+        "status": "running",
+        "health": "healthy",
+        "restart": "unless-stopped",
+        "restarts": "0",
+        "mounts": [
+          "volume:/var/lib/docker/volumes/broneeringinfo_private_files/_data:/data/private"
+        ]
+      },
+      "/broneeringinfo-web-1": {
+        "id": "872cfa75a655ae6cf576c7313bc7c2ad7b71ade6c913b7582d531e483b9f39ae",
+        "image": "sha256:df1d159c16a38d1343d5bccd1253d56e026c0a11a59adc050a5afc47fd569158",
+        "started": "2026-09-12T11:15:02.275011613Z",
+        "status": "running",
+        "health": "healthy",
+        "restart": "unless-stopped",
+        "restarts": "0",
+        "mounts": [
+          "volume:/var/lib/docker/volumes/broneeringinfo_private_files/_data:/data/private"
+        ]
+      }
+    },
+    "counts": {
+      "tenants": 3,
+      "bookings": 3,
+      "invoices": 0,
+      "subscriptions": 0
+    },
+    "http": {
+      "broneering.info": "200",
+      "www.broneering.info": "200",
+      "haldus.broneering.info": "200",
+      "demo.broneering.info": "200",
+      "demo2.broneering.info": "200"
+    },
+    "ready": true
+  },
+  "public_checks": [
+    {
+      "host": "demo.broneering.info",
+      "catalog": "passed",
+      "serviceCount": 4,
+      "availability": "passed",
+      "date": "2026-09-14",
+      "offerCount": 24,
+      "checkedAtUtc": "2026-09-12T11:17:02.3095108Z"
+    },
+    {
+      "host": "demo2.broneering.info",
+      "catalog": "passed",
+      "serviceCount": 4,
+      "availability": "passed",
+      "date": "2026-09-14",
+      "offerCount": 24,
+      "checkedAtUtc": "2026-09-12T11:17:02.5857209Z"
+    }
+  ],
+  "assistant_manual_start_commands": false,
+  "outage_duration_measured": false,
+  "database_row_content_hashes_compared": false,
+  "new_bookings_created": false,
+  "limits": [
+    "Existing four running containers only; SMTP and payment workers were not active.",
+    "Record counts and persistent volume identities compared; no full before/after row-content or file-content comparison.",
+    "No in-flight write, crash, power-loss, disk-loss, offsite or new-host recovery test."
+  ],
+  "evidence_sha256": {
+    "before.txt": "e7df411bc6af389ccc90e04ae1e7a6e08df47a1fc8fcd68c5cb085bd210a3c72",
+    "after.txt": "f4dc636d26df62b748619d1948cd224015c6a43ff162f43cdd22899b5a1ac91e",
+    "public-checks.json": "9da8d4395347553413b96b75a00595a8be3b1825105adcbc7165beaa2e29f2fd"
+  }
+}

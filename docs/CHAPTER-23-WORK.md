@@ -1,5 +1,7 @@
 # Peatükk 23 — paranduste ja vastuvõtu tööregister
 
+**Ajakohane tööde ja otsuste koond 12.09.2026:** [V1 allesjäänud tööd](REMAINING-WORK.md) seob G01–G09, kõik D-/O-otsused ning algse plaani peatükkide 27–30 üleandmisnõuded. Allpool säilivad algsed töölepingud ja nende ajaloolised hinnangud; juba lõpetatud osa ei tellita nende põhjal uuesti.
+
 **Peatükk 26, 12.09.2026:** [serveri tehniline vastuvõtt](CHAPTER-26.md) läbis: 12 000 päringut p95 19,2 ms, 30/30 kalendrimuudatust kuni 5,006 s, konkurents, import/eksport, sisemine arveldus, lahkumistähtajad ning 53 tabeli ja privaatfailide taastamine. SMTP, Maksekeskus ja väline varukoopia on omaniku juhisel hilisemaks; inimvastuvõtt ja päris säilitusleping jäävad eraldi.
 
 **Peatükk 24 lõpetatud 10.09.2026:** [AT-01–18 tehniline vastuvõtt ja viis lisakontrolli](CHAPTER-24.md) läbisid. Värske tulemus: 290/290 automaattesti, 9/9 brauserifaasi ja build. Parandatud on nurjunud ajamuutuse järel kadunud vorm/põhjendus. Peatükkide 25–26 ja kogu V1 omaniku vastuvõtt jääb eraldi.
@@ -8,7 +10,7 @@
 
 **Hilisem serveriuuendus 08.09.2026:** parandused, migratsioon 048 ja Nginxi impordipiir on paigaldatud. [Täpne paigaldusprotokoll ja allesjäänud piirid](DEPLOYMENT-2026-09-08.md). Allpool kirjeldatud kohalik kontroll eelnes sellele paigaldusele.
 
-Seis 08.09.2026 pärast omaniku paranduskäsku: **23-F01–F05 on kohalikult parandatud ja kontrollitud**, [järelraport ja tõendid](CHAPTER-23-FIXES.md). **23-G01–G08 on avatud; 23-G09 tehniline teostus ja kohalik kontroll on 09.09 valmis** ([tõendid](SUPPORT-G09.md)); tootmise paigaldus ja omaniku etappide vastuvõtt jäävad eraldi. Audit ega selle register ei ole korraldus väliste teenuste tellimiseks või tootmise muutmiseks. Omaniku varasem kujunduse ning välise varunduse/hoiatuste edasilükkamine jääb kehtima. [Koodileiud ja tõendid](CHAPTER-23.md), [AT-maatriks](CHAPTER-23-ACCEPTANCE.md).
+Praegune seis 12.09.2026: **23-F01–F05 on parandatud ja serverisse paigaldatud; G03 automaatmaatriks, G06 tehniline mõõtevoor ning G09 tehniline teostus/paigaldus on tehtud.** G01/G02/G04/G05/G07/G08 ja G03/G09 sõltumatu vastuvõtt jäävad avatuks oma täpses ulatuses. [Koodileiud ja parandused](CHAPTER-23-FIXES.md), [AT-maatriks](CHAPTER-23-ACCEPTANCE.md). Register ei aktiveeri väliseid teenuseid; kujunduse, SMTP/Maksekeskuse ning välise varunduse/hoiatuste edasilükkamine jääb kehtima.
 
 Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tähendab järgmise kirjeldatud piiritletud töö arendaja/testija tunde; välise teenuse ooteaeg, partnerite ajakulu ja pärast katset ilmnev parandustöö on eraldi. Hinnangud vajavad töö alustamisel täpsustamist. Kõigi tööde kinnitaja on toote omanik; vastuvõtu kuupäev on märkimata.
 
@@ -76,6 +78,8 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G01 — otsused, õigused ja väljalaske litsentsitõend
 
+**12.09.2026:** [D-/O-otsuste, lahtiste tööde ning ptk 27–30 nõuete koond](REMAINING-WORK.md) koostatud algdokumendi põhjal. Omaniku kooskõlastus, uus tehniline litsentsiinventuur ja lõplik üleandmine on veel tegemata. Registri koostamist ei loeta kogu G01 vastuvõtuks.
+
 - **Seos / eesmärk:** ptk 03/20/27/28/29, E0/E10, AT-45. Omanikul on kinnitatud tooteotsused, vajalikud ligipääsud ja kontrollitav õiguste ahel.
 - **Sisendid / eeltingimused:** D-/O-register, omaniku hilisemad otsused, õiguste lepingud, lukufail ja Windowsi/Linuxi/OS-i inventuur; dokumentide tegelikud omanikud peavad olema määratud.
 - **Põhikäik:** koondada kinnitatud ja lahtised otsused; siduda tööpuu väljalaskega, täiendada puuduvad litsentsitekstid ja lepingulise üleandmise tõendid. Dokumenteeritud Next.js + `pg` lihtsustus hinnata V1 lõpliku arhitektuuri kokkuleppena.
@@ -110,6 +114,8 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G04 — kujunduse teostus ja vastuvõtt
 
+**Omaniku täpsustus 12.09.2026:** [Ajasta avalik tootetutvustus-/müügileht ja domeenikava](AJASTA-WEBSITE-PLAN.md) kuuluvad allesjäänud töösse. React/Next.js/TypeScripti tehniline avaleht on olemas; lõplik sisu/kujundus ja ajasta.ee kasutuselevõtt ei ole tehtud. Kujunduse edasilükkamine säilib, domeenisuunamine vajab veel kokkulepitud ulatust.
+
 - **Seos / eesmärk:** ptk 12, E5/E7, AT-34. Ühine versioonitud teema toimib alamdomeenil, iframe'is ja modaalis.
 - **Sisendid / eeltingimused:** omaniku kinnitatud suund, mallide/fontide/piltide valik ning õigused. **Omaniku otsusel praegu ootel.**
 - **Põhikäik:** kinnitada disain ja täpne ulatus; teostada mustand, eelvaade, avaldamine, vaikeseadete taastamine ning piiratud meedia/kontrasti reeglid.
@@ -142,6 +148,8 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## 23-G07 — säilituse automaatika ja lahkumise andmeleping
 
+**12.09.2026:** lahkumise tegeliku HTTP, ekspordi, ligipääsutähtaja ning andmete säilimise katse läbis [peatükis 26](CHAPTER-26.md). Kinnitatud säilitusleping, kuivkäik ja automaatika jäävad selle töö avatud osaks.
+
 - **Seos / eesmärk:** ptk 18/21, E8/E10, AT-46. Kinnitatud säilitustähtajad rakenduvad tegelikult ja andmed antakse lahkumisel õigesti üle.
 - **Sisendid / eeltingimused:** kinnitatud andmeklasside tähtajad, legal hold, arvelduse säilituse kokkulepe, ekspordi- ja kustutuskuupäevad. Praegu on automaatika välja lülitatud.
 - **Põhikäik:** järgmiseks kinnitada iga klassi täitmise leping ja kuiva läbimise aruanne; selle alusel teostada piiratud partiidega korduskindel töö ning jälgimine.
@@ -151,6 +159,10 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 - **Sõltuvused / vastutaja / hinnang:** kinnitatud tähtajad, F-04 ja 23-G08; omanik + andmekaitse/lepingute koostaja + arendaja. Järgmine andmeleping ja dry-run kavand **6–10 h**, lõplik automaatika hinnata pärast kinnitust.
 
 ## 23-G08 — väline taastamine ja sõltumatu paigaldus
+
+**12.09.2026:** kogu sünteetilise DB, failide ja uuema eemaldamisregistri taastamine koos taastatud rakendusega samal VPS-il läbis [peatükis 26](CHAPTER-26.md). Alles jäävad väline hoidla/võtmed, ajastused/häired, uue hosti serverikao katse, WAL/RPO/RTO ning teise arendaja AT-44.
+
+**Hilisem 12.09 lisakontroll:** [kasutaja tehtud serverirestardi järelkontroll](RESTART-2026-09-12.md) läbis. Neli konteinerit taastusid, HTTP töötab ja põhikirjete arvud säilisid. See ei sulge ülal loetletud välise taastamise töid; ühise VPS-i ressursijaotus vajab eraldi ülevaatust.
 
 - **Seos / eesmärk:** ptk 22/26/29, E10, AT-43/44. Uus käitaja suudab taastada andmed ja käivitada teenuse omaniku taristus.
 - **Sisendid / eeltingimused:** kaitstud väline hoiukoht, võtmete sõltumatu hoiuviis, seire/hoiatuste saaja, realistlik sünteetiline andmemaht ja puhas sihtserver. Välise koha ning tootmise aktiveerimine on **omaniku otsusel edasi lükatud**.
@@ -174,6 +186,6 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 
 ## Järjekord ja etappide sulgemine
 
-F-01–F-05 kohalik parandusring on lõpetatud. 23-G09 piiratud tugivaate tehniline teostus on 09.09 valmis. Järgmiste töödena jäävad 23-G03/G05/G06/G08 vastavad protokollid. Äriotsused, piloot ja õiguste ahel liiguvad omaniku tööna nende sõltuvustega samal ajal. Kujunduse ja tootmise varunduse edasilükkamist audit ei tühista.
+F-01–F05 parandused ja paigaldus, G03 automaatmaatriks, G06 mõõtevoor ning G09 tehniline teostus/paigaldus on lõpetatud. Järgmisena saab teha G01 tehnilise litsentsiinventuuri; G02 protokollide või G07 andmelepinguprojekti ettevalmistus on samuti võimalik. [Täpne allesjäänud ulatus ja sõltuvused](REMAINING-WORK.md). Inimvastuvõttu ei asendata korduva automaattestiga; kujunduse ja väliste seadistuste edasilükkamine säilib.
 
 E2 kohalikule tehnilisele katsele on [värske tõend](CHAPTER-23.md) olemas ning eraldi koodimuudatust selle tõendi tekitamiseks vaja ei ole; lõplik omaniku vastuvõtt tuleb registreerida. E0–E10 muud piirid on põhiosa tabelis. Etappe ei märgita tervikuna valmis selle põhjal, et käesolev audit ja tööregister valmis said.

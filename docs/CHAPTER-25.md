@@ -42,6 +42,25 @@ Sõltumatu klient teeb proovibroneeringu abita. Töötaja leiab päeva plaani ja
 
 Kujundusejärgses tehnilises voorus kontrollitakse uuesti kontrasti, suurendust, klaviatuuri, modaali fookust ja avaldamise/mustandi piire (AT-32–35). Turvalisuse lisalävendis seotakse parooli- ja MFA-taastamise, üleslaadimise, sisendite väärkasutuse, päringupiiride ning logisaladuste tegelikud tõendid [ASVS-i registriga](CHAPTER-16.md). Puuduv või sõltuvuse tõttu tegemata kontroll jääb avatuks.
 
+## Platvormihalduri arusaadavuse vastuvõtt
+
+Omaniku täpsustus 12.09.2026: ka tema platvormihaldus peab olema arusaadav. See on eraldi ettevõtte omaniku igapäevasest broneerimishaldusest. [Platvormihalduri juhendi esmane versioon](PLATFORM-ADMIN-GUIDE.md) on koostatud praeguse lähtekoodi põhjal; allolevaid kasutajakatseid pole tehtud. Kujundus jääb ootele.
+
+Haldur peab saama aru, millist ettevõtet ta parajasti haldab, mida näidatud seisund tähendab, mis põhjustas tõrke, mida saab järgmiseks teha ning mida kinnitamine muudab. Tehnilist veakoodi või arendaja suulist juhendamist ei loeta piisavaks selgituseks. Vajalikud kinnitused ja õiguste piirid peavad olema nähtavad enne toimingut. Täpne lahendus hinnatakse lõpliku kujundusega.
+
+| Ülesanne | Vastuvõtul kontrollitav tulemus |
+| --- | --- |
+| Leia ettevõte ja selle seis | Haldur tuvastab õige ettevõtte ning eristab seadistamist, avaldamist, maksepiirangut ja lahkumist; eri vormide ettevõttevalik ei eksita |
+| Loo testettevõte ja taasta esimese omaniku kutse | Haldur mõistab avaldamata testrežiimi, kutse saajat/aegumist ja seda, kas kiri saadeti; eristab taastamist omanikuvahetusest |
+| Leia tellimus, arve ja laekumine | Haldur selgitab 35 € hinda, perioodi, maksetähtaega, tasumata jääki ning piirangu põhjust; leiab õige arve |
+| Paranda sünteetiline laekumiskirje või krediteeri testarve | Haldur eristab parandust, kreeditarvet ja tegelikku tagasimakset; saab enne kinnitamist aru mõjust kasutusõigusele ning leiab ajaloo |
+| Lahenda makse- või saatmistõrke järgmine samm | Haldur eristab ootel, ebaõnnestunud, kontrollimist vajavat ja edukat tulemust ning test-/päriskeskkonda; teab, millal värskendada, korrata või anda juhtum käitajale. Pärisühenduste katse sõltub G05-st |
+| Alusta ja lõpeta auditeeritud tugi | Haldur teab ettevõtet, põhjust, aegumist ja lubatud andmeid; mõistab ainult lugemise piiri ning leiab lõpetamise toimingu. Seos G09 |
+| Korralda ettevõtte lahkumise pöördumine | Haldur eristab pausi, tellimuse/andmeligipääsu lõppu ja kustutamist ning teab, kes võib toimingut teha. Platvormihalduri sulgemise/taasavamise töökorraldus on praegu kooskõlastamata; omaniku vorm üksi seda nõuet ei sulge |
+| Leia juhis ja rikke vastutaja | Haldur leiab rollile sobiva juhendi ning määratud hooldaja/asendaja kontakti ja toeajad. Praegu on kontaktid määramata |
+
+Katse tehakse pärast kujundust sünteetiliste andmetega ning fikseeritud versioonis. Omanik täidab enda platvormihalduri ülesanded; sõltumatu testija katab kokkulepitud kasutajamaatriksi. Iga ülesande juures märgitakse lõpetamine, abi vajadus, eksimus, põhjuse ja tagajärje mõistmine ning tõend. Ebaselge haldusvaade jääb parandustööks ka siis, kui juhend kirjeldab õiget klõpsujada. Omaniku praegune nõue ei ole olemasoleva halduse vastuvõtu kinnitus.
+
 ## Tulemuse vorm ja lõpetamine
 
 Allolev on täitmata vorm, mitte läbitud katse.

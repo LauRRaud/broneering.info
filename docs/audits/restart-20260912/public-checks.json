@@ -1,0 +1,20 @@
+[
+  {
+    "host": "demo.broneering.info",
+    "catalog": "passed",
+    "serviceCount": 4,
+    "availability": "passed",
+    "date": "2026-09-14",
+    "offerCount": 24,
+    "checkedAtUtc": "2026-09-12T11:17:02.3095108Z"
+  },
+  {
+    "host": "demo2.broneering.info",
+    "catalog": "passed",
+    "serviceCount": 4,
+    "availability": "passed",
+    "date": "2026-09-14",
+    "offerCount": 24,
+    "checkedAtUtc": "2026-09-12T11:17:02.5857209Z"
+  }
+]
