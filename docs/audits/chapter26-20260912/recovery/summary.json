@@ -1,0 +1,10 @@
+{
+  "pass": true,
+  "backupAt": "2026-09-12T10:22:51.443Z",
+  "recoveryStartedAt": "2026-09-12T10:22:54.272Z",
+  "recoveryReadyAt": "2026-09-12T10:23:06.172Z",
+  "recoveryDatabase": "recovery_c3562584e67fff2e2fa9f83f081cdfc9",
+  "measuredRestoreSeconds": 11.9,
+  "snapshotAgeAtRecoverySeconds": 2.829,
+  "scope": "Full synthetic database and encrypted private files, newer removal ledger, separate database and app on the same VPS; no offsite/server-loss guarantee"
+}

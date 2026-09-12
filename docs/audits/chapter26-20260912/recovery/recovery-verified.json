@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-12T10:23:03.746Z",
+  "pass": true,
+  "bookingsPreserved": 101014,
+  "removedContactBookings": 10,
+  "oldSessionsRevoked": true,
+  "oldExportsRevoked": true,
+  "importPayloadsCleared": true,
+  "retainedFiles": 1,
+  "retainedFileHash": "b31dc5e53cce572f2b28ac0efee931f2758b613f4e1d4cc825f66397a1b60cdc",
+  "appRoleUnprivileged": true
+}

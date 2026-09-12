@@ -1,0 +1,111 @@
+{
+  "at": "2026-09-12T10:18:04.074Z",
+  "phase": "import-export",
+  "runId": "23a291e6-c904-4e47-b92b-01b025e10159",
+  "checks": [
+    {
+      "path": "/api/admin/imports",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "PATCH",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "PUT",
+      "status": 409
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "PATCH",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "PUT",
+      "status": 409
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "POST",
+      "status": 400
+    },
+    {
+      "path": "/api/admin/bookings",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "PATCH",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/imports",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/exports",
+      "method": "POST",
+      "status": 202
+    },
+    {
+      "path": "/api/admin/exports",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/exports",
+      "method": "GET",
+      "status": 403
+    }
+  ],
+  "before": {
+    "customers": 127,
+    "bookings": 1023,
+    "outbox": 31
+  },
+  "after": {
+    "customers": 129,
+    "bookings": 1024,
+    "outbox": 31
+  },
+  "export": {
+    "id": "739d981b-95af-4634-9277-8a9604e13aac",
+    "records": 1285,
+    "bookings": 1024,
+    "bytes": 984579,
+    "sha256": "033546a91b04a83facca60d0fdd27fa107e89d9a1c884c8bc4f5dc1da3660c1b",
+    "customerRelations": true
+  },
+  "pass": true
+}

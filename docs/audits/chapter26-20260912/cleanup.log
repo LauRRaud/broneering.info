@@ -1,0 +1,18 @@
+257d4456ccb6
+2026/09/12 13:30:25 [notice] 554498#554498: signal process started
+ Container chapter26-368c67ccd28b-web-1  Stopping
+ Container chapter26-368c67ccd28b-web-1  Stopped
+ Container chapter26-368c67ccd28b-web-1  Removing
+ Container chapter26-368c67ccd28b-web-1  Removed
+ Container chapter26-368c67ccd28b-db-1  Stopping
+ Container chapter26-368c67ccd28b-db-1  Stopped
+ Container chapter26-368c67ccd28b-db-1  Removing
+ Container chapter26-368c67ccd28b-db-1  Removed
+ Network chapter26-368c67ccd28b_default  Removing
+ Volume chapter26-368c67ccd28b_database  Removing
+ Volume chapter26-368c67ccd28b_private_files  Removing
+ Volume chapter26-368c67ccd28b_private_files  Removed
+ Network chapter26-368c67ccd28b_default  Removed
+ Volume chapter26-368c67ccd28b_database  Removed
+{"status":"ready"}
+Removed isolated resources and private artifacts for chapter26-368c67ccd28b

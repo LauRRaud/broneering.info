@@ -1,5 +1,7 @@
 # Peatükk 23 — paranduste ja vastuvõtu tööregister
 
+**Peatükk 26, 12.09.2026:** [serveri tehniline vastuvõtt](CHAPTER-26.md) läbis: 12 000 päringut p95 19,2 ms, 30/30 kalendrimuudatust kuni 5,006 s, konkurents, import/eksport, sisemine arveldus, lahkumistähtajad ning 53 tabeli ja privaatfailide taastamine. SMTP, Maksekeskus ja väline varukoopia on omaniku juhisel hilisemaks; inimvastuvõtt ja päris säilitusleping jäävad eraldi.
+
 **Peatükk 24 lõpetatud 10.09.2026:** [AT-01–18 tehniline vastuvõtt ja viis lisakontrolli](CHAPTER-24.md) läbisid. Värske tulemus: 290/290 automaattesti, 9/9 brauserifaasi ja build. Parandatud on nurjunud ajamuutuse järel kadunud vorm/põhjendus. Peatükkide 25–26 ja kogu V1 omaniku vastuvõtt jääb eraldi.
 
 **23-G03 lõppvoor 10.09.2026:** [laiendatud tehnilise testimise aruanne](ACCEPTANCE-G03-COMPLETION.md): 505 HTTP-päringut ja üks andmebaasi räsivõrdlus (506/506), 14/14 brauserifaasi (356 kontrolli), 287/287 automaattesti ja tootmisbuild läbisid. Hilinenud modaali ning makselingi õiguskontrolli vead parandatud. Pärisseadmete, ekraanilugejate ja sõltumatu kasutaja vastuvõtt jääb avatuks; allpool on varasemate voorude ajalooline seis.
@@ -127,6 +129,8 @@ Vastutaja on igal tööl pakutud **roll**, mitte määratud inimene. Hinnang tä
 - **Sõltuvused / vastutaja / hinnang:** F-01, ühenduste ja väljastaja andmete kättesaadavus; käitaja/arendaja + omanik, tehniline testivoor **8–16 h**, välised seadistused/ooteajad eraldi.
 
 ## 23-G06 — koormus ja kalendri nähtavuse aeg
+
+**Seis 12.09.2026: tehniline mõõtevoor läbitud.** [AT-47/48 protokoll](CHAPTER-26.md). Allpool on algne vastuvõtuleping.
 
 - **Seos / eesmärk:** ptk 11/26, E6/E10, AT-47/48. Tõendada õigsus ja kokkulepitud reageerimisajad lähtekoormusel.
 - **Sisendid / eeltingimused:** eraldi mõõtekeskkond, 100 ettevõtet, 100 000 ajaloolist broneeringut, määratud töötajate/graafikute jaotus.

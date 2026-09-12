@@ -1,0 +1,79 @@
+{
+  "at": "2026-09-12T10:19:20.288Z",
+  "phase": "exit",
+  "checks": [
+    {
+      "path": "/api/admin/exit",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/exit",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/catalog",
+      "method": "GET",
+      "status": 404
+    },
+    {
+      "path": "/api/admin/exports",
+      "method": "POST",
+      "status": 202
+    },
+    {
+      "path": "/api/admin/exports",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/exports",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": "/api/admin/exports",
+      "method": "POST",
+      "status": 403
+    },
+    {
+      "path": "/api/admin/bookings",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": "/api/admin/exit",
+      "method": "GET",
+      "status": 200
+    }
+  ],
+  "schedule": {
+    "tenantId": "26963a73-7309-49b6-b04f-e9540777cd15",
+    "version": 1,
+    "action": "schedule",
+    "bookingStopsAt": "2026-09-12T10:19:02.256Z",
+    "serviceEndsAt": "2026-09-12T10:19:11.256Z",
+    "dataAccessUntil": "2026-09-12T10:19:19.256Z",
+    "deletionNotBefore": "2026-09-13T10:19:03.256Z",
+    "agreement": "Synthetic acceptance deadlines only, no real company termination",
+    "confirmed": true
+  },
+  "ended": {
+    "version": 2,
+    "scheduled": true,
+    "bookingStopsAt": "2026-09-12T10:19:02.256Z",
+    "serviceEndsAt": "2026-09-12T10:19:11.256Z",
+    "dataAccessUntil": "2026-09-12T10:19:19.256Z",
+    "deletionNotBefore": "2026-09-13T10:19:03.256Z",
+    "agreement": "Synthetic acceptance deadlines only, no real company termination",
+    "bookingsStopped": true,
+    "serviceEnded": true,
+    "accessExpired": true,
+    "futureBookings": 0
+  },
+  "bookingsPreserved": 1024,
+  "domainStillReserved": true,
+  "clock": "Real elapsed clock, no mocked timers or deadline DB edits",
+  "pass": true
+}

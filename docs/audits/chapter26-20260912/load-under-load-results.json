@@ -1,0 +1,35 @@
+{
+  "at": "2026-09-10T19:36:01.723Z",
+  "runId": "23a291e6-c904-4e47-b92b-01b025e10159",
+  "endpoint": "Isolated Nginx TLS on same production VPS, loopback clients",
+  "cache": "cold means newly started app without availability requests; DB was seeded/ANALYZEd, OS/database caches were not purged on the shared server",
+  "clients": "100 real loopback source IPs (127.0.1.1–100), one per tenant; production-equivalent Nginx 5 r/s per-IP rule retained",
+  "distribution": "100 tenants round-robin; alternating services; 3 future days; 25% specific employee, 75% any eligible employee",
+  "requested": "under-load",
+  "summaries": [
+    {
+      "name": "under-load",
+      "requestedSeconds": 120,
+      "requestedRate": 20,
+      "expectedRequests": 2400,
+      "completed": 2400,
+      "elapsedSeconds": 119.966535292,
+      "p50Ms": 12.228009999998903,
+      "p95Ms": 20.452238000000307,
+      "p99Ms": 24.511421999995946,
+      "maxMs": 53.144136,
+      "scheduledP95Ms": 20.45556099999976,
+      "schedulerLagP95Ms": 0.7044449999957578,
+      "statuses": {
+        "200": 2400
+      },
+      "tenantIsolationAndOfferChecks": 2400,
+      "failures": [],
+      "stopped": null,
+      "pass": true
+    }
+  ],
+  "productionHealthChecks": 25,
+  "productionHealthFailures": 0,
+  "pass": true
+}

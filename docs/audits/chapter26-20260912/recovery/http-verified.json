@@ -1,0 +1,37 @@
+{
+  "at": "2026-09-12T10:23:06.121Z",
+  "checks": [
+    {
+      "path": "/api/ready",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/bookings",
+      "status": 401
+    },
+    {
+      "path": "/api/admin/bookings",
+      "status": 200
+    },
+    {
+      "path": "/api/availability",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/bookings",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/bookings",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/bookings",
+      "status": 200
+    }
+  ],
+  "newBookingVisible": true,
+  "publicOffers": 20,
+  "pass": true,
+  "transport": "Actual isolated app HTTP on server loopback port 3111"
+}

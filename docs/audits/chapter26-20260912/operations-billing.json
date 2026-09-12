@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-12T10:15:37.783Z",
+  "phase": "billing",
+  "tenantId": "a9527411-5d5c-4640-950b-e541fa9d303f",
+  "periods": [
+    "2026-07-01",
+    "2026-08-01",
+    "2026-09-01"
+  ],
+  "invoiceCount": 3,
+  "paymentCount": 3,
+  "repeatIdempotent": true,
+  "overdueCheckedAt": "2026-09-20T13:15:37.624+03:00",
+  "paidAccess": true,
+  "provider": "No external payment provider; real internal ledger functions",
+  "pass": true
+}

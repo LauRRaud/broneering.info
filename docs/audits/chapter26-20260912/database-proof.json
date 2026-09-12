@@ -1,0 +1,16 @@
+{
+  "at": "2026-09-10T12:06:56.395Z",
+  "runId": "23a291e6-c904-4e47-b92b-01b025e10159",
+  "tenants": 100,
+  "historical_bookings": 100000,
+  "future_bookings": 1000,
+  "staff": 500,
+  "services": 200,
+  "customers": 11000,
+  "invoices": 100,
+  "payments": 100,
+  "database_bytes": "157578943",
+  "commercial_billing_enabled": true,
+  "synthetic_contacts": true,
+  "outbox": []
+}

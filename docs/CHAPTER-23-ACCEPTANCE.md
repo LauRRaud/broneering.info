@@ -1,5 +1,7 @@
 # Peatükk 23 — AT-01–AT-48 tõendite maatriks
 
+**Peatükk 26, 12.09.2026:** [serveri tehniline vastuvõtt](CHAPTER-26.md) läbis: 12 000 päringut p95 19,2 ms, 30/30 kalendrimuudatust kuni 5,006 s, konkurents, import/eksport, sisemine arveldus, lahkumistähtajad ning 53 tabeli ja privaatfailide taastamine. SMTP, Maksekeskus ja väline varukoopia on omaniku juhisel hilisemaks; inimvastuvõtt ja päris säilitusleping jäävad eraldi.
+
 **Peatüki 25 otsus 10.09.2026:** pärisseadmete ja sõltumatu kasutaja vastuvõtt pärast kujunduse valmimist; ekraanilugejat testib pime inimene. [Katsesammud ja tulemuse vorm](CHAPTER-25.md). Tehnilised tõendid säilivad, kasutajavastuvõtt on ootel.
 
 **Peatükk 24 lõpetatud 10.09.2026:** [AT-01–18 tehniline vastuvõtt ja viis lisakontrolli](CHAPTER-24.md) läbisid. Värske tulemus: 290/290 automaattesti, 9/9 brauserifaasi ja build. Parandatud on nurjunud ajamuutuse järel kadunud vorm/põhjendus. Peatükkide 25–26 ja kogu V1 omaniku vastuvõtt jääb eraldi.
@@ -85,7 +87,7 @@ Parooli taastamise, MFA/varukoodide ja sessiooni sulgemise päris handler'i kats
 | AT-44 Puhas uus server ja teine arendaja | Osaline | Auditis tühja DB 47 migratsiooni, `runner` build ja readiness läbivad; paigaldusjuhend olemas | Sõltumatu teise arendaja paigaldus ja broneerimine uuel serveril **23-G08** |
 | AT-45 Lähtekoodi ja õiguste üleandmine | Osaline | Kohalik kood/lukufail/juhendid, ptk 20 varasem privaatsuse ja litsentside inventuur | Omaniku ligipääsude ning lepingulise õiguste ahela ja puuduvate litsentsitekstide kinnitus **23-G01** |
 | AT-46 Ettevõtte lahkumine | Osaline | [company-exit.test.ts](../tests/company-exit.test.ts), `exports.test.ts`, `embed.test.ts`: tähtajad, õiguste lõpp, eksport, broneeringute säilimine, domeeni reserveerimine | Kokkulepitud tähtaegade, failide üleandmise ja täieliku säilituse tervikvastuvõtt **23-G07/G08** |
-| AT-47 Kalendri taustavärskendus | Osaline | `booking-management.tsx` küsib aktiivses vaates perioodiliselt uut seisu, kalender ja ühenduse hoiatus loetud | Kahe eraldi kasutaja muudatuse tegeliku nähtavusaja mõõtmine kuni 10 s tavakoormusel **23-G06** |
-| AT-48 Koormuskatse | **Puudub** | 50 sama hõivamise kinnituse test tõendab õigsuse üht piiri | 100 ettevõtet, 100 000 ajaloolist broneeringut, 20 saadavuspäringut/s, p95 < 1 s, taristu/jaotuse/külma-sooja seisu/kestuse protokoll **23-G06** |
+| AT-47 Kalendri taustavärskendus | Tehniliselt läbitud 10.09 | [Ptk 26](CHAPTER-26.md): kaks eraldi kasutajat, 15 + 15 loomise/muutmise/tühistamise mõõtmist, kuni 5006 ms, ka 20 päringu/s all | Mõõdetud Chrome’i ja taristu piires; sõltumatu kasutaja vastuvõtt eraldi |
+| AT-48 Koormuskatse | Tehniliselt läbitud 10.09 | [Ptk 26](CHAPTER-26.md): 100 ettevõtet, 100 000 ajaloolist broneeringut, 20 päringut/s 600 s, 12 000/12 000 korrektset vastust, p95 19,2 ms | Sama VPS-i loopback-proksi mõõtmine, täpne jaotus ja toorandmed protokollis |
 
 Ühtegi osalist või vigast rida ei saa sulgeda lihtsalt olemasoleva testikomplekti uuesti käivitamisega. Paranduse juurde tuleb lisada puuduvat piiri läbiv katse ja uus versioonitud tõend. Lahtiste tööde täielikud sisendid, vastutaja roll, sõltuvused ja hinnangud: [tööregister](CHAPTER-23-WORK.md).

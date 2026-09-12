@@ -1,0 +1,8 @@
+{
+  "at": "2026-09-12T10:23:02.684Z",
+  "tables": 53,
+  "bookings": 101014,
+  "tenants": 101,
+  "allRowFingerprintsEqual": true,
+  "pass": true
+}

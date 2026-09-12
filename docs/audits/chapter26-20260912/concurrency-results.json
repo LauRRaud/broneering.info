@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-12T10:11:33.168Z",
+  "runId": "23a291e6-c904-4e47-b92b-01b025e10159",
+  "phase": "baseline",
+  "transport": "Authenticated owner HTTP through production-equivalent TLS proxy",
+  "requests": 50,
+  "winners": 1,
+  "conflicts": 49,
+  "replaySameBooking": true,
+  "bookingId": "58d988dd-cd32-4831-bec3-612f477c7e0f",
+  "elapsedMs": 620,
+  "counts": {
+    "bookings": 1,
+    "commands": 1,
+    "events": 1,
+    "outbox": 1,
+    "sent": 0
+  },
+  "pass": true
+}

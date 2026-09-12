@@ -1,0 +1,15 @@
+{"prepared":true,"linkedBookings":10,"fileBytes":167}
+ Container chapter26-368c67ccd28b-web-1  Stopping
+ Container chapter26-368c67ccd28b-web-1  Stopped
+{"tables":53,"bookings":101014,"tenants":101}
+{"ok":true,"files":13,"removals":0,"createdAt":"2026-09-12T10:22:53.124Z"}
+{"removed":true,"bookings":10}
+{"ok":true,"files":0,"removals":1,"createdAt":"2026-09-12T10:22:54.205Z"}
+{"allRowFingerprintsEqual":true,"tables":53}
+{"ok":true,"reconciled":1,"retainedFiles":1,"promotion":"manual isolated acceptance still required"}
+{"at":"2026-09-12T10:23:03.746Z","pass":true,"bookingsPreserved":101014,"removedContactBookings":10,"oldSessionsRevoked":true,"oldExportsRevoked":true,"importPayloadsCleared":true,"retainedFiles":1,"retainedFileHash":"b31dc5e53cce572f2b28ac0efee931f2758b613f4e1d4cc825f66397a1b60cdc","appRoleUnprivileged":true}
+{"createdFreshIsolatedSession":true}
+curl: (56) Recv failure: Connection reset by peer
+{"at":"2026-09-12T10:23:06.121Z","checks":[{"path":"/api/ready","status":200},{"path":"/api/admin/bookings","status":401},{"path":"/api/admin/bookings","status":200},{"path":"/api/availability","status":200},{"path":"/api/admin/bookings","status":200},{"path":"/api/admin/bookings","status":200},{"path":"/api/admin/bookings","status":200}],"newBookingVisible":true,"publicOffers":20,"pass":true,"transport":"Actual isolated app HTTP on server loopback port 3111"}
+{"pass": true, "backupAt": "2026-09-12T10:22:51.443Z", "recoveryStartedAt": "2026-09-12T10:22:54.272Z", "recoveryReadyAt": "2026-09-12T10:23:06.172Z", "recoveryDatabase": "recovery_c3562584e67fff2e2fa9f83f081cdfc9", "measuredRestoreSeconds": 11.9, "snapshotAgeAtRecoverySeconds": 2.829, "scope": "Full synthetic database and encrypted private files, newer removal ledger, separate database and app on the same VPS; no offsite/server-loss guarantee"}
+Recovery proof saved in output/chapter26/recovery-c3562584e67fff2e2fa9f83f081cdfc9

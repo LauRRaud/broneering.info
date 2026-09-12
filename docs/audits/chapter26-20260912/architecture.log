@@ -1,0 +1,5 @@
+
+> broneering-info@0.1.0 architecture:check
+> node --import tsx scripts/architecture.ts
+
+Architecture boundaries passed (157 source files).

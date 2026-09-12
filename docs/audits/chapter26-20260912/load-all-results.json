@@ -1,0 +1,77 @@
+{
+  "at": "2026-09-10T19:29:23.510Z",
+  "runId": "23a291e6-c904-4e47-b92b-01b025e10159",
+  "endpoint": "Isolated Nginx TLS on same production VPS, loopback clients",
+  "cache": "cold means newly started app without availability requests; DB was seeded/ANALYZEd, OS/database caches were not purged on the shared server",
+  "clients": "100 real loopback source IPs (127.0.1.1–100), one per tenant; production-equivalent Nginx 5 r/s per-IP rule retained",
+  "distribution": "100 tenants round-robin; alternating services; 3 future days; 25% specific employee, 75% any eligible employee",
+  "requested": "all",
+  "summaries": [
+    {
+      "name": "cold",
+      "requestedSeconds": 5,
+      "requestedRate": 20,
+      "expectedRequests": 100,
+      "completed": 100,
+      "elapsedSeconds": 4.970858743000001,
+      "p50Ms": 21.65877599999976,
+      "p95Ms": 30.357961999999986,
+      "p99Ms": 93.09337800000003,
+      "maxMs": 130.15612600000003,
+      "scheduledP95Ms": 31.079840999999988,
+      "schedulerLagP95Ms": 0.36726999999973486,
+      "statuses": {
+        "200": 100
+      },
+      "tenantIsolationAndOfferChecks": 100,
+      "failures": [],
+      "stopped": null,
+      "pass": true
+    },
+    {
+      "name": "warmup",
+      "requestedSeconds": 60,
+      "requestedRate": 20,
+      "expectedRequests": 1200,
+      "completed": 1200,
+      "elapsedSeconds": 59.970224604,
+      "p50Ms": 12.276061999997182,
+      "p95Ms": 19.49256300000343,
+      "p99Ms": 22.745734000000084,
+      "maxMs": 36.75145199999679,
+      "scheduledP95Ms": 19.64677600000141,
+      "schedulerLagP95Ms": 1.054377000000386,
+      "statuses": {
+        "200": 1200
+      },
+      "tenantIsolationAndOfferChecks": 1200,
+      "failures": [],
+      "stopped": null,
+      "pass": true
+    },
+    {
+      "name": "measure",
+      "requestedSeconds": 600,
+      "requestedRate": 20,
+      "expectedRequests": 12000,
+      "completed": 12000,
+      "elapsedSeconds": 599.981152372,
+      "p50Ms": 11.57562100001087,
+      "p95Ms": 19.225880000041798,
+      "p99Ms": 22.340927999990527,
+      "maxMs": 43.046658999999636,
+      "scheduledP95Ms": 19.209196000010706,
+      "schedulerLagP95Ms": 0.8105239999713376,
+      "statuses": {
+        "200": 12000
+      },
+      "tenantIsolationAndOfferChecks": 12000,
+      "failures": [],
+      "stopped": null,
+      "pass": true
+    }
+  ],
+  "productionHealthChecks": 134,
+  "productionHealthFailures": 0,
+  "pass": true
+}

@@ -1,0 +1,521 @@
+{
+  "phase": "under-load",
+  "at": "2026-09-10T19:35:44.707Z",
+  "browser": "152.0.7977.83",
+  "environment": "Same VPS isolated production image via TLS and SSH tunnel",
+  "measurements": [
+    {
+      "action": "create",
+      "bookingId": "e7140d4a-f7d5-42c7-b6fd-d8d0712d6e27",
+      "version": 1,
+      "startedAt": 1789068869607,
+      "acknowledgedAt": 1789068869658,
+      "visibleAt": 1789068874586,
+      "writeRequestMs": 51,
+      "fromAcknowledgementMs": 4928,
+      "fromRequestStartUpperBoundMs": 4979,
+      "active": true
+    },
+    {
+      "action": "reschedule",
+      "bookingId": "e7140d4a-f7d5-42c7-b6fd-d8d0712d6e27",
+      "version": 2,
+      "startedAt": 1789068874628,
+      "acknowledgedAt": 1789068874668,
+      "visibleAt": 1789068879592,
+      "writeRequestMs": 40,
+      "fromAcknowledgementMs": 4924,
+      "fromRequestStartUpperBoundMs": 4964,
+      "active": true
+    },
+    {
+      "action": "cancel",
+      "bookingId": "e7140d4a-f7d5-42c7-b6fd-d8d0712d6e27",
+      "version": 3,
+      "startedAt": 1789068879593,
+      "acknowledgedAt": 1789068879625,
+      "visibleAt": 1789068884553,
+      "writeRequestMs": 32,
+      "fromAcknowledgementMs": 4928,
+      "fromRequestStartUpperBoundMs": 4960,
+      "active": true
+    },
+    {
+      "action": "create",
+      "bookingId": "1712d740-49c0-47d8-a17f-5083eeffd468",
+      "version": 1,
+      "startedAt": 1789068884594,
+      "acknowledgedAt": 1789068884663,
+      "visibleAt": 1789068889580,
+      "writeRequestMs": 69,
+      "fromAcknowledgementMs": 4917,
+      "fromRequestStartUpperBoundMs": 4986,
+      "active": true
+    },
+    {
+      "action": "reschedule",
+      "bookingId": "1712d740-49c0-47d8-a17f-5083eeffd468",
+      "version": 2,
+      "startedAt": 1789068889666,
+      "acknowledgedAt": 1789068889729,
+      "visibleAt": 1789068894657,
+      "writeRequestMs": 63,
+      "fromAcknowledgementMs": 4928,
+      "fromRequestStartUpperBoundMs": 4991,
+      "active": true
+    },
+    {
+      "action": "cancel",
+      "bookingId": "1712d740-49c0-47d8-a17f-5083eeffd468",
+      "version": 3,
+      "startedAt": 1789068894658,
+      "acknowledgedAt": 1789068894705,
+      "visibleAt": 1789068899633,
+      "writeRequestMs": 47,
+      "fromAcknowledgementMs": 4928,
+      "fromRequestStartUpperBoundMs": 4975,
+      "active": true
+    },
+    {
+      "action": "create",
+      "bookingId": "0478459b-d5ec-422f-a14a-6f0b20a36641",
+      "version": 1,
+      "startedAt": 1789068899672,
+      "acknowledgedAt": 1789068899722,
+      "visibleAt": 1789068904645,
+      "writeRequestMs": 50,
+      "fromAcknowledgementMs": 4923,
+      "fromRequestStartUpperBoundMs": 4973,
+      "active": true
+    },
+    {
+      "action": "reschedule",
+      "bookingId": "0478459b-d5ec-422f-a14a-6f0b20a36641",
+      "version": 2,
+      "startedAt": 1789068904703,
+      "acknowledgedAt": 1789068904757,
+      "visibleAt": 1789068909682,
+      "writeRequestMs": 54,
+      "fromAcknowledgementMs": 4925,
+      "fromRequestStartUpperBoundMs": 4979,
+      "active": true
+    },
+    {
+      "action": "cancel",
+      "bookingId": "0478459b-d5ec-422f-a14a-6f0b20a36641",
+      "version": 3,
+      "startedAt": 1789068909684,
+      "acknowledgedAt": 1789068909735,
+      "visibleAt": 1789068914651,
+      "writeRequestMs": 51,
+      "fromAcknowledgementMs": 4916,
+      "fromRequestStartUpperBoundMs": 4967,
+      "active": true
+    },
+    {
+      "action": "create",
+      "bookingId": "4051ce99-cbe4-405e-8578-363377b3de13",
+      "version": 1,
+      "startedAt": 1789068914690,
+      "acknowledgedAt": 1789068914729,
+      "visibleAt": 1789068919643,
+      "writeRequestMs": 39,
+      "fromAcknowledgementMs": 4914,
+      "fromRequestStartUpperBoundMs": 4953,
+      "active": true
+    },
+    {
+      "action": "reschedule",
+      "bookingId": "4051ce99-cbe4-405e-8578-363377b3de13",
+      "version": 2,
+      "startedAt": 1789068919684,
+      "acknowledgedAt": 1789068919735,
+      "visibleAt": 1789068924651,
+      "writeRequestMs": 51,
+      "fromAcknowledgementMs": 4916,
+      "fromRequestStartUpperBoundMs": 4967,
+      "active": true
+    },
+    {
+      "action": "cancel",
+      "bookingId": "4051ce99-cbe4-405e-8578-363377b3de13",
+      "version": 3,
+      "startedAt": 1789068924652,
+      "acknowledgedAt": 1789068924685,
+      "visibleAt": 1789068929619,
+      "writeRequestMs": 33,
+      "fromAcknowledgementMs": 4934,
+      "fromRequestStartUpperBoundMs": 4967,
+      "active": true
+    },
+    {
+      "action": "create",
+      "bookingId": "59e8ca40-fff4-4151-a4b9-aa6343f746d5",
+      "version": 1,
+      "startedAt": 1789068929653,
+      "acknowledgedAt": 1789068929698,
+      "visibleAt": 1789068934640,
+      "writeRequestMs": 45,
+      "fromAcknowledgementMs": 4942,
+      "fromRequestStartUpperBoundMs": 4987,
+      "active": true
+    },
+    {
+      "action": "reschedule",
+      "bookingId": "59e8ca40-fff4-4151-a4b9-aa6343f746d5",
+      "version": 2,
+      "startedAt": 1789068934706,
+      "acknowledgedAt": 1789068934768,
+      "visibleAt": 1789068939704,
+      "writeRequestMs": 62,
+      "fromAcknowledgementMs": 4936,
+      "fromRequestStartUpperBoundMs": 4998,
+      "active": true
+    },
+    {
+      "action": "cancel",
+      "bookingId": "59e8ca40-fff4-4151-a4b9-aa6343f746d5",
+      "version": 3,
+      "startedAt": 1789068939706,
+      "acknowledgedAt": 1789068939744,
+      "visibleAt": 1789068944668,
+      "writeRequestMs": 38,
+      "fromAcknowledgementMs": 4924,
+      "fromRequestStartUpperBoundMs": 4962,
+      "active": true
+    }
+  ],
+  "polls": [
+    {
+      "at": 1789068874456,
+      "status": 200
+    },
+    {
+      "at": 1789068879477,
+      "status": 200
+    },
+    {
+      "at": 1789068884481,
+      "status": 200
+    },
+    {
+      "at": 1789068889462,
+      "status": 200
+    },
+    {
+      "at": 1789068894470,
+      "status": 200
+    },
+    {
+      "at": 1789068899490,
+      "status": 200
+    },
+    {
+      "at": 1789068904490,
+      "status": 200
+    },
+    {
+      "at": 1789068909498,
+      "status": 200
+    },
+    {
+      "at": 1789068914479,
+      "status": 200
+    },
+    {
+      "at": 1789068919469,
+      "status": 200
+    },
+    {
+      "at": 1789068924469,
+      "status": 200
+    },
+    {
+      "at": 1789068929463,
+      "status": 200
+    },
+    {
+      "at": 1789068934473,
+      "status": 200
+    },
+    {
+      "at": 1789068939469,
+      "status": 200
+    },
+    {
+      "at": 1789068944464,
+      "status": 200
+    }
+  ],
+  "checks": [
+    {
+      "check": "Observer calendar is genuinely visible",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "Creation offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before create",
+      "pass": true
+    },
+    {
+      "check": "create: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "create: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "A distinct reschedule offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before reschedule",
+      "pass": true
+    },
+    {
+      "check": "reschedule: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "reschedule: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before cancel",
+      "pass": true
+    },
+    {
+      "check": "cancel: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "cancel: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "Creation offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before create",
+      "pass": true
+    },
+    {
+      "check": "create: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "create: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "A distinct reschedule offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before reschedule",
+      "pass": true
+    },
+    {
+      "check": "reschedule: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "reschedule: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before cancel",
+      "pass": true
+    },
+    {
+      "check": "cancel: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "cancel: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "Creation offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before create",
+      "pass": true
+    },
+    {
+      "check": "create: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "create: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "A distinct reschedule offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before reschedule",
+      "pass": true
+    },
+    {
+      "check": "reschedule: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "reschedule: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before cancel",
+      "pass": true
+    },
+    {
+      "check": "cancel: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "cancel: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "Creation offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before create",
+      "pass": true
+    },
+    {
+      "check": "create: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "create: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "A distinct reschedule offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before reschedule",
+      "pass": true
+    },
+    {
+      "check": "reschedule: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "reschedule: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before cancel",
+      "pass": true
+    },
+    {
+      "check": "cancel: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "cancel: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "Creation offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before create",
+      "pass": true
+    },
+    {
+      "check": "create: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "create: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Writer reads real authorized offers",
+      "pass": true
+    },
+    {
+      "check": "A distinct reschedule offer exists",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before reschedule",
+      "pass": true
+    },
+    {
+      "check": "reschedule: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "reschedule: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Observer remained active before cancel",
+      "pass": true
+    },
+    {
+      "check": "cancel: actual owner POST succeeded (200)",
+      "pass": true
+    },
+    {
+      "check": "cancel: visible within 10 seconds, including write and tunnel latency",
+      "pass": true
+    },
+    {
+      "check": "Periodic real calendar reads succeeded without manual refresh",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

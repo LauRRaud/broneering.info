@@ -1,0 +1,275 @@
+{
+  "at": "2026-09-12T10:32:27.972Z",
+  "applicationCommit": "bd47944701f712c5402029bf6a9ecf8b0ed1ec56",
+  "serverWorkerSourcesMatchLocal": [
+    "src/lib/billing-worker.ts",
+    "src/lib/export-worker.ts",
+    "src/lib/import-management.ts",
+    "src/lib/import-commit.ts",
+    "src/lib/company-exit.ts",
+    "src/lib/customer-privacy.ts",
+    "scripts/operations/recovery.ts",
+    "scripts/operations/reconcile.ts",
+    "scripts/operations/recovery-artifact.ts"
+  ],
+  "sources": [
+    {
+      "file": "docs/CHAPTER-23-ACCEPTANCE.md",
+      "sha256": "6d9e47d33ac65dbf49fcf633e5d130fbf8c124aba858e86010012c4bbd6df6a6"
+    },
+    {
+      "file": "docs/CHAPTER-23-COVERAGE.md",
+      "sha256": "3a6e7a4fd0c5d62a8792b65c22b6637700406494094a3de7c8f1860dae0aceeb"
+    },
+    {
+      "file": "docs/CHAPTER-23-WORK.md",
+      "sha256": "08255bde67aa9192d0048caff33839d2e8ce44233ff13f480c421c70d256b43f"
+    },
+    {
+      "file": "docs/CHAPTER-26.md",
+      "sha256": "ae071ec1e42a4d7a03bf3bddcd00e4ec6a8bb4a2eef5ec3093e39620b8eeb7fb"
+    },
+    {
+      "file": "docs/PROGRESS.md",
+      "sha256": "bde1780b0ec4e07de721f1cae2fd0a12e6fccbbecd871f1d6611ed51cc4248cf"
+    },
+    {
+      "file": "docs/ROADMAP.md",
+      "sha256": "f1ba68795b279c3616953056f4dcc168acbfb6efd2bb91ddc611f223c541e7c1"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-09-10-chapter26-acceptance.md",
+      "sha256": "67386477e59ab93f3e68fb3327a6ca70b6d15f9b018f85c3f8edacbf5b0dcd76"
+    },
+    {
+      "file": "infra/acceptance/chapter26-cleanup.sh",
+      "sha256": "9af40d4b9441381f0e6c10bfc694d3df919a764c807657837eee9d3813f94102"
+    },
+    {
+      "file": "infra/acceptance/chapter26-recovery.sh",
+      "sha256": "024d76b00ca93fde6eb5f039e2dfbc6d76107a843aae6ff6b663713d03882ad3"
+    },
+    {
+      "file": "infra/acceptance/chapter26-setup.sh",
+      "sha256": "4c7e0ab2eebfa6e96ff1e9de6f2ffba445447b89f74398826a8eaf306420c631"
+    },
+    {
+      "file": "infra/acceptance/chapter26.compose.yaml",
+      "sha256": "7c0af30cda30d4b7f6a2f020f0717967cac944e1224552cea2e1a5f2ad3deb8a"
+    },
+    {
+      "file": "scripts/chapter26-calendar.js",
+      "sha256": "1d74b5e2f62904ea87523f65ede5a6b6c40dc39aab5dba1ac394be727de77140"
+    },
+    {
+      "file": "scripts/chapter26-concurrency.mjs",
+      "sha256": "5603bd698f78c1596e8f8197da7340d0473763ddfaefc0d8aedaae3b63268c5c"
+    },
+    {
+      "file": "scripts/chapter26-config-check.cjs",
+      "sha256": "854cb3e6f39fe4248b2ae55953b6b2a93fd891851b713b23775da32b2291860c"
+    },
+    {
+      "file": "scripts/chapter26-fixture.ts",
+      "sha256": "87318f30e1536f2bf8e253cb4a098d12343e18b5c3b3a7111e1adf212e67e67d"
+    },
+    {
+      "file": "scripts/chapter26-load.mjs",
+      "sha256": "49dedc697dce020f0cd08044163f194ddfa669bf860c847e3c9e33fc3b86a982"
+    },
+    {
+      "file": "scripts/chapter26-operations.ts",
+      "sha256": "a062ae939f4754af4075f4e9fee41b32b8dbca59e27bcab94069dc36f1d7f5cd"
+    },
+    {
+      "file": "scripts/chapter26-recovery-http.mjs",
+      "sha256": "162d6910ed1a1f38b5ad83dbd2e3cbf0e27e16edc8bd6c26ff6f3ea522874b18"
+    },
+    {
+      "file": "scripts/chapter26-recovery.ts",
+      "sha256": "4a292d69b53d7010a13ffb18c42485559acc5bdc20c64f7425601d91936686dc"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/audits/chapter26-20260912/architecture.log",
+      "bytes": 145,
+      "sha256": "6b308c4b89c6b3bf3e611f96bdddf53b92ff214b787ed48191dcd2d9b08351b2"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/calendar-baseline.json",
+      "bytes": 12910,
+      "sha256": "90d8072e0dc1487ce589671725823bcbacd779c2838985a54240e91a02f807c5"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/calendar-baseline.png",
+      "bytes": 63333,
+      "sha256": "51e40c032b57c838681e2817b9900671b460ec425e0f6e4a672efb62e58cab6b"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/calendar-under-load.json",
+      "bytes": 12912,
+      "sha256": "674becb0a4f357ca371a8c34619075b1cc97cc9b3f5ebe412faeb0cb4118519b"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/calendar-under-load.png",
+      "bytes": 63519,
+      "sha256": "ce16390ee0a4562fed1db81ab8e8f8a879b6f9a8376ea0105d58c43e2dbd1410"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/cleanup-old-fixture.log",
+      "bytes": 28,
+      "sha256": "9a4a98ecd0a1610255cdbd3588427311bf005aee36615b44bc9aea8dd1195d3d"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/cleanup-verify.log",
+      "bytes": 44,
+      "sha256": "d221004b72dce56c11d44d3989f75d0356f1092b3f92fa49ef236f00267bde30"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/cleanup.log",
+      "bytes": 892,
+      "sha256": "1d9a21f1e179dcc922bbe3847563a4d257cec8fc8eaff02f5b28d3dfff259126"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/concurrency-results.json",
+      "bytes": 473,
+      "sha256": "3cba3d73e02abaee0bb2edf81a6793ba3b9505acf43ac565047b7fa65849cc55"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/database-proof.json",
+      "bytes": 379,
+      "sha256": "893d1ea7c8579dd85eceade7750248823adc8bddd412707f55f44b4d80a03285"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/dataset.json",
+      "bytes": 553,
+      "sha256": "ff9c13a15159576434b854ea8c05869541e41e92960c67cfbdf1f76e46099134"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/health-original-load.json",
+      "bytes": 15179,
+      "sha256": "7c204974a03ed6457a75c87c783a44e7f136981dfcea71f470435d91e6ac236a"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/load-all-results.json",
+      "bytes": 2445,
+      "sha256": "9cc5b0b1c9b571522603bec73b550898b396d541986abb3b35ea9b4693e39e56"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/load-cold-requests.json",
+      "bytes": 22186,
+      "sha256": "0a22bde9b808af2694a7ee353139c60f39c5a6cbc4c85f056889476cc2d81864"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/load-measure-requests.json",
+      "bytes": 2683839,
+      "sha256": "98c7358645c6db32693dc0466637a6932bd07a007d909adc4d5c3ccd99587fda"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/load-under-load-requests.json",
+      "bytes": 535103,
+      "sha256": "4e1dd0dd92c426bece2fdd1474f324a1401e5c7ac69e2c522a9f2ad7577015c3"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/load-under-load-results.json",
+      "bytes": 1292,
+      "sha256": "c5317423cc0da0f2acbd3ad58012972242ee1317f6cf4b20ea95dbe7802404c2"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/load-warmup-requests.json",
+      "bytes": 267298,
+      "sha256": "1fd5e1c1cc17ce4b2136915618e1fa881fd00e6217c0afdf120438b13b40010a"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/operations-billing.json",
+      "bytes": 428,
+      "sha256": "7d9f6b4537ff6650e39f879c0f7169f2dd09df561ed9e4b616d1c62d330e7999"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/operations-exit.json",
+      "bytes": 1924,
+      "sha256": "37d0fc5f04b14dcfb3ea02356e5ccec4c15cc1701befb877f30ea8365b98958e"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/operations-import-export.json",
+      "bytes": 2131,
+      "sha256": "e2bae269ee2d5be9dc2faee9bb04e0498e19186cf016de7ec41d00a2dba14240"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/production-health-during-load.json",
+      "bytes": 2834,
+      "sha256": "246407e46edcbddbfd40f55add5d42d760bb003dff52a5bc79e8158eef4ab8ad"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/recovery-run.log",
+      "bytes": 1922,
+      "sha256": "b7a0111a7885b52db2c3b097b40d41b1be7d2ba92ae63c7c2bcd142b188bae60"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/recovery/before.json",
+      "bytes": 4906,
+      "sha256": "60d77ac3d7bd5cc1f44252d42c7b8f78925d2344ad969596542e5c7c2319b3b0"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/recovery/database-restored.json",
+      "bytes": 145,
+      "sha256": "910d3e393a057ede8a0e0d82df1d7ec68c529e2f47f452d024728aeeb2f60f68"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/recovery/expected.json",
+      "bytes": 340,
+      "sha256": "a18f9a60f2bcbcd0dc8d15f8ea5c3574d527617a8a91f284ce21f5576d7821cb"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/recovery/http-verified.json",
+      "bytes": 674,
+      "sha256": "5e27e55a8529d343c2fd64cfd75c388dd24133c598eb228b302f7260b00ef803"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/recovery/live-ready-after.json",
+      "bytes": 18,
+      "sha256": "31bf75f4c0a97cc1f7b60df824fa390b3be9ba014f29b63c87c698ba63d9a9fd"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/recovery/recovery-verified.json",
+      "bytes": 352,
+      "sha256": "0f1f1f5598fdcad3921a4cb8ee4302513db084537c1ef9511d658ed0aeaf6ca3"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/recovery/removal-after-backup.json",
+      "bytes": 127,
+      "sha256": "85b016986e5a30613f69e2e17d970fdda43ba570202807e2f7642e12f48509d1"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/recovery/summary.json",
+      "bytes": 467,
+      "sha256": "ef03b077c61d37a8dec748810640dbdfd38fc9890820a6b5cd4fdeea1ce5527c"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/resources-before.log",
+      "bytes": 4611,
+      "sha256": "bee96970f8e071fded37f92d8e3872914df1a965104ec03ab03a2806406bcf26"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/server-before-cleanup.log",
+      "bytes": 1288,
+      "sha256": "34ec481104bb1121c7f9f3b98d5e9919da1597010704c5ebc2d37b2e27e9a978"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/tests.json",
+      "bytes": 20882,
+      "sha256": "b45adaaa5b2886561a6ce732f540e014b94745c6c27f5b734bb907064c6713a1"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/tests.log",
+      "bytes": 1668,
+      "sha256": "7b2279838021b739628f2d67770e41717c119ccbc151f3e499e935d4762a0bc8"
+    },
+    {
+      "file": "docs/audits/chapter26-20260912/typecheck.log",
+      "bytes": 55,
+      "sha256": "7f4c80187b18a82eaea2b0329fc0d29b1aaf95e6776ad845d882a2d7216ea580"
+    }
+  ]
+}

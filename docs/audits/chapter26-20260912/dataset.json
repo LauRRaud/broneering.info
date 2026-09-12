@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-10T12:06:55.756Z",
+  "runId": "23a291e6-c904-4e47-b92b-01b025e10159",
+  "tenants": 100,
+  "historicalBookings": 100000,
+  "futureBookings": 1000,
+  "staffPerTenant": 5,
+  "servicesPerTenant": 2,
+  "historicalDays": 100,
+  "historyCustomersPerTenant": 100,
+  "weeklyHours": "09–12 and 13–18 every day, location 09–18",
+  "exceptions": "Employee 4 is closed on day+1 in every fifth tenant",
+  "commercialBilling": "Standard 35 EUR plan, real issued invoice and synthetic recorded payment in isolated DB",
+  "seedSeconds": 19.175
+}

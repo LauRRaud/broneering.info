@@ -1,0 +1,56 @@
+2026-09-10T12:06:59Z
+Linux 6.8.0-139-generic x86_64 GNU/Linux
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           52 bits physical, 57 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  3
+On-line CPU(s) list:                     0-2
+Vendor ID:                               AuthenticAMD
+Model name:                              AMD EPYC 9274F 24-Core Processor
+CPU family:                              25
+Model:                                   17
+Thread(s) per core:                      1
+Core(s) per socket:                      1
+Socket(s):                               3
+Stepping:                                1
+BogoMIPS:                                8099.97
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm rep_good nopl cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw perfctr_core ssbd perfmon_v2 ibrs ibpb stibp ibrs_enhanced vmmcall fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves avx512_bf16 clzero xsaveerptr wbnoinvd arat npt lbrv nrip_save tsc_scale vmcb_clean pausefilter pfthreshold v_vmsave_vmload vgif vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq la57 rdpid overflow_recov succor fsrm flush_l1d arch_capabilities
+Virtualization:                          AMD-V
+Hypervisor vendor:                       KVM
+Virtualization type:                     full
+L1d cache:                               192 KiB (3 instances)
+L1i cache:                               192 KiB (3 instances)
+L2 cache:                                1.5 MiB (3 instances)
+L3 cache:                                48 MiB (3 instances)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-2
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Vulnerable: Safe RET, no microcode
+Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; STIBP disabled; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Vulnerable: Clear CPU buffers attempted, no microcode
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Not affected
+               total        used        free      shared  buff/cache   available
+Mem:            6932        4218         369         201        2853        2714
+Swap:           2047         702        1345
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda1        48G   39G  9.2G  81% /
+nginx version: nginx/1.24.0 (Ubuntu)
+29.1.3
+web-image=sha256:617c21b4532e64931a76d83514a37c1b81221c535cea81f368188657aa0b320f
+tools-image=sha256:72c91cfd8758cc1521ae56ccac66d076b2905967bcbd53b43fc3d914ce27a027
+NAME                           IMAGE                                                                                 COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+chapter26-368c67ccd28b-db-1    postgres:18@sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280   "docker-entrypoint.s…"   db        27 seconds ago   Up 26 seconds (healthy)   127.0.0.1:55436->5432/tcp
+chapter26-368c67ccd28b-web-1   sha256:617c21b4532e64931a76d83514a37c1b81221c535cea81f368188657aa0b320f               "docker-entrypoint.s…"   web       3 seconds ago    Up 2 seconds              127.0.0.1:3109->3000/tcp

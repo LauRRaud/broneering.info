@@ -1,0 +1,10 @@
+{
+  "tenantId": "835640bb-f751-40f0-b0ce-78e2875f26fd",
+  "customerId": "01f01e24-dd2e-4e2e-9128-d6a10e8ab798",
+  "bookings": 10,
+  "file": {
+    "key": "835640bb-f751-40f0-b0ce-78e2875f26fd_b58d5b30-aa29-4e14-a22b-1422fc07d7b3_jsonl",
+    "bytes": 167,
+    "sha256": "b31dc5e53cce572f2b28ac0efee931f2758b613f4e1d4cc825f66397a1b60cdc"
+  }
+}
