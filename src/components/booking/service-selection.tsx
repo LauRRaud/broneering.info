@@ -4,12 +4,27 @@ import {localeNames,localeTags} from '@/lib/locales';
 import {localizedService} from '@/lib/service-translation-contracts';
 import styles from './selection.module.css';
 
-export function serviceCategories(catalog: Catalog) {
-  return [...new Set(catalog.services.map(item => item.category))];
+export function servicePath(service: Service): string[] {
+  return service.categoryPath?.length ? service.categoryPath : [service.category];
+}
+
+export function servicesAtPath(services: Service[], path: string[]) {
+  return services.filter(service=>{const parts=servicePath(service);return parts.length===path.length&&path.every((part,index)=>parts[index]===part);});
+}
+
+export function serviceCategories(catalog: Catalog, path: string[] = []) {
+  return [...new Set(catalog.services.map(servicePath).filter(parts=>parts.length>path.length&&path.every((part,index)=>parts[index]===part)).map(parts=>parts[path.length]))];
+}
+
+export function initialCategoryPath(catalog: Catalog) {
+  const path:string[]=[];
+  let choices=serviceCategories(catalog,path);
+  while(choices.length===1&&!servicesAtPath(catalog.services,path).length){path.push(choices[0]);choices=serviceCategories(catalog,path);}
+  return path;
 }
 
 export function firstBookingStep(catalog: Catalog): 'category' | 'service' {
-  return serviceCategories(catalog).length > 1 ? 'category' : 'service';
+  return serviceCategories(catalog,initialCategoryPath(catalog)).length ? 'category' : 'service';
 }
 
 export function CategorySelection({categories,selected,disabled,onSelect}: {

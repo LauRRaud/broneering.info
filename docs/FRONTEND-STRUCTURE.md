@@ -27,3 +27,5 @@ Ajasta lihtne avaleht on [eraldi komponendis](../src/components/marketing/ajasta
 Kontrollida tuleb tõlkeid, mobiilivaadet, klaviatuuri, fookust, veaseisundeid ja kõiki muudetud kasutusvooge. Kujundusreeglid kehtivad ka järgmistele arendajatele [AGENTS.md kaudu](../AGENTS.md).
 
 12.09 jätk: broneerimise kompaktne päis ning kategooria- ja teenusevalik on nüüd eraldi komponentides. [Sammupõhise voo kirjeldus](BOOKING-STEPS.md).
+
+Ilutegu 12.09 nõuded: [ettevõtte logo, värvid, kategooriavisuaalid ja kalender](THEME-SETTINGS-REQUIREMENTS.md). Need on kujundusredaktori nõuded; redaktor ise on veel teostamata.

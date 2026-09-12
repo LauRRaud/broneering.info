@@ -1,6 +1,6 @@
 import type {Locale} from './locales';
 import type {PublicServiceTranslation} from './service-translation-contracts';
-export type Service = { sourceLanguage?:Locale; translations?:Partial<Record<Locale,PublicServiceTranslation>>; id: string; name: string; description: string; category: string; priceFrom: number; durationFrom: number };
+export type Service = { categoryPath?:string[]; sourceLanguage?:Locale; translations?:Partial<Record<Locale,PublicServiceTranslation>>; id: string; name: string; description: string; category: string; priceFrom: number; durationFrom: number };
 export type Staff = { id: string; name: string; title: string; bio?: string; photoUrl?: string; serviceIds: string[] };
 export type Catalog = { tenant: { bookingTerms?:string; defaultLanguage?:'et'|'en'|'ru';name: string; slug: string; address: string; timezone: string; description: string; cancellationHours: number; rulesVersion:number; demo: boolean }; services: Service[]; staff: Staff[]; today: string; maxDate: string; selectedStaffId?: string };
 export type NextAvailability = { date: string | null; searchedThrough: string; hasMore: boolean };

@@ -71,3 +71,36 @@ it('skips a redundant category and staff step for a direct worker link',async()=
  await click('Lõikus');expect(title()).toBe('Vali aeg');
  await click('Tagasi');expect(title()).toBe('Vali teenus');
 });
+
+
+it('walks nested categories without splitting slash characters in group names',async()=>{
+ const nested={...catalog,services:[
+  {...catalog.services[0],category:'Juuksur / Värv / lõikus',categoryPath:['Juuksur','Värv / lõikus']},
+  {...catalog.services[1],category:'Juuksur / Soengud',categoryPath:['Juuksur','Soengud']},
+  {...catalog.services[2],category:'Pediküür',categoryPath:['Pediküür']},
+ ]};
+ await render(nested);
+ await click('Juuksur');
+ expect(title()).toBe('Vali teenusegrupp');
+ expect(button('Värv / lõikus')).toBeDefined();
+ expect(button('Pediküür')).toBeUndefined();
+ await click('Värv / lõikus');
+ expect(title()).toBe('Vali teenus');
+ expect(button('Lõikus')).toBeDefined();
+ expect(button('Massaaž')).toBeUndefined();
+ await click('Tagasi');expect(button('Soengud')).toBeDefined();
+ await click('Tagasi');expect(button('Pediküür')).toBeDefined();
+});
+
+it('keeps direct services reachable alongside subgroups and skips a sole top-level group',async()=>{
+ await render({...catalog,services:[
+  {...catalog.services[0],categoryPath:['Juuksur']},
+  {...catalog.services[1],categoryPath:['Juuksur','Soengud']},
+ ]});
+ expect(title()).toBe('Vali teenusegrupp');
+ expect(button('Juuksur')).toBeUndefined();
+ expect(button('Lõikus')).toBeDefined();
+ expect(button('Soengud')).toBeDefined();
+ await click('Lõikus');await click('Tagasi');await click('Tagasi');
+ expect(title()).toBe('Vali teenusegrupp');expect(button('Soengud')).toBeDefined();
+});

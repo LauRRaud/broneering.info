@@ -6,7 +6,7 @@ export default function BookingHeader({tenant}: {tenant: Catalog['tenant']}) {
   const {t}=useI18n();
   return <header>
     <h1>{tenant.name}</h1>
-    {tenant.demo&&<small>{t('Demokeskkond — proovibroneeringud')}</small>}
+    {tenant.demo&&<small>{t('Demo — töötajad ja osa teenusekestusi on näidisandmed.')}</small>}
     {(tenant.address||tenant.description||tenant.bookingTerms)&&<details>
       <summary>{t('Ettevõtte info ja tingimused')}</summary>
       <p>{tenant.address}</p><p>{tenant.description}</p>
