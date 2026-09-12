@@ -1,0 +1,17 @@
+.root{position:relative;font-size:.925rem}
+.trigger{display:flex;align-items:center;justify-content:center;gap:.5rem;min-block-size:2.5rem;padding:.3rem .85rem;background:transparent;color:var(--text);border:1px solid transparent;border-radius:999px;cursor:pointer;font-size:.875rem;font-weight:500}
+.trigger>svg:last-child{transform:rotate(90deg);color:var(--navigation,var(--heading))}
+.trigger:hover,.trigger[aria-expanded=true]{border-color:transparent;background:color-mix(in srgb,var(--selected) 4%,var(--surface))}
+.panel{position:absolute;z-index:40;inset-inline-end:0;inset-block-start:calc(100% + .35rem);inline-size:max-content;min-inline-size:8.25rem;max-inline-size:calc(100vw - 2rem);padding:.32rem;background:var(--surface);color:var(--text);border:1px solid var(--cardBorder,var(--border));border-radius:.72rem;box-shadow:0 12px 38px color-mix(in srgb,var(--text) 10%,transparent)}
+.panel[data-align=start]{inset-inline-start:0;inset-inline-end:auto}
+.panel[data-compact]{min-inline-size:0;padding:.25rem}
+.heading{margin:0;padding:.7rem .7rem .55rem;font-size:.9rem;font-weight:500;letter-spacing:.01em;color:var(--mutedText,var(--text))}
+.item{display:flex;align-items:center;gap:.55rem;inline-size:100%;min-block-size:2.5rem;padding:.48rem .7rem;background:transparent;color:var(--text);border:0;border-radius:.48rem;text-align:start;white-space:nowrap;cursor:pointer;font-size:1rem}
+.item>svg{color:var(--icons,var(--heading));flex:none}
+.item[aria-checked=true]{background:color-mix(in srgb,var(--selected) 7%,var(--surface));font-weight:600}
+.item:hover,.item:focus-visible{background:color-mix(in srgb,var(--selected) 12%,var(--surface))}
+.item:focus-visible{outline:2px solid var(--border);outline-offset:-2px}
+.item[data-separator]{margin-block-start:.45rem;border-block-start:1px solid var(--cardBorder,var(--border));border-start-start-radius:0;border-start-end-radius:0}
+.check{margin-inline-start:auto;display:flex;inline-size:1.05rem;flex:none;color:var(--icons,var(--heading))}
+.panel[data-compact] .item{gap:.35rem;padding-inline:.45rem}
+.panel[data-compact] .check{margin-inline-start:auto}

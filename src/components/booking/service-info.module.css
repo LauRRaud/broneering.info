@@ -1,0 +1,9 @@
+.toggle{display:grid;place-items:center;inline-size:2.35rem;min-inline-size:2.35rem;block-size:2.35rem;min-block-size:2.35rem;padding:0;border:0;border-radius:50%;background:transparent;color:var(--icons,var(--heading));line-height:1;cursor:pointer}
+.toggle:hover{background:color-mix(in srgb,var(--selected) 8%,var(--surface))}
+.dialog{position:relative;border-radius:1.1rem;border-color:var(--cardBorder,var(--border));padding:2rem;text-align:start}
+.close{position:absolute;z-index:1;inset-block-start:1rem;inset-inline-end:1rem;display:grid;place-items:center;inline-size:2.65rem;min-inline-size:2.65rem;block-size:2.65rem;min-block-size:2.65rem;padding:0;border:1px solid var(--cardBorder,var(--border));border-radius:50%;background:color-mix(in srgb,var(--surface) 90%,transparent);color:var(--icons,var(--heading));cursor:pointer}
+.close:hover{background:color-mix(in srgb,var(--icons,var(--heading)) 7%,var(--surface))}
+.title{margin:.15rem 0 1rem;padding-inline-end:3rem;font-family:var(--theme-heading-font,Georgia,serif);font-weight:400;font-size:2rem;line-height:1.2;color:var(--heading)}
+.notice{margin:0 0 1rem;padding:.75rem 1rem;border-inline-start:.1875rem solid var(--selected);background:color-mix(in srgb,var(--selected) 5%,var(--surface));font-size:.85rem;line-height:1.5}
+.description{margin:0;white-space:pre-wrap;line-height:1.65;color:var(--text)}
+@media(max-width:30rem){.dialog{padding:1.25rem}.title{font-size:1.7rem}}

@@ -1,0 +1,55 @@
+.root{inline-size:100%;min-inline-size:0}
+.navigation{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-block-end:1.65rem}
+.navigation h3{margin:0;text-align:center;font-size:clamp(1.5rem,2.5vw,2rem);font-family:var(--theme-heading-font,Georgia,serif);font-weight:400;color:var(--heading);text-transform:capitalize;line-height:1.2}
+.navigation button{display:grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;padding:.65rem;border-radius:50%;border-color:var(--cardBorder,var(--border));background:transparent;color:var(--navigation,var(--heading));cursor:pointer}
+.navigation button:disabled{opacity:.3;cursor:default}
+.previous{transform:rotate(180deg)}
+.grid{table-layout:fixed;border-spacing:0 .45rem;width:100%}
+.grid th{font-weight:500;font-size:.72rem;padding-block-end:.7rem;color:var(--mutedText,var(--text))}
+.grid td{padding:0;text-align:center}
+.day{position:relative;display:inline-grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;max-inline-size:100%;padding:0;border:1px solid transparent;border-radius:50%;font:inherit;font-size:.9rem;font-variant-numeric:tabular-nums;background:transparent;color:var(--calendarText);cursor:pointer}
+.day:hover:not(:disabled):not([aria-pressed=true]){background:color-mix(in srgb,var(--selected) 8%,var(--calendar))}
+.day[aria-current=date]{border-color:var(--navigation,var(--heading))}
+.day:disabled{opacity:.25;cursor:default}
+.day.empty:not(:disabled){color:var(--mutedText,var(--text));background:color-mix(in srgb,var(--text) 5%,var(--calendar))}
+.day[aria-pressed=true]{font-weight:600;background:var(--selected);color:var(--selectedText);border-color:var(--selected);text-decoration:none}
+.help{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%)}
+.legend{display:flex;flex-wrap:wrap;gap:.7rem 1.2rem;margin-block-start:1.5rem;padding-block-start:1.1rem;border-block-start:1px solid var(--cardBorder,var(--border));font-size:.66rem;color:var(--mutedText,var(--text))}
+.legend span{display:flex;align-items:center;gap:.4rem}
+.legend i{inline-size:.6rem;block-size:.6rem;border-radius:50%;background:color-mix(in srgb,var(--text) 8%,var(--calendar))}
+.legend .selected{background:var(--selected)}
+.legend .today{background:transparent;border:1px solid var(--navigation,var(--heading))}
+.large .navigation{margin-block-end:1.8rem}
+.large .navigation h3{font-size:clamp(1.8rem,2.8vw,2.35rem)}
+.large .navigation button{inline-size:3.1rem;block-size:3.1rem}
+.large .grid{border-spacing:0 .58rem}
+.large .grid th{font-size:.84rem;padding-block-end:.8rem}
+.large .day{inline-size:3.15rem;block-size:3.15rem;font-size:1.1rem}
+.large .legend{gap:.8rem 1.4rem;margin-block-start:1.65rem;padding-block-start:1.15rem;font-size:.76rem}
+.large .legend i{inline-size:.7rem;block-size:.7rem}
+@media(max-width:360px){.day{inline-size:2.3rem;block-size:2.5rem}.navigation{gap:.25rem}}
+@media(min-width:681px) and (max-height:950px){
+  .navigation{margin-block-end:.85rem}
+  .navigation button{inline-size:2.4rem;block-size:2.4rem;padding:.55rem}
+  .grid{border-spacing:0 .2rem}
+  .grid th{padding-block-end:.35rem}
+  .day{inline-size:2.35rem;block-size:2.35rem}
+  .legend{margin-block-start:.7rem;padding-block-start:.65rem}
+  .large .navigation{margin-block-end:1rem}
+  .large .navigation button{inline-size:3rem;block-size:3rem;padding:.65rem}
+  .large .grid{border-spacing:0 .3rem}
+  .large .grid th{font-size:.9rem;padding-block-end:.5rem}
+  .large .day{inline-size:3.05rem;block-size:3.05rem;font-size:1.15rem}
+  .large .legend{margin-block-start:.9rem;padding-block-start:.75rem;font-size:.8rem}
+}
+@media(min-width:1101px) and (max-height:950px){
+  .large .navigation{margin-block-end:.75rem}
+  .large .navigation h3{font-size:clamp(1.55rem,2vw,1.9rem)}
+  .large .navigation button{inline-size:2.65rem;block-size:2.65rem;padding:.55rem}
+  .large .grid{border-spacing:0 .2rem}
+  .large .grid th{font-size:.8rem;padding-block-end:.35rem}
+  .large .day{inline-size:2.55rem;block-size:2.55rem;font-size:1rem}
+  .large .legend{gap:.65rem 1rem;margin-block-start:.65rem;padding-block-start:.6rem;font-size:.72rem}
+  .large .legend i{inline-size:.65rem;block-size:.65rem}
+}
+@media(forced-colors:active){.day[aria-pressed=true]{forced-color-adjust:none;background:Highlight;color:HighlightText;border-color:Highlight}}

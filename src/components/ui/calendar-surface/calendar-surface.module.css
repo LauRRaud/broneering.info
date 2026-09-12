@@ -1,0 +1,8 @@
+.root {
+  --button:var(--calendar);
+  --buttonText:var(--calendarText);
+  --surface:var(--calendar);
+  --text:var(--calendarText);
+  background:var(--calendar,Canvas);
+  color:var(--calendarText,CanvasText);
+}

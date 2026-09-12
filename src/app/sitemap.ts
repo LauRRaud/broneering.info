@@ -5,5 +5,5 @@ import { searchPageForHost } from '@/lib/search';
 export const dynamic = 'force-dynamic';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const page = await searchPageForHost((await headers()).get('host') ?? '');
-  return page ? [{ url: page.url }] : [];
+  return page ? [{ url: page.url }, ...(page.url === 'https://ajasta.ee/' ? [{url: 'https://ajasta.ee/juhend'}] : [])] : [];
 }

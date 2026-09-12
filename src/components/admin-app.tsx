@@ -1,4 +1,6 @@
 "use client";
+import ScrollRegion from '@/components/ui/scroll-region/scroll-region';
+import GuideLink from './help/guide-link';
 import {localeTags} from '@/lib/locales';
 import LanguageSettings from './language-settings';
 import ServiceTranslations from './service-translations';
@@ -20,6 +22,7 @@ import {useI18n} from '@/components/i18n-provider';
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import ThemeEditor from '@/components/admin/theme/theme-editor';
 import ServiceManagement from '@/components/service-management';
 import ScheduleManagement from '@/components/schedule-management';
 import CustomerManagement from '@/components/customer-management';
@@ -407,6 +410,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
   if (resetToken && !resetHandled && !state?.user) return (
     <main id="main-content" tabIndex={-1} data-live-language>
       <h1>{t("Uue parooli määramine")}</h1>
+      <GuideLink t={t} newTab/>
       {message && <p role="alert">{t(message)}</p>}
       <form onSubmit={resetPassword}>
         <p><label htmlFor="reset-password">{t("Uus parool")}</label><br /><input id="reset-password" type="password" minLength={12} value={newPassword} onChange={(event) => setNewPassword(event.target.value)} required /></p>
@@ -419,6 +423,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
   if (!state?.user) return (
     <main id="main-content" tabIndex={-1} data-live-language>
       <h1>{t("broneering.info haldus")}</h1>
+      <GuideLink t={t} newTab/>
       {message && <p role="alert">{t(message)}</p>}
       {stateError && <p role="alert">{stateError}</p>}
       {verificationEmail && <section><h2>{t("E-posti kinnitamine")}</h2><p>{t("Kinnituskiri on seotud aadressiga ")}{verificationEmail}.</p>{!mailAvailable && <p>{t("E-kirjade saatmine ei ole seadistatud, seega uut kinnituskirja praegu saata ei saa.")}</p>}<button type="button" onClick={() => void resendVerification(verificationEmail)} disabled={!!busy || !mailAvailable}>{t("Saada kinnituskiri uuesti")}</button></section>}
@@ -476,6 +481,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
   if (!state.user.emailVerified) return (
     <main id="main-content" tabIndex={-1} data-live-language>
       <h1>{t("Haldus")}</h1>
+      <GuideLink t={t} newTab/>
       <p>{t("E-posti aadress tuleb enne halduse kasutamist kinnitada.")}</p>
       {message && <p role="alert">{t(message)}</p>}
       {!mailAvailable && <p>{t("E-kirjade saatmine ei ole seadistatud, seega uut kinnituskirja praegu saata ei saa.")}</p>}
@@ -488,6 +494,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
     <main id="main-content" tabIndex={-1} data-live-language>
       <header>
         <h1>{t("Haldus")}</h1>
+        <GuideLink t={t} newTab/>
         <p>{state.user.name} · {state.user.email}</p>
         <button type="button" onClick={() => void signOut()} disabled={!!busy}>{t("Logi välja")}</button>
       </header>
@@ -518,11 +525,12 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
             {selected.role==='owner'&&<CompanyExit tenantId={selected.tenantId} key={'exit:'+selected.tenantId} onChanged={()=>void loadState()}/>}
             {selected.dataAccessExpired?<p role="status">{t('Ettevõtte ajutine andmeligipääs on lõppenud. Võta ühendust platvormi haldajaga.')}</p>:<>
             {scheduleConflicts&&<div role="alert"><h3>{t("Graafikumuudatuse konfliktid (")}{scheduleConflicts.total})</h3><p>{t("Broneeringud ja graafik jäid muutmata. Loendis on kuni 30 mõjutatud broneeringut; kliendi kontaktandmeid siin ei kuvata.")}</p><ul>{scheduleConflicts.items.map(item=><li key={item.reference}>{item.reference} · {item.staffName} · {new Date(item.start).toLocaleString(localeTags[locale],{timeZone:state.schedules?.rules.timezone??'Europe/Tallinn'})}–{new Date(item.end).toLocaleTimeString(localeTags[locale],{timeZone:state.schedules?.rules.timezone??'Europe/Tallinn'})}</li>)}</ul></div>}
+            {(selected.role==='owner'||selected.permissions.includes('theme.publish'))&&<ThemeEditor key={'theme:'+selected.tenantId} tenantId={selected.tenantId}/>}
             <LanguageSettings key={'language:'+selected.tenantId} tenantId={selected.tenantId} owner={selected.role==='owner'}/>
             <BookingManagement key={'bookings:'+selected.tenantId+':'+state.user.id} tenantId={selected.tenantId} userId={state.user.id}/>
             {selected.role!=='staff'&&<CustomerManagement key={'customers:'+selected.tenantId} tenantId={selected.tenantId}/>}
             {state.schedules&&<ScheduleManagement key={'schedules:'+selected.tenantId} tenantId={selected.tenantId} state={state.schedules} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,t("Graafiku muudatus on salvestatud."))}/>}
-            {state.catalog && <ServiceManagement key={'catalog:'+selected.tenantId} tenantId={selected.tenantId} catalog={state.catalog} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,t("Hinnakirja muudatus on salvestatud."))}/>}
+            {state.catalog && <ServiceManagement key={'catalog:'+selected.tenantId} tenantId={selected.tenantId} catalog={state.catalog} busy={!!busy} onPhotoSaved={loadState} save={(action,payload)=>performAdminAction(action,payload,t("Hinnakirja muudatus on salvestatud."))}/>}
               {selected.role === "owner" && <>
                 <Onboarding tenantId={selected.tenantId} key={'onboarding:'+selected.tenantId}/>
                 <ExportManagement tenantId={selected.tenantId} key={'exports:'+selected.tenantId}/>
@@ -532,7 +540,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
               <ServiceTranslations tenantId={selected.tenantId} key={'translations:'+selected.tenantId} revision={JSON.stringify(state.catalog?.services)??''}/>
               {state.embedding && <EmbeddingSettingsForm key={`${selected.tenantId}:${state.embedding.origins.join('|')}`} tenantId={selected.tenantId} settings={state.embedding} onSave={origins=>performAdminAction('embedding-settings',{tenantId:selected.tenantId,origins},t("Lubatud kodulehed on salvestatud."))}/>}
               <h3>{t("Liikmed")}</h3>
-              <div className="table-scroll" role="region" aria-label={t("Liikmed")} tabIndex={0}><table>
+              <ScrollRegion role="region" aria-label={t("Liikmed")} tabIndex={0}><table>
                 <thead><tr><th>{t("Nimi")}</th><th>{t("E-post")}</th><th>{t("Roll")}</th><th>{t("Aktiivne")}</th><th>{t("MFA")}</th><th>{t("Toimingud")}</th></tr></thead>
                 <tbody>{(state.members || []).map((member) => <tr key={member.userId}>
                   <td>{member.name}</td>
@@ -542,7 +550,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
                   <td>{member.twoFactorEnabled ? t("jah") : t("ei")}</td>
                   <td>{member.role === "owner" ? <span>{t("Omaniku konto")}</span> : <><form onSubmit={(event) => submitRole(event, member)}><label>{t("Roll ")}<select name="role" defaultValue={member.role}><option value="receptionist">{t("Vastuvõtt")}</option><option value="staff">{t("Töötaja")}</option></select></label> <label>{t("Töötaja ")}<select name="staffId" defaultValue={member.staffId || ""}><option value="">{t("Puudub")}</option>{(state.staff || []).map((staff) => <option key={staff.id} value={staff.id}>{staff.name}</option>)}</select></label> <button type="submit" disabled={!!busy}>{t("Salvesta roll")}</button></form><form onSubmit={(event) => submitPermissions(event, member)}><span>{t("Õigused: ")}</span>{delegationOptions.filter((option) => option.role === member.role).map((option) => <label key={option.permission}><input type="checkbox" name="permission" value={option.permission} defaultChecked={member.permissions.includes(option.permission)} /> {t(option.label)}</label>)} <button type="submit" disabled={!!busy}>{t("Salvesta õigused")}</button></form><button type="button" disabled={!!busy} onClick={() => { if (window.confirm(t("Kas tühistada selle liikme juurdepääs?"))) void performAdminAction("revoke-member", { tenantId: selected.tenantId, userId: member.userId }, t("Liikme juurdepääs tühistati.")); }}>{t("Tühista juurdepääs")}</button></>}</td>
                 </tr>)}</tbody>
-              </table></div>
+              </table></ScrollRegion>
               <h3>{t("Kutsu liige")}</h3>
               {!state.mailAvailable && <p>{t("E-kirjade saatmine ei ole seadistatud. Kutseid ei saa saata.")}</p>}
               <form onSubmit={submitInvitation}><p><label htmlFor="invite-email">{t("E-post")}</label><br /><input id="invite-email" name="email" type="email" required /></p><p><label htmlFor="invite-role">{t("Roll")}</label><br /><select id="invite-role" name="role" value={inviteRole} onChange={(event) => setInviteRole(event.target.value as "receptionist" | "staff")}><option value="receptionist">{t("Vastuvõtt")}</option><option value="staff">{t("Töötaja")}</option></select></p><p><label htmlFor="invite-staff">{t("Töötaja profiil")}</label><br /><select id="invite-staff" name="staffId" defaultValue=""><option value="">{t("Puudub")}</option>{(state.staff || []).map((staff) => <option key={staff.id} value={staff.id}>{staff.name}</option>)}</select></p>{delegationOptions.filter((option) => option.role === inviteRole).map((option) => <label key={option.permission}><input type="checkbox" name="permission" value={option.permission} /> {t(option.label)}</label>)}<p><button type="submit" disabled={!!busy || !state.mailAvailable}>{t("Saada kutse")}</button></p></form>

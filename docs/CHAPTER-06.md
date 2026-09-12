@@ -22,7 +22,7 @@ Omaniku esitatud kategooriad on **Juuksur, Massaaž, Ripsmed ja Pediküür**. Ne
 
 - Juuksuri alamgruppideks sobivad Salgutamine + lõikus + föönisoeng, Põhi + salk + föön, Värvimine + lõikus + föönisoeng ning Lõikused ja soengud. Nende alla kuuluvad konkreetsed hinnastatud teenused.
 - Massaaži teenused võivad kuuluda otse põhikategooriasse: Megamõnnatamine, Klassikaline massaaž, Aroomimassaaž, Reflektoorne jalalabateraapia, Selg / turi / kael, Laste massaaž ja Jalad.
-- Ripsmed → Klassikalised ripsmepikendused või Hübriidripsmepikendused → Paigaldus / teise tehniku hooldus ning Hooldus.
+- Ripsmed → Klassikaliste ripsmete paigaldus või hooldus ning hübriidripsmete paigaldus või hooldus.
 - Pediküür → Spa-pediküür + geellakk või Spa-pediküür geellakita.
 
 Need on struktuurinäited, mitte päris hinnakirja import. Ilutegu demoteenuste hinnad jäävad näidisandmeteks.

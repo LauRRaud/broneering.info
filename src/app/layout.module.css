@@ -1,0 +1,3 @@
+.document {min-block-size:100dvh;padding:.5rem;}
+.document:has([data-booking-flow]) {padding:0;}
+.document:has([data-booking-flow]) > .utilities {display:none;}

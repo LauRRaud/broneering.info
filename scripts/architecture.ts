@@ -1,5 +1,5 @@
 import ts from 'typescript';
-import {readFileSync, readdirSync} from 'node:fs';
+import {readFileSync, readdirSync, existsSync} from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 
@@ -8,7 +8,7 @@ export const sharedLibraries = new Set([
   'admin-contracts', 'booking-management-contracts', 'booking-calendar', 'contracts',
   'contact-validation', 'embed-contracts', 'errors', 'i18n', 'locales',
   'schedule-contracts', 'service-management-contracts', 'service-translation-contracts',
-  'notification-contracts', 'booking-mutation-outcome',
+  'notification-contracts', 'booking-mutation-outcome', 'theme-contracts', 'public-phone',
 ]);
 const browserLibraries = new Set(['auth-client', 'client-fetch']);
 export function runtimeImports(file: string, source: string) {
@@ -47,6 +47,25 @@ export function checkArchitecture(root = process.cwd()) {
   const graph = new Map(files.map(file => [file, runtimeImports(file, readFileSync(file, 'utf8'))]));
   const violations = new Set<string>();
   const relative = (file: string) => path.relative(root, file).replaceAll('\\', '/');
+  // Component/page styles must be opt-in CSS Modules, never another global theme.
+  for (const [file,node] of graph) for (const spec of node.imports) {
+    if (spec.endsWith('.css') && !spec.endsWith('.module.css') && !(relative(file)==='src/app/layout.tsx' && spec==='./accessibility.css')) {
+      violations.add(`${relative(file)} imports global CSS ${spec}; use a colocated CSS Module`);
+    }
+  }
+  function checkThemeTokens(directory:string) {
+    for (const entry of readdirSync(directory,{withFileTypes:true})) {
+      const file=path.join(directory,entry.name);
+      if(entry.isDirectory())checkThemeTokens(file);
+      else if(entry.name.endsWith('.css')) {
+        const css=readFileSync(file,'utf8').replace(/\/\*[\s\S]*?\*\//g,'');
+        for(const match of css.matchAll(/(?:^|[;{])\s*([\w-]+)\s*:/g)) {
+          if(!match[1].startsWith('--')&&match[1]!=='color-scheme')violations.add(`${relative(file)} sets ${match[1]}; theme files contain tokens only, move styling to the component`);
+        }
+      }
+    }
+  }
+  if(existsSync(path.join(root,'src/styles')))checkThemeTokens(path.join(root,'src/styles'));
   for (const [file, node] of graph) {
     if (relative(file).startsWith('src/lib/')) for (const spec of node.imports) {
       const target = ts.resolveModuleName(spec, file, options, ts.sys).resolvedModule?.resolvedFileName;

@@ -1,59 +1,65 @@
+import Button from '@/components/ui/button/button';
 import type {Catalog, Service} from '@/lib/contracts';
 import {useI18n} from '@/components/i18n-provider';
 import {localeNames,localeTags} from '@/lib/locales';
 import {localizedService} from '@/lib/service-translation-contracts';
-import styles from './selection.module.css';
+import ServiceInfo from './service-info';
+import styles from './service-selection.module.css';
 
-export function servicePath(service: Service): string[] {
-  return service.categoryPath?.length ? service.categoryPath : [service.category];
+export function servicePath(service:Service):string[]{return service.categoryPath?.length?service.categoryPath:[service.category];}
+export function servicesAtPath(services:Service[],path:string[]){return services.filter(service=>{const parts=servicePath(service);return parts.length===path.length&&path.every((part,index)=>parts[index]===part);});}
+export function serviceCategories(catalog:Catalog,path:string[]=[]){return [...new Set(catalog.services.map(servicePath).filter(parts=>parts.length>path.length&&path.every((part,index)=>parts[index]===part)).map(parts=>parts[path.length]))];}
+export function descendSingleCategory(catalog:Catalog,start:string[]=[]){const path=[...start];let choices=serviceCategories(catalog,path);while(choices.length===1&&!servicesAtPath(catalog.services,path).length){path.push(choices[0]);choices=serviceCategories(catalog,path);}return path;}
+export function initialCategoryPath(catalog:Catalog){return descendSingleCategory(catalog);}
+export function firstBookingStep(catalog:Catalog):'category'|'service'{return serviceCategories(catalog,initialCategoryPath(catalog)).length?'category':'service';}
+
+const beautyCategoryOrder=['juuksur','massaaž','ripsmed','küünehooldus'];
+export function orderedCategories(categories:string[]){
+  return categories.map((category,index)=>({category,index})).sort((a,b)=>{
+    const aRank=beautyCategoryOrder.indexOf(a.category.trim().toLocaleLowerCase('et'));
+    const bRank=beautyCategoryOrder.indexOf(b.category.trim().toLocaleLowerCase('et'));
+    return (aRank<0?beautyCategoryOrder.length:aRank)-(bRank<0?beautyCategoryOrder.length:bRank)||a.index-b.index;
+  }).map(item=>item.category);
 }
 
-export function servicesAtPath(services: Service[], path: string[]) {
-  return services.filter(service=>{const parts=servicePath(service);return parts.length===path.length&&path.every((part,index)=>parts[index]===part);});
+// Display related services together while retaining each real service identifier.
+function servicePresentation(service:Service){
+  const named=service.name.match(/^(.*?)\s+—\s+(.+)$/);
+  if(named)return {name:named[1].trim(),variant:named[2].trim()};
+  const match=service.name.match(/^(.*?),\s*(\d+(?:[.,]\d+)?)\s*(h|min|ч|мин)\s*$/i);
+  if(!match)return {name:service.name,variant:service.name};
+  const unit=match[3].toLowerCase(),minutes=Number(match[2].replace(',','.'))*(unit==='h'||unit==='ч'?60:1);
+  return Math.abs(minutes-service.durationFrom)<.01?{name:match[1].trim(),variant:`${match[2]} ${match[3]}`}:{name:service.name,variant:service.name};
 }
-
-export function serviceCategories(catalog: Catalog, path: string[] = []) {
-  return [...new Set(catalog.services.map(servicePath).filter(parts=>parts.length>path.length&&path.every((part,index)=>parts[index]===part)).map(parts=>parts[path.length]))];
-}
-
-export function initialCategoryPath(catalog: Catalog) {
-  const path:string[]=[];
-  let choices=serviceCategories(catalog,path);
-  while(choices.length===1&&!servicesAtPath(catalog.services,path).length){path.push(choices[0]);choices=serviceCategories(catalog,path);}
-  return path;
-}
-
-export function firstBookingStep(catalog: Catalog): 'category' | 'service' {
-  return serviceCategories(catalog,initialCategoryPath(catalog)).length ? 'category' : 'service';
-}
-
-export function CategorySelection({categories,selected,disabled,onSelect}: {
-  categories: string[]; selected: string | null; disabled: boolean; onSelect: (category: string) => void;
-}) {
+export function serviceVariantName(service:Service){return servicePresentation(service).name;}
+export function CategorySelection({categories,selected,disabled,onSelect}:{categories:string[];selected:string|null;disabled:boolean;onSelect:(category:string)=>void}){
   const {t}=useI18n();
-  return <ul className={styles.options} aria-label={t('Teenusegrupid')}>
-    {categories.map(category=><li key={category}><button type="button" disabled={disabled} aria-pressed={selected===category} onClick={()=>onSelect(category)}>{category || t('Muud teenused')}</button></li>)}
-  </ul>;
+  return <ul className={styles.categories} aria-label={t('Teenusegrupid')}>{orderedCategories(categories).map(category=>{
+    const label=category?t(category):t('Muud teenused');
+    return <li key={category}><Button className={styles.category} type="button" aria-label={label} disabled={disabled} aria-pressed={selected===category} onClick={()=>onSelect(category)}>
+      <strong>{label}</strong>
+    </Button></li>;
+  })}</ul>;
 }
-
-export function ServiceSelection({services,selected,disabled,exactPrice,search,onSearch,onSelect}: {
-  services: Service[]; selected: string; disabled: boolean; exactPrice: boolean;
-  search: string; onSearch: (search: string) => void; onSelect: (service: Service) => void;
-}) {
+export function ServiceSelection({services,selected,disabled,exactPrice,search,onSearch,onSelect}:{services:Service[];selected:string;disabled:boolean;exactPrice:boolean;search:string;onSearch:(search:string)=>void;onSelect:(service:Service)=>void}){
   const {t,locale}=useI18n();
   const visible=services.map(service=>localizedService(service,locale)).filter(item=>`${item.name} ${item.description}`.toLocaleLowerCase(locale).includes(search.trim().toLocaleLowerCase(locale)));
-  const money=(value:number)=>new Intl.NumberFormat(localeTags[locale],{style:'currency',currency:'EUR'}).format(value/100);
+  const groups=new Map<string,typeof visible>();
+  for(const item of visible){const key=JSON.stringify([servicePath(item),serviceVariantName(item),item.contentLanguage,item.translationMissing]);groups.set(key,[...(groups.get(key)??[]),item]);}
+  const money=(value:number)=>new Intl.NumberFormat(localeTags[locale],{style:'currency',currency:'EUR',maximumFractionDigits:value%100?2:0}).format(value/100);
+  const duration=(value:number)=>value%30===0&&value>=60?new Intl.NumberFormat(localeTags[locale]).format(value/60)+' '+t('h'):value+' '+t('min');
   return <>
-    {services.length>8&&<label>{t('Otsi teenust ')}<input type="search" disabled={disabled} value={search} onChange={event=>onSearch(event.target.value)}/></label>}
-    <ul className={styles.options} aria-label={t('Teenused')}>
-      {visible.map(item=><li key={item.id}>
-        <button lang={item.contentLanguage} type="button" disabled={disabled} aria-pressed={selected===item.id} onClick={()=>onSelect(item)}>{item.name}</button>
-        <span className={styles.price}>{exactPrice?'':t('Alates ')}{item.durationFrom} {t('min · ')}{exactPrice?'':t('alates ')}{money(item.priceFrom)}</span>
-        {item.translationMissing&&<p>{t('Tõlge pole veel kinnitatud. Algteksti keel: {language}',{language:localeNames[item.contentLanguage]})}</p>}
-        {item.description&&<details><summary>{t('Teenuse lisainfo')}</summary><p lang={item.contentLanguage}>{item.description}</p></details>}
-      </li>)}
-      {!services.length&&<li>{t('Teenuseid ei ole veel lisatud.')}</li>}
-      {!!services.length&&!visible.length&&<li>{t('Otsingule vastavaid teenuseid ei ole. Muuda otsingut või gruppi.')}</li>}
-    </ul>
+    <ul className={styles.services} aria-label={t('Teenused')}>{[...groups].map(([key,items])=>{
+      const first=items[0],multiple=items.length>1;
+      return <li key={key} className={styles.service} data-multiple={multiple||undefined}>{multiple&&<h3 lang={first.contentLanguage}>{serviceVariantName(first)}</h3>}
+        <ul className={styles.variants}>{items.sort((a,b)=>b.durationFrom-a.durationFrom||a.name.localeCompare(b.name,locale)).map(item=>{
+          const notice=item.translationMissing?t('Tõlge pole veel kinnitatud. Algteksti keel: {language}',{language:localeNames[item.contentLanguage]}):undefined;
+          const showInfo=servicePath(item)[0]?.trim().toLocaleLowerCase('et')!=='juuksur';
+          return <li key={item.id} className={styles.variantRow}><Button className={styles.variant} aria-label={item.name} lang={item.contentLanguage} type="button" disabled={disabled} aria-pressed={selected===item.id} onClick={()=>onSelect(item)}>
+            <span className={styles.variantName}>{multiple?servicePresentation(item).variant:item.name}</span><span className={styles.variantMeta}>{exactPrice||item.durationFrom===item.durationTo?'':t('Alates ')}{duration(item.durationFrom)} · {exactPrice||item.priceFrom===item.priceTo?'':t('alates ')}{money(item.priceFrom)}</span>
+          </Button>{showInfo&&<ServiceInfo name={item.name} description={item.description} language={item.contentLanguage} translationNotice={notice}/>}</li>;
+        })}</ul>
+      </li>;
+    })}{!services.length&&<li>{t('Teenuseid ei ole veel lisatud.')}</li>}{!!services.length&&!visible.length&&<li>{t('Otsingule vastavaid teenuseid ei ole. Muuda otsingut või gruppi.')}</li>}</ul>
   </>;
 }

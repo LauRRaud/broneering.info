@@ -1,0 +1,50 @@
+// @vitest-environment jsdom
+import {afterEach,expect,it,vi} from 'vitest';
+import {act,createElement} from 'react';
+import {createRoot,type Root} from 'react-dom/client';
+import StaffCard from '../src/components/booking/staff-card';
+import {nameInitials} from '../src/components/ui/avatar/avatar';
+import {publicPhoneHref} from '../src/lib/public-phone';
+
+let root:Root,container:HTMLDivElement;
+afterEach(async()=>{if(root)await act(async()=>root.unmount());container?.remove();});
+it('reveals a callable number on demand without selecting the employee; preserves name and fallback initials',async()=>{
+ Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});
+ container=document.createElement('div');document.body.append(container);root=createRoot(container);
+ const onSelect=vi.fn(),staff={id:'test',name:'Õie Kask',title:'Juuksur',serviceIds:[],photoUrl:'https://example.invalid/photo.jpg',publicPhone:'+372 5555 0101',bio:'Minu tutvustus'};
+ await act(async()=>root.render(createElement(StaffCard,{staff,onSelect})));
+ expect(container.textContent).toContain('Õie Kask');
+ expect(container.textContent).not.toContain(staff.publicPhone);
+ expect(container.textContent).not.toContain(staff.bio);
+ expect(container.textContent).not.toContain(staff.title);
+ expect(container.querySelector('a')).toBeNull();
+ await act(async()=>container.querySelector('img')!.dispatchEvent(new Event('error')));
+ expect(container.querySelector('[aria-hidden="true"]')?.textContent).toBe('ÕK');
+ const toggle=container.querySelector<HTMLButtonElement>('[aria-expanded]')!;
+ expect(toggle.getAttribute('aria-label')).toContain(staff.name);
+ expect(toggle.getAttribute('aria-expanded')).toBe('false');
+ await act(async()=>toggle.click());
+ expect(toggle.getAttribute('aria-expanded')).toBe('true');
+ expect(container.querySelector('a')?.getAttribute('href')).toBe('tel:+37255550101');
+ expect(container.textContent).toContain(staff.publicPhone);
+ expect(container.textContent).toContain(staff.bio);
+ expect(container.textContent).toContain(staff.title);
+ expect(onSelect).not.toHaveBeenCalled();
+ await act(async()=>toggle.click());
+ expect(container.querySelector('a')).toBeNull();
+ await act(async()=>root.render(createElement(StaffCard,{staff:{...staff,publicPhone:''},onSelect})));
+ expect(container.querySelector('[aria-expanded]')).not.toBeNull();
+ await act(async()=>toggle.click());
+ expect(container.textContent).toContain(staff.bio);
+ expect(container.querySelector('a')).toBeNull();
+ await act(async()=>root.render(createElement(StaffCard,{staff:{...staff,publicPhone:'',bio:'',title:''},onSelect})));
+ expect(container.querySelector('[aria-expanded]')).toBeNull();
+ expect(container.textContent).toContain(staff.name);
+});
+it('supports Unicode names and accepts only plain phone numbers',()=>{
+ expect(nameInitials('Õie Kask')).toBe('ÕK');
+ expect(nameInitials('Mari')).toBe('MA');
+ expect(nameInitials('Анна Иванова')).toBe('АИ');
+ expect(publicPhoneHref(' +372 (5555) 0101 ')).toBe('tel:+37255550101');
+ for(const value of ['', 'tel:+37255550101','javascript:alert(1)','123','+37255550101,123','*123#'])expect(publicPhoneHref(value)).toBeNull();
+});

@@ -1,12 +1,12 @@
 import {beforeEach,expect,it,vi} from 'vitest';
 import {GET} from '../src/app/api/availability/route';
 import {tenantForHost} from '../src/lib/tenants';
-import {nextAvailableDay} from '../src/lib/availability';
+import {nextAvailableDay,monthAvailability} from '../src/lib/availability';
 import {limitTenant} from '../src/lib/request-limits';
 
 vi.mock('../src/lib/request-limits',async importOriginal=>({...await importOriginal<typeof import('../src/lib/request-limits')>(),limitTenant:vi.fn(async()=>{})}));
 vi.mock('../src/lib/tenants',()=>({tenantForHost:vi.fn()}));
-vi.mock('../src/lib/availability',()=>({availableOffers:vi.fn(),nextAvailableDay:vi.fn()}));
+vi.mock('../src/lib/availability',()=>({availableOffers:vi.fn(),nextAvailableDay:vi.fn(),monthAvailability:vi.fn()}));
 
 const tenantId='11111111-1111-4111-8111-111111111111';
 const serviceId='22222222-2222-4222-8222-222222222222';
@@ -29,4 +29,14 @@ it('isolates next-day quotas by trusted client IP and retains a higher tenant ba
     [`next-day-client:${tenantId}:203.0.113.77`,30],
     [`next-day-tenant:${tenantId}`,300],
   ]);
+});
+
+it('bounds month overview requests with client and tenant limits and rejects ambiguous modes',async()=>{
+ vi.mocked(monthAvailability).mockResolvedValue({days:{'2026-09-10':true}});
+ const req=request('198.51.100.10');
+ const response=await GET(new Request(req.url.replace('next=1','month=1'),req));
+ expect(response.status).toBe(200);expect(await response.json()).toEqual({days:{'2026-09-10':true}});
+ expect(limitTenant).toHaveBeenCalledWith(`month-client:${tenantId}:198.51.100.10`,30);
+ expect(limitTenant).toHaveBeenCalledWith(`month-tenant:${tenantId}`,300);
+ expect((await GET(new Request(req.url+'&month=1',req))).status).toBe(400);
 });

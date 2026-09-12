@@ -3,6 +3,7 @@ import { AppError } from './errors';
 import {billingAccess} from './billing-access';
 
 export type Tenant = {
+  reminder_minutes?:number|null;
   booking_stops_at?:Date|null;
   service_ends_at?:Date|null;
   data_access_until?:Date|null;

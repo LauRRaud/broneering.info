@@ -1,13 +1,21 @@
+import {publishedTheme} from './themes';
 import { DateTime } from 'luxon';
 import type { PoolClient } from 'pg';
 import type { Offer, Catalog } from './contracts';
 import type { Tenant } from './tenants';
 import {assertBookingAccess} from './booking-access';
-import type {Actor} from './access';
+import {requireMembershipInClient,type Actor} from './access';
 import { withTenant } from './db';
 import { AppError } from './errors';
 import {mergeAdjacent} from './schedule-contracts';
 import {z} from 'zod';
+
+// Theme previews may read availability with theme.publish, but cannot book.
+async function assertAvailabilityAccess(client:PoolClient,tenant:Tenant,actor:Actor|undefined,designPreview:boolean){
+  if(!designPreview)return assertBookingAccess(client,tenant,actor);
+  if(!actor)throw new AppError(403,'FORBIDDEN','Sul puudub selleks toiminguks õigus.');
+  await requireMembershipInClient(actor,tenant.id,'theme.publish',client);
+}
 
 type Interval = [number, number];
 type Hours = { staff_id: string | null; start_minute: number; end_minute: number };
@@ -31,30 +39,30 @@ export function intervalsFor(staffId: string | null, hours: Hours[], exceptions:
   return mergeAdjacent(source.filter(i => Array.isArray(i) && i.length === 2 && i.every(Number.isInteger) && i[0] >= 0 && i[1] <= 1440 && i[1] > i[0]));
 }
 
-export async function catalogFor(tenant: Tenant, selectedStaffId?: string,previewActor?:Actor): Promise<Catalog> {
+export async function catalogFor(tenant: Tenant, selectedStaffId?: string,previewActor?:Actor,designPreview=false): Promise<Catalog> {
   if(selectedStaffId !== undefined && !z.uuid().safeParse(selectedStaffId).success) throw new AppError(404,'STAFF_UNAVAILABLE','Selle töötaja link ei ole enam kasutatav.');
   return withTenant(tenant.id, async client => {
     const current=await client.query<Tenant>('SELECT * FROM tenants WHERE id=$1 AND active FOR SHARE',[tenant.id]);
     if(!current.rowCount)throw new AppError(404,'TENANT_NOT_FOUND','Ettevõtet ei leitud.');
     tenant=current.rows[0];
-    await assertBookingAccess(client,tenant,previewActor);
-    const services = await client.query(`SELECT s.id,s.source_language AS "sourceLanguage",s.name,s.description,COALESCE(g.path,s.category) AS category,CASE WHEN g.ancestry IS NULL THEN ARRAY[s.category] ELSE ARRAY(SELECT ancestor.name FROM unnest(g.ancestry) WITH ORDINALITY AS branch(id,position) JOIN service_groups ancestor ON ancestor.tenant_id=s.tenant_id AND ancestor.id=branch.id ORDER BY branch.position) END AS "categoryPath",min(COALESCE(ss.price,s.default_price))::int AS "priceFrom",min(COALESCE(ss.duration,s.default_duration))::int AS "durationFrom"
+    await assertAvailabilityAccess(client,tenant,previewActor,designPreview);
+    const services = await client.query(`SELECT s.id,s.source_language AS "sourceLanguage",s.name,s.description,COALESCE(g.path,s.category) AS category,CASE WHEN g.ancestry IS NULL THEN ARRAY[s.category] ELSE ARRAY(SELECT ancestor.name FROM unnest(g.ancestry) WITH ORDINALITY AS branch(id,position) JOIN service_groups ancestor ON ancestor.tenant_id=s.tenant_id AND ancestor.id=branch.id ORDER BY branch.position) END AS "categoryPath",min(COALESCE(ss.price,s.default_price))::int AS "priceFrom",min(COALESCE(ss.duration,s.default_duration))::int AS "durationFrom",max(COALESCE(ss.price,s.default_price))::int AS "priceTo",max(COALESCE(ss.duration,s.default_duration))::int AS "durationTo"
       FROM services s LEFT JOIN service_group_tree g ON g.tenant_id=s.tenant_id AND g.id=s.group_id JOIN staff_services ss ON ss.tenant_id=s.tenant_id AND ss.service_id=s.id
       JOIN staff st ON st.tenant_id=ss.tenant_id AND st.id=ss.staff_id
       WHERE s.tenant_id=$1 AND ($2::uuid IS NULL OR st.id=$2) AND s.active AND s.online AND st.active AND st.online AND ss.active AND (s.group_id IS NULL OR g.effective_active) GROUP BY s.id,g.path,g.ancestry ORDER BY category,s.name`,[tenant.id,selectedStaffId??null]);
     const translated=await client.query('SELECT tr.service_id,tr.language,tr.published_name AS name,tr.published_description AS description FROM service_translations tr JOIN services s ON s.tenant_id=tr.tenant_id AND s.id=tr.service_id WHERE tr.tenant_id=$1 AND tr.published_source_version=s.content_version AND tr.language<>s.source_language',[tenant.id]);
     for(const service of services.rows)service.translations=Object.fromEntries(translated.rows.filter(r=>r.service_id===service.id).map(r=>[r.language,{name:r.name,description:r.description}]));
-    const staff = await client.query(`SELECT st.id,st.name,st.title,st.bio,st.photo_url AS "photoUrl",array_agg(ss.service_id) AS "serviceIds"
+    const staff = await client.query(`SELECT st.id,st.name,st.title,st.bio,st.photo_url AS "photoUrl",st.public_phone AS "publicPhone",array_agg(ss.service_id) AS "serviceIds",json_agg(json_build_object('serviceId',ss.service_id,'price',COALESCE(ss.price,s.default_price),'duration',COALESCE(ss.duration,s.default_duration))) AS "serviceDetails"
       FROM staff st JOIN staff_services ss ON ss.staff_id=st.id AND ss.tenant_id=st.tenant_id
       JOIN services s ON s.id=ss.service_id AND s.tenant_id=ss.tenant_id
       WHERE st.tenant_id=$1 AND ($2::uuid IS NULL OR st.id=$2) AND st.active AND st.online AND s.active AND s.online AND ss.active AND (s.group_id IS NULL OR EXISTS (SELECT 1 FROM service_group_tree g WHERE g.tenant_id=s.tenant_id AND g.id=s.group_id AND g.effective_active)) GROUP BY st.id ORDER BY st.name,st.id`,[tenant.id,selectedStaffId??null]);
     if(selectedStaffId && !staff.rowCount) throw new AppError(404,'STAFF_UNAVAILABLE','Selle töötaja link ei ole enam kasutatav.');
     const now = DateTime.now().setZone(tenant.timezone);
-    return { tenant: { bookingTerms:tenant.booking_terms,defaultLanguage:tenant.default_language,name: tenant.name, slug: tenant.slug, address: tenant.address, description: tenant.description, timezone: tenant.timezone, cancellationHours: tenant.cancellation_hours, rulesVersion:tenant.rules_version, demo: tenant.demo }, services: services.rows, staff: staff.rows, today: now.toISODate()!, maxDate: now.plus({days:tenant.window_days}).toISODate()!, ...(selectedStaffId?{selectedStaffId}:{}) };
+    return { theme:await publishedTheme(client,tenant.id), tenant: { reminderMinutes:tenant.reminder_minutes??null,bookingTerms:tenant.booking_terms,defaultLanguage:tenant.default_language,name: tenant.name, slug: tenant.slug, address: tenant.address, description: tenant.description, timezone: tenant.timezone, cancellationHours: tenant.cancellation_hours, rulesVersion:tenant.rules_version, demo: tenant.demo }, services: services.rows, staff: staff.rows, today: now.toISODate()!, maxDate: now.plus({days:tenant.window_days}).toISODate()!, ...(selectedStaffId?{selectedStaffId}:{}) };
   });
 }
 
-export async function offersInTransaction(client: PoolClient, tenant: Tenant, serviceId: string, day: string, staffId?: string, now: DateTime = DateTime.now(), options:{excludeBookingId?:string;includeHidden?:boolean}={}): Promise<Offer[]> {
+export async function offersInTransaction(client: PoolClient, tenant: Tenant, serviceId: string, day: string, staffId?: string, now: DateTime = DateTime.now(), options:{excludeBookingId?:string;includeHidden?:boolean;firstOnly?:boolean}={}): Promise<Offer[]> {
   const date = DateTime.fromISO(day, {zone: tenant.timezone});
   if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !date.isValid || date.toISODate() !== day) throw new AppError(400,'INVALID_DATE','Vali korrektne kuupäev.');
   const today = now.setZone(tenant.timezone).startOf('day');
@@ -88,6 +96,7 @@ export async function offersInTransaction(client: PoolClient, tenant: Tenant, se
         if (busy.rows.some(b=>b.staff_id===staff.staff_id && b.start.getTime() < occupiedEnd.toMillis() && b.end.getTime() > occupiedStart.toMillis())) continue;
         seen.add(start.toMillis());
         result.push({staffId:staff.staff_id,staffName:staff.staff_name,serviceId,start:start.toUTC().toISO()!,end:end.toUTC().toISO()!,price:staff.price,duration:staff.duration});
+        if(options.firstOnly)return result;
       }
     }
   }
@@ -95,22 +104,44 @@ export async function offersInTransaction(client: PoolClient, tenant: Tenant, se
   return result.sort((a,b)=>a.start.localeCompare(b.start) || a.staffName.localeCompare(b.staffName) || a.staffId.localeCompare(b.staffId));
 }
 
-export function availableOffers(tenant: Tenant, serviceId: string, day: string, staffId?: string,previewActor?:Actor) {
+export function availableOffers(tenant: Tenant, serviceId: string, day: string, staffId?: string,previewActor?:Actor,designPreview=false) {
   return withTenant(tenant.id, async client=>{
     const current=await client.query<Tenant>('SELECT * FROM tenants WHERE id=$1 AND active FOR SHARE',[tenant.id]);
     if(!current.rowCount)throw new AppError(404,'TENANT_NOT_FOUND','Ettevõtet ei leitud.');
-    await assertBookingAccess(client,current.rows[0],previewActor);
+    await assertAvailabilityAccess(client,current.rows[0],previewActor,designPreview);
     return offersInTransaction(client,current.rows[0],serviceId,day,staffId);
   });
 }
 
+// A bounded month overview uses the same rules as booking offers. It is advisory;
+// selecting a day and confirming a booking always recheck current availability.
+export function monthAvailability(tenant:Tenant,serviceId:string,day:string,staffId?:string,previewActor?:Actor,designPreview=false){
+  return withTenant(tenant.id,async client=>{
+    const current=await client.query<Tenant>('SELECT * FROM tenants WHERE id=$1 AND active FOR SHARE',[tenant.id]);
+    if(!current.rowCount)throw new AppError(404,'TENANT_NOT_FOUND','Ettevõtet ei leitud.');
+    const fresh=current.rows[0],now=DateTime.now();
+    await assertAvailabilityAccess(client,fresh,previewActor,designPreview);
+    const base=DateTime.fromISO(day,{zone:fresh.timezone});
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(day)||!base.isValid||base.toISODate()!==day)throw new AppError(400,'INVALID_DATE','Vali korrektne kuupäev.');
+    const today=now.setZone(fresh.timezone).startOf('day'),last=today.plus({days:fresh.window_days});
+    const first=base.startOf('month'),end=base.endOf('month');
+    if(end<today||first>last)throw new AppError(400,'INVALID_DATE','Kuupäev jääb broneerimisaknast välja.');
+    const days:Record<string,boolean>={};
+    for(let candidate=first;candidate<=end;candidate=candidate.plus({days:1})){
+      const date=candidate.toISODate()!;
+      days[date]=candidate>=today&&candidate<=last&&(await offersInTransaction(client,fresh,serviceId,date,staffId,now,{firstOnly:true})).length>0;
+    }
+    return {days};
+  });
+}
+
 // Search at most 31 days per request; callers can explicitly continue the next block.
-export function nextAvailableDay(tenant: Tenant, serviceId: string, after: string, staffId?: string,previewActor?:Actor) {
+export function nextAvailableDay(tenant: Tenant, serviceId: string, after: string, staffId?: string,previewActor?:Actor,designPreview=false) {
   return withTenant(tenant.id,async client=>{
     const current=await client.query<Tenant>('SELECT * FROM tenants WHERE id=$1 AND active FOR SHARE',[tenant.id]);
     if(!current.rowCount)throw new AppError(404,'TENANT_NOT_FOUND','Ettevõtet ei leitud.');
     const fresh=current.rows[0], now=DateTime.now();
-    await assertBookingAccess(client,fresh,previewActor);
+    await assertAvailabilityAccess(client,fresh,previewActor,designPreview);
     const base=DateTime.fromISO(after,{zone:fresh.timezone});
     if(!/^\d{4}-\d{2}-\d{2}$/.test(after)||!base.isValid||base.toISODate()!==after)throw new AppError(400,'INVALID_DATE','Vali korrektne kuupäev.');
     const today=now.setZone(fresh.timezone).startOf('day');

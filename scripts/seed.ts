@@ -7,7 +7,7 @@ async function main() {
   try {
     await client.query('BEGIN');
     for (const salon of [
-      { slug: 'ilutegu', name: 'Ilutegu', address: 'Tabasalu · näidisandmed', description: 'Aeg iseendale. Vali teenus ja leia endale sobiv hetk.', staff: ['Mari', 'Kertu'] },
+      { slug: 'ilutegu', name: 'Ilutegu', address: 'Tabasalu', description: 'Aeg iseendale. Vali teenus ja leia endale sobiv hetk.', staff: ['Mari', 'Kertu'] },
       { slug: 'teine', name: 'Stuudio Kask', address: 'Tallinn · väljamõeldud demosalong', description: 'Väike paus sinu päevas. Juuksed, ilu ja hea enesetunne.', staff: ['Anna', 'Liis'] }
     ]) {
       const added = await client.query('INSERT INTO tenants(slug,name,address,description) VALUES($1,$2,$3,$4) ON CONFLICT(slug) DO NOTHING RETURNING id', [salon.slug,salon.name,salon.address,salon.description]);

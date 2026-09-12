@@ -1,0 +1,6 @@
+.root{font-size:.78rem;color:var(--mutedText,var(--text))}
+.root summary{cursor:pointer;min-block-size:2.75rem;display:flex;align-items:center;gap:.4rem}
+.root summary::before{content:'+';font-size:1.15rem;color:var(--navigation,var(--heading))}
+.root[open]{grid-column:1/-1}
+.root[open] summary::before{content:'−'}
+.root ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:1rem}

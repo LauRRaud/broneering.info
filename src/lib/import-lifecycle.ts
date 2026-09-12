@@ -46,7 +46,7 @@ export async function importLifecycle(actor:Actor,raw:unknown){
       await issueBookingLink(client,tenant,after);
       await client.query("UPDATE outbox SET status='superseded',version=version+1 WHERE tenant_id=$1 AND booking_id=$2 AND status IN ('pending','failed','sending')",[d.tenantId,after.id]);
       const due=new Date(after.start_at.getTime()-tenant.reminder_minutes*60000);
-      if(due.getTime()>Date.now()){
+      if(after.customer_reminders!==false&&due.getTime()>Date.now()){
         await client.query("INSERT INTO outbox(tenant_id,booking_id,booking_version,kind,language,next_attempt_at) VALUES($1,$2,$3,'booking.reminder',$4,$5)",[d.tenantId,after.id,after.version,after.customer_language,due]);scheduled++;
       }
       await bookingEvent(client,after,'import.notifications.enabled',actor.id,before);

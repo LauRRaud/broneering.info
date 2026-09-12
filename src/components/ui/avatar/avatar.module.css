@@ -1,0 +1,2 @@
+.avatar {display:inline-flex;align-items:center;justify-content:center;inline-size:var(--avatar-size,3rem);block-size:var(--avatar-size,3rem);border-radius:var(--avatar-radius,0);overflow:hidden;background:color-mix(in srgb,var(--heading) 6%,var(--surface));color:var(--heading);flex-shrink:0;}
+.avatar img {inline-size:100%;block-size:100%;object-fit:cover;}

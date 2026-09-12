@@ -1,0 +1,2 @@
+.root {inline-size:36rem;max-inline-size:calc(100% - 2rem);max-block-size:calc(100dvh - 2rem);overflow:auto;background:var(--surface,Canvas);color:var(--text,CanvasText);border:1px solid var(--border,CanvasText);padding:1rem;}
+.root::backdrop {background:rgb(0 0 0 / .45);}

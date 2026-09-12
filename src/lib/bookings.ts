@@ -1,3 +1,4 @@
+import {contactErrors} from './contact-validation';
 import {serviceNameFor} from './service-content';
 import { createHash, randomUUID } from 'node:crypto';
 import { DateTime } from 'luxon';
@@ -16,6 +17,8 @@ import {sealBookingReply,openBookingReply} from './booking-secrets';
 import {assertBillingForBooking} from './billing-access';
 
 export const bookingSchema = z.object({
+  smsReminder:z.boolean().optional(),
+  emailReminder:z.boolean().optional(),
   language:z.enum(['et','en','ru']).optional(),
   serviceId: z.uuid(), staffId: z.uuid(), start: z.iso.datetime({ offset:true }),
   expectedPrice: z.number().int().min(0), expectedDuration: z.number().int().min(5).max(720),
@@ -24,8 +27,10 @@ export const bookingSchema = z.object({
   phone: z.string().trim().max(30).regex(/^[+\d ()-]*$/).optional(),
 }).strict();
 
-export async function insertBooking(client:PoolClient,tenant:Tenant,input:{language?:'et'|'en'|'ru';sendEmail?:boolean;serviceId:string;staffId:string;name:string;email:string|null;phone?:string},offer:Offer,source:'online'|'manual',actorId:string|null){
+export async function insertBooking(client:PoolClient,tenant:Tenant,input:{smsReminder?:boolean;emailReminder?:boolean;language?:'et'|'en'|'ru';sendEmail?:boolean;serviceId:string;staffId:string;name:string;email:string|null;phone?:string},offer:Offer,source:'online'|'manual',actorId:string|null){
   if(tenant.public_state==='paused'||tenant.public_state==='closed'||(tenant.booking_stops_at&&tenant.booking_stops_at.getTime()<=Date.now()))throw new AppError(409,'BOOKINGS_PAUSED','Ettevõte ei võta praegu broneeringuid vastu.');
+  if(input.smsReminder&&!tenant.demo)throw new AppError(400,'INVALID_INPUT','SMS-meeldetuletused ei ole selles ettevõttes veel kasutusel.');
+  if(input.smsReminder&&contactErrors({name:input.name,email:input.email??'',phone:input.phone??''},true).phone)throw new AppError(400,'INVALID_INPUT','SMS-meeldetuletuseks on vaja telefoninumbrit koos riigikoodiga.');
   await assertBillingForBooking(client,tenant);
   const details=await client.query(`SELECT s.name,COALESCE(ss.buffer_before,s.buffer_before) AS buffer_before,COALESCE(ss.buffer_after,s.buffer_after) AS buffer_after FROM services s JOIN staff_services ss ON ss.tenant_id=s.tenant_id AND ss.service_id=s.id WHERE s.tenant_id=$1 AND s.id=$2 AND ss.staff_id=$3`,[tenant.id,input.serviceId,input.staffId]);
   const detail=details.rows[0],id=randomUUID(),reference=`BR-${id.replaceAll('-','').slice(0,12).toUpperCase()}`;
@@ -33,6 +38,8 @@ export async function insertBooking(client:PoolClient,tenant:Tenant,input:{langu
   const start=DateTime.fromISO(offer.start),end=DateTime.fromISO(offer.end);
   const row=(await client.query<BookingRow>(`INSERT INTO bookings(id,tenant_id,reference,service_id,staff_id,service_name,staff_name,customer_name,customer_email,customer_phone,start_at,end_at,occupied,price,duration,buffer_before,buffer_after,cancellation_hours,source,customer_language)
     VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,tstzrange($13::timestamptz,$14::timestamptz,'[)'),$15,$16,$17,$18,$19,$20,$21) RETURNING *`,[id,tenant.id,reference,input.serviceId,input.staffId,detail.name,offer.staffName,input.name,input.email,input.phone||null,offer.start,offer.end,start.minus({minutes:detail.buffer_before}).toISO(),end.plus({minutes:detail.buffer_after}).toISO(),offer.price,offer.duration,detail.buffer_before,detail.buffer_after,tenant.cancellation_hours,source,input.language??tenant.default_language])).rows[0];
+  if(input.emailReminder===false){await client.query('UPDATE bookings SET customer_reminders=false WHERE tenant_id=$1 AND id=$2',[tenant.id,id]);row.customer_reminders=false;}
+  if(input.smsReminder){await client.query('UPDATE bookings SET customer_sms_reminders=true WHERE tenant_id=$1 AND id=$2',[tenant.id,id]);row.customer_sms_reminders=true;}
   await bookingEvent(client,row,'booking.created',actorId);
   if(tenant.demo)await client.query('UPDATE bookings SET is_test=true WHERE tenant_id=$1 AND id=$2',[tenant.id,id]);
   if(input.sendEmail===false){await client.query('UPDATE bookings SET customer_notifications=false WHERE tenant_id=$1 AND id=$2',[tenant.id,id]);row.customer_notifications=false;}

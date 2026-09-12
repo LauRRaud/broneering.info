@@ -4,7 +4,7 @@ Siit leiab broneering.info olemasolevad juhised ja nende lõpetamise seisu. Seis
 
 ## Kasutaja ja ettevõtte haldaja
 
-Ühtne lõppkasutaja kasutusjuhend on **koostamata ja vastu võtmata**. Selle sisuline alus on olemas allolevates arenduspeatükkides; need sisaldavad ka tehnilist teavet ja katsete ajalugu.
+Ühtse lõppkasutaja kasutusjuhendi **esmane versioon on kohalikus eelvaates olemas, avaldamine ja kasutajavastuvõtt on ootel**. See avaneb avalehelt ja haldusest samale `/juhend` lehele, haldusest uuel vahelehel. Üks [sisufail](../src/content/user-guide.ts) hoiab peatükke ja püsivaid ankrulinke; [kohaliku eelvaate juhis](LOCAL-PREVIEW.md). Arenduspeatükid jäävad tehniliseks alusmaterjaliks.
 
 | Kasutaja ülesanne | Olemasolev alus |
 | --- | --- |
@@ -18,7 +18,7 @@ Siit leiab broneering.info olemasolevad juhised ja nende lõpetamise seisu. Seis
 | Pakett, arved, laekumised ja maksetõrked | [Arveldus](CHAPTER-19.md); SMTP ja Maksekeskuse pärisvastuvõtt ootel |
 | Andmetaotlus ja kontaktide eemaldamine | [Andmekaitse töövood](CHAPTER-21.md); automaatne säilitamispoliitika kinnitamata |
 
-Valmiv kasutusjuhend peab selgitama iga rolli põhitoiminguid, eeltingimusi, õnnestumise tulemust ja tõrke korral jätkamist. Lõplikud nupunimed ning ekraanipildid kontrollitakse pärast kujundust. Iseseisev kasutaja peab saama juhendi järgi ülesande lõpetada; juhendi faili olemasolu üksi ei tõenda vastuvõttu. Juhendi kasutajale kättesaadav koht rakenduses või abilehel lepitakse kokku kujunduse käigus; praegu uut abiliidest ei teostata.
+Valmiv kasutusjuhend peab selgitama iga rolli põhitoiminguid, eeltingimusi, õnnestumise tulemust ja tõrke korral jätkamist. Lõplikud nupunimed ning ekraanipildid kontrollitakse pärast kujundust. Iseseisev kasutaja peab saama juhendi järgi ülesande lõpetada; juhendi faili olemasolu üksi ei tõenda vastuvõttu. Omaniku 12.09 täpsustuse järgi kasutatakse ühte juhendit aadressil `ajasta.ee/juhend`, millele viitavad nii avaleht kui ka haldus. Kohalik esmane versioon katab peamised broneerimise, teenuste, graafikute ja manustamise toimingud. Import/eksport, arveldus ning andmetaotlused vajavad veel kasutajale suunatud peatükke; tehnilist dokumentatsiooni ei avaldata automaatselt abilehel.
 
 ## Platvormi omanik ja administraator
 
@@ -52,4 +52,5 @@ Hooldaja, asendaja, kontaktkanal, toeajad ja rikkele reageerimise vastutus on **
 Arenduspeatükkides olevad vanad testiarvud ja seisukirjeldused käivad oma kuupäeva kohta. Praeguse tegemata töö ulatus tuleb võtta uuemast kuupäevastatud protokollist ja allesjäänud tööde registrist.
 
 - [Kujunduse, primitiivide ja komponentide failikorraldus](FRONTEND-STRUCTURE.md)
+- [Halduse struktuuri lähteplaan: põhimenüü, töövaated ja konto/ettevõtte/platvormi eraldamine](ADMIN-STRUCTURE-PLAN.md) — dokumenteeritud suund; kujundus ja teostus on ootel.
 - [Ajasta veebilehe HTTPS-i ja avalehe suunamise paigaldus](DEPLOYMENT-AJASTA-2026-09-12.md)

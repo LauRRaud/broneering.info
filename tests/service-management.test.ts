@@ -1,3 +1,5 @@
+import sharp from 'sharp';
+import {changeStaffPhoto,staffPhoto} from '../src/lib/staff-photos';
 import {beforeAll,afterAll,beforeEach,afterEach,it,expect,vi} from 'vitest';
 import {serviceTranslationState,changeServiceTranslation} from '../src/lib/service-translations';
 import {localizedService,translationStatus} from '../src/lib/service-translation-contracts';
@@ -49,6 +51,23 @@ afterEach(async()=>{
 const input=(o:Offer)=>({serviceId:o.serviceId,staffId:o.staffId,start:o.start,expectedPrice:o.price,expectedDuration:o.duration,expectedRulesVersion:1,name:'Test Client',email:'test@example.invalid'});
 async function service(){return (await state(owner,tenant.id)).services[0];}
 async function assignment(){return (await state(owner,tenant.id)).assignments[0];}
+
+it('publishes only explicitly supplied public phones, preserves omitted values and removes cleared or offline contacts',async()=>{
+ const current=async()=>(await state(owner,tenant.id)).staff.find(item=>item.id===staffId)!;
+ expect((await catalogFor(tenant)).staff[0].publicPhone).toBe('');
+ await save(owner,'save-staff',{tenantId:tenant.id,...await current(),publicPhone:'+372 5555 0101'});
+ expect((await catalogFor(tenant)).staff[0].publicPhone).toBe('+372 5555 0101');
+ const {publicPhone:unused,...legacy}=await current();
+ await save(owner,'save-staff',{tenantId:tenant.id,...legacy,title:'Uuendatud'});
+ expect((await current()).publicPhone).toBe('+372 5555 0101');
+ await expect(save(clerk,'save-staff',{tenantId:tenant.id,...await current(),publicPhone:'+372 5555 0102'})).rejects.toMatchObject({status:403});
+ await expect(save(owner,'save-staff',{tenantId:foreign.id,...await current()})).rejects.toMatchObject({status:403});
+ await expect(save(owner,'save-staff',{tenantId:tenant.id,...await current(),publicPhone:'tel:123'})).rejects.toMatchObject({status:400});
+ await save(owner,'save-staff',{tenantId:tenant.id,...await current(),online:false});
+ expect((await catalogFor(tenant)).staff).toHaveLength(0);
+ await save(owner,'save-staff',{tenantId:tenant.id,...await current(),online:true,publicPhone:''});
+ expect((await catalogFor(tenant)).staff[0].publicPhone).toBe('');
+});
 
 it('permanently cancels linked invitations when staff is archived and preserves fresh/unlinked invitations',async()=>{
  await db.query('DELETE FROM memberships WHERE tenant_id=$1 AND user_id=ANY($2::text[])',[tenant.id,[clerk.id,worker.id]]);
@@ -236,7 +255,9 @@ it('publishes only the selected public staff profile fields',async()=>{
   const st=(await catalogFor(tenant)).staff[0];
   expect(st.bio).toBe('Avalik tutvustus');
   expect(st.photoUrl).toBe('https://example.invalid/photo.jpg');
-  expect(Object.keys(st).sort()).toEqual(['bio','id','name','photoUrl','serviceIds','title']);
+  expect(Object.keys(st).sort()).toEqual(['bio','id','name','photoUrl','publicPhone','serviceDetails','serviceIds','title']);
+  expect(st.serviceDetails).toHaveLength(1);
+  expect(Object.keys(st.serviceDetails![0]).sort()).toEqual(['duration','price','serviceId']);
 });
 it('serializes a concurrent price change and booking confirmation without mixed snapshots',async()=>{
   const offer=(await availableOffers(tenant,serviceId,day))[0];
@@ -269,4 +290,44 @@ it('rejects group cycles and foreign parents without disturbing existing branche
   const foreignGroup=(await db.query("INSERT INTO service_groups(tenant_id,name) VALUES($1,'Foreign') RETURNING id",[foreign.id])).rows[0].id;
   await expect(save(owner,'save-group',{tenantId:tenant.id,name:'Forbidden',parentId:foreignGroup,active:true})).rejects.toMatchObject({code:'GROUP_NOT_FOUND'});
   expect((await catalogFor(tenant)).services).toHaveLength(1);
+});
+
+async function photo(){return sharp({create:{width:1200,height:800,channels:3,background:'#998877'}}).jpeg().withMetadata({orientation:6}).toBuffer();}
+it('saves a normalized photo, preserves it on profile edits, and removes it atomically',async()=>{
+ const result=await changeStaffPhoto(owner,{tenantId:tenant.id,staffId,version:1},await photo());
+ expect(result.version).toBe(2);
+ const bytes=await staffPhoto(tenant.id,staffId),meta=await sharp(bytes).metadata();
+ expect(meta.format).toBe('jpeg');expect(meta.width).toBe(512);expect(meta.height).toBe(768);expect(meta.exif).toBeUndefined();
+ const data=(await state(owner,tenant.id)).staff.find(s=>s.id===staffId)!;
+ await save(owner,'save-staff',{tenantId:tenant.id,...data,name:'Updated Mari'});
+ expect(await staffPhoto(tenant.id,staffId)).toEqual(bytes);
+ await changeStaffPhoto(owner,{tenantId:tenant.id,staffId,version:3},null);
+ await expect(staffPhoto(tenant.id,staffId)).rejects.toMatchObject({code:'NOT_FOUND'});
+ expect((await db.query('SELECT photo_image,photo_url FROM staff WHERE id=$1',[staffId])).rows[0]).toEqual({photo_image:null,photo_url:''});
+});
+it('rejects foreign staff, non-owner writes and stale photo replacement without changing the image',async()=>{
+ const bytes=await photo();
+ await expect(changeStaffPhoto(clerk,{tenantId:tenant.id,staffId,version:1},bytes)).rejects.toMatchObject({code:'FORBIDDEN'});
+ await expect(changeStaffPhoto(owner,{tenantId:tenant.id,staffId:foreignStaffId,version:1},bytes)).rejects.toMatchObject({code:'NOT_FOUND'});
+ await changeStaffPhoto(owner,{tenantId:tenant.id,staffId,version:1},bytes);
+ const saved=await staffPhoto(tenant.id,staffId);
+ await expect(changeStaffPhoto(owner,{tenantId:tenant.id,staffId,version:1},null)).rejects.toMatchObject({code:'VERSION_CONFLICT'});
+ await expect(staffPhoto(foreign.id,staffId)).rejects.toMatchObject({code:'NOT_FOUND'});
+ expect(await staffPhoto(tenant.id,staffId)).toEqual(saved);
+});
+it('hides unpublished staff photos publicly while retaining an owner preview',async()=>{
+ await changeStaffPhoto(owner,{tenantId:tenant.id,staffId,version:1},await photo());
+ await db.query('UPDATE staff SET online=false WHERE id=$1',[staffId]);
+ await expect(staffPhoto(tenant.id,staffId)).rejects.toMatchObject({code:'NOT_FOUND'});
+ expect((await staffPhoto(tenant.id,staffId,owner)).length).toBeGreaterThan(0);
+ await db.query('UPDATE staff SET online=true WHERE id=$1',[staffId]);
+ await db.query("UPDATE tenants SET public_state='paused' WHERE id=$1",[tenant.id]);
+ await expect(staffPhoto(tenant.id,staffId)).rejects.toMatchObject({code:'NOT_FOUND'});
+});
+it('rejects spoofed photo paths and discards stored image when replaced by an external URL',async()=>{
+ await changeStaffPhoto(owner,{tenantId:tenant.id,staffId,version:1},await photo());
+ const data=(await state(owner,tenant.id)).staff.find(s=>s.id===staffId)!;
+ await expect(save(owner,'save-staff',{tenantId:tenant.id,...data,photoUrl:'/api/staff-photos/'+foreignStaffId+'?v=2'})).rejects.toMatchObject({code:'INVALID_PHOTO'});
+ await save(owner,'save-staff',{tenantId:tenant.id,...data,photoUrl:'https://example.invalid/new.jpg'});
+ await expect(staffPhoto(tenant.id,staffId,owner)).rejects.toMatchObject({code:'NOT_FOUND'});
 });

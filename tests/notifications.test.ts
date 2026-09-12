@@ -48,8 +48,32 @@ afterEach(async()=>{
   if(!path.basename(capture).startsWith('booking-mail-test-')||path.dirname(capture)!==tmpdir())throw Error('Unsafe test cleanup path');
   await rm(capture,{recursive:true,force:true});
 });
-async function booking(){const o=(await availableOffers(tenant,serviceId,day,staffId))[0];return createBooking(tenant,{language:'en',serviceId,staffId,start:o.start,expectedPrice:o.price,expectedDuration:o.duration,expectedRulesVersion:1,name:'Test client',email:'client@example.invalid'},randomUUID());}
+async function booking(emailReminder?:boolean){const o=(await availableOffers(tenant,serviceId,day,staffId))[0];return createBooking(tenant,{emailReminder,language:'en',serviceId,staffId,start:o.start,expectedPrice:o.price,expectedDuration:o.duration,expectedRulesVersion:1,name:'Test client',email:'client@example.invalid'},randomUUID());}
 async function rawJob(id:string){return (await db.query('SELECT * FROM outbox WHERE id=$1',[id])).rows[0];}
+
+it('honours reminder opt-out through settings changes while still sending confirmations and cancellation notices',async()=>{
+  await settings(60,'operator@example.invalid');const b=await booking(false);
+  expect((await db.query('SELECT customer_reminders,customer_notifications FROM bookings WHERE id=$1',[b.id])).rows[0]).toEqual({customer_reminders:false,customer_notifications:true});
+  const jobs=async()=>(await db.query('SELECT kind,status FROM outbox WHERE booking_id=$1',[b.id])).rows;
+  expect(await jobs()).toContainEqual({kind:'booking.confirmed',status:'pending'});
+  expect(await jobs()).toContainEqual({kind:'company.booking.confirmed',status:'pending'});
+  expect((await jobs()).some(j=>j.kind==='booking.reminder')).toBe(false);
+  await settings(120);expect((await jobs()).some(j=>j.kind==='booking.reminder')).toBe(false);
+  await changeAdminBooking(owner,{action:'cancel',tenantId:tenant.id,bookingId:b.id,version:b.version,reason:'Client request'},randomUUID());
+  expect(await jobs()).toContainEqual({kind:'booking.cancelled',status:'pending'});
+  const optedIn=await booking(true);
+  expect((await db.query("SELECT kind FROM outbox WHERE booking_id=$1 AND kind='booking.reminder'",[optedIn.id])).rowCount).toBe(1);
+});
+it('rechecks reminder preference before delivery even for an already claimed reminder',async()=>{
+  await settings(60);const b=await booking(true);
+  await db.query("UPDATE outbox SET status='skipped' WHERE booking_id=$1 AND kind<>'booking.reminder'",[b.id]);
+  await db.query("UPDATE outbox SET next_attempt_at=clock_timestamp()-interval '1 minute' WHERE booking_id=$1 AND kind='booking.reminder'",[b.id]);
+  const claim=(await claimNotification(tenant.id))!;
+  await db.query('UPDATE bookings SET customer_reminders=false WHERE id=$1',[b.id]);
+  const send=vi.fn(async()=> 'sent' as const);
+  expect(await deliverNotification(claim,send)).toBe('skipped');expect(send).not.toHaveBeenCalled();
+  expect(await rawJob(claim.id)).toMatchObject({last_error_code:'REMINDER_NOT_APPLICABLE'});
+});
 async function settings(reminderMinutes:number|null,notificationEmail=''){const state=await notificationState(owner,tenant.id);return changeNotificationSettings(owner,{action:'settings',tenantId:tenant.id,version:state.settings.version,notificationEmail,reminderMinutes});}
 it('captures a localized confirmation and the existing secure link without marking it delivered',async()=>{
   const b=await booking(),claim=(await claimNotification(tenant.id))!;expect(claim).toBeTruthy();

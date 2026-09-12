@@ -1,7 +1,7 @@
 import {z} from 'zod';
 import {adminActor,adminError,adminJson,assertAdminHost} from '@/lib/admin-http';
 import {previewTenant} from '@/lib/preview';
-import {catalogFor,availableOffers,nextAvailableDay} from '@/lib/availability';
+import {catalogFor,availableOffers,nextAvailableDay,monthAvailability} from '@/lib/availability';
 import {createBooking} from '@/lib/bookings';
 import {limitTenant,readJson} from '@/lib/http';
 import {AppError} from '@/lib/errors';
@@ -11,9 +11,10 @@ export async function GET(request:Request,context:Context){try{
   const q=new URL(request.url).searchParams,tenant=await previewTenant(actor,q.get('tenantId')??''),{action}=await context.params;
   if(action==='catalog')return adminJson(await catalogFor(tenant,undefined,actor));
   if(action!=='availability')throw new AppError(404,'NOT_FOUND','Lehte ei leitud.');
-  const input=z.object({serviceId:z.uuid(),date:z.string().regex(/^\d{4}-\d{2}-\d{2}$/),staffId:z.uuid().optional(),next:z.literal('1').optional()}).safeParse(Object.fromEntries(q));
+  const input=z.object({serviceId:z.uuid(),date:z.string().regex(/^\d{4}-\d{2}-\d{2}$/),staffId:z.uuid().optional(),next:z.literal('1').optional(),month:z.literal('1').optional()}).refine(d=>!(d.next&&d.month)).safeParse(Object.fromEntries(q));
   if(!input.success)throw new AppError(400,'INVALID_INPUT','Vali teenus ja kuupäev.');
   const d=input.data;
+  if(d.month){await limitTenant('preview-month:'+actor.id,30);return adminJson(await monthAvailability(tenant,d.serviceId,d.date,d.staffId,actor));}
   if(d.next){await limitTenant('preview-next:'+actor.id,30);return adminJson(await nextAvailableDay(tenant,d.serviceId,d.date,d.staffId,actor));}
   return adminJson({offers:await availableOffers(tenant,d.serviceId,d.date,d.staffId,actor)});
 }catch(e){return adminError(e,request);}}

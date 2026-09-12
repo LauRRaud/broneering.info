@@ -24,11 +24,11 @@ it('refreshes rejected challenges while retrying the same possibly committed boo
   });
   const container=document.createElement('div');document.body.append(container);
   const root=createRoot(container);
-  const button=(text:string)=>[...container.querySelectorAll('button')].find(b=>b.textContent?.includes(text))!;
+  const button=(text:string)=>[...container.querySelectorAll('button')].find(b=>(b.getAttribute('aria-label')??b.textContent)?.includes(text))!;
   try{
     await act(async()=>root.render(createElement(BookingFlow,{catalog,challengeSiteKey:'test'})));
     await act(async()=>button('Test service').click());
-    await act(async()=>container.querySelector<HTMLButtonElement>('ul[aria-label="Vabad ajad"] button')!.click());
+    await act(async()=>container.querySelector<HTMLButtonElement>('[aria-label="Vabad ajad"] [role="tabpanel"] button')!.click());
     await act(async()=>finishScriptLoad());
     await act(async()=>button('Solve challenge').click());
     for(const [id,value] of [['name','Test Customer'],['email','test@example.com']]){

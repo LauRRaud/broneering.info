@@ -1,16 +1,11 @@
-import type {Catalog} from '@/lib/contracts';
-import styles from './selection.module.css';
+import {useEmbedClose} from '@/components/embed-frame';
 import {useI18n} from '@/components/i18n-provider';
-
+import Icon from '@/components/ui/icon/icon';
+import BrandIdentity from '@/components/ui/theme/brand-identity';
+import type {Catalog} from '@/lib/contracts';
+import styles from './booking-header.module.css';
+import BookingPreferences from './booking-preferences';
 export default function BookingHeader({tenant}: {tenant: Catalog['tenant']}) {
-  const {t}=useI18n();
-  return <header>
-    <h1>{tenant.name}</h1>
-    {tenant.demo&&<small>{t('Demo — töötajad ja osa teenusekestusi on näidisandmed.')}</small>}
-    {(tenant.address||tenant.description||tenant.bookingTerms)&&<details>
-      <summary>{t('Ettevõtte info ja tingimused')}</summary>
-      <p>{tenant.address}</p><p>{tenant.description}</p>
-      {tenant.bookingTerms&&<p className={styles.terms}>{tenant.bookingTerms}</p>}
-    </details>}
-  </header>;
+  const close=useEmbedClose(),{t}=useI18n();
+  return <header className={styles.header}><div className={styles.bar}><BrandIdentity name={tenant.name}/><div className={styles.controls}><BookingPreferences/>{close&&<button className={styles.close} type="button" onClick={close} aria-label={t('Sulge broneerimisaken')}><Icon name="close" size={21}/></button>}</div></div></header>;
 }

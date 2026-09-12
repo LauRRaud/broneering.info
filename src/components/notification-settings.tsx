@@ -1,4 +1,6 @@
 'use client';
+import styles from './notification-settings.module.css';
+import ScrollRegion from '@/components/ui/scroll-region/scroll-region';
 import {useEffect,useRef,useState} from 'react';
 import {localizedFetch as fetch} from '@/lib/client-fetch';
 import type {NotificationState} from '@/lib/notification-contracts';
@@ -40,12 +42,12 @@ export default function NotificationSettings({tenantId}:{tenantId:string}){
       </fieldset></form>
       <p>{t('SMTP-le edastamine ei tõenda kirja kohaletoimetamist ega lugemist.')}</p>
       <label>{t('Korduskatse või tagasiside põhjendus')} <input value={reason} maxLength={500} disabled={busy} onChange={e=>setReason(e.target.value)}/></label>
-      <div className="table-scroll" role="region" aria-label={t('Teavituste järjekord')} tabIndex={0}><table className="notification-queue"><thead><tr>{['Broneeringu number','Teavitus','Saaja','Seisund','Katsed','Järgmine katse','Tagasiside','Toimingud'].map(label=><th scope="col" key={label}>{t(label)}</th>)}</tr></thead><tbody>
+      <ScrollRegion role="region" aria-label={t('Teavituste järjekord')} tabIndex={0}><table className={styles.queue}><thead><tr>{['Broneeringu number','Teavitus','Saaja','Seisund','Katsed','Järgmine katse','Tagasiside','Toimingud'].map(label=><th scope="col" key={label}>{t(label)}</th>)}</tr></thead><tbody>
         {state.jobs.map(job=><tr key={job.id}><td>{job.reference}</td><td>{t(kindLabels[job.kind.replace(/^company\./,'')]??job.kind)}</td><td>{t(job.recipientKind==='company'?'Ettevõte':'Klient')}</td><td>{t(statusLabels[job.status]??job.status)}{job.capturedAt&&' · '+t('Proovikiri')}{job.lastErrorCode&&<small> {job.lastErrorCode}</small>}{job.sentAt&&<small> {when(job.sentAt)}</small>}</td><td>{job.attempts}/{job.retryBudget}</td><td>{['pending','failed'].includes(job.status)&&job.attempts<job.retryBudget?when(job.nextAttemptAt):'—'}</td><td>{t(job.deliveryStatus==='delivered'?'Kohaletoimetamine kinnitatud':job.deliveryStatus==='bounced'?'Tagasipõrge':'Teadmata')}</td><td>
           {job.status==='failed'&&job.attempts<80&&<button disabled={busy||reason.trim().length<3} onClick={()=>void command({action:'retry',id:job.id,version:job.version,reason})}>{t('Proovi saatmist uuesti')}</button>}
           {job.status==='sent'&&<><button disabled={busy||reason.trim().length<3} onClick={()=>void command({action:'feedback',id:job.id,version:job.version,deliveryStatus:'bounced',reason})}>{t('Märgi tagasipõrge')}</button><button disabled={busy||reason.trim().length<3} onClick={()=>void command({action:'feedback',id:job.id,version:job.version,deliveryStatus:'delivered',reason})}>{t('Kinnita kohaletoimetamine')}</button></>}
         </td></tr>)}
-      </tbody></table></div>
+      </tbody></table></ScrollRegion>
       {!state.jobs.length&&<p>{t('Teavitusi veel ei ole.')}</p>}
       <button disabled={busy||page===0} onClick={()=>setPage(p=>p-1)}>{t('Eelmine lehekülg')}</button><button disabled={busy||!state.hasMore} onClick={()=>setPage(p=>p+1)}>{t('Järgmine lehekülg')}</button>
     </>}

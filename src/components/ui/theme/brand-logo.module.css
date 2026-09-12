@@ -1,0 +1,4 @@
+.logo {display:block;max-inline-size:14rem;}
+.logo img {max-inline-size:100%;max-block-size:7rem;object-fit:contain;}
+.light {display:var(--light-logo-display);}
+.dark {display:var(--dark-logo-display);}

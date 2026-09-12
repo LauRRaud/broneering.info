@@ -18,3 +18,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Add components and token files as they are needed. Do not create empty placeholder libraries, duplicate primitives or a single ever-growing shared component/style file.
 - Apply the same rules to the public website, booking flow and administration. Preserve accessibility, translation and existing behavior while restructuring.
 - See `docs/FRONTEND-STRUCTURE.md` for the intended organization and current migration boundary.
+
+- Theme containers must not style arbitrary descendant buttons, inputs, links or headings. Components opt into UI primitives explicitly. Keep theme files in src/styles limited to CSS custom properties and color-scheme; document layout belongs to its CSS Module. The architecture check enforces theme declarations and global CSS imports.

@@ -1,0 +1,4 @@
+.root {background:var(--surface,Field);color:var(--text,FieldText);border-color:var(--border,ButtonText);}
+.root::placeholder {color:inherit;opacity:1;}
+.root[type='checkbox'],.root[type='radio'] {accent-color:var(--selected,auto);}
+.root:focus-visible{outline:0;border-color:var(--selected,var(--border,ButtonText));box-shadow:0 0 0 .2rem color-mix(in srgb,var(--selected) 16%,transparent);}

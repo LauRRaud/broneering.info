@@ -1,4 +1,0 @@
-/* Layout only; the owner supplies the visual theme. */
-.options { list-style: none; padding: 0; display: grid; gap: 1rem; }
-.price { display: block; margin-block: .25rem; }
-.terms { white-space: pre-wrap; }

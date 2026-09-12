@@ -1,0 +1,25 @@
+.root{position:relative;margin:0 auto;color:var(--text);interpolate-size:allow-keywords}
+.track{box-sizing:border-box;display:flex;align-items:center;inline-size:max-content;max-inline-size:calc(100vw - 2rem);min-block-size:3.5rem;padding:.35rem .42rem;border:1px solid var(--cardBorder,var(--border));border-radius:999px;background:var(--surface);box-shadow:0 10px 30px color-mix(in srgb,var(--text) 7%,transparent)}
+.steps{display:flex;align-items:center;gap:.08rem;list-style:none;padding:0;margin:0}
+.steps li{position:relative;box-sizing:border-box;display:flex;flex:0 0 auto;align-items:center;justify-content:center;inline-size:2rem;min-inline-size:0;block-size:2.55rem;padding-inline:0;overflow:visible;border-radius:999px;color:var(--mutedText,var(--text));transition:inline-size .42s cubic-bezier(.4,0,.2,1),padding .42s cubic-bezier(.4,0,.2,1),background-color .24s ease,color .24s ease}
+.stepControl{display:flex;align-items:center;justify-content:center;gap:.5rem;inline-size:100%;block-size:100%;min-inline-size:0;padding:0;border:0;border-radius:inherit;background:transparent;color:inherit}
+button.stepControl{cursor:pointer}
+button.stepControl:focus-visible{outline:2px solid var(--selected);outline-offset:2px}
+.marker{display:block;inline-size:.48rem;block-size:.48rem;border-radius:50%;background:color-mix(in srgb,var(--text) 28%,var(--surface));flex:none;transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease}
+.steps li[data-complete='true'] .marker{background:color-mix(in srgb,var(--selected) 72%,var(--surface))}
+.steps li[data-selectable='true']:is(:hover,:focus-within) .marker{transform:scale(1.45);box-shadow:0 0 0 .18rem color-mix(in srgb,var(--selected) 16%,transparent);background:var(--selected)}
+.steps li[aria-current]{inline-size:max-content;max-inline-size:15rem;padding-inline:.72rem .88rem;background:var(--selected);color:var(--selectedText)}
+.steps li[aria-current] .marker{background:var(--selectedText)}
+.current{max-inline-size:0;overflow:hidden;font-size:.72rem;font-weight:700;line-height:1;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateX(-.25rem);transition:max-inline-size .42s cubic-bezier(.4,0,.2,1),opacity .2s ease,transform .32s cubic-bezier(.4,0,.2,1)}
+.steps li[aria-current] .current{max-inline-size:12rem;opacity:1;transform:none}
+.tooltip{position:absolute;z-index:5;inset-block-end:calc(100% + .35rem);inset-inline-start:50%;max-inline-size:min(13rem,calc(100vw - 2rem));padding:.42rem .7rem;border:1px solid var(--selected);border-radius:.55rem;background:var(--selected);box-shadow:0 8px 22px color-mix(in srgb,var(--text) 16%,transparent);color:var(--selectedText);font-size:.72rem;font-weight:650;line-height:1.2;letter-spacing:.04em;text-transform:none;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,.25rem);transition:opacity .16s ease,transform .16s ease}
+.steps li:not([aria-current]):is(:hover,:focus-within) .tooltip{opacity:1;transform:translate(-50%,0)}
+.back{display:grid;place-items:center;inline-size:2.35rem;block-size:2.55rem;padding:0;border:0;border-radius:50%;background:transparent;color:var(--navigation,var(--heading));cursor:pointer;flex:none}
+.back svg{transform:rotate(180deg)}
+.back:hover{background:color-mix(in srgb,var(--selected) 8%,var(--surface))}
+.back:disabled{opacity:.5;cursor:wait}
+.divider{inline-size:1px;block-size:1.5rem;margin-inline:.08rem .22rem;background:var(--cardBorder,var(--border));flex:none}
+.sr{position:absolute;inset-block-start:0;inset-inline-start:0;inline-size:1px;block-size:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+@media(max-width:480px){.track{min-block-size:3.2rem;padding:.3rem .35rem}.steps{gap:0}.steps li{inline-size:1.5rem;block-size:2.35rem}.steps li[aria-current]{max-inline-size:9rem;padding-inline:.58rem .7rem}.steps li[aria-current] .current{max-inline-size:7.5rem}.current{font-size:.64rem;letter-spacing:.09em}.back{inline-size:2.15rem;block-size:2.35rem}.divider{margin-inline:.05rem .12rem}}
+@media(prefers-reduced-motion:reduce){.steps li,.current,.marker,.tooltip{transition:none}}
+@media(forced-colors:active){.track{border-color:CanvasText}.tooltip{border-color:CanvasText;background:Canvas;color:CanvasText}.tooltip::after{border-color:CanvasText;background:Canvas}.marker{background:GrayText}.steps li[aria-current]{background:Highlight;color:HighlightText;forced-color-adjust:none}.steps li[aria-current] .marker{background:HighlightText}}

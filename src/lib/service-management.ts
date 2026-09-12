@@ -6,6 +6,9 @@ import {markBookingsForAttention} from './booking-records';
 import {serviceManagementSchemas,type ServiceManagementAction,type ServiceManagementState} from './service-management-contracts';
 
 function conflict():never {throw new AppError(409,'VERSION_CONFLICT','Andmed on vahepeal muutunud. Laadi haldus uuesti ja kontrolli muudatusi.');}
+export async function requireServiceStructure(client:PoolClient,actor:Actor,tenantId:string){
+  await context(client,actor,tenantId,true);
+}
 async function context(client:PoolClient,actor:Actor,tenantId:string,structure=false){
   // Same tenant lock as booking confirmation and membership changes prevents stale writes.
   const tenant=await client.query('SELECT id FROM tenants WHERE id=$1 AND active FOR UPDATE',[tenantId]);
@@ -19,7 +22,7 @@ export async function serviceManagementState(actor:Actor,tenantId:string):Promis
     const membership=await context(client,actor,tenantId);
     const groups=await client.query('SELECT g.id,g.parent_id AS "parentId",g.name,COALESCE(t.path,g.name) AS path,g.active,g.version FROM service_groups g LEFT JOIN service_group_tree t ON t.tenant_id=g.tenant_id AND t.id=g.id WHERE g.tenant_id=$1 ORDER BY path,g.id',[tenantId]);
     const services=await client.query('SELECT id,source_language AS "sourceLanguage",group_id AS "groupId",name,description,default_price AS "defaultPrice",default_duration AS "defaultDuration",buffer_before AS "bufferBefore",buffer_after AS "bufferAfter",active,online,version FROM services WHERE tenant_id=$1 ORDER BY name,id',[tenantId]);
-    const staff=await client.query('SELECT id,name,title,bio,photo_url AS "photoUrl",active,online,version FROM staff WHERE tenant_id=$1 ORDER BY name,id',[tenantId]);
+    const staff=await client.query('SELECT id,name,title,bio,photo_url AS "photoUrl",public_phone AS "publicPhone",active,online,version FROM staff WHERE tenant_id=$1 ORDER BY name,id',[tenantId]);
     const assignments=await client.query('SELECT staff_id AS "staffId",service_id AS "serviceId",price,duration,buffer_before AS "bufferBefore",buffer_after AS "bufferAfter",active,version FROM staff_services WHERE tenant_id=$1 ORDER BY service_id,staff_id',[tenantId]);
     return {groups:groups.rows,services:services.rows,staff:staff.rows,assignments:assignments.rows,canEditStructure:membership.role==='owner'};
   });
@@ -54,11 +57,15 @@ export async function saveServiceManagement(actor:Actor,action:ServiceManagement
       auditMetadata={before:before??null,after};
     }else if(action==='save-staff'){
       const d=serviceManagementSchemas[action].parse(raw),values=[tenantId,d.name,d.title,d.bio,d.photoUrl,d.active,d.online];
+      if(d.photoUrl.startsWith('/api/staff-photos/')){
+        const current=d.id?(await client.query('SELECT photo_url FROM staff WHERE tenant_id=$1 AND id=$2',[tenantId,d.id])).rows[0]:null;
+        if(current?.photo_url!==d.photoUrl)throw new AppError(400,'INVALID_PHOTO','Foto tuleb lisada töötaja fotovormi kaudu.');
+      }
       if(d.id&&!d.active){
         const owner=await client.query("SELECT user_id FROM memberships WHERE tenant_id=$1 AND staff_id=$2 AND active AND role='owner'",[tenantId,d.id]);
         if(owner.rowCount)throw new AppError(409,'OWNER_PROTECTED','Selle töötajaga on seotud omaniku konto. Eemalda enne omaniku töötajaseos või anna omandiõigus üle.');
       }
-      const saved=d.id?await client.query('UPDATE staff SET name=$2,title=$3,bio=$4,photo_url=$5,active=$6,online=$7,version=version+1 WHERE tenant_id=$1 AND id=$8 AND version=$9 RETURNING id',[...values,d.id,d.version]):await client.query('INSERT INTO staff(tenant_id,name,title,bio,photo_url,active,online) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING id',values);
+      const saved=d.id?await client.query('UPDATE staff SET name=$2,title=$3,bio=$4,photo_image=CASE WHEN photo_url=$5 THEN photo_image ELSE NULL END,photo_url=$5,active=$6,online=$7,public_phone=COALESCE($10,public_phone),version=version+1 WHERE tenant_id=$1 AND id=$8 AND version=$9 RETURNING id',[...values,d.id,d.version,d.publicPhone??null]):await client.query('INSERT INTO staff(tenant_id,name,title,bio,photo_url,active,online,public_phone) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id',[...values,d.publicPhone??'']);
       if(!saved.rowCount)conflict();targetId=saved.rows[0].id;
       if(d.id&&!d.active){
         const invitations=await client.query<{id:string}>('UPDATE invitations SET cancelled_at=now() WHERE tenant_id=$1 AND staff_id=$2 AND accepted_at IS NULL AND cancelled_at IS NULL RETURNING id',[tenantId,d.id]);

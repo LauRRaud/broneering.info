@@ -67,20 +67,20 @@
     if(typeof HTMLDialogElement==='undefined'||typeof HTMLDialogElement.prototype.showModal!=='function')return false;
     if(activeDialog)activeDialog.close();
     const cached=dialogs.get(anchor);
-    if(cached){cached.showModal();activeDialog=cached;document.documentElement.style.overflow='hidden';cached.querySelector('button').focus();return true;}
+    if(cached){cached.showModal();activeDialog=cached;document.documentElement.style.overflow='hidden';cached.querySelector('button:not([hidden])')?.focus();return true;}
     const locale=language(anchor),t=text=>translate(locale,text);
     const dialog=document.createElement('dialog');
     dialog.lang=locale;
     const title=document.createElement('h2');title.textContent=t('Broneeri aeg');title.id=`booking-${channel()}`;
     dialog.setAttribute('aria-labelledby',title.id);
-    // Only functional sizing: the application's visual design is intentionally deferred.
-    Object.assign(dialog.style,{width:'min(56rem, 96vw)',maxWidth:'96vw',maxHeight:'96dvh',padding:'1rem',boxSizing:'border-box'});
-    const close=document.createElement('button');close.type='button';close.textContent=t('Sulge');close.autofocus=true;
+    // The iframe owns the tenant theme. The host shell only clips its rounded outline.
+    Object.assign(dialog.style,{width:'min(92rem, 96vw)',maxWidth:'96vw',maxHeight:'94dvh',padding:'0',boxSizing:'border-box',border:'0',borderRadius:'1.5rem',boxShadow:'0 24px 100px #00000030',overflow:'auto'});
+    const close=document.createElement('button');close.type='button';close.textContent='×';close.setAttribute('aria-label',t('Sulge'));close.autofocus=true;Object.assign(close.style,{position:'absolute',right:'1rem',top:'1rem',border:'0',borderRadius:'50%',width:'44px',height:'44px',fontSize:'28px',background:'white',color:'#333',cursor:'pointer'});
     const status=document.createElement('p');status.setAttribute('role','status');status.textContent=t('Broneerimisvaate laadimine…');
     const fallback=document.createElement('a');fallback.href=url.href;fallback.textContent=t('Ava eraldi broneerimisleht');
-    const frame=document.createElement('iframe');frame.title=t('Aja broneerimine');frame.width='100%';frame.height='700';frame.referrerPolicy='no-referrer';
-    const embed=new URL('/embed',url);embed.searchParams.set('parent',location.origin);embed.searchParams.set('lang',locale);frame.src=embed.href;
-    dialog.append(title,close,status,fallback,frame);
+    const frame=document.createElement('iframe');frame.title=t('Aja broneerimine');frame.width='100%';frame.height='700';frame.referrerPolicy='no-referrer';Object.assign(frame.style,{display:'block',border:'0'});
+    const embed=new URL('/embed',url);embed.searchParams.set('parent',location.origin);embed.searchParams.set('lang',locale);embed.searchParams.set('modal','1');frame.src=embed.href;
+    Object.assign(title.style,{position:'absolute',width:'1px',height:'1px',overflow:'hidden',clipPath:'inset(50%)'});dialog.append(title,close,status,fallback,frame);
     let disconnect=()=>{};const oldOverflow=document.documentElement.style.overflow;
     const cleanup=()=>{if(activeDialog===dialog){document.documentElement.style.overflow=oldOverflow;activeDialog=null;anchor.focus();}};
     close.addEventListener('click',()=>dialog.close());dialog.addEventListener('close',cleanup);
@@ -89,7 +89,7 @@
       if(activeDialog)activeDialog.close();
       document.body.append(dialog);dialog.showModal();activeDialog=dialog;dialogs.set(anchor,dialog);
       document.documentElement.style.overflow='hidden';close.focus();
-      disconnect=connect(frame,url,()=>{frame.hidden=false;status.textContent='';},()=>{status.textContent=t('Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht.');frame.hidden=true;},()=>dialog.close());
+      disconnect=connect(frame,url,()=>{frame.hidden=false;status.textContent='';status.hidden=true;fallback.hidden=true;close.hidden=true;},()=>{status.textContent=t('Manustatud vaadet ei õnnestunud avada. Ava eraldi broneerimisleht.');frame.hidden=true;},()=>dialog.close());
       return true;
     }catch{disconnect();dialog.remove();document.documentElement.style.overflow=oldOverflow;activeDialog=null;return false;}
   }

@@ -2,7 +2,7 @@ import { beforeEach, afterEach, afterAll, describe, it, expect } from 'vitest';
 import { randomUUID } from 'node:crypto';
 import pg from 'pg';
 import { DateTime } from 'luxon';
-import { availableOffers, catalogFor, localInstant, offersInTransaction, nextAvailableDay } from '../src/lib/availability';
+import { availableOffers, catalogFor, localInstant, offersInTransaction, nextAvailableDay, monthAvailability } from '../src/lib/availability';
 import { createBooking, insertBooking } from '../src/lib/bookings';
 import { pool, withTenant, withTenantRetry } from '../src/lib/db';
 import { tenantForHost, type Tenant } from '../src/lib/tenants';
@@ -45,6 +45,24 @@ afterEach(async()=>{
 afterAll(async()=>{await admin.end();await pool().end();});
 
 describe('PostgreSQL booking core',()=>{
+  it('month overview follows staff schedules, duration/buffers, bookings and tenant isolation',async()=>{
+    const overview=await monthAvailability(first.tenant,first.serviceId,day,first.staffId);
+    expect(overview.days[day]).toBe(true);
+    expect(Object.keys(overview.days)).toHaveLength(DateTime.fromISO(day).daysInMonth!);
+    expect(Object.keys(overview.days).every(date=>date.startsWith(day.slice(0,7)))).toBe(true);
+    await admin.query('INSERT INTO schedule_exceptions(tenant_id,staff_id,day,closed,intervals) VALUES($1,$2,$3,false,$4)',[first.tenant.id,first.staffId,day,'[[540,580]]']);
+    expect((await monthAvailability(first.tenant,first.serviceId,day,first.staffId)).days[day]).toBe(false); // 30 min + 15 min buffers do not fit.
+    await admin.query('UPDATE staff_services SET duration=15 WHERE tenant_id=$1 AND staff_id=$2',[first.tenant.id,first.staffId]);
+    expect((await monthAvailability(first.tenant,first.serviceId,day,first.staffId)).days[day]).toBe(true);
+    await createBooking(first.tenant,input(await firstOffer()),randomUUID());
+    expect((await monthAvailability(first.tenant,first.serviceId,day,first.staffId)).days[day]).toBe(false);
+    expect(await availableOffers(first.tenant,first.serviceId,day,first.staffId)).toHaveLength(0);
+    await additionalWorker();
+    expect((await monthAvailability(first.tenant,first.serviceId,day)).days[day]).toBe(true);
+    expect(Object.values((await monthAvailability(first.tenant,second.serviceId,day)).days).every(value=>!value)).toBe(true);
+    expect(Object.values((await monthAvailability(first.tenant,first.serviceId,day,second.staffId)).days).every(value=>!value)).toBe(true);
+    await expect(monthAvailability(first.tenant,first.serviceId,'2026-02-30')).rejects.toMatchObject({code:'INVALID_DATE'});
+  });
   it('15: recovers from a real PostgreSQL deadlock by rerunning the losing transaction',async()=>{
     const other=await additionalWorker(),ids=[first.staffId,other],attempts=[0,0];
     let arrived=0;let release!:()=>void;
@@ -270,4 +288,17 @@ describe('AT-17: Europe/Tallinn daylight saving',()=>{
     expect(localInstant('2026-03-29',270,'Europe/Tallinn')?.toUTC().toFormat('HH:mm')).toBe('01:30');
     expect(localInstant('2026-10-25',270,'Europe/Tallinn')?.toUTC().toFormat('HH:mm')).toBe('02:30');
   });
+});
+
+it('stores the demo SMS preference without sending SMS and rejects unsupported real-tenant requests',async()=>{
+ await admin.query('UPDATE tenants SET demo=true WHERE id=$1',[first.tenant.id]);
+ const offer=await firstOffer(),payload={...input(offer),smsReminder:true,phone:'+372 5555 0101'},key=randomUUID();
+ const booking=await createBooking(first.tenant,payload,key);
+ expect((await admin.query('SELECT customer_sms_reminders FROM bookings WHERE id=$1',[booking.id])).rows[0].customer_sms_reminders).toBe(true);
+ expect((await admin.query("SELECT after_data FROM booking_events WHERE booking_id=$1 AND action='booking.created'",[booking.id])).rows[0].after_data.smsReminder).toBe(true);
+ expect((await createBooking(first.tenant,payload,key)).id).toBe(booking.id);
+ expect((await admin.query("SELECT count(*)::int n FROM outbox WHERE booking_id=$1 AND kind LIKE '%sms%'",[booking.id])).rows[0].n).toBe(0);
+ const otherOffer=await firstOffer(second);
+ await expect(withTenant(second.tenant.id,client=>insertBooking(client,{...second.tenant,demo:false},{...input(otherOffer),smsReminder:true,phone:'+372 5555 0101'},otherOffer,'online',null))).rejects.toMatchObject({code:'INVALID_INPUT'});
+ await expect(createBooking(first.tenant,{...input(await firstOffer()),smsReminder:true},randomUUID())).rejects.toMatchObject({code:'INVALID_INPUT'});
 });

@@ -1,0 +1,11 @@
+.root{max-inline-size:44rem;margin:0 auto;padding:2.5rem 1rem;text-align:center}
+.seal{display:grid;place-items:center;inline-size:5rem;block-size:5rem;border:1px solid var(--selected);border-radius:50%;margin:0 auto 1.5rem;color:var(--selected);background:color-mix(in srgb,var(--selected) 5%,var(--surface))}
+.eyebrow{letter-spacing:.1em;text-transform:uppercase;font-size:.75rem;color:var(--heading)}
+.root h2{font-family:var(--booking-display-font,Georgia,serif);font-size:clamp(2.5rem,5vw,4rem);font-weight:400;line-height:1.2;margin:.8rem 0 1.4rem}
+.root>p{font-size:.88rem;color:var(--mutedText,var(--text))}
+.card{padding:1.5rem;background:var(--surface);border:1px solid var(--cardBorder,var(--border));border-radius:.8rem;margin:2rem 0}
+.card strong{font-family:var(--booking-display-font,Georgia,serif);font-size:1.5rem;font-weight:400;color:var(--heading)}
+.reference{font-size:.8rem;letter-spacing:.04em}
+.actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:1.2rem;font-size:.85rem}
+.actions button{display:flex;gap:.5rem;align-items:center;padding:.8rem 1rem;background:var(--selected);color:var(--selectedText);border-radius:.5rem;cursor:pointer}
+.restart{border:0;background:transparent;color:var(--link);text-decoration:underline;padding:1rem;cursor:pointer}

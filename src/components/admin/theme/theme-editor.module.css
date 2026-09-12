@@ -1,0 +1,3 @@
+.editor {min-inline-size:0;}
+.layout {min-inline-size:0;}
+.actions {display:flex;flex-wrap:wrap;gap:.5rem;}

@@ -1,7 +1,11 @@
 "use client";
+import Button from '@/components/ui/button/button';
+
+
+import Heading from '@/components/ui/heading/heading';
 import {isDefinitiveBookingRejection} from '@/lib/booking-mutation-outcome';
 import {localizedService} from '@/lib/service-translation-contracts';
-import {localeNames} from '@/lib/locales';
+
 import {contactErrors,type ContactErrors} from '@/lib/contact-validation';
 import {localeTags} from '@/lib/locales';
 import {localizedFetch as fetch} from '@/lib/client-fetch';
@@ -11,17 +15,27 @@ import {useI18n} from '@/components/i18n-provider';
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import type { BookingInput, BookingResult, Catalog, NextAvailability, Offer, Service, Staff } from "../lib/contracts";
 
-import {downloadBookingCalendar} from '@/lib/booking-calendar';
+
 import Turnstile from '@/components/turnstile';
-import selectionStyles from '@/components/booking/selection.module.css';
+import {ThemeSurface} from '@/components/ui/theme/theme-surface';
+import TimePicker from '@/components/booking/time-picker';
+
+import {canRequestReminder} from '@/components/booking/booking-reminder';
+import BookingProgress from '@/components/booking/booking-progress';
+import BookingConfirmation from '@/components/booking/booking-confirmation';
+import BookingSuccess from '@/components/booking/booking-success';
+import OfferSelection from '@/components/booking/offer-selection';
+import Icon from '@/components/ui/icon/icon';
+import flowStyles from './booking/booking-flow.module.css';
+import StaffCard from '@/components/booking/staff-card';
 import BookingHeader from '@/components/booking/booking-header';
-import {CategorySelection,ServiceSelection,serviceCategories,firstBookingStep,initialCategoryPath,servicesAtPath,servicePath} from '@/components/booking/service-selection';
+import {CategorySelection,descendSingleCategory,ServiceSelection,serviceCategories,firstBookingStep,initialCategoryPath,servicesAtPath,servicePath} from '@/components/booking/service-selection';
 
 type Step = "category" | "service" | "staff" | "time" | "details";
 type AvailabilityState = "idle" | "loading" | "ready" | "empty" | "error";
 
-export default function BookingFlow({ catalog:initialCatalog,previewTenantId,challengeSiteKey }: { catalog: Catalog;previewTenantId?:string;challengeSiteKey?:string }) {
-  const endpoint=(action:string,query='')=>previewTenantId?`/api/admin/preview/${action}?tenantId=${encodeURIComponent(previewTenantId)}${query?'&'+query:''}`:`/api/${action}${query?'?'+query:''}`;
+function BookingFlowContent({ catalog:initialCatalog,previewTenantId,challengeSiteKey,designPreview=false }: { catalog: Catalog;previewTenantId?:string;challengeSiteKey?:string;designPreview?:boolean }) {
+  const endpoint=(action:string,query='')=>previewTenantId?`/api/admin/${designPreview?'theme-preview':'preview'}/${action}?tenantId=${encodeURIComponent(previewTenantId)}${query?'&'+query:''}`:`/api/${action}${query?'?'+query:''}`;
   const {t,locale}=useI18n();
 const stepLabels: Array<{ id: Step; label: string; short: string }> = [
   { id: "category", label: t("Teenusegrupp"), short: "00" },
@@ -34,19 +48,6 @@ const stepLabels: Array<{ id: Step; label: string; short: string }> = [
 function localDate(date: string) {
   const [year, month, day] = date.split("-").map(Number);
   return new Date(year, month - 1, day);
-}
-
-function dateValue(date: Date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-function shiftDate(date: string, amount: number) {
-  const value = localDate(date);
-  value.setDate(value.getDate() + amount);
-  return dateValue(value);
 }
 
 function makeIdempotencyKey() {
@@ -83,9 +84,6 @@ function dateTimeLabel(value: string, timezone: string) {
   return dateLabel(formatted);
 }
 
-function shortDateLabel(value: string) {
-  return new Intl.DateTimeFormat(localeTags[locale], { weekday: "short", day: "numeric", month: "short" }).format(localDate(value));
-}
 
 
 
@@ -94,6 +92,7 @@ function shortDateLabel(value: string) {
   const [step, setStep] = useState<Step>(()=>firstBookingStep(initialCatalog));
   const [serviceId, setServiceId] = useState("");
   const [staffId, setStaffId] = useState("");
+  const [staffChosen,setStaffChosen]=useState(false);
   const [date, setDate] = useState(catalog.today);
   const [offers, setOffers] = useState<Offer[]>([]);
   const [offer, setOffer] = useState<Offer | null>(null);
@@ -108,9 +107,10 @@ function shortDateLabel(value: string) {
   const [serviceSearch, setServiceSearch] = useState("");
   const [categoryPath, setCategoryPath] = useState<string[]>(()=>initialCategoryPath(initialCatalog));
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
+  const [emailReminder,setEmailReminder]=useState(false);
+  const [smsReminder,setSmsReminder]=useState(false);
   const [fieldErrors,setFieldErrors]=useState<ContactErrors>({});
   const [validationAttempt,setValidationAttempt]=useState(0);
-  useEffect(()=>{const first=Object.keys(fieldErrors)[0];if(first)document.getElementById(first)?.focus();},[validationAttempt]);
   const [submitState, setSubmitState] = useState<"idle" | "submitting" | "uncertain" | "error">("idle");
   const [submitError, setSubmitError] = useState("");
   const [result, setResult] = useState<BookingResult | null>(null);
@@ -122,7 +122,15 @@ function shortDateLabel(value: string) {
   const payloadRef = useRef("");
   const submitLockRef = useRef(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const headingFocusFrame = useRef<number | null>(null);
   const nextDayAbort = useRef<AbortController | null>(null);
+
+  useEffect(()=>{
+    const first=Object.keys(fieldErrors)[0];
+    if(!first)return;
+    if(headingFocusFrame.current!==null){window.cancelAnimationFrame(headingFocusFrame.current);headingFocusFrame.current=null;}
+    document.getElementById(first)?.focus();
+  },[validationAttempt]);
 
   const service = useMemo(() => catalog.services.find((item) => item.id === serviceId), [catalog.services, serviceId]);
   const eligibleStaff = useMemo(
@@ -131,17 +139,12 @@ function shortDateLabel(value: string) {
   );
   const initialPath=initialCategoryPath(catalog);
   const categories=serviceCategories(catalog,categoryPath);
-  const visibleSteps = stepLabels.filter(item => (item.id !== 'category' || firstBookingStep(catalog)==='category') && (item.id !== 'staff' || (!catalog.selectedStaffId && eligibleStaff.length !== 1)));
+  const visibleSteps = stepLabels.filter(item => (item.id !== 'category' || firstBookingStep(catalog)==='category') && (item.id !== 'staff' || !catalog.selectedStaffId));
   const canGoBack = step !== visibleSteps[0].id || (step==='category'&&categoryPath.length>initialPath.length);
   const bookingLocked = submitState === "submitting" || submitState === "uncertain" || catalogLoading;
   const categoryServices = servicesAtPath(sourceCatalog.services,categoryPath);
-  const isDateAtStart = date <= catalog.today;
   const isDateAtEnd = date >= catalog.maxDate;
 
-  const dateStrip = useMemo(() => {
-    const dates = [shiftDate(date, -2), shiftDate(date, -1), date, shiftDate(date, 1), shiftDate(date, 2)];
-    return dates.filter((item, index, list) => item >= catalog.today && item <= catalog.maxDate && list.indexOf(item) === index);
-  }, [catalog.maxDate, catalog.today, date]);
 
   useEffect(() => {
     setNextDaySearching(false);
@@ -189,8 +192,10 @@ function shortDateLabel(value: string) {
   }, [availabilityRetry, catalog.maxDate, catalog.today, date, serviceId, staffId]);
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => headingRef.current?.focus());
-    return () => window.cancelAnimationFrame(frame);
+    if(headingFocusFrame.current!==null)window.cancelAnimationFrame(headingFocusFrame.current);
+    const frame = window.requestAnimationFrame(() => {headingFocusFrame.current=null;headingRef.current?.focus();});
+    headingFocusFrame.current=frame;
+    return () => {window.cancelAnimationFrame(frame);if(headingFocusFrame.current===frame)headingFocusFrame.current=null;};
   }, [result, step, categoryPath]);
 
   function resetTime() {
@@ -209,8 +214,8 @@ function shortDateLabel(value: string) {
 
   function chooseCategory(category: string) {
     if(bookingLocked)return;
-    const nextPath=[...categoryPath,category];
-    if(!service||!nextPath.every((part,index)=>servicePath(service)[index]===part)){setServiceId('');setStaffId('');setServiceSearch('');resetTime();}
+    const nextPath=descendSingleCategory(catalog,[...categoryPath,category]);
+    if(!service||!nextPath.every((part,index)=>servicePath(service)[index]===part)){setServiceId('');setStaffId('');setStaffChosen(false);setServiceSearch('');resetTime();}
     setCategoryPath(nextPath);
     setStep(serviceCategories(catalog,nextPath).length?'category':'service');
   }
@@ -219,14 +224,19 @@ function shortDateLabel(value: string) {
     if(bookingLocked)return;
     setServiceId(next.id);
     const nextStaff = catalog.staff.filter((item) => item.serviceIds.includes(next.id));
-    setStaffId(nextStaff.length === 1 ? nextStaff[0].id : "");
+    if(next.id!==serviceId){
+      const linkedStaff=catalog.selectedStaffId?nextStaff.find(item=>item.id===catalog.selectedStaffId):undefined;
+      setStaffId(linkedStaff?.id??"");
+      setStaffChosen(!!linkedStaff);
+    }
     resetTime();
-    setStep(nextStaff.length === 1 ? "time" : "staff");
+    setStep(catalog.selectedStaffId ? "time" : "staff");
   }
 
   function chooseStaff(next: Staff | null) {
     if(bookingLocked)return;
     setStaffId(next?.id || "");
+    setStaffChosen(true);
     resetTime();
     setStep("time");
   }
@@ -286,10 +296,14 @@ function shortDateLabel(value: string) {
   function goBack() {
     if(bookingLocked)return;
     if (step === "details") setStep("time");
-    else if (step === "time") setStep(eligibleStaff.length > 1 ? "staff" : "service");
+    else if (step === "time") setStep(catalog.selectedStaffId ? "service" : "staff");
     else if (step === "staff") setStep("service");
     else if (step === "service" && categories.length) setStep("category");
-    else if ((step === "service" || step === "category") && categoryPath.length > initialPath.length) {setCategoryPath(path=>path.slice(0,-1));setStep("category");}
+    else if ((step === "service" || step === "category") && categoryPath.length > initialPath.length) {
+      let previous=categoryPath.slice(0,-1);
+      while(previous.length>initialPath.length&&serviceCategories(catalog,previous).length===1&&!servicesAtPath(catalog.services,previous).length)previous=previous.slice(0,-1);
+      setCategoryPath(previous);setStep(serviceCategories(catalog,previous).length?'category':'service');
+    }
   }
 
   function updateField(field: keyof typeof form, value: string) {
@@ -301,9 +315,10 @@ function shortDateLabel(value: string) {
 
   async function submitBooking(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if(designPreview)return;
     if (submitLockRef.current || catalogLoading || !offer || !service) return;
     if(challengeSiteKey&&!challengeToken){setSubmitState(state=>state==='uncertain'?'uncertain':'error');setSubmitError(t('Palun kinnita, et sa ei ole robot.'));return;}
-    if(submitState !== 'uncertain'){const errors=contactErrors(form);setFieldErrors(errors);if(Object.keys(errors).length){setValidationAttempt(value=>value+1);return;}}
+    if(submitState !== 'uncertain'){const errors=contactErrors(form,smsReminder&&catalog.tenant.demo&&canRequestReminder(offer.start,catalog.tenant.reminderMinutes));setFieldErrors(errors);if(Object.keys(errors).length){setValidationAttempt(value=>value+1);return;}}
     submitLockRef.current = true;
     setSubmitState("submitting");
     setSubmitError("");
@@ -318,6 +333,8 @@ function shortDateLabel(value: string) {
           expectedPrice: offer.price,
           expectedDuration: offer.duration,
           expectedRulesVersion:catalog.tenant.rulesVersion,
+          smsReminder:smsReminder&&catalog.tenant.demo&&canRequestReminder(offer.start,catalog.tenant.reminderMinutes),
+          emailReminder:emailReminder&&canRequestReminder(offer.start,catalog.tenant.reminderMinutes),
           name: form.name.trim(),
           email: form.email.trim(),
           ...(form.phone.trim() ? { phone: form.phone.trim() } : {}),
@@ -409,95 +426,64 @@ function shortDateLabel(value: string) {
     return visibleSteps.findIndex((item) => item.id === id);
   }
 
-  if (result) {
-    return (
-      <main id="main-content" tabIndex={-1} data-live-language>
-        <section aria-labelledby="success-title">
-          {catalog.tenant.demo && <p role="status">{t("Demokeskkond — proovibroneeringud")}</p>}
-          <p>{result.currentVersion ? t("Broneeringu esialgne kinnitus") : t("Broneering kinnitatud")}</p>
-          <h1 id="success-title" ref={headingRef} tabIndex={-1}>{t("Kohtumiseni, ")}{form.name.split(" ")[0] || "sind"}.</h1>
-          <p>{result.currentVersion ? t("Broneeringut on pärast loomist muudetud. Allpool on esialgse kinnituse andmed; kontrolli kehtivat aega halduslingilt või ettevõttelt.") : t("Sinu aeg on kalendrisse märgitud. Hoia broneeringu number alles.")}</p>
-          <dl>
-            <div><dt>{t("Broneering")}</dt><dd>{result.reference}</dd></div>
-            <div><dt>{t("Teenus")}</dt><dd>{result.serviceName}</dd></div>
-            <div><dt>{t("Koht")}</dt><dd>{catalog.tenant.name}<br />{catalog.tenant.address}</dd></div>
-            <div><dt>{t("Aeg")}</dt><dd>{dateTimeLabel(result.start, catalog.tenant.timezone)}, {timeLabel(result.start, catalog.tenant.timezone)} – {timeLabel(result.end, catalog.tenant.timezone)}</dd></div>
-            <div><dt>{t("Töötaja")}</dt><dd>{result.staffName}</dd></div>
-            <div><dt>{t("Kestus")}</dt><dd>{result.duration}{t(" min")}</dd></div>
-            <div><dt>{t("Hind")}</dt><dd>{money(result.price)}</dd></div>
-          </dl>
-          {result.cancellationHours != null && <p>{t("Palume muutmisest või tühistamisest ettevõttele teada anda vähemalt ")}{result.cancellationHours} {t("tundi ette.")}</p>}
-          <p>{result.currentVersion ? t("Siin näidatud esialgne kinnitus ei kajasta hilisemaid muudatusi.") : t("Broneering on kinnitatud sõltumata kinnituskirja kohalejõudmisest.")}{catalog.tenant.demo && t(" Demokeskkond e-kirju ei saada.")}</p>
-          <p><button type="button" disabled={!!result.currentVersion} onClick={() => downloadBookingCalendar(result,catalog.tenant)}>{t("Lisa kalendrisse")}</button></p>{result.managementUrl&&<p><a href={result.managementUrl} target="_blank" rel={"noopener noreferrer"}>{t("Vaata, muuda või tühista broneeringut")}</a><br/>{t("Hoia halduslink alles ja enda teada. ")}{!result.currentVersion&&result.managementExpiresAt&&<>{t("Link kehtib kuni ")}{dateTimeLabel(result.managementExpiresAt,catalog.tenant.timezone)}, {timeLabel(result.managementExpiresAt,catalog.tenant.timezone)}.</>}</p>}
-          <button type="button" onClick={() => { setResult(null); setStep(firstBookingStep(catalog)); setCategoryPath(initialCategoryPath(catalog)); setServiceSearch(""); setServiceId(""); setStaffId(""); setOffer(null); }}>{t("Tee uus broneering")}</button>
-        </section>
-      </main>
-    );
+  function stepCompleted(id:Step){
+    if(id==='category')return !!serviceId||stepIndex(step)>stepIndex(id);
+    if(id==='service')return !!serviceId;
+    if(id==='staff')return !!catalog.selectedStaffId||staffChosen;
+    if(id==='time')return !!offer;
+    return false;
   }
 
-  return (
-    <main id="main-content" tabIndex={-1} data-live-language>
-      <BookingHeader tenant={catalog.tenant}/>
-      {catalog.selectedStaffId && <p>{t("Broneerid töötajale ")}{catalog.staff.find(item=>item.id===catalog.selectedStaffId)?.name}. <button type="button" disabled={bookingLocked} onClick={changeLinkedStaff}>{catalogLoading?t("Laadime töötajaid…"):t("Muuda töötajat")}</button></p>}
+  function stepSelectable(id:Step){
+    if(id==='category')return true;
+    if(id==='service')return firstBookingStep(catalog)==='service'||!!serviceId||stepIndex(step)>stepIndex(id);
+    if(id==='staff')return !!serviceId;
+    if(id==='time')return !!serviceId&&(!!catalog.selectedStaffId||staffChosen);
+    return !!offer;
+  }
 
-      <section aria-labelledby="booking-title">
-        <p>{t('Samm {current} / {total}',{current:stepIndex(step)+1,total:visibleSteps.length})}</p>
-        <h2 id="booking-title" ref={headingRef} tabIndex={-1}>{step === 'category' ? t('Vali teenusegrupp') : step === "service" ? t("Vali teenus") : step === "staff" ? t("Vali töötaja") : step === "time" ? t("Vali aeg") : t("Sinu andmed")}</h2>
-        {(step==='category'||step==='service')&&categoryPath.length>0&&<p>{categoryPath.map(part=>part||t('Muud teenused')).join(' / ')}</p>}
-        {step==='staff'&&<p>{service?.name}</p>}
-        {(step==='category'||step==='service'||step==='staff')&&submitError&&<p role="alert">{t(submitError)}</p>}
-        {canGoBack && <p><button type="button" onClick={goBack} disabled={bookingLocked}>{t("Tagasi")}</button></p>}
+  function goToStep(index:number){
+    const next=visibleSteps[index];
+    if(!next||next.id===step||bookingLocked||!stepSelectable(next.id))return;
+    if(next.id==='category')setCategoryPath(initialPath);
+    else if(service)setCategoryPath(servicePath(service));
+    setStep(next.id);
+  }
 
-          {step === 'category' && <CategorySelection categories={categories} selected={service?servicePath(service)[categoryPath.length]??null:null} disabled={bookingLocked} onSelect={chooseCategory}/>}
-          {(step === 'service'||(step==='category'&&categoryServices.length>0)) && <ServiceSelection services={categoryServices} selected={serviceId} disabled={bookingLocked} exactPrice={!!catalog.selectedStaffId} search={serviceSearch} onSearch={setServiceSearch} onSelect={chooseService}/>}
-
-          {step === "staff" && (
-            <ul aria-label={t("Töötajad")}>
-              <li><button type="button" onClick={() => chooseStaff(null)} aria-pressed={staffId === ""}>{t("Töötaja pole oluline")}</button><p>{t("Näita kõigi seda teenust pakkuvate töötajate vabu aegu. Kuupäeva ja kellaaja valid ise.")}</p></li>
-              {eligibleStaff.map((item) => <li key={item.id}><button type="button" onClick={() => chooseStaff(item)} aria-pressed={staffId === item.id}>{item.name}</button><p>{item.title}</p>{item.bio&&<details><summary>{t("Teenindaja tutvustus")}</summary><p>{item.bio}</p></details>}{item.photoUrl&&<img src={item.photoUrl} alt="" width={96} height={96} loading="lazy" referrerPolicy="no-referrer"/>}</li>)}
-              {!eligibleStaff.length && <li>{t("Sellele teenusele ei ole sobivaid töötajaid.")}</li>}
-            </ul>
-          )}
-
-          {step === "time" && (
-            <div>
-
-              {submitError && <p role="alert">{t(submitError)}</p>}
-              <p><button type="button" onClick={() => chooseDate(shiftDate(date, -1))} disabled={isDateAtStart || bookingLocked} aria-label={t("Eelmine päev")}>{t("Eelmine päev")}</button></p>
-              <label>{t("Valitud kuupäev ")}<input type="date" value={date} min={catalog.today} max={catalog.maxDate} onChange={(event) => chooseDate(event.target.value)} disabled={bookingLocked} /></label>
-              <p><button type="button" onClick={() => chooseDate(shiftDate(date, 1))} disabled={isDateAtEnd || bookingLocked} aria-label={t("Järgmine päev")}>{t("Järgmine päev")}</button></p>
-              <p>{t("Valitud: ")}{service?.name} / {staffId ? eligibleStaff.find((item) => item.id === staffId)?.name : t("Kõik töötajad")}</p>
-              {!staffId && <p>{t("Iga pakkumine näitab konkreetset töötajat, hinda ja kestust. Samal kellaajal võib olla mitu pakkumist; vali neist endale sobiv. Ühtegi aega ei valita sinu eest.")}</p>}
-              <ul aria-label={t("Vali kuupäev")}>
-                {dateStrip.map((item) => <li key={item}><button type="button" onClick={() => chooseDate(item)} disabled={bookingLocked} aria-pressed={item === date}>{shortDateLabel(item)}</button></li>)}
-              </ul>
-              {availability === "loading" && <p role="status">{t("Otsime vabu aegu…")}</p>}
-              {availability === "error" && <p role="alert"><strong>{t("Ajad ei avanenud.")}</strong> {t(availabilityError)} <button type="button" onClick={() => setAvailabilityRetry((value) => value + 1)}>{t("Proovi uuesti")}</button></p>}
-              {availability === "empty" && <div><p><strong>{t("Sel päeval vabu aegu ei ole.")}</strong> {t("Vali järgmine päev või proovi teist töötajat.")}</p><button type="button" onClick={findNextDay} disabled={nextDaySearching || nextDayExhausted || isDateAtEnd || bookingLocked}>{nextDaySearching?t("Otsime järgmist vaba päeva…"):nextDayCursor?t("Jätka vaba päeva otsingut"):t("Leia järgmine vaba päev")}</button><p>{t("Otsime kuni 31 päeva korraga. Kellaaeg jääb sinu valida.")}</p></div>}
-              {nextDayMessage && <p role="status">{t(nextDayMessage)}</p>}
-              {!staffId && (availability === 'ready' || availability === 'empty') && eligibleStaff.some(item=>!offers.some(value=>value.staffId===item.id)) && <ul aria-label={t("Töötajad, kellel sel päeval vabu aegu pole")}>{eligibleStaff.filter(item=>!offers.some(value=>value.staffId===item.id)).map(item=><li key={item.id}>{item.name}{t(": sel päeval vabu aegu pole.")}</li>)}</ul>}
-              {availability === "ready" && <ul aria-label={t("Vabad ajad")}>{offers.map((item) => <li key={`${item.staffId}-${item.start}`}><button type="button" onClick={() => chooseOffer(item)}><strong>{timeLabel(item.start, catalog.tenant.timezone)}</strong> — {item.staffName}, {item.duration} {t("min · ")}{money(item.price)}</button></li>)}</ul>}
-            </div>
-          )}
-
-          {step === "details" && offer && (
-            <div>
-              <form id="booking-form" noValidate onSubmit={submitBooking}>
-                {Object.values(fieldErrors).some(Boolean)&&<div role="alert"><p>{t("Kontrolli esiletõstetud välju.")}</p><ul>{Object.entries(fieldErrors).filter(([,error])=>error).map(([field,error])=><li key={field}><a href={'#'+field}>{t(error!)}</a></li>)}</ul></div>}
-                <p><label htmlFor="name">{t("Teenuse saaja nimi *")}</label><br /><input id="name" aria-invalid={!!fieldErrors.name} aria-describedby={fieldErrors.name?"name-error contact-help":"contact-help"} name="name" autoComplete="name" minLength={2} maxLength={120} value={form.name} onChange={(event) => updateField("name", event.target.value)} required disabled={bookingLocked} placeholder={t("Ees- ja perekonnanimi")} />{fieldErrors.name&&<span className="field-error" id="name-error">{t(fieldErrors.name!)}</span>}</p>
-                <p><label htmlFor="email">{t("Kontaktisiku e-post *")}</label><br /><input id="email" aria-invalid={!!fieldErrors.email} aria-describedby={fieldErrors.email?"email-error contact-help":"contact-help"} name="email" type="email" autoComplete="email" maxLength={254} value={form.email} onChange={(event) => updateField("email", event.target.value)} required disabled={bookingLocked} placeholder={t("sina@näide.ee")} />{fieldErrors.email&&<span className="field-error" id="email-error">{t(fieldErrors.email!)}</span>}</p>
-                <p><label htmlFor="phone">{t("Kontaktisiku telefon (soovi korral)")}</label><br /><input id="phone" aria-invalid={!!fieldErrors.phone} aria-describedby={fieldErrors.phone?"phone-error contact-help":"contact-help"} name="phone" type="tel" autoComplete="tel" maxLength={30} value={form.phone} onChange={(event) => updateField("phone", event.target.value)} disabled={bookingLocked} placeholder="+372 …" />{fieldErrors.phone&&<span className="field-error" id="phone-error">{t(fieldErrors.phone!)}</span>}</p>
-                <p id="contact-help">{t("Kontot pole vaja. Teisele inimesele broneerides sisesta tema nimi ja enda kontaktandmed. Kasutame neid andmeid ainult broneeringuga seoses.")}</p>
-                {challengeSiteKey&&<Turnstile siteKey={challengeSiteKey} onToken={setChallengeToken} resetSignal={challengeReset} label={t("Botikontroll")}/>}
-                {submitState === "uncertain" && <p role="alert"><strong>{t("Kontrollime kinnituse tulemust.")}</strong> {t(submitError)} {t("Kinnitus loetakse õnnestunuks alles serveri vastuse järel.")}</p>}
-                {submitState === "error" && <p role="alert"><strong>{t("Broneeringut ei saanud kinnitada.")}</strong> {t(submitError)} {t("Kontrolli andmeid ja proovi uuesti.")}</p>}
-              </form>
-              <aside aria-label={t("Broneeringu kokkuvõte")}><h3>{t("Sinu broneering")}</h3><h4 lang={service?.contentLanguage}>{service?.name}</h4>{service?.translationMissing&&<p>{t("Tõlge pole veel kinnitatud. Algteksti keel: {language}",{language:localeNames[service.contentLanguage]})}</p>}<dl><div><dt>{t("Koht")}</dt><dd>{catalog.tenant.name}<br />{catalog.tenant.address}</dd></div><div><dt>{t("Kuupäev")}</dt><dd>{dateTimeLabel(offer.start, catalog.tenant.timezone)}</dd></div><div><dt>{t("Kell")}</dt><dd>{timeLabel(offer.start, catalog.tenant.timezone)} – {timeLabel(offer.end, catalog.tenant.timezone)}</dd></div><div><dt>{t("Töötaja")}</dt><dd>{offer.staffName}</dd></div><div><dt>{t("Kestus")}</dt><dd>{offer.duration}{t(" min")}</dd></div><div><dt>{t("Hind")}</dt><dd>{money(offer.price)}</dd></div></dl><p>{t("Palume muutmisest või tühistamisest ettevõttele teada anda vähemalt ")}{catalog.tenant.cancellationHours} {t("tundi ette.")}</p><p>{t("Teenuse eest siin veebis ei maksta.")}</p>{catalog.tenant.demo && <p>{t("Demokeskkond — proovibroneeringud. E-kirju ei saadeta.")}</p>}</aside>
-              {catalog.tenant.bookingTerms&&<section aria-label={t('Broneerimistingimused')}><h3>{t('Broneerimistingimused')}</h3><p className={selectionStyles.terms}>{catalog.tenant.bookingTerms}</p></section>}
-              <button type="submit" form="booking-form" disabled={submitState === "submitting" || catalogLoading}>{submitState === "submitting" ? "Kinnitame…" : submitState === "uncertain" ? t("Proovi uuesti") : t("Kinnita broneering")}</button>
-            </div>
-          )}
-      </section>
-    </main>
-  );
+  const titles={category:t('Vali kategooria'),service:t('Vali teenus'),staff:t('Vali spetsialist'),time:t('Vali aeg'),details:t('Kinnita broneering')};
+  const restart=()=>{setResult(null);setStep(firstBookingStep(catalog));setCategoryPath(initialCategoryPath(catalog));setServiceSearch('');setServiceId('');setStaffId('');setStaffChosen(false);setOffer(null);setForm({name:'',email:'',phone:''});setEmailReminder(false);setSmsReminder(false);keyRef.current='';payloadRef.current='';};
+  return <main className={flowStyles.root} id="main-content" tabIndex={-1} data-live-language data-booking-flow>
+    <BookingHeader tenant={catalog.tenant}/>
+    {designPreview&&<p className={flowStyles.notice} role="status">{t('Kujunduse eelvaade — broneeringu kinnitamine on välja lülitatud.')}</p>}
+    {catalog.selectedStaffId&&!result&&<p className={flowStyles.linked}>{t('Broneerid töötajale ')}{catalog.staff.find(item=>item.id===catalog.selectedStaffId)?.name}. <Button type="button" disabled={bookingLocked} onClick={changeLinkedStaff}>{catalogLoading?t('Laadime töötajaid…'):t('Muuda töötajat')}</Button></p>}
+    <div className={flowStyles.body} data-step={result?'success':step}>
+    {result?<BookingSuccess result={result} tenant={catalog.tenant} name={form.name} serviceName={service?.name} onRestart={restart} headingRef={headingRef}/>:<section aria-labelledby="booking-title">
+      <div className={flowStyles.intro}><Heading as="h2" className={flowStyles.title} id="booking-title" ref={headingRef} tabIndex={-1}>{titles[step]}</Heading></div>
+      {(step==='category'||step==='service'||step==='staff')&&submitError&&<p className={flowStyles.notice} role="alert">{t(submitError)}</p>}
+      <div className={flowStyles.stage} key={step+categoryPath.join('/')}>
+      {step==='category'&&<CategorySelection categories={categories} selected={service?servicePath(service)[categoryPath.length]??null:null} disabled={bookingLocked} onSelect={chooseCategory}/>}
+      {(step==='service'||(step==='category'&&categoryServices.length>0))&&<ServiceSelection services={categoryServices} selected={serviceId} disabled={bookingLocked} exactPrice={!!catalog.selectedStaffId||catalog.staff.filter(item=>categoryServices.some(service=>item.serviceIds.includes(service.id))).length===1} search={serviceSearch} onSearch={setServiceSearch} onSelect={chooseService}/>}
+      {step==='staff'&&<ul className={flowStyles.staffList} aria-label={t('Töötajad')}>
+        {eligibleStaff.map(item=><li key={item.id}><StaffCard staff={item} serviceId={serviceId} showPrice={new Set(eligibleStaff.map(person=>{const detail=person.serviceDetails?.find(value=>value.serviceId===serviceId);return detail?detail.price+':'+detail.duration:'';})).size>1} selected={staffChosen&&staffId===item.id} disabled={bookingLocked} onSelect={()=>chooseStaff(item)}/></li>)}
+        {eligibleStaff.length>1&&<li><Button className={flowStyles.any} type="button" disabled={bookingLocked} onClick={()=>chooseStaff(null)} aria-label={t('Eelistus puudub')} aria-pressed={staffChosen&&staffId===''}><span className={flowStyles.anyAvatar} aria-hidden="true">?</span><strong>{t('Eelistus puudub')}</strong></Button></li>}
+        {!eligibleStaff.length&&<li>{t('Sellele teenusele ei ole sobivaid töötajaid.')}</li>}
+      </ul>}
+      {step==='time'&&<TimePicker key={serviceId+':'+staffId} date={date} min={catalog.today} max={catalog.maxDate} disabled={bookingLocked} onChange={chooseDate} serviceId={serviceId} staffId={staffId} endpoint={endpoint('availability')}>
+        {submitError&&<p role="alert">{t(submitError)}</p>}
+        {availability==='loading'&&<p role="status">{t('Otsime vabu aegu…')}</p>}
+        {availability==='error'&&<p role="alert">{t('Ajad ei avanenud.')} {t(availabilityError)} <Button type="button" onClick={()=>setAvailabilityRetry(value=>value+1)}>{t('Proovi uuesti')}</Button></p>}
+        {availability==='empty'&&<div><p>{t('Sel päeval vabu aegu ei ole.')}</p><Button className={flowStyles.nextDay} variant="primary" type="button" onClick={findNextDay} disabled={nextDaySearching||nextDayExhausted||isDateAtEnd||bookingLocked}>{nextDaySearching?t('Otsime järgmist vaba päeva…'):nextDayCursor?t('Jätka vaba päeva otsingut'):t('Leia järgmine vaba päev')}</Button></div>}
+        {nextDayMessage&&<p role="status">{t(nextDayMessage)}</p>}
+        {availability==='ready'&&<OfferSelection key={date} offers={offers} timezone={catalog.tenant.timezone} showStaff={!staffId} selected={offer} disabled={bookingLocked} onSelect={chooseOffer}/>}
+      </TimePicker>}
+      {step==='details'&&offer&&service&&<BookingConfirmation tenant={catalog.tenant} service={service} offer={offer} form={form} errors={fieldErrors} locked={bookingLocked} state={submitState} error={submitError} preview={designPreview} emailReminder={emailReminder} onReminder={setEmailReminder} smsReminder={smsReminder} onSmsReminder={setSmsReminder} onField={updateField} onSubmit={submitBooking} canEditStaff={!catalog.selectedStaffId&&eligibleStaff.length>0} onEdit={target=>{if(!bookingLocked)setStep(target);}}>
+        {challengeSiteKey&&<Turnstile siteKey={challengeSiteKey} onToken={setChallengeToken} resetSignal={challengeReset} label={t('Botikontroll')}/>}
+      </BookingConfirmation>}
+      </div>
+    </section>}
+    </div>
+    <footer className={flowStyles.footer}><span aria-hidden="true"/>{!result?<BookingProgress current={stepIndex(step)} labels={visibleSteps.map(item=>item.label)} completed={visibleSteps.map(item=>stepCompleted(item.id))} selectable={visibleSteps.map(item=>stepSelectable(item.id))} canGoBack={canGoBack} disabled={bookingLocked} onBack={goBack} onSelect={goToStep}/>:<span/>}<a className={flowStyles.brand} href="https://ajasta.ee" target="_blank" rel="noopener noreferrer" aria-label={t('Ajasta broneerimistarkvara')}><Icon name="clock" size={25}/>Ajasta.ee</a></footer>
+  </main>;
 }
+
+export default function BookingFlow(props:Parameters<typeof BookingFlowContent>[0]){return <ThemeSurface theme={props.catalog.theme}><BookingFlowContent {...props}/></ThemeSurface>;}

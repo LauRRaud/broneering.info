@@ -1,0 +1,9 @@
+.preview {min-inline-size:0;}
+.dialog {max-width:calc(100% - 2rem);max-height:calc(100dvh - 2rem);overflow:auto;background:var(--surface);color:var(--text);}
+
+.title {font-family:var(--theme-heading-font);font-size:2rem;font-weight:500;color:var(--heading);}
+.muted {color:var(--mutedText,var(--text));}
+.card {display:flex;align-items:center;gap:1rem;padding:1rem;border:1px solid var(--cardBorder,var(--border));border-radius:1rem;}
+.card > svg {color:var(--icons,var(--heading));}
+.back {margin-inline-start:auto;display:grid;place-items:center;inline-size:2.5rem;block-size:2.5rem;border:1px solid var(--cardBorder,var(--border));border-radius:50%;background:var(--surface);color:var(--navigation,var(--heading));}
+.back svg {transform:rotate(180deg);}

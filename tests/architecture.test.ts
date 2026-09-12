@@ -16,12 +16,16 @@ it('rejects indirect browser imports and server modules depending on UI', () => 
   try {
     mkdirSync(path.join(root, 'src/components'), {recursive: true});
     mkdirSync(path.join(root, 'src/lib'));
+    mkdirSync(path.join(root, 'src/styles'));
+    writeFileSync(path.join(root, 'src/styles/theme.module.css'), '.theme {--background:white; padding:2rem;}');
     writeFileSync(path.join(root, 'tsconfig.json'), JSON.stringify({compilerOptions: {moduleResolution: 'bundler', module: 'esnext'}}));
-    writeFileSync(path.join(root, 'src/components/view.tsx'), `'use client'; import '../lib/contracts';`);
+    writeFileSync(path.join(root, 'src/components/view.tsx'), `'use client'; import '../lib/contracts'; import './globals.css';`);
     writeFileSync(path.join(root, 'src/lib/contracts.ts'), `export * from './db';`);
     writeFileSync(path.join(root, 'src/lib/db.ts'), `import '../components/view';`);
     const result = checkArchitecture(root);
     expect(result.violations.some(v => v.includes('server library in browser/shared graph'))).toBe(true);
     expect(result.violations.some(v => v.includes('must not depend on src/components'))).toBe(true);
+    expect(result.violations.some(v => v.includes('imports global CSS'))).toBe(true);
+    expect(result.violations.some(v => v.includes('sets padding'))).toBe(true);
   } finally { rmSync(root, {recursive: true, force: true}); }
 });

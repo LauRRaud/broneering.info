@@ -1,0 +1,3 @@
+.colors {display:grid;gap:.5rem;}
+.color {display:grid;grid-template-columns:minmax(0,1fr) 3rem 6rem;gap:.5rem;align-items:center;}
+.color input {width:100%;min-width:0;}

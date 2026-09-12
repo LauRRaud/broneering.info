@@ -1,0 +1,3 @@
+.editor { min-inline-size: 0; }
+.editor input { max-inline-size: 100%; }
+.preview { display: block; max-inline-size: min(100%, 12rem); max-block-size: 12rem; object-fit: contain; }

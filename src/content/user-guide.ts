@@ -1,0 +1,140 @@
+type GuideSection = {id: string; title: string; intro: string; steps: string[]; result: string};
+
+// The shared public guide has one content source. Keep IDs stable for chapter links.
+export const guideSections: GuideSection[] = [
+  {
+    id: 'esimesed-sammud', title: 'Esimesed sammud halduses',
+    intro: 'Ettevõtte halduse kasutamiseks vajad enda kontot ja kutset õigesse ettevõttesse. Broneerija ei pea kontot looma.',
+    steps: [
+      'Ava saadud kutse. Loo konto või logi olemasoleva kontoga sisse ning võta kutse vastu. Kinnita oma e-posti aadress.',
+      'Omanik peab aktiveerima kaheastmelise autentimise. Lisa konto autentimisrakendusse, salvesta varukoodid turvaliselt ja kinnita seadistus rakenduse koodiga.',
+      'Kontrolli jaotises „Minu ettevõtted” valitud ettevõtet ja oma rolli. Omanik haldab ettevõtte seadeid; vastuvõtt ja töötaja näevad oma õigustele vastavaid toiminguid.',
+      'Seadista teenused, töötajad ja töögraafikud. Kontrolli avalikus broneerimisvaates teenuste hindu, kestusi ja pakutavaid aegu enne klientidele lingi jagamist.',
+    ],
+    result: 'Kui kutse on aegunud või ettevõte puudub, palu ettevõtte omanikul või Ajasta haldajal ligipääsu kontrollida. Puuduv seadistusvorm võib tuleneda sinu rollist.',
+  },
+  {
+    id: 'teenused', title: 'Kategooriad, teenused, hinnad ja kestused',
+    intro: 'Ava „Teenused ja töötajad”. Teenusegrupp korraldab valikuid; broneeritav teenus sisaldab hinda ja kestust.',
+    steps: [
+      'Lisa „Teenusegrupid” all põhikategooria. Alamkategooria loomisel vali „Ülemgrupp”, näiteks Küünehooldus → Maniküür või Pediküür.',
+      'Lisa teenus ja vali selle grupp. Sisesta teenuse nimi, vaikehind eurodes ning „Vaikekestus (min)”. Vajaduse korral lisa kirjeldus.',
+      'Sisesta ettevalmistuse ja lõpetamise aeg minutites. Need puhvrid hõivavad töötaja kalendris lisaaega, et järgmine broneering ei algaks liiga vara.',
+      'Märgi teenus aktiivseks ja veebis broneeritavaks ning salvesta. Seo teenus seda pakkuvate töötajatega.',
+    ],
+    result: 'Kontrolli tulemust avalikul lehel. Hinna või kestuse muutmine ei kirjuta varasemate broneeringute kokkuleppeid ümber. Ilutegu demos on osa kestusi näidisandmed; pärisajad kinnitab ettevõte.',
+  },
+  {
+    id: 'tootajad', title: 'Töötajad ja nende teenused',
+    intro: 'Töötaja avalik profiil ja halduse kasutajakonto on eraldi asjad. Profiili loomiseks ei pea töötajal olema sisselogimiskontot.',
+    steps: [
+      'Lisa jaotises „Teenused ja töötajad” töötaja nimi, amet ning soovi korral avalik lühitutvustus.',
+      'Töötaja nimi on alati nähtav. Foto puudumisel või laadimise ebaõnnestumisel kuvatakse selle asemel nime initsiaalid.',
+      'Soovi korral täida „Avalik telefon (valikuline)” kliendikõnedeks mõeldud numbriga, eelistatult koos riigikoodiga. Broneerimisvaates avab infoikoon töötaja tutvustuse ning numbri koos helistamislingiga. Ikooni taga olev number on külastajatele kättesaadav. Numbri eemaldamiseks tühjenda väli ja salvesta töötaja.',
+      'Töötaja info avaneb spetsialisti valiku kaardi ülanurgast. Info vaatamine ei vali töötajat. Telefon ja tutvustus on valikulised; infonupp kuvatakse, kui on ametinimetus, tutvustus või avalik telefon.',
+      'Salvesta töötaja ja ava tema „Töötaja foto” plokk. „Vali pilt” avab failivaliku; „Tee foto” palub telefonil kaamera avada. Vaata eelvaadet ja vajuta „Salvesta foto”. JPG, PNG või WebP, kuni 10 MB; HEIC-pilt salvesta esmalt JPG-na. Kaamera käitumine sõltub telefonist ja brauserist.',
+      'Loo töötaja ja teenuse seos. Jäta erihind, erikestus ja puhvrite erandid tühjaks, et kasutada teenuse vaikeväärtusi, või määra vajalikud erandid.',
+      'Seadista töötaja töögraafik. Kontrolli, et nii teenus, töötaja kui ka nende seos on broneerimiseks lubatud.',
+    ],
+    result: 'Kui töötajat avalikus valikus ei ole, kontrolli tema aktiivsust, veebis nähtavust ja teenuseseost. Töötaja arhiveerimine vajab tähelepanu: tema tulevased broneeringud tuleb lahendada ja haldusligipääs suletakse.',
+  },
+  {
+    id: 'toograafikud', title: 'Töögraafikud, pausid ja suletud päevad',
+    intro: 'Ava „Töögraafikud ja saadavus”. Broneeritav aeg peab mahtuma nii asukoha kui ka töötaja tööaja sisse koos teenuse puhvritega.',
+    steps: [
+      'Määra asukoha nädalagraafik ning töötaja töövahemikud vastavatel nädalapäevadel.',
+      'Pausi jaoks sisesta kaks avatud vahemikku: näiteks 09:00–12:00 ja 14:00–18:00 jätab 12:00–14:00 suletuks.',
+      'Üksiku päeva või puhkuseperioodi sulgemiseks lisa kuupäevaerand soovitud asukohale või töötajale. Eripäeva lühema tööaja jaoks määra selle päeva avatud vahemikud.',
+      'Salvesta ja kontrolli avalikus vaates sama kuupäeva. Kui muudatus on vastuolus olemasolevate broneeringutega, vaata konfliktide loendit ning lahenda need eraldi.',
+    ],
+    result: 'Suletud ajad ei ole uueks veebibroneeringuks saadaval. Olemasolevaid broneeringuid ei nihutata ega kustutata automaatselt. Järjestikuseid aegu eelistav soovitusfunktsioon on kavandamisel; praegu seda lülitit halduses ei ole.',
+  },
+  {
+    id: 'broneerimine', title: 'Kuidas klient broneerib',
+    intro: 'Eraldi broneerimisleht ja kodulehel avanev modaal kasutavad sama sammhaaval teekonda.',
+    steps: [
+      'Vali kategooria, vajaduse korral alamkategooria ja teenus. Ainult ühe valikuga vaheaste võib automaatselt vahele jääda.',
+      'Vali töötaja või töötaja eelistuseta valik, kui seda pakutakse. „Vali aeg” sammus on kuukalender ja valitud päeva vabad kellaajad koos: laias vaates kõrvuti, kitsas vaates üksteise all. Kuude vahetamiseks kasuta kalendri nooli.',
+      'Valitud kuupäev on täidetud ringis, tänane kuupäev kontuuriga. Tuhmil päeval pole valitud teenusele ja töötajale praegu vabu aegu; päeva valimine kontrollib kellaaegu uuesti. Möödunud kuupäevi ja broneerimisaknast välja jäävaid päevi valida ei saa. Tühja päeva juures aitab „Leia järgmine vaba päev”.',
+      'Kalendris liiguvad nooleklahvid päevade ja nädalate kaupa; Home ja End viivad nädala algusse või lõppu, Page Up ja Page Down vahetavad kuud. Enter või tühik valib kuupäeva. Seejärel vali päevaosa Hommik, Päev või Õhtu ja sobiv kellaaeg. Päevaosade vahel saab liikuda ka nooleklahvidega.',
+      'Sisesta küsitud kontaktandmed. Kontrolli kokkuvõttes ettevõtet, töötajat, aega, hinda ning muutmise ja tühistamise tingimusi.',
+      'Soovi korral märgi „Soovin meeldetuletust e-postiga”. Valik on algul märkimata ning ilmub siis, kui ettevõte on meeldetuletuse aja määranud ja selle saatmisaeg pole veel möödunud. Linnukese puudumine ei lülita välja kinnitust ega muutmise või tühistamise teavitusi.',
+      'Enne kinnitamist saad avada lingi „broneerimistingimustega”. Dialoog näitab selle ettevõtte tingimusi. Sulge see ülanurga ristist või Escape-klahviga; broneerimisaken jääb avatuks ja sisestatud andmed säilivad. Kinnitamisnupu vajutamisega nõustud kuvatud tingimustega.',
+      'Kinnita broneering ja oota tulemusvaadet. Salvesta broneeringu number ning võimaluse korral kalendrifail ja halduslink.',
+    ],
+    result: 'Pelgalt aja valimine ei kinnita broneeringut. Kui vastus katkeb, kasuta samas vaates pakutud korduskatset. Kui aeg võeti vahepeal ära, vali uus pakkumine. Kinnitusekraan on oluline ka siis, kui e-kiri pole kohale jõudnud.',
+  },
+  {
+    id: 'muutmine', title: 'Broneeringu muutmine ja tühistamine',
+    intro: 'Klient saab kasutada oma broneeringu halduslinki, kui ettevõte on selle võimaluse sisse lülitanud. Ettevõtte määratud etteteatamistähtaeg kehtib ka pärast broneerimist.',
+    steps: [
+      'Ava enda broneeringu halduslink ja kontrolli broneeringu andmeid.',
+      'Aja muutmiseks vali pakutav uus aeg, kontrolli kokkuvõtet ning kinnita muudatus.',
+      'Tühistamiseks kasuta tühistamise toimingut ja kinnita oma soov. Modaali sulgemine broneeringut ei tühista.',
+      'Kui link puudub, on aegunud või tähtaeg möödas, võta ühendust broneeringut teenindava ettevõttega.',
+    ],
+    result: 'Muudatus on tehtud alles pärast kinnitust. Hoia halduslink enda teada: see annab ligipääsu sinu broneeringule.',
+  },
+  {
+    id: 'kalender', title: 'Ettevõtte kalender ja käsitsi broneeringud',
+    intro: 'Halduses saad vaadata broneeringuid päeva- või nädalavaates ning mobiilis nimekirjana. Töötaja ligipääs piirdub talle lubatud andmetega.',
+    steps: [
+      'Vali kuupäev, vaade ja töötaja. Ava broneering, et näha detaile ning lubatud toiminguid.',
+      'Käsitsi lisamiseks kasuta „Lisa broneering”, vali teenus, töötaja ja vaba aeg ning sisesta kliendi andmed.',
+      'Enne muutmist või tühistamist kontrolli broneeringu kokkuvõtet. Kui toiming küsib põhjendust, kirjelda tegelik põhjus.',
+      'Võrguvea korral oota ühenduse taastumist ja kontrolli viimase uuenduse aega. Kui teine haldaja muutis sama broneeringut, ava värske versioon enne jätkamist.',
+    ],
+    result: 'Käsitsi lisamisel kontrollitakse samuti kattumist ja saadavust. Kalendri nägemine telefonis ei tähenda automaatset sünkroonimist telefoni kalendrirakendusega.',
+  },
+  {
+    id: 'veebilehele-lisamine', title: 'Broneerimisnupp oma veebilehele',
+    intro: 'Ettevõtte omanik leiab haldusest jaotise „Kodulehele lisamine”. Veebilehe tegijale saab edastada sealt kopeeritud paigalduskoodi.',
+    steps: [
+      'Tavalise „Broneeri” nupu jaoks kasuta oma ettevõtte „Broneerimisleht” aadressi. Link avab eraldi broneerimislehe ja töötab ilma lisaskriptita.',
+      'Modaali või lehesisese vaate jaoks lisa „Lubatud kodulehed” alla veebilehe täpne HTTPS-algusaadress ning vajuta „Salvesta kodulehed”. Näiteks https://salong.ee ja https://www.salong.ee tuleb sisestada eraldi; ära lisa lehe teekonda ega tärni.',
+      'Vali „Paigalduskoha aadress” ja kopeeri sobiv näide: „Tavaline link”, „Lehesisene vaade” või „Modaal”. Anna veebilehe tegijale valitud näide koos juhendi selle peatüki lingiga.',
+      'Katseta avaldatud kodulehel arvutis ja telefonis: nupu avanemine, teenuse valimine, tagasi liikumine ja sulgemine. Kui veebiehitaja ei luba skripti või iframe-i, kasuta tavalist linki.',
+    ],
+    result: 'Modaal avaneb kodulehe peal aknana; lehesisene vaade asub lehe sisu sees. Mõlemal juhul peab paigalduskoha aadress vastama lubatud aadressile. Kui broneerimisaadress ei ole valmis, palu Ajasta haldajal selle seadistust kontrollida.',
+  },
+  {
+    id: 'teavitused-ja-mobiil', title: 'Teavitused ja kalendrisse salvestamine',
+    intro: 'E-kirja kohaletoimetamine ja broneeringu kinnitamine on eraldi toimingud. Praeguses demokeskkonnas ei ole päris e-kirjade saatmine aktiveeritud.',
+    steps: [
+      'Broneerijana kontrolli kinnitust tulemusvaates. Kui kuvatakse kalendrisse lisamise võimalus, laadi alla ICS-fail ja ava see oma kalendrirakenduses.',
+      'ICS-fail lisab ühe sündmuse. Kui broneeringu aega hiljem muudad, kontrolli ja vajaduse korral uuenda ka enda kalendrikirjet.',
+      'Haldajana vaata broneeringu detailis teavituse seisundit. Saatmisvea korral kontrolli enne kliendile uue kinnituse lubamist tegelikku broneeringu seisu.',
+      'Ettevõtte omanik määrab teavituste seadetes „Meeldetuletus minutites enne aega”, näiteks 1440 minutit ehk 24 tundi. Tühi väli lülitab meeldetuletused välja. Uues avalikus broneerimisvormis valib klient ise e-posti meeldetuletuse; ettevõtte seadete muutmine ei tühista tema loobumist. Varasemate ja halduses käsitsi lisatud broneeringute senine saatmisloogika säilib.',
+      'Ettevõtte enda broneerimistingimused sisesta või muuda jaotises „Ettevõtte seadistamine ja avaldamine” väljal „Broneerimistingimused”. Kliendi viimase sammu tingimuste link avab selle teksti. Kui tingimused muutuvad enne kliendi kinnitamist, palub süsteem värsked tingimused üle vaadata ja aja uuesti valida.',
+    ],
+    result: 'Demokeskkonnas saab proovida SMS-meeldetuletuse valikut, mis nõuab telefoninumbrit ja salvestab eelistuse. Päris SMS-e ei saadeta; teenusepakkuja, hind ja pakett ei ole veel ühendatud. Kogu töötajakalendri pidev sünkroonimine ei ole praegu kasutatav funktsioon.',
+  },
+  {
+    id: 'kujundus', title: 'Logo, värvid ja font',
+    intro: 'Ava ettevõtte halduses „Broneerimislehe kujundus”. Omanik ja kujunduse avaldamise õigusega vastuvõtutöötaja saavad muuta oma ettevõtte broneerimisvaadet. Muudatused jäävad mustandisse kuni avaldamiseni.',
+    steps: [
+      'Jaotises „Ettevõtte tähis päises” vali, kas broneerimislehe vasakpoolses päises kuvatakse ettevõtte nimi või logo. Nimi pärineb ettevõtte andmetest. Nime valimine ei kustuta üles laaditud logo; saad hiljem uuesti logo valida. Logo puudumisel või laadimisveal kasutatakse nime.',
+      'Vali eraldi põhiteksti- ja pealkirjafont ning heleda ja tumeda vaate värvid. Värvivalija kõrval saab sisestada täpse HEX-koodi, näiteks #245A45. Nuppude, teksti, abiteksti, ikoonide, navigeerimise, kaardipiiride, tausta ja avaliku kalendri värvid on eraldi väljad. Kaasasolevad Manrope ja Cormorant Garamond laaditakse meie serverist.',
+      'Vajuta „Salvesta kujunduse mustand”. Seejärel saad lisada logo. Vali fail, kontrolli eelvaadet ja vajuta „Salvesta logo mustandisse”. Logo saab ka asendada või mustandist eemaldada.',
+      'Lubatud on PNG-, WebP- ja JPG-logo kuni 10 MB ning 40 megapikslit. Soovitame läbipaistva taustaga PNG- või WebP-faili, kuid taustaga logo on samuti lubatud. Pildi tausta automaatselt ei eemaldata; läbipaistvus säilib.',
+      'Logo heledale ja tumedale taustale on eraldi valikud. Teine versioon on vabatahtlik; selle puudumisel kasutatakse olemasolevat logo mõlemas vaates. Kontrolli loetavust ka kõrge kontrastiga vaates. Ilma logota jääb ettevõtte nimi nähtavaks.',
+      'Eelvaade näitab jooksvalt värve, fonti, nuppe, kalendri valikut ja logo. „Vaata modaalis” avab sama näidise dialoogis; sulgemiseks sobib ka Escape. Salvestatud mustandi broneerimisvaate link avab päris broneerimissammud ilma lõpliku kinnitamise võimaluseta.',
+      'Kontrastikontroll nimetab parandamist vajavad värvipaarid. Sobimatu kombinatsiooni võib salvestada mustandisse, kuid avaldamine on blokeeritud. Vajaduse korral taasta vastava vaate vaikevärvid ja kohanda neid uuesti.',
+      'Kui eelvaade sobib, vajuta „Avalda kujundus”. Avaldatud värvid, font ja logo jõuavad ettevõtte broneerimislehele ning kodulehele lisatud broneerimisaknasse lehe uuesti laadimisel.',
+      'Varasema kujunduse taastamiseks ava „Taasta varasem kujundus”, vali versioon ja „Taasta mustandisse”. See asendab praeguse mustandi. Kontrolli tulemust ning avalda uuesti.',
+      'Külastaja „Vaade” valik võimaldab kasutada seadme teemat, heledat või tumedat režiimi ning kõrget kontrasti. Brauseri lubatud küpsised jätavad valiku samal domeenil meelde. Kõrge kontrast kasutab kindlaid loetavaid värve ettevõtte värvide asemel.',
+      'Kategooriate piltide ja ikoonide valik ning sisemise halduskalendri töötajate värvid ei kuulu veel sellesse redaktorisse. Töötajafoto lisamist kirjeldab peatükk „Töötajad ja nende teenused”.',
+    ],
+    result: 'Seaded on praegu kohalikus eelvaates; serveri versioon neid veel ei sisalda. Kontrastikontroll ei tõenda kogu süsteemi WCAG 2.2 AA ega EN 301 549 vastavust: kasutajateekond, klaviatuur ja ekraanilugeja vajavad samuti kontrolli.',
+  },
+  {
+    id: 'abi', title: 'Kui midagi ei tööta',
+    intro: 'Broneeringu aja ja teenusega seotud küsimused lahendab teenust pakkuv ettevõte. Haldusligipääsu või rakenduse vea puhul pöördu ettevõtte omaniku või Ajasta haldaja poole.',
+    steps: [
+      'Pane kirja lehe aadress, toimingu aeg, nähtud veateade ja see, millist sammu tegid. Vajaduse korral lisa broneeringu number.',
+      'Ära saada veakirjeldusega paroole, autentimiskoode, varukoode ega broneeringu salajast halduslinki. Kuvatõmmiselt peida kõrvaliste klientide andmed.',
+      'Kui salvestuse tulemus on ebaselge, kontrolli enne uue toimingu loomist olemasolevat broneeringut või kasuta vaates pakutud korduskatset.',
+    ],
+    result: 'Toe kontaktkanal ja teenindusajad lepitakse ettevõtte käivitamisel kokku. Juhend ei kinnita veel toe hinnastust ega lõplikku kasutajavastuvõttu.',
+  },
+];

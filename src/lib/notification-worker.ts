@@ -70,7 +70,7 @@ export async function deliverNotification(claim:Claim,send:Sender=sendNotificati
     const company=claim.recipient_kind==='company';
     const to=company?tenant.notification_email:booking.customer_notifications!==false?booking.customer_email:null;
     if(!to){await finish(client,claim,'skipped','RECIPIENT_DISABLED');return 'skipped';}
-    if(kind==='booking.reminder'&&(tenant.reminder_minutes==null||booking.start_at.getTime()<=Date.now())){
+    if(kind==='booking.reminder'&&(booking.customer_reminders===false||tenant.reminder_minutes==null||booking.start_at.getTime()<=Date.now())){
       await finish(client,claim,'skipped','REMINDER_NOT_APPLICABLE');return 'skipped';
     }
     let managementUrl:string|undefined;

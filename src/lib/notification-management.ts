@@ -27,7 +27,7 @@ export async function changeNotificationSettings(actor:Actor,raw:unknown){
         await client.query("UPDATE outbox SET status='superseded',version=version+1 WHERE tenant_id=$1 AND kind='booking.reminder' AND status IN ('pending','failed','sending')",[input.tenantId]);
         if(input.reminderMinutes!=null)await client.query(`INSERT INTO outbox(tenant_id,booking_id,booking_version,kind,language,next_attempt_at)
           SELECT tenant_id,id,version,'booking.reminder',customer_language,start_at-$2*interval '1 minute' FROM bookings
-          WHERE tenant_id=$1 AND status='confirmed' AND attention_reason IS NULL AND customer_email IS NOT NULL AND customer_notifications AND start_at-$2*interval '1 minute'>clock_timestamp()
+          WHERE tenant_id=$1 AND status='confirmed' AND attention_reason IS NULL AND customer_email IS NOT NULL AND customer_notifications AND customer_reminders AND start_at-$2*interval '1 minute'>clock_timestamp()
           ON CONFLICT(tenant_id,booking_id,booking_version,kind) DO UPDATE SET status='pending',next_attempt_at=EXCLUDED.next_attempt_at,claim_token=NULL,locked_until=NULL,last_error_code=NULL,version=outbox.version+1
           WHERE outbox.status='superseded' AND outbox.captured_at IS NULL AND outbox.attempts<outbox.retry_budget`,[input.tenantId,input.reminderMinutes]);
       }
