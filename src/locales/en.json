@@ -1275,5 +1275,10 @@
   "Palun kinnita, et sa ei ole robot.": "Please confirm that you are not a robot.",
   "Broneeringu turvakontroll pole hetkel kättesaadav.": "The booking security check is currently unavailable.",
   "Turvakontroll ebaõnnestus. Palun proovi uuesti.": "The security check failed. Please try again.",
-  "Botikontroll": "Bot check"
+  "Botikontroll": "Bot check",
+  "Teenuse lisainfo": "Service details",
+  "Ettevõtte info ja tingimused": "Business information and terms",
+  "Samm {current} / {total}": "Step {current} / {total}",
+  "Vali teenusegrupp": "Choose a service category",
+  "Vali aeg": "Choose a time"
 }

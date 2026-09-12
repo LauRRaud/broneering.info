@@ -1275,5 +1275,10 @@
   "Palun kinnita, et sa ei ole robot.": "Подтвердите, что вы не робот.",
   "Broneeringu turvakontroll pole hetkel kättesaadav.": "Проверка безопасности бронирования временно недоступна.",
   "Turvakontroll ebaõnnestus. Palun proovi uuesti.": "Проверка безопасности не пройдена. Повторите попытку.",
-  "Botikontroll": "Проверка на робота"
+  "Botikontroll": "Проверка на робота",
+  "Teenuse lisainfo": "Подробнее об услуге",
+  "Ettevõtte info ja tingimused": "Информация о компании и условия",
+  "Samm {current} / {total}": "Шаг {current} / {total}",
+  "Vali teenusegrupp": "Выберите категорию услуг",
+  "Vali aeg": "Выберите время"
 }

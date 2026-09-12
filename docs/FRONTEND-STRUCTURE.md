@@ -25,3 +25,5 @@ Ajasta lihtne avaleht on [eraldi komponendis](../src/components/marketing/ajasta
 Ülejäänud broneerimis- ja halduskomponentide jaotust ei ole selle muudatusega tervikuna ümber tehtud. Kujunduse rakendamisel jaotatakse muudetav vaade vastutuste järgi ning tõstetakse korduvad elemendid primitiivideks. Olemasolevat toimivat äriloogikat ei kirjutata pelgalt stiilimise pärast ümber. Uusi tühje kaustu ega kasutamata primitiive ette ei looda.
 
 Kontrollida tuleb tõlkeid, mobiilivaadet, klaviatuuri, fookust, veaseisundeid ja kõiki muudetud kasutusvooge. Kujundusreeglid kehtivad ka järgmistele arendajatele [AGENTS.md kaudu](../AGENTS.md).
+
+12.09 jätk: broneerimise kompaktne päis ning kategooria- ja teenusevalik on nüüd eraldi komponentides. [Sammupõhise voo kirjeldus](BOOKING-STEPS.md).
