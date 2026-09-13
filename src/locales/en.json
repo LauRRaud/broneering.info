@@ -448,6 +448,8 @@
   "Muudatuse teavitus salvestatakse saatmise järjekorda.": "The change notification will be queued for delivery.",
   "Muudatuste ajalugu": "Change history",
   "Muutmine ja tühistamine": "Changes and cancellation",
+  "Kinnitatud broneeringu muutmisest või tühistamisest palume ettevõttele teada anda vähemalt ": "To change or cancel a confirmed booking, please notify the business at least ",
+  "Enne broneeringu kinnitamist saad oma valikuid vabalt muuta.": "You can freely change your selections before confirming your booking.",
   "Muutmine ja tühistamine on lubatud kuni": "Changes and cancellation are allowed until",
   "Muutmine ja tühistamine: vähemalt": "Changes and cancellation: at least",
   "Muutmise ja tühistamise tähtaeg (tundi)": "Change and cancellation notice (hours)",

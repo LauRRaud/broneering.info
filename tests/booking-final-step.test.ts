@@ -56,16 +56,18 @@ it('reveals cancellation notice on demand without submitting or losing contact d
  await render();
  const trigger=container.querySelector<HTMLButtonElement>('button[aria-label="Muutmine ja tühistamine"]')!;
  const dialog=document.getElementById(trigger.getAttribute('aria-controls')!) as HTMLDialogElement;
- expect(container.textContent).not.toContain('Palume muutmisest või tühistamisest');
+ expect(container.textContent).not.toContain('Kinnitatud broneeringu muutmisest');
  await act(async()=>trigger.click());
  expect(dialog.open).toBe(true);
  expect(dialog.textContent).toContain('vähemalt 24 tundi ette.');
+ expect(dialog.textContent).toContain('Kinnitatud broneeringu muutmisest või tühistamisest');
+ expect(dialog.textContent).toContain('Enne broneeringu kinnitamist saad oma valikuid vabalt muuta.');
  expect(vi.mocked(fetch).mock.calls.some(call=>call[1]?.method==='POST')).toBe(false);
  await act(async()=>dialog.dispatchEvent(new Event('cancel',{cancelable:true})));
  expect(dialog.open).toBe(false);
  expect(document.activeElement).toBe(trigger);
  expect(container.querySelector<HTMLInputElement>('#name')!.value).toBe('Test Customer');
- expect(container.textContent).not.toContain('Palume muutmisest või tühistamisest');
+ expect(container.textContent).not.toContain('Kinnitatud broneeringu muutmisest');
 });
 
 it('requires an international phone for the demo SMS choice and preserves it on a retry',async()=>{

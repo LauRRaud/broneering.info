@@ -15,7 +15,8 @@ export default function BookingPolicy({cancellationHours}:{cancellationHours:num
     <Dialog ref={dialog} id={id} className={styles.dialog} aria-labelledby={id+'-title'} onCancel={event=>{event.preventDefault();close();}} onClose={()=>setOpen(false)}>{open&&<>
       <Button type="button" autoFocus className={styles.close} aria-label={t('Sulge')} onClick={close}><Icon name="close" size={24}/></Button>
       <h2 id={id+'-title'}>{t('Muutmine ja tühistamine')}</h2>
-      <p>{t('Palume muutmisest või tühistamisest ettevõttele teada anda vähemalt ')}{cancellationHours} {t('tundi ette.')}</p>
+      <p>{t('Kinnitatud broneeringu muutmisest või tühistamisest palume ettevõttele teada anda vähemalt ')}{cancellationHours} {t('tundi ette.')}</p>
+      <p>{t('Enne broneeringu kinnitamist saad oma valikuid vabalt muuta.')}</p>
     </>}</Dialog>
   </>;
 }
