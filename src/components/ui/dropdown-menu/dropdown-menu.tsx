@@ -24,7 +24,7 @@ export default function DropdownMenu({label,accessibleLabel,heading,items,icon,a
       event.preventDefault();setActive(value=>event.key==='Home'?0:event.key==='End'?items.length-1:(value+(event.key==='ArrowDown'?1:-1)+items.length)%items.length);
     }
   }
-  return <div ref={root} className={styles.root} onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget))close();}}>
+  return <div ref={root} className={styles.root} data-compact={compact||undefined} onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget))close();}}>
     <button ref={trigger} type="button" className={styles.trigger} aria-label={accessibleLabel} aria-expanded={open} aria-haspopup="menu" aria-controls={id} disabled={disabled} onClick={()=>open?close():show()} onKeyDown={event=>{if(event.key==='ArrowDown'||event.key==='ArrowUp'){event.preventDefault();show(event.key==='ArrowUp'?items.length-1:0);}}}>{icon&&<Icon name={icon} size={18}/>}<span>{label}</span><Icon name="chevron" size={16}/></button>
     {open&&<div className={styles.panel} data-align={align} data-compact={compact||undefined}>{heading&&<p className={styles.heading}>{heading}</p>}<div ref={menu} id={id} role="menu" aria-label={accessibleLabel} onKeyDown={keyDown}>
       {items.map((item,index)=><button key={item.id} type="button" role={item.kind==='checkbox'?'menuitemcheckbox':'menuitemradio'} aria-checked={item.checked} lang={item.lang} tabIndex={active===index?0:-1} className={styles.item} data-separator={item.separator||undefined} onFocus={()=>setActive(index)} onClick={()=>{item.onSelect();if(item.kind!=='checkbox')close(true);}}>

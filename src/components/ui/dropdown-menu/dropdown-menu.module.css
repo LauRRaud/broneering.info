@@ -6,7 +6,9 @@
 .trigger:disabled{cursor:not-allowed;opacity:.55}
 .panel{position:absolute;z-index:40;inset-inline-end:0;inset-block-start:calc(100% + .55rem);inline-size:max-content;min-inline-size:12.5rem;max-inline-size:calc(100vw - 2rem);padding:.52rem;background:color-mix(in srgb,var(--surface) 97%,var(--selected) 3%);color:var(--text);border:1px solid color-mix(in srgb,var(--cardBorder,var(--border)) 82%,transparent);border-radius:1rem;box-shadow:0 22px 52px color-mix(in srgb,var(--text) 14%,transparent)}
 .panel[data-align=start]{inset-inline-start:0;inset-inline-end:auto}
-.panel[data-compact]{min-inline-size:10.5rem;padding:.42rem}
+.panel[data-compact]{min-inline-size:0;padding:.42rem}
+.root[data-compact] .trigger{border-radius:999px;font-weight:500}
+.root[data-compact] .trigger:hover,.root[data-compact] .trigger[aria-expanded=true]{border-color:transparent;background:transparent;color:var(--heading)}
 .heading{margin:0;padding:.48rem .65rem .58rem;font-size:.7rem;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--mutedText,var(--text))}
 .item{display:flex;align-items:center;gap:.55rem;inline-size:100%;min-block-size:2.55rem;padding:.55rem .65rem;background:transparent;color:var(--text);border:0;border-radius:.68rem;text-align:start;white-space:nowrap;cursor:pointer;font-size:.9rem}
 .item>svg{color:var(--icons,var(--heading));flex:none}
@@ -15,5 +17,5 @@
 .item:focus-visible{outline:2px solid var(--selected);outline-offset:-2px}
 .item[data-separator]{margin-block-start:.45rem;border-block-start:1px solid var(--cardBorder,var(--border));border-start-start-radius:0;border-start-end-radius:0}
 .check{margin-inline-start:auto;display:flex;inline-size:1.05rem;flex:none;color:var(--icons,var(--heading))}
-.panel[data-compact] .item{gap:.35rem;padding-inline:.58rem}
+.panel[data-compact] .item{gap:.8rem;padding-inline:.58rem}
 .panel[data-compact] .check{margin-inline-start:auto}
