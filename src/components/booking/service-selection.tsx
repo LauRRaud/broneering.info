@@ -1,4 +1,5 @@
 import Button from '@/components/ui/button/button';
+import type {CSSProperties} from 'react';
 import type {Catalog, Service} from '@/lib/contracts';
 import {useI18n} from '@/components/i18n-provider';
 import {localeNames,localeTags} from '@/lib/locales';
@@ -50,12 +51,18 @@ export function ServiceSelection({services,selected,disabled,exactPrice,search,o
   const visible=services.map(service=>localizedService(service,locale)).filter(item=>`${item.name} ${item.description}`.toLocaleLowerCase(locale).includes(search.trim().toLocaleLowerCase(locale)));
   const groups=new Map<string,typeof visible>();
   for(const item of visible){const key=JSON.stringify([servicePath(item),serviceVariantName(item),item.contentLanguage,item.translationMissing]);groups.set(key,[...(groups.get(key)??[]),item]);}
+  // Balance complete groups by row count while preserving reading and keyboard order.
+  const entries=[...groups],spans=entries.map(([,items])=>items.length>1?items.length+1:1),total=spans.reduce((sum,value)=>sum+value,0);
+  let split=entries.length,left=0,difference=Infinity;
+  for(let index=1;index<entries.length;index++){left+=spans[index-1];const next=Math.abs(total-2*left);if(next<difference){difference=next;split=index;}}
+  const nextRows=[1,1];
+  const placement=spans.map((span,index)=>{const column=index<split?0:1,start=nextRows[column];nextRows[column]+=span;return {'--service-column':column+1,'--service-start':start,'--service-span':span} as CSSProperties;});
   const money=(value:number)=>new Intl.NumberFormat(localeTags[locale],{style:'currency',currency:'EUR',maximumFractionDigits:value%100?2:0}).format(value/100);
   const duration=(value:number)=>value%30===0&&value>=60?new Intl.NumberFormat(localeTags[locale]).format(value/60)+' '+t('h'):value+' '+t('min');
   return <>
-    <ul className={styles.services} aria-label={t('Teenused')}>{[...groups].map(([key,items])=>{
+    <ul className={styles.services} aria-label={t('Teenused')}>{entries.map(([key,items],index)=>{
       const first=items[0],multiple=items.length>1;
-      return <li key={key} className={styles.service} data-multiple={multiple||undefined}>{multiple&&<h3 lang={first.contentLanguage}>{serviceVariantName(first)}</h3>}
+      return <li key={key} className={styles.service} style={placement[index]} data-multiple={multiple||undefined}>{multiple&&<h3 lang={first.contentLanguage}>{serviceVariantName(first)}</h3>}
         <ul className={styles.variants}>{items.sort((a,b)=>b.durationFrom-a.durationFrom||a.name.localeCompare(b.name,locale)).map(item=>{
           const notice=item.translationMissing?t('Tõlge pole veel kinnitatud. Algteksti keel: {language}',{language:localeNames[item.contentLanguage]}):undefined;
           const showInfo=servicePath(item)[0]?.trim().toLocaleLowerCase('et')!=='juuksur';

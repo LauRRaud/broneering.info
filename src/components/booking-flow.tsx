@@ -108,7 +108,7 @@ function dateTimeLabel(value: string, timezone: string) {
   const [catalogLoading, setCatalogLoading] = useState(false);
   const [serviceSearch, setServiceSearch] = useState("");
   const [categoryPath, setCategoryPath] = useState<string[]>(()=>initialCategoryPath(initialCatalog));
-  const [form, setForm] = useState({ name: "", email: "", phone: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "+372 " });
   const [emailReminder,setEmailReminder]=useState(false);
   const [smsReminder,setSmsReminder]=useState(false);
   const [fieldErrors,setFieldErrors]=useState<ContactErrors>({});
@@ -329,7 +329,8 @@ function dateTimeLabel(value: string, timezone: string) {
     if(designPreview)return;
     if (submitLockRef.current || catalogLoading || !offer || !service) return;
     if(challengeSiteKey&&!challengeToken){setSubmitState(state=>state==='uncertain'?'uncertain':'error');setSubmitError(t('Palun kinnita, et sa ei ole robot.'));return;}
-    if(submitState !== 'uncertain'){const errors=contactErrors(form,smsReminder&&catalog.tenant.demo&&canRequestReminder(offer.start,catalog.tenant.reminderMinutes));setFieldErrors(errors);if(Object.keys(errors).length){setValidationAttempt(value=>value+1);return;}}
+    const phone=form.phone.trim()==='+372'?'':form.phone.trim();
+    if(submitState !== 'uncertain'){const errors=contactErrors({...form,phone},smsReminder&&catalog.tenant.demo&&canRequestReminder(offer.start,catalog.tenant.reminderMinutes));setFieldErrors(errors);if(Object.keys(errors).length){setValidationAttempt(value=>value+1);return;}}
     submitLockRef.current = true;
     setSubmitState("submitting");
     setSubmitError("");
@@ -348,7 +349,7 @@ function dateTimeLabel(value: string, timezone: string) {
           emailReminder:emailReminder&&canRequestReminder(offer.start,catalog.tenant.reminderMinutes),
           name: form.name.trim(),
           email: form.email.trim(),
-          ...(form.phone.trim() ? { phone: form.phone.trim() } : {}),
+          ...(phone ? { phone } : {}),
         };
         serialized = JSON.stringify(payload);
         payloadRef.current = serialized;
@@ -462,7 +463,7 @@ function dateTimeLabel(value: string, timezone: string) {
   }
 
   const titles={category:t('Vali kategooria'),service:t('Vali teenus'),staff:t('Vali spetsialist'),time:t('Vali aeg'),details:t('Kinnita broneering')};
-  const restart=()=>{setResult(null);setStep(firstBookingStep(catalog));setCategoryPath(initialCategoryPath(catalog));setServiceSearch('');setServiceId('');setStaffId('');setStaffChosen(false);setOffer(null);setForm({name:'',email:'',phone:''});setEmailReminder(false);setSmsReminder(false);keyRef.current='';payloadRef.current='';};
+  const restart=()=>{setResult(null);setStep(firstBookingStep(catalog));setCategoryPath(initialCategoryPath(catalog));setServiceSearch('');setServiceId('');setStaffId('');setStaffChosen(false);setOffer(null);setForm({name:'',email:'',phone:'+372 '});setEmailReminder(false);setSmsReminder(false);keyRef.current='';payloadRef.current='';};
   return <main className={flowStyles.root} id="main-content" tabIndex={-1} data-live-language data-booking-flow>
     <BookingHeader tenant={catalog.tenant}/>
     {designPreview&&<p className={flowStyles.notice} role="status">{t('Kujunduse eelvaade — broneeringu kinnitamine on välja lülitatud.')}</p>}

@@ -44,10 +44,14 @@ it('opens company terms without submitting or losing input and sends reminder op
  expect(requests).toHaveLength(2);expect(requests[0][1]?.body).toBe(requests[1][1]?.body);
  expect(JSON.parse(String(requests[0][1]?.body))).toMatchObject({emailReminder:true,expectedRulesVersion:1});
 });
-it('sends an explicit reminder opt-out when the checkbox is untouched',async()=>{
- await render();await act(async()=>container.querySelector('form')!.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+it('omits the untouched phone prefix and sends an explicit reminder opt-out',async()=>{
+ await render();
+ expect(container.querySelector<HTMLInputElement>('#phone')!.value).toBe('+372 ');
+ expect(container.querySelector('label[for="phone"]')!.textContent).toBe('Telefoninumber');
+ await act(async()=>container.querySelector('form')!.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
  const request=vi.mocked(fetch).mock.calls.find(call=>call[1]?.method==='POST')!;
  expect(JSON.parse(String(request[1]?.body))).toMatchObject({emailReminder:false});
+ expect(JSON.parse(String(request[1]?.body))).not.toHaveProperty('phone');
  expect(canRequestReminder('2026-09-12T11:00:00Z',1440)).toBe(false);
  expect(canRequestReminder(offer.start,null)).toBe(false);
 });
