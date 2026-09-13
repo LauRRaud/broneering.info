@@ -4,6 +4,7 @@
 .title{font-family:var(--booking-display-font);font-weight:500;font-size:clamp(3rem,4.4vw,4.65rem);line-height:1.02;letter-spacing:-.045em;margin:0;color:var(--heading);text-wrap:balance}
 .title:focus{outline:none}
 .stage{animation:arrive .25s ease-out both}
+.body[data-step=time] .stage{animation:none}
 .footer{position:fixed;z-index:4;inset-block-end:0;inset-inline:0;display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;inline-size:100%;padding:1rem clamp(1rem,5vw,5rem) max(1rem,env(safe-area-inset-bottom));background:transparent;pointer-events:none}
 .footer[data-fade='true']{background:linear-gradient(to bottom,transparent,var(--background) 75%)}
 .footer>*{pointer-events:auto}

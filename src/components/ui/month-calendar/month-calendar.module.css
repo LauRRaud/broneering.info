@@ -11,7 +11,7 @@
 .day:hover:not(:disabled):not([aria-pressed=true]){background:color-mix(in srgb,var(--selected) 8%,var(--calendar))}
 .day[aria-current=date]{border-color:var(--navigation,var(--heading))}
 .day:disabled{opacity:.25;cursor:default}
-.day.empty:not(:disabled){color:var(--mutedText,var(--text));background:color-mix(in srgb,var(--text) 5%,var(--calendar))}
+.day.empty:not(:disabled):not([aria-pressed=true]){color:var(--mutedText,var(--text));background:color-mix(in srgb,var(--text) 5%,var(--calendar))}
 .day[aria-pressed=true]{font-weight:600;background:var(--selected);color:var(--selectedText);border-color:var(--selected);text-decoration:none}
 .help{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%)}
 .legend{display:flex;flex-wrap:wrap;gap:.7rem 1.2rem;margin-block-start:1.5rem;padding-block-start:1.1rem;border-block-start:1px solid var(--cardBorder,var(--border));font-size:.66rem;color:var(--mutedText,var(--text))}
