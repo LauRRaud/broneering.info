@@ -21,17 +21,17 @@ export default function AdminCalendar({state,locked,select,create}:{state:AdminB
   if(!state.columns?.length)return null;
   return <div ref={container} className={styles.calendar} role="region" aria-label={t("Kalender: kellaaeg vertikaalselt")} tabIndex={0}>
     <div className={styles.grid} style={{gridTemplateColumns:`4rem repeat(${state.columns.length},minmax(11rem,1fr))`}}>
-      <div><div className={styles.heading}>{t("Kell")}</div><div className={styles.times}>{Array.from({length:24},(_,h)=><span key={h} style={{top:h*60}}>{clock(h*60)}</span>)}</div></div>
+      <div className={styles.timeRail}><div className={styles.heading}/><div className={styles.times}>{Array.from({length:24},(_,h)=><span key={h} style={{top:h*60}}>{clock(h*60)}</span>)}</div></div>
       {state.columns.map(column=>{
         const start=DateTime.fromISO(column.day,{zone:state.timezone}),end=start.plus({days:1});
-        return <div key={column.day+column.staffId}><div className={styles.heading}>{column.name}<br/>{start.toFormat('dd.MM.yyyy')}<br/><button type="button" disabled={locked} onClick={()=>create(column.day,column.staffId)}>{t("Lisa broneering")}</button></div>
+        return <div key={column.day+column.staffId}><div className={styles.heading}><span className={styles.avatar} aria-hidden="true">{column.name.slice(0,1).toUpperCase()}</span><span><strong>{column.name}</strong><small>{start.toFormat('dd.MM.yyyy')}</small></span><button type="button" disabled={locked} onClick={()=>create(column.day,column.staffId)} aria-label={`${t("Lisa broneering")}: ${column.name}`}>+</button></div>
           <div className={styles.column} aria-label={`${column.name}, ${column.day}`}>
             <span className={styles.closed}>{column.closed?t("Puudumine / suletud"):t("Tööväline aeg")}</span>
             {column.working.map(([a,b])=><div key={a} className={styles.working} style={{top:a,height:b-a}}>{t("Tööaeg ")}{clock(a)}–{clock(b)}</div>)}
             {state.bookings.filter(b=>b.status!=='cancelled'&&b.staffId===column.staffId&&Date.parse(b.end)>start.toMillis()&&Date.parse(b.start)<end.toMillis()).map(b=>{
               const a=DateTime.fromISO(b.start).setZone(state.timezone),z=DateTime.fromISO(b.end).setZone(state.timezone);
               const top=a<start?0:a.hour*60+a.minute,bottom=z>=end?1440:z.hour*60+z.minute;
-              return <button key={b.id} type="button" disabled={locked} className={styles.booking} style={{top,height:Math.max(1,bottom-top)}} onClick={()=>select(b)}>{a.toFormat('HH:mm ZZ')}–{z.toFormat('HH:mm ZZ')} · {b.name}<br/>{b.serviceName} · {t(names[b.status])}{b.attentionReason?t(" · Vajab lahendamist"):''}</button>;
+              return <button key={b.id} type="button" disabled={locked} className={`${styles.booking} ${b.attentionReason?styles.needsAttention:''}`} style={{top,height:Math.max(34,bottom-top)}} onClick={()=>select(b)}><small>{a.toFormat('HH:mm')}–{z.toFormat('HH:mm')}</small><strong>{b.name}</strong><span>{b.serviceName}</span>{b.attentionReason&&<i aria-label={t("Vajab lahendamist")}>!</i>}</button>;
             })}
           </div>
         </div>;

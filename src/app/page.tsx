@@ -13,11 +13,14 @@ import AjastaHome from '@/components/marketing/ajasta-home';
 
 export const dynamic='force-dynamic';
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await searchPageForHost((await headers()).get('host') ?? '');
+  const host=(await headers()).get('host')??'';
+  if(['localhost','127.0.0.1'].includes(hostnameFromHost(host))) return {title:'Ajasta – broneerimissüsteem teenusepakkujatele',description:'Sinu aeg. Lihtsalt broneeritud.',robots:{index:false,follow:false},icons:{icon:'/ajasta-icon.svg'}};
+  const page = await searchPageForHost(host);
   if (!page) return { robots: { index: false, follow: false } };
   return {
     title: page.title,
     description: page.description,
+    ...(page.url==='https://ajasta.ee/'?{icons:{icon:'/ajasta-icon.svg'}}:{}),
     robots: { index: true, follow: true },
     alternates: { canonical: page.url },
     openGraph: { title: page.title, description: page.description, url: page.url, siteName: page.url === 'https://ajasta.ee/' ? 'Ajasta' : 'broneering.info', locale: 'et_EE', type: 'website' },

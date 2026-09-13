@@ -1,0 +1,4 @@
+.root{line-height:1.6;min-block-size:100dvh}
+.main:focus{outline:none}
+.ribbon{margin:0;padding:1.15rem 1.25rem;border-block:1px solid var(--cardBorder);text-align:center;font-family:var(--theme-heading-font);font-style:italic;font-size:1.6rem;color:var(--mutedText)}
+@media(max-width:700px){.ribbon{font-size:1.3rem}}

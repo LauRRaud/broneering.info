@@ -1,0 +1,7 @@
+.header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:1.25rem}
+.header p{margin:0 0 .2rem;color:var(--mutedText);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.13em}
+.header h1{margin:0;color:var(--heading);font-family:var(--font-cormorant),Georgia,serif;font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:500;line-height:1;letter-spacing:-.04em}
+.header nav{display:flex;gap:.2rem;padding:.25rem;border:1px solid var(--cardBorder);border-radius:.7rem;background:var(--surface)}
+.header button{border:0;border-radius:.5rem;padding:.55rem .85rem;background:transparent;color:var(--text);cursor:pointer}
+.header button[aria-current="page"]{background:var(--selected);color:var(--selectedText);font-weight:700}
+@media(max-width:780px){.header{align-items:flex-start;flex-direction:column;gap:1rem}.header nav{width:100%;overflow:auto}.header button{flex:0 0 auto}}

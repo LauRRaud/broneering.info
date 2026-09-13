@@ -11,6 +11,7 @@
 .brand svg{color:var(--icons,var(--heading));inline-size:1.15rem}
 .staffList{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));inline-size:100%;max-inline-size:69rem;justify-content:center;list-style:none;gap:1.15rem;padding:0;margin:0 auto}
 .staffList>li{inline-size:100%;max-inline-size:21rem;min-inline-size:0;justify-self:center}
+.staffList>li:only-child{grid-column:1/-1;inline-size:min(100%,21rem)}
 .any{inline-size:100%;block-size:100%;min-block-size:23rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:3rem 1rem 2.5rem;border:1px solid var(--cardBorder,var(--border));border-radius:1rem;background:var(--surface);color:var(--text);cursor:pointer;transition:border-color .2s,background .2s}
 .any strong{margin-block-start:1rem;font-family:var(--booking-display-font);font-size:2.3rem;letter-spacing:-.025em;line-height:1.25;font-weight:400;color:var(--heading)}
 .anyAvatar{--avatar-size:11rem;--avatar-height:11rem;--avatar-radius:50%;--avatar-background:linear-gradient(145deg,color-mix(in srgb,var(--heading) 9%,var(--surface)),color-mix(in srgb,var(--heading) 6%,var(--surface)));--avatar-color:var(--navigation,var(--heading));display:flex;font-family:var(--booking-display-font);font-size:5.4rem;font-weight:400}

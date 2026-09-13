@@ -1,0 +1,4 @@
+.root{display:inline-flex;align-items:center;gap:.65rem;color:var(--heading);font-size:2.2rem;letter-spacing:-.075em;line-height:1;text-decoration:none;font-weight:500;flex-shrink:0}
+.root svg{color:var(--navigation);margin-block-start:.3rem}
+@media(max-width:800px){.root{font-size:1.9rem}}
+@media(max-width:400px){.root{font-size:1.65rem;gap:.3rem}.root svg{width:23px;height:23px}}

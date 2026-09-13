@@ -1,0 +1,2 @@
+.root{display:flex;align-items:center;font-size:.85rem;gap:.15rem}
+@media(max-width:400px){.root{font-size:.75rem;gap:0}}

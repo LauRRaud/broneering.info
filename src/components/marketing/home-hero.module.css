@@ -1,0 +1,11 @@
+.root{max-inline-size:1440px;margin-inline:auto;display:grid;grid-template-columns:.92fr 1.08fr;align-items:center;gap:clamp(2rem,4vw,4rem);padding:clamp(3rem,6vw,6rem) clamp(1.25rem,4.5vw,5rem) clamp(3.5rem,6vw,6rem)}
+.copy{min-inline-size:0}
+.title{font-family:var(--theme-heading-font);font-size:clamp(4.4rem,7.7vw,7.25rem);font-weight:500;line-height:.88;letter-spacing:-.055em;color:var(--heading);margin:0 0 2rem;overflow-wrap:normal}
+.title span,.title em{display:block}
+.title em{font-weight:400;color:var(--link);margin-block-start:.1em}
+.description{max-inline-size:26rem;font-size:1.05rem;line-height:1.8;margin:0 0 2rem;color:var(--text)}
+.actions{display:flex;align-items:center;gap:1.7rem;flex-wrap:wrap}
+@media(max-width:1000px){.title{font-size:clamp(4.2rem,8.7vw,6rem)}.root{grid-template-columns:1fr 1.05fr;gap:2rem;padding-inline:2rem}.description{font-size:.95rem}.actions{gap:1.2rem}}
+@media(max-width:800px){.root{grid-template-columns:1fr;padding:3.25rem 1.5rem 3rem;gap:3rem;max-inline-size:620px}.copy{text-align:center}.title{font-size:clamp(4.2rem,12vw,6rem);line-height:.92}.description{margin-inline:auto;max-inline-size:26rem}.actions{justify-content:center}}
+@media(max-width:370px){.root{padding-inline:1rem}.title{font-size:3.8rem}.actions{gap:1rem}}
+@media(prefers-reduced-motion:no-preference){.copy{animation:enter .6s ease-out both}@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}}

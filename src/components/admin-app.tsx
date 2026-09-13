@@ -27,6 +27,12 @@ import ServiceManagement from '@/components/service-management';
 import ScheduleManagement from '@/components/schedule-management';
 import CustomerManagement from '@/components/customer-management';
 import BookingManagement from '@/components/booking-management';
+import AdminShell,{type AdminSection} from '@/components/admin/admin-shell';
+import AdminAuthShell from '@/components/admin/admin-auth-shell';
+import {ThemeSurface} from '@/components/ui/theme/theme-surface';
+import {marketingTheme} from '@/components/marketing/marketing-theme';
+import workspaceStyles from '@/components/admin/admin-workspace.module.css';
+import SettingsNav,{type SettingsArea} from '@/components/admin/settings-nav';
 import type {ScheduleConflict} from '@/lib/schedule-contracts';
 import EmbeddingSettingsForm from '@/components/embedding-settings';
 import { delegationOptions, type AdminInvitation, type AdminMember, type AdminRole, type AdminState } from "@/lib/admin-contracts";
@@ -89,6 +95,8 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
   const [invitationError, setInvitationError] = useState("");
   const [supportGrant, setSupportGrant] = useState<SupportGrant | null>(null);
   const [inviteRole, setInviteRole] = useState<"receptionist" | "staff">("receptionist");
+  const [activeSection,setActiveSection]=useState<AdminSection>('bookings');
+  const [settingsArea,setSettingsArea]=useState<SettingsArea>('company');
   const stateRequest = useRef(0);
   const stateAbort = useRef<AbortController | null>(null);
 
@@ -421,8 +429,7 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
   );
 
   if (!state?.user) return (
-    <main id="main-content" tabIndex={-1} data-live-language>
-      <h1>{t("broneering.info haldus")}</h1>
+    <ThemeSurface theme={marketingTheme}><AdminAuthShell eyebrow={t("Teenusepakkuja haldus")} title={t("Tere tulemast tagasi.")} description={t("Logi sisse, et hallata broneeringuid, kliente, teenuseid ja oma meeskonna tööpäeva.")}>
       <GuideLink t={t} newTab/>
       {message && <p role="alert">{t(message)}</p>}
       {stateError && <p role="alert">{stateError}</p>}
@@ -472,10 +479,11 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
             <button type="submit" disabled={!!busy}>{t("Logi sisse")}</button>
           </form>
           <p><button type="button" onClick={() => setAuthView("forgot")}>{t("Unustasin parooli")}</button></p>
+          <p>{t("Konto loomine on hetkel suletud.")}</p>
           {invitationActive && <p><button type="button" onClick={() => setAuthView("signup")}>{t("Loo konto kutsega")}</button></p>}
         </section>
       )}
-    </main>
+    </AdminAuthShell></ThemeSurface>
   );
 
   if (!state.user.emailVerified) return (
@@ -491,64 +499,61 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
   );
 
   return (
-    <main id="main-content" tabIndex={-1} data-live-language>
-      <header>
-        <h1>{t("Haldus")}</h1>
-        <GuideLink t={t} newTab/>
-        <p>{state.user.name} · {state.user.email}</p>
-        <button type="button" onClick={() => void signOut()} disabled={!!busy}>{t("Logi välja")}</button>
-      </header>
-      {message && <p role="status">{t(message)}</p>}
-      {stateError && <p role="alert">{stateError}</p>}
-      {invitationError && <p role="alert">{invitationError}</p>}
+    <ThemeSurface theme={marketingTheme}><AdminShell t={t} section={activeSection} onSectionChange={setActiveSection} userName={state.user.name} memberships={ownMemberships} selectedTenantId={selectedTenantId||selected?.tenantId||''} onTenantChange={setSelectedTenantId} onSignOut={()=>void signOut()} busy={!!busy}>
+      <div className={workspaceStyles.notices}>
+        {message && <p className={workspaceStyles.notice} role="status">{t(message)}</p>}
+        {stateError && <p className={workspaceStyles.notice} role="alert">{stateError}</p>}
+        {invitationError && <p className={workspaceStyles.notice} role="alert">{invitationError}</p>}
+      </div>
+      {activeSection==='settings'&&<SettingsNav t={t} value={settingsArea} onChange={setSettingsArea}/>}
       {invitationActive && !invitationHandled && <section aria-labelledby="invitation-title"><h2 id="invitation-title">{t("Kutse")}</h2><p>{t("Oled saanud kutse halduskeskkonda.")}</p><button type="button" onClick={() => void acceptInvitation()} disabled={!!busy}>{t("Võta kutse vastu")}</button></section>}
 
-      <section aria-labelledby="security-title">
+      {activeSection==='settings'&&settingsArea==='account'&&<section className={workspaceStyles.panel} aria-labelledby="security-title">
         <h2 id="security-title">{t("Turvalisus")}</h2>
         {requiresTwoFactor && <p role="alert">{t("Omanikud ja platvormi administraatorid peavad enne kaitstud sisu kasutamist kaheastmelise autentimise aktiveerima.")}</p>}
         {!state.user.twoFactorEnabled && !enrollment && <form onSubmit={enableTwoFactor}><h3>{t("Aktiveeri autentimisrakendus")}</h3><p><label htmlFor="enrollment-password">{t("Praegune parool")}</label><br /><input id="enrollment-password" type="password" value={enrollmentPassword} onChange={(event) => setEnrollmentPassword(event.target.value)} required /></p><button type="submit" disabled={!!busy}>{t("Alusta registreerimist")}</button></form>}
         {enrollment && <section><h3>{t("Lisa autentimisrakendus")}</h3><p>{t("Skaneerimise asemel sisesta rakendusse see võti käsitsi:")}</p><p><code>{enrollment.secret}</code></p><p><small>{t("Seadistus URI: ")}{enrollment.uri}</small></p><p>{t("Salvesta need varukoodid enne jätkamist:")}</p><ul>{enrollment.backupCodes.map((code) => <li key={code}><code>{code}</code></li>)}</ul><form onSubmit={verifyEnrollment}><p><label><input type="checkbox" checked={backupCodesSaved} onChange={(event) => setBackupCodesSaved(event.target.checked)} /> {t("Olen varukoodid turvaliselt salvestanud.")}</label></p><p><label htmlFor="enrollment-code">{t("Autentimisrakenduse kood")}</label><br /><input id="enrollment-code" inputMode="numeric" value={twoFactorCode} onChange={(event) => setTwoFactorCode(event.target.value)} required /></p><button type="submit" disabled={!!busy || !backupCodesSaved}>{t("Kinnita autentimine")}</button></form></section>}
         {state.user.twoFactorEnabled && <form onSubmit={disableTwoFactor}><h3>{t("Vaheta autentimisrakendus")}</h3><p>{t("Keelamine nõuab praegust parooli. Pärast seda saad uue rakenduse kohe registreerida.")}</p><p><label htmlFor="replace-2fa-password">{t("Praegune parool")}</label><br /><input id="replace-2fa-password" type="password" value={replacePassword} onChange={(event) => setReplacePassword(event.target.value)} required /></p><button type="submit" disabled={!!busy}>{t("Keela ja registreeri uus")}</button></form>}
         <form onSubmit={changePassword}><h3>{t("Muuda parooli")}</h3><p><label htmlFor="current-password">{t("Praegune parool")}</label><br /><input id="current-password" type="password" value={changeCurrentPassword} onChange={(event) => setChangeCurrentPassword(event.target.value)} required /></p><p><label htmlFor="change-password">{t("Uus parool (vähemalt 12 märki)")}</label><br /><input id="change-password" type="password" minLength={12} value={changeNewPassword} onChange={(event) => setChangeNewPassword(event.target.value)} required /></p><p><label htmlFor="change-password-confirm">{t("Korda uut parooli")}</label><br /><input id="change-password-confirm" type="password" minLength={12} value={changeNewPasswordConfirmation} onChange={(event) => setChangeNewPasswordConfirmation(event.target.value)} required /></p><button type="submit" disabled={!!busy}>{t("Muuda parooli")}</button></form>
-      </section>
+      </section>}
 
       {requiresTwoFactor ? <p>{t("Kaitstud halduse sisu avaneb pärast kaheastmelise autentimise aktiveerimist.")}</p> : (
         <>
-          {state.user.isPlatformAdmin && <CompanyProvisioning onCreated={()=>void loadState()}/>}
-          {state.user.isPlatformAdmin && <OwnerInvitationRecovery tenants={state.platformTenants??[]}/>}
-          {state.user.isPlatformAdmin && <SubscriptionManagement tenants={state.platformTenants??[]}/>}
-          {state.user.isPlatformAdmin && <BillingIssuer/>}
-          {ownMemberships.length > 0 && <section aria-labelledby="context-title"><h2 id="context-title">{t("Minu ettevõtted")}</h2><label htmlFor="tenant-context">{t("Vali enda kontekst")}</label><br /><select id="tenant-context" value={selectedTenantId || selected?.tenantId || ""} onChange={(event) => setSelectedTenantId(event.target.value)}>{ownMemberships.map((membership) => <option key={membership.tenantId} value={membership.tenantId}>{membership.tenantName} ({t(roleLabel(membership.role))})</option>)}</select></section>}
-          {selected && <section aria-labelledby="workspace-title"><h2 id="workspace-title">{selected.tenantName}</h2><p>{t("Roll: ")}{t(roleLabel(selected.role))}</p>
-            <p><button type="button" disabled={!!busy} onClick={()=>window.location.reload()}>{t("Laadi haldus uuesti")}</button> {t("(salvestamata vormid lähtestatakse)")}</p>
-            {selected.role==='owner'&&<RetentionSettings tenantId={selected.tenantId} key={'retention:'+selected.tenantId}/>}
-            {selected.role==='owner'&&<CompanyExit tenantId={selected.tenantId} key={'exit:'+selected.tenantId} onChanged={()=>void loadState()}/>}
+          {activeSection==='settings'&&settingsArea==='account'&&state.user.isPlatformAdmin && <div className={workspaceStyles.panel}><CompanyProvisioning onCreated={()=>void loadState()}/></div>}
+          {activeSection==='settings'&&settingsArea==='account'&&state.user.isPlatformAdmin && <div className={workspaceStyles.panel}><OwnerInvitationRecovery tenants={state.platformTenants??[]}/></div>}
+          {activeSection==='settings'&&settingsArea==='company'&&state.user.isPlatformAdmin && <div className={workspaceStyles.panel}><SubscriptionManagement tenants={state.platformTenants??[]}/></div>}
+          {activeSection==='settings'&&settingsArea==='account'&&state.user.isPlatformAdmin && <div className={workspaceStyles.panel}><BillingIssuer/></div>}
+          {selected && <section className={workspaceStyles.workspace} aria-labelledby="workspace-title"><h2 id="workspace-title">{selected.tenantName}</h2>
+            {activeSection==='settings'&&settingsArea==='account'&&<p><button type="button" disabled={!!busy} onClick={()=>window.location.reload()}>{t("Laadi haldus uuesti")}</button> {t("(salvestamata vormid lähtestatakse)")}</p>}
+            {activeSection==='settings'&&settingsArea==='data'&&selected.role==='owner'&&<div className={workspaceStyles.panel}><RetentionSettings tenantId={selected.tenantId} key={'retention:'+selected.tenantId}/></div>}
+            {activeSection==='settings'&&settingsArea==='data'&&selected.role==='owner'&&<div className={workspaceStyles.panel}><CompanyExit tenantId={selected.tenantId} key={'exit:'+selected.tenantId} onChanged={()=>void loadState()}/></div>}
             {selected.dataAccessExpired?<p role="status">{t('Ettevõtte ajutine andmeligipääs on lõppenud. Võta ühendust platvormi haldajaga.')}</p>:<>
             {scheduleConflicts&&<div role="alert"><h3>{t("Graafikumuudatuse konfliktid (")}{scheduleConflicts.total})</h3><p>{t("Broneeringud ja graafik jäid muutmata. Loendis on kuni 30 mõjutatud broneeringut; kliendi kontaktandmeid siin ei kuvata.")}</p><ul>{scheduleConflicts.items.map(item=><li key={item.reference}>{item.reference} · {item.staffName} · {new Date(item.start).toLocaleString(localeTags[locale],{timeZone:state.schedules?.rules.timezone??'Europe/Tallinn'})}–{new Date(item.end).toLocaleTimeString(localeTags[locale],{timeZone:state.schedules?.rules.timezone??'Europe/Tallinn'})}</li>)}</ul></div>}
-            {(selected.role==='owner'||selected.permissions.includes('theme.publish'))&&<ThemeEditor key={'theme:'+selected.tenantId} tenantId={selected.tenantId}/>}
-            <LanguageSettings key={'language:'+selected.tenantId} tenantId={selected.tenantId} owner={selected.role==='owner'}/>
-            <BookingManagement key={'bookings:'+selected.tenantId+':'+state.user.id} tenantId={selected.tenantId} userId={state.user.id}/>
-            {selected.role!=='staff'&&<CustomerManagement key={'customers:'+selected.tenantId} tenantId={selected.tenantId}/>}
-            {state.schedules&&<ScheduleManagement key={'schedules:'+selected.tenantId} tenantId={selected.tenantId} state={state.schedules} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,t("Graafiku muudatus on salvestatud."))}/>}
-            {state.catalog && <ServiceManagement key={'catalog:'+selected.tenantId} tenantId={selected.tenantId} catalog={state.catalog} busy={!!busy} onPhotoSaved={loadState} save={(action,payload)=>performAdminAction(action,payload,t("Hinnakirja muudatus on salvestatud."))}/>}
+            {activeSection==='settings'&&settingsArea==='appearance'&&(selected.role==='owner'||selected.permissions.includes('theme.publish'))&&<div className={workspaceStyles.panel}><ThemeEditor key={'theme:'+selected.tenantId} tenantId={selected.tenantId}/></div>}
+            {activeSection==='settings'&&settingsArea==='company'&&<div className={workspaceStyles.panel}><LanguageSettings key={'language:'+selected.tenantId} tenantId={selected.tenantId} owner={selected.role==='owner'}/></div>}
+            {activeSection==='bookings'&&<BookingManagement key={'bookings:'+selected.tenantId+':'+state.user.id} tenantId={selected.tenantId} userId={state.user.id}/>}
+            {activeSection==='customers'&&selected.role!=='staff'&&<div className={workspaceStyles.panel}><CustomerManagement key={'customers:'+selected.tenantId} tenantId={selected.tenantId}/></div>}
+            {activeSection==='team'&&state.schedules&&<div className={workspaceStyles.panel}><ScheduleManagement key={'schedules:'+selected.tenantId} tenantId={selected.tenantId} state={state.schedules} busy={!!busy} save={(action,payload)=>performAdminAction(action,payload,t("Graafiku muudatus on salvestatud."))}/></div>}
+            {activeSection==='services'&&state.catalog && <div className={workspaceStyles.panel}><ServiceManagement key={'catalog:'+selected.tenantId} tenantId={selected.tenantId} catalog={state.catalog} busy={!!busy} onPhotoSaved={loadState} save={(action,payload)=>performAdminAction(action,payload,t("Hinnakirja muudatus on salvestatud."))}/></div>}
               {selected.role === "owner" && <>
+                {activeSection==='settings'&&settingsArea==='company'&&<div className={workspaceStyles.panel}>
                 <Onboarding tenantId={selected.tenantId} key={'onboarding:'+selected.tenantId}/>
-                <ExportManagement tenantId={selected.tenantId} key={'exports:'+selected.tenantId}/>
                 <SubscriptionManagement tenantId={selected.tenantId} key={'billing:'+selected.tenantId}/>
-                <ImportManagement tenantId={selected.tenantId} key={'imports:'+selected.tenantId}/>
-                <NotificationSettings tenantId={selected.tenantId} key={'notifications:'+selected.tenantId}/>
-              <ServiceTranslations tenantId={selected.tenantId} key={'translations:'+selected.tenantId} revision={JSON.stringify(state.catalog?.services)??''}/>
-              {state.embedding && <EmbeddingSettingsForm key={`${selected.tenantId}:${state.embedding.origins.join('|')}`} tenantId={selected.tenantId} settings={state.embedding} onSave={origins=>performAdminAction('embedding-settings',{tenantId:selected.tenantId,origins},t("Lubatud kodulehed on salvestatud."))}/>}
+              </div>}
+              {activeSection==='settings'&&settingsArea==='data'&&<div className={workspaceStyles.panel}><ExportManagement tenantId={selected.tenantId} key={'exports:'+selected.tenantId}/><ImportManagement tenantId={selected.tenantId} key={'imports:'+selected.tenantId}/></div>}
+              {activeSection==='settings'&&settingsArea==='notifications'&&<div className={workspaceStyles.panel}><NotificationSettings tenantId={selected.tenantId} key={'notifications:'+selected.tenantId}/>{state.embedding && <EmbeddingSettingsForm key={`${selected.tenantId}:${state.embedding.origins.join('|')}`} tenantId={selected.tenantId} settings={state.embedding} onSave={origins=>performAdminAction('embedding-settings',{tenantId:selected.tenantId,origins},t("Lubatud kodulehed on salvestatud."))}/>}</div>}
+              {activeSection==='settings'&&settingsArea==='appearance'&&<div className={workspaceStyles.panel}><ServiceTranslations tenantId={selected.tenantId} key={'translations:'+selected.tenantId} revision={JSON.stringify(state.catalog?.services)??''}/></div>}
+              {activeSection==='team'&&<div className={workspaceStyles.panel}>
               <h3>{t("Liikmed")}</h3>
-              <ScrollRegion role="region" aria-label={t("Liikmed")} tabIndex={0}><table>
+              <ScrollRegion role="region" aria-label={t("Liikmed")} tabIndex={0}><table className={workspaceStyles.membersTable}>
                 <thead><tr><th>{t("Nimi")}</th><th>{t("E-post")}</th><th>{t("Roll")}</th><th>{t("Aktiivne")}</th><th>{t("MFA")}</th><th>{t("Toimingud")}</th></tr></thead>
                 <tbody>{(state.members || []).map((member) => <tr key={member.userId}>
-                  <td>{member.name}</td>
-                  <td>{member.email}</td>
-                  <td>{t(roleLabel(member.role))}</td>
-                  <td>{member.active ? t("jah") : t("ei")}</td>
-                  <td>{member.twoFactorEnabled ? t("jah") : t("ei")}</td>
-                  <td>{member.role === "owner" ? <span>{t("Omaniku konto")}</span> : <><form onSubmit={(event) => submitRole(event, member)}><label>{t("Roll ")}<select name="role" defaultValue={member.role}><option value="receptionist">{t("Vastuvõtt")}</option><option value="staff">{t("Töötaja")}</option></select></label> <label>{t("Töötaja ")}<select name="staffId" defaultValue={member.staffId || ""}><option value="">{t("Puudub")}</option>{(state.staff || []).map((staff) => <option key={staff.id} value={staff.id}>{staff.name}</option>)}</select></label> <button type="submit" disabled={!!busy}>{t("Salvesta roll")}</button></form><form onSubmit={(event) => submitPermissions(event, member)}><span>{t("Õigused: ")}</span>{delegationOptions.filter((option) => option.role === member.role).map((option) => <label key={option.permission}><input type="checkbox" name="permission" value={option.permission} defaultChecked={member.permissions.includes(option.permission)} /> {t(option.label)}</label>)} <button type="submit" disabled={!!busy}>{t("Salvesta õigused")}</button></form><button type="button" disabled={!!busy} onClick={() => { if (window.confirm(t("Kas tühistada selle liikme juurdepääs?"))) void performAdminAction("revoke-member", { tenantId: selected.tenantId, userId: member.userId }, t("Liikme juurdepääs tühistati.")); }}>{t("Tühista juurdepääs")}</button></>}</td>
+                  <td data-label={t("Nimi")}>{member.name}</td>
+                  <td data-label={t("E-post")}>{member.email}</td>
+                  <td data-label={t("Roll")}>{t(roleLabel(member.role))}</td>
+                  <td data-label={t("Aktiivne")}>{member.active ? t("jah") : t("ei")}</td>
+                  <td data-label={t("MFA")}>{member.twoFactorEnabled ? t("jah") : t("ei")}</td>
+                  <td data-label={t("Toimingud")}>{member.role === "owner" ? <span>{t("Omaniku konto")}</span> : <><form onSubmit={(event) => submitRole(event, member)}><label>{t("Roll ")}<select name="role" defaultValue={member.role}><option value="receptionist">{t("Vastuvõtt")}</option><option value="staff">{t("Töötaja")}</option></select></label> <label>{t("Töötaja ")}<select name="staffId" defaultValue={member.staffId || ""}><option value="">{t("Puudub")}</option>{(state.staff || []).map((staff) => <option key={staff.id} value={staff.id}>{staff.name}</option>)}</select></label> <button type="submit" disabled={!!busy}>{t("Salvesta roll")}</button></form><form onSubmit={(event) => submitPermissions(event, member)}><span>{t("Õigused: ")}</span>{delegationOptions.filter((option) => option.role === member.role).map((option) => <label key={option.permission}><input type="checkbox" name="permission" value={option.permission} defaultChecked={member.permissions.includes(option.permission)} /> {t(option.label)}</label>)} <button type="submit" disabled={!!busy}>{t("Salvesta õigused")}</button></form><button type="button" disabled={!!busy} onClick={() => { if (window.confirm(t("Kas tühistada selle liikme juurdepääs?"))) void performAdminAction("revoke-member", { tenantId: selected.tenantId, userId: member.userId }, t("Liikme juurdepääs tühistati.")); }}>{t("Tühista juurdepääs")}</button></>}</td>
                 </tr>)}</tbody>
               </table></ScrollRegion>
               <h3>{t("Kutsu liige")}</h3>
@@ -556,15 +561,16 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
               <form onSubmit={submitInvitation}><p><label htmlFor="invite-email">{t("E-post")}</label><br /><input id="invite-email" name="email" type="email" required /></p><p><label htmlFor="invite-role">{t("Roll")}</label><br /><select id="invite-role" name="role" value={inviteRole} onChange={(event) => setInviteRole(event.target.value as "receptionist" | "staff")}><option value="receptionist">{t("Vastuvõtt")}</option><option value="staff">{t("Töötaja")}</option></select></p><p><label htmlFor="invite-staff">{t("Töötaja profiil")}</label><br /><select id="invite-staff" name="staffId" defaultValue=""><option value="">{t("Puudub")}</option>{(state.staff || []).map((staff) => <option key={staff.id} value={staff.id}>{staff.name}</option>)}</select></p>{delegationOptions.filter((option) => option.role === inviteRole).map((option) => <label key={option.permission}><input type="checkbox" name="permission" value={option.permission} /> {t(option.label)}</label>)}<p><button type="submit" disabled={!!busy || !state.mailAvailable}>{t("Saada kutse")}</button></p></form>
               <h3>{t("Kutsed")}</h3><ul>{(state.invitations || []).map((invitation: AdminInvitation) => <li key={invitation.id}>{invitation.email} · {t(roleLabel(invitation.role))} {t("· aegub ")}{invitation.expiresAt} <button type="button" disabled={!!busy} onClick={() => { if (window.confirm(t("Kas tühistada see kutse?"))) void performAdminAction("cancel-invitation", { tenantId: selected.tenantId, invitationId: invitation.id }, t("Kutse tühistati.")); }}>{t("Tühista kutse")}</button></li>)}</ul>
               <h3>{t("Omaniku üleandmine")}</h3><form onSubmit={(event) => { event.preventDefault(); const data = new FormData(event.currentTarget); void performAdminAction("transfer-owner", { tenantId: selected.tenantId, newOwnerUserId: String(data.get("newOwnerUserId")) }, t("Omand anti üle. Logi uuesti sisse.")); }}><label>{t("Uus omanik ")}<select name="newOwnerUserId" required><option value="">{t("Vali liige")}</option>{(state.members || []).filter((member) => member.userId !== state.user?.id && member.active && member.twoFactorEnabled).map((member) => <option key={member.userId} value={member.userId}>{member.name} ({member.email})</option>)}</select></label> <button type="submit" disabled={!!busy}>{t("Anna üle")}</button></form>
+              </div>}
             </>}
           </>}
           </section>}
-          {state.user.isPlatformAdmin && <PlatformSupport tenants={state.platformTenants||[]} grants={state.supportGrants||[]} selected={supportGrant} busy={!!busy}
+          {activeSection==='settings'&&settingsArea==='account'&&state.user.isPlatformAdmin && <div className={workspaceStyles.panel}><PlatformSupport tenants={state.platformTenants||[]} grants={state.supportGrants||[]} selected={supportGrant} busy={!!busy}
             select={setSupportGrant}
             start={(tenantId,reason)=>{void performAdminAction("support-start",{tenantId,reason},t("Toe ligipääs avati."));}}
-            stop={grantId=>{void performAdminAction("support-stop",{grantId},t("Toe ligipääs lõpetati."));}}/>}
+            stop={grantId=>{void performAdminAction("support-stop",{grantId},t("Toe ligipääs lõpetati."));}}/></div>}
         </>
       )}
-    </main>
+    </AdminShell></ThemeSurface>
   );
 }

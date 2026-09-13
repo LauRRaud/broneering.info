@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## UI architecture (owner requirement, 2026-09-12)
 
-- The owner supplies the visual design. Keep the Ajasta homepage plain until then.
+- The owner authorized the Ajasta homepage design on 2026-09-13, using the booking demo's warm, restrained visual direction. Preserve its modular structure. The owner will supply the hero image; do not generate or draw a substitute product preview.
 - Do not create a large global stylesheet. Global CSS is limited to resets, document defaults, accessibility and shared design tokens (CSS custom properties).
 - Keep reusable primitives in `src/components/ui/<primitive>/`, with their own TSX and colocated CSS Module. Primitives must not depend on booking, billing or administration logic.
 - Compose feature components in their own folders (marketing, booking, admin). Split page sections and substantial components by responsibility; keep route files focused on routing and data loading.

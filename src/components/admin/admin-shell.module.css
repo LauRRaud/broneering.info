@@ -1,0 +1,27 @@
+.app{min-height:100dvh;background:var(--background);color:var(--text);font-family:var(--font-manrope),system-ui,sans-serif}
+.header{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:minmax(13rem,auto) minmax(29rem,1fr) auto;align-items:center;min-height:4.75rem;padding:0 clamp(1.25rem,3vw,3rem);background:color-mix(in srgb,var(--surface) 96%,transparent);border-bottom:1px solid var(--cardBorder);box-shadow:0 7px 28px rgb(69 48 32 / .05);backdrop-filter:blur(18px)}
+.identity{display:flex;align-items:center;gap:1.15rem;min-width:0}
+.identity>a{font-family:var(--font-manrope),system-ui,sans-serif;font-size:1.85rem;letter-spacing:-.08em}
+.companyName{min-width:0;padding-left:1.15rem;border-left:1px solid var(--cardBorder);color:var(--heading);font-family:var(--font-cormorant),Georgia,serif;font-size:1.32rem;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.companySelect select{max-width:12rem;border:0;border-left:1px solid var(--cardBorder);border-radius:0;padding:.45rem 1.9rem .45rem 1.15rem;background:transparent;color:var(--heading);font-family:var(--font-cormorant),Georgia,serif;font-size:1.2rem}
+.navigation{align-self:stretch;display:flex;justify-content:center;align-items:stretch;gap:.25rem}
+.navigation button{position:relative;border:0;padding:.2rem .95rem;background:transparent;color:var(--text);font-size:.94rem;cursor:pointer}
+.navigation button::after{content:"";position:absolute;inset:auto .75rem 0;height:2px;background:var(--selected);transform:scaleX(0);transition:transform .18s ease}
+.navigation button:hover::after,.navigation button[aria-current="page"]::after{transform:scaleX(1)}
+.navigation button[aria-current="page"]{color:var(--heading);font-weight:700}
+.actions{display:flex;justify-content:flex-end;align-items:center;gap:1rem;min-width:0}
+.status{display:inline-flex;align-items:center;gap:.45rem;padding:.48rem .75rem;border-radius:.7rem;background:#eaf4ed;color:#38644a;font-size:.76rem;white-space:nowrap}
+.status i{width:.5rem;height:.5rem;border-radius:50%;background:#278546}
+.actions>a{color:var(--text);font-size:.87rem;text-decoration:none;white-space:nowrap}
+.profile{position:relative}
+.profile summary{display:flex;align-items:center;gap:.55rem;list-style:none;cursor:pointer;color:var(--heading)}
+.profile summary::-webkit-details-marker{display:none}
+.profile summary span{display:grid;place-items:center;width:2.35rem;height:2.35rem;border-radius:50%;background:color-mix(in srgb,var(--selected) 11%,var(--surface));font-size:.78rem}
+.profile summary b{max-width:8rem;font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile>button{position:absolute;right:0;top:calc(100% + .75rem);min-width:9rem;border:1px solid var(--cardBorder);border-radius:.65rem;padding:.65rem .8rem;background:var(--surface);color:var(--text);box-shadow:0 12px 30px rgb(37 27 19 / .12);cursor:pointer}
+.profile:not([open])>button{display:none}
+.content{width:min(100%,112rem);margin-inline:auto;padding:clamp(1rem,2.5vw,2.75rem) clamp(1rem,2.8vw,3rem) 4rem;outline:none}
+.srOnly{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:1380px){.status{display:none}}
+@media(max-width:1120px){.header{grid-template-columns:auto 1fr;gap:.75rem}.navigation{grid-column:1/-1;grid-row:2;order:3;min-height:3.2rem;overflow:auto}.actions{grid-column:2}.content{padding-top:1.5rem}}
+@media(max-width:720px){.header{position:relative;padding:.9rem 1rem 0}.companyName,.companySelect{display:none}.actions>a,.actions>div{display:none}.profile summary b{display:none}.navigation{margin-inline:-1rem;padding-inline:.5rem}.navigation button{flex:0 0 auto;padding-inline:.75rem}.content{padding:1rem .85rem 3rem}}
