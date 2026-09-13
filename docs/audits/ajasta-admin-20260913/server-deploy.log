@@ -1,0 +1,292 @@
+From github.com:LauRRaud/broneering.info
+ * branch            main       -> FETCH_HEAD
+Updating 0326860..4d4302e
+Fast-forward
+ AGENTS.md                                          |  2 +-
+ design-qa.md                                       | 80 ++++++++++++++++++
+ public/ajasta-icon.svg                             |  1 +
+ src/app/layout.module.css                          |  4 +
+ src/app/page.tsx                                   |  5 +-
+ src/components/admin-app.tsx                       | 96 ++++++++++++----------
+ src/components/admin-calendar.module.css           | 32 +++++---
+ src/components/admin-calendar.tsx                  |  6 +-
+ src/components/admin/admin-auth-shell.module.css   | 18 ++++
+ src/components/admin/admin-auth-shell.tsx          | 20 +++++
+ src/components/admin/admin-shell.module.css        | 27 ++++++
+ src/components/admin/admin-shell.tsx               | 55 +++++++++++++
+ src/components/admin/admin-workspace.module.css    | 35 ++++++++
+ src/components/admin/settings-nav.module.css       |  7 ++
+ src/components/admin/settings-nav.tsx              | 15 ++++
+ src/components/booking-management.module.css       | 40 +++++++++
+ src/components/booking-management.tsx              | 31 ++++---
+ src/components/booking/booking-flow.module.css     |  1 +
+ src/components/customer-management.module.css      | 11 +++
+ src/components/customer-management.tsx             | 11 +--
+ src/components/marketing/ajasta-home.module.css    |  4 +
+ src/components/marketing/ajasta-home.tsx           | 38 +++++----
+ src/components/marketing/hero-media.module.css     |  3 +
+ src/components/marketing/hero-media.tsx            |  9 ++
+ src/components/marketing/home-features.module.css  | 10 +++
+ src/components/marketing/home-features.tsx         | 12 +++
+ src/components/marketing/home-footer.module.css    | 12 +++
+ src/components/marketing/home-footer.tsx           | 13 +++
+ src/components/marketing/home-header.module.css    | 11 +++
+ src/components/marketing/home-header.tsx           | 16 ++++
+ src/components/marketing/home-hero.module.css      | 11 +++
+ src/components/marketing/home-hero.tsx             | 14 ++++
+ src/components/marketing/home-start.module.css     | 20 +++++
+ src/components/marketing/home-start.tsx            | 20 +++++
+ src/components/marketing/marketing-theme.ts        |  6 ++
+ .../ui/action-link/action-link.module.css          |  5 ++
+ src/components/ui/action-link/action-link.tsx      |  9 ++
+ .../ui/date-picker/date-picker.module.css          |  8 ++
+ src/components/ui/date-picker/date-picker.tsx      | 32 ++++++++
+ .../ui/dropdown-menu/dropdown-menu.module.css      | 22 ++---
+ src/components/ui/dropdown-menu/dropdown-menu.tsx  |  6 +-
+ .../site-preferences/site-preferences.module.css   |  2 +
+ .../ui/site-preferences/site-preferences.tsx       | 19 +++++
+ src/components/ui/wordmark/wordmark.module.css     |  4 +
+ src/components/ui/wordmark/wordmark.tsx            |  6 ++
+ src/locales/en.json                                | 50 ++++++++++-
+ src/locales/et.json                                | 50 ++++++++++-
+ src/locales/ru.json                                | 50 ++++++++++-
+ 48 files changed, 850 insertions(+), 109 deletions(-)
+ create mode 100644 design-qa.md
+ create mode 100644 public/ajasta-icon.svg
+ create mode 100644 src/components/admin/admin-auth-shell.module.css
+ create mode 100644 src/components/admin/admin-auth-shell.tsx
+ create mode 100644 src/components/admin/admin-shell.module.css
+ create mode 100644 src/components/admin/admin-shell.tsx
+ create mode 100644 src/components/admin/admin-workspace.module.css
+ create mode 100644 src/components/admin/settings-nav.module.css
+ create mode 100644 src/components/admin/settings-nav.tsx
+ create mode 100644 src/components/booking-management.module.css
+ create mode 100644 src/components/customer-management.module.css
+ create mode 100644 src/components/marketing/ajasta-home.module.css
+ create mode 100644 src/components/marketing/hero-media.module.css
+ create mode 100644 src/components/marketing/hero-media.tsx
+ create mode 100644 src/components/marketing/home-features.module.css
+ create mode 100644 src/components/marketing/home-features.tsx
+ create mode 100644 src/components/marketing/home-footer.module.css
+ create mode 100644 src/components/marketing/home-footer.tsx
+ create mode 100644 src/components/marketing/home-header.module.css
+ create mode 100644 src/components/marketing/home-header.tsx
+ create mode 100644 src/components/marketing/home-hero.module.css
+ create mode 100644 src/components/marketing/home-hero.tsx
+ create mode 100644 src/components/marketing/home-start.module.css
+ create mode 100644 src/components/marketing/home-start.tsx
+ create mode 100644 src/components/marketing/marketing-theme.ts
+ create mode 100644 src/components/ui/action-link/action-link.module.css
+ create mode 100644 src/components/ui/action-link/action-link.tsx
+ create mode 100644 src/components/ui/date-picker/date-picker.module.css
+ create mode 100644 src/components/ui/date-picker/date-picker.tsx
+ create mode 100644 src/components/ui/site-preferences/site-preferences.module.css
+ create mode 100644 src/components/ui/site-preferences/site-preferences.tsx
+ create mode 100644 src/components/ui/wordmark/wordmark.module.css
+ create mode 100644 src/components/ui/wordmark/wordmark.tsx
+time="2026-09-13T12:32:36+03:00" level=warning msg="Docker Compose is configured to build using Bake, but buildx isn't installed"
+#0 building with "default" instance using docker driver
+
+#1 [web internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.65kB done
+#1 DONE 0.0s
+
+#2 [migrate internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.65kB done
+#2 DONE 0.0s
+
+#3 [migrate internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#3 ...
+
+#4 [web internal] load .dockerignore
+#4 DONE 0.0s
+
+#3 [web internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#3 DONE 0.7s
+
+#5 [migrate internal] load .dockerignore
+#5 transferring context: 166B done
+#5 DONE 0.0s
+
+#4 [web internal] load .dockerignore
+#4 transferring context: 166B done
+#4 DONE 0.0s
+
+#6 [web dependencies 1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#6 resolve docker.io/library/node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e 0.0s done
+#6 DONE 0.0s
+
+#7 [migrate internal] load build context
+#7 transferring context: 6.43kB 0.0s done
+#7 DONE 0.0s
+
+#8 [migrate dependencies 3/6] COPY --chmod=644 package.json package-lock.json ./
+#8 CACHED
+
+#9 [migrate dependencies 4/6] RUN npm ci --no-fund
+#9 CACHED
+
+#10 [migrate dependencies 5/6] COPY scripts/licenses.ts ./scripts/licenses.ts
+#10 CACHED
+
+#11 [web dependencies 6/6] RUN mkdir -p docs && npm run licenses && cp docs/THIRD-PARTY-NOTICES.txt /app/THIRD-PARTY-NOTICES.txt
+#11 CACHED
+
+#12 [web internal] load build context
+#12 transferring context: 727.61kB 0.0s done
+#12 DONE 0.0s
+
+#13 [web dependencies 3/6] COPY --chmod=644 package.json package-lock.json ./
+#13 CACHED
+
+#14 [web dependencies 5/6] COPY scripts/licenses.ts ./scripts/licenses.ts
+#14 CACHED
+
+#15 [web dependencies 4/6] RUN npm ci --no-fund
+#15 CACHED
+
+#16 [web dependencies 6/6] RUN mkdir -p docs && npm run licenses && cp docs/THIRD-PARTY-NOTICES.txt /app/THIRD-PARTY-NOTICES.txt
+#16 CACHED
+
+#17 [web dependencies 2/6] WORKDIR /app
+#17 CACHED
+
+#18 [migrate migration 1/2] COPY scripts ./scripts
+#18 DONE 0.0s
+
+#19 [migrate migration 2/2] COPY db ./db
+#19 DONE 0.0s
+
+#20 [web builder 1/2] COPY . .
+#20 ...
+
+#21 [migrate] exporting to image
+#21 exporting layers 0.0s done
+#21 exporting manifest sha256:0b497735c363edd6fa156132a2eb1f3a826bb350044905f7a040e31e7a12efe5 done
+#21 exporting config sha256:61e788c35b43493ed7e5bcb21d8e5888ede2cbd30ab88d11c02c56b65ea5e3a6 done
+#21 exporting attestation manifest sha256:d7ede4fea0c58c9a0f865b5e64cb6c5794fb15b05098ecb11a7b5bb9193bd2df done
+#21 exporting manifest list sha256:58804d33686070aeee9d6599807a83047e2dfd8318832e35ce23e8e8707c7f0f done
+#21 naming to docker.io/library/broneeringinfo-migrate:latest done
+#21 unpacking to docker.io/library/broneeringinfo-migrate:latest 0.0s done
+#21 DONE 0.1s
+
+#22 [migrate] resolving provenance for metadata file
+#22 DONE 0.0s
+
+#20 [web builder 1/2] COPY . .
+#20 DONE 0.3s
+
+#23 [web builder 2/2] RUN npm run build
+#23 0.201 
+#23 0.201 > broneering-info@0.1.0 build
+#23 0.201 > npm run architecture:check && node --import tsx scripts/widget-languages.ts && next build
+#23 0.201 
+#23 0.272 
+#23 0.272 > broneering-info@0.1.0 architecture:check
+#23 0.272 > node --import tsx scripts/architecture.ts
+#23 0.272 
+#23 1.071 Architecture boundaries passed (231 source files).
+#23 1.469 ▲ Next.js 16.3.4 (Turbopack)
+#23 1.495 ✓ Running next.config.ts took 25ms
+#23 1.501 
+#23 1.522   Creating an optimized production build ...
+#23 12.98 ✓ Compiled successfully in 11.3s
+#23 12.99   Running TypeScript ...
+#23 20.76   Finished TypeScript in 7.8s ...
+#23 20.77   Collecting page data using 2 workers ...
+#23 21.54   Generating static pages using 2 workers (0/22) ...
+#23 21.57   Generating static pages using 2 workers (5/22) 
+#23 21.64   Generating static pages using 2 workers (10/22) 
+#23 21.65   Generating static pages using 2 workers (16/22) 
+#23 21.66 ✓ Generating static pages using 2 workers (22/22) in 117ms
+#23 21.66   Finalizing page optimization ...
+#23 21.94 
+#23 21.95 Route (app)
+#23 21.95 ┌ ƒ /
+#23 21.95 ├ ƒ /_not-found
+#23 21.95 ├ ƒ /api/admin/[action]
+#23 21.95 ├ ƒ /api/admin/billing
+#23 21.95 ├ ƒ /api/admin/booking-policy
+#23 21.95 ├ ƒ /api/admin/bookings
+#23 21.95 ├ ƒ /api/admin/companies
+#23 21.95 ├ ƒ /api/admin/customers
+#23 21.95 ├ ƒ /api/admin/customers/privacy
+#23 21.95 ├ ƒ /api/admin/exit
+#23 21.95 ├ ƒ /api/admin/exports
+#23 21.95 ├ ƒ /api/admin/imports
+#23 21.95 ├ ƒ /api/admin/language
+#23 21.95 ├ ƒ /api/admin/notifications
+#23 21.95 ├ ƒ /api/admin/onboarding
+#23 21.95 ├ ƒ /api/admin/preview/[action]
+#23 21.95 ├ ƒ /api/admin/retention
+#23 21.95 ├ ƒ /api/admin/staff-photo
+#23 21.95 ├ ƒ /api/admin/state
+#23 21.95 ├ ƒ /api/admin/subscription
+#23 21.95 ├ ƒ /api/admin/support
+#23 21.95 ├ ƒ /api/admin/theme
+#23 21.95 ├ ƒ /api/admin/theme-logo
+#23 21.95 ├ ƒ /api/admin/theme-preview/[action]
+#23 21.95 ├ ƒ /api/admin/translations
+#23 21.95 ├ ƒ /api/auth/[...all]
+#23 21.95 ├ ƒ /api/availability
+#23 21.95 ├ ƒ /api/booking/manage
+#23 21.95 ├ ƒ /api/bookings
+#23 21.95 ├ ƒ /api/catalog
+#23 21.95 ├ ƒ /api/health
+#23 21.95 ├ ƒ /api/payments/invoice
+#23 21.95 ├ ƒ /api/payments/makecommerce/notify
+#23 21.95 ├ ƒ /api/payments/makecommerce/return
+#23 21.95 ├ ƒ /api/ready
+#23 21.95 ├ ƒ /api/staff-photos/[staffId]
+#23 21.95 ├ ƒ /api/theme-logo
+#23 21.95 ├ ƒ /broneering
+#23 21.95 ├ ƒ /embed
+#23 21.95 ├ ƒ /juhend
+#23 21.95 ├ ƒ /pay
+#23 21.95 ├ ƒ /preview
+#23 21.95 ├ ƒ /robots.txt
+#23 21.95 └ ƒ /sitemap.xml
+#23 21.95 
+#23 21.95 
+#23 21.95 ƒ Proxy (Middleware)
+#23 21.95 
+#23 21.95 ƒ  (Dynamic)  server-rendered on demand
+#23 21.95 
+#23 DONE 22.0s
+
+#24 [web runner 3/8] RUN groupadd --system --gid 1001 booking && useradd --system --uid 1001 --gid booking booking && mkdir -p /data/private && chown booking:booking /data/private
+#24 CACHED
+
+#25 [web runner 4/8] COPY --from=builder --chown=booking:booking /app/.next/standalone ./
+#25 DONE 0.3s
+
+#26 [web runner 5/8] COPY --from=builder --chown=booking:booking /app/.next/static ./.next/static
+#26 DONE 0.0s
+
+#27 [web runner 6/8] COPY --from=builder --chown=booking:booking /app/public ./public
+#27 DONE 0.0s
+
+#28 [web runner 7/8] COPY --from=builder --chown=booking:booking /app/db/migrations ./db/migrations
+#28 DONE 0.0s
+
+#29 [web runner 8/8] COPY --from=dependencies --chown=booking:booking /app/THIRD-PARTY-NOTICES.txt ./THIRD-PARTY-NOTICES.txt
+#29 DONE 0.0s
+
+#30 [web] exporting to image
+#30 exporting layers
+#30 exporting layers 1.3s done
+#30 exporting manifest sha256:cfef1f49a1b48b0878cc5ff773527fbc464b9d7cde56c39898f94655168f12ba done
+#30 exporting config sha256:c588d7cea7ea66dacb19af771a41619efd196482ce9dd46cf06f8d7be5555c92 done
+#30 exporting attestation manifest sha256:6aa80936f343c8ddb7c64c5a6a878ef654983a558c1906ce77cb2134719bfbac done
+#30 exporting manifest list sha256:16eefaa52b2863434299153854ee1429fcbecae7cffcd55853d934cf60ccab7b done
+#30 naming to docker.io/library/broneeringinfo-web:latest done
+#30 unpacking to docker.io/library/broneeringinfo-web:latest
+#30 unpacking to docker.io/library/broneeringinfo-web:latest 0.4s done
+#30 DONE 1.8s
+
+ migrate  Built
+#31 [web] resolving provenance for metadata file
+#31 DONE 0.0s
+ web  Built
+ Container broneeringinfo-db-1  Running
+ Container broneeringinfo-db-1  Running

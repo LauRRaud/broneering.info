@@ -14,7 +14,9 @@ import AjastaHome from '@/components/marketing/ajasta-home';
 export const dynamic='force-dynamic';
 export async function generateMetadata(): Promise<Metadata> {
   const host=(await headers()).get('host')??'';
-  if(['localhost','127.0.0.1'].includes(hostnameFromHost(host))) return {title:'Ajasta – broneerimissüsteem teenusepakkujatele',description:'Sinu aeg. Lihtsalt broneeritud.',robots:{index:false,follow:false},icons:{icon:'/ajasta-icon.svg'}};
+  const hostname=hostnameFromHost(host);
+  if(['haldus.broneering.info','haldus.localhost'].includes(hostname)) return {title:'Ajasta haldus',description:'Ajasta teenusepakkuja haldus.',robots:{index:false,follow:false},icons:{icon:'/ajasta-icon.svg'}};
+  if(['localhost','127.0.0.1'].includes(hostname)) return {title:'Ajasta – broneerimissüsteem teenusepakkujatele',description:'Sinu aeg. Lihtsalt broneeritud.',robots:{index:false,follow:false},icons:{icon:'/ajasta-icon.svg'}};
   const page = await searchPageForHost(host);
   if (!page) return { robots: { index: false, follow: false } };
   return {
