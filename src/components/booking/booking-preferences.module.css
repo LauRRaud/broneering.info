@@ -1,3 +1,3 @@
-.root{display:flex;align-items:center;gap:0;padding:.1rem;background:var(--surface);border:1px solid var(--cardBorder,var(--border));border-radius:999px}
+.root{--dropdown-trigger-font-size:1rem;display:flex;align-items:center;gap:0;padding:.1rem;background:var(--surface);border:1px solid var(--cardBorder,var(--border));border-radius:999px}
 .root>div+div::before{content:'';position:absolute;inset-inline-start:0;inset-block-start:50%;transform:translateY(-50%);inline-size:1px;block-size:1rem;background:var(--cardBorder,var(--border))}
-@media(max-width:380px){.root{padding:.1rem}}
+@media(max-width:380px){.root{--dropdown-trigger-padding-inline:.65rem;padding:.1rem}}

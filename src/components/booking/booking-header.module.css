@@ -8,4 +8,5 @@
 .controls{display:flex;flex:none;white-space:nowrap;gap:.65rem;align-items:center}
 .close{display:grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;padding:0;background:transparent;color:var(--navigation,var(--heading));border:1px solid var(--cardBorder,var(--border));border-radius:50%;cursor:pointer}
 .close:hover{background:color-mix(in srgb,var(--selected) 6%,var(--surface))}
+@media(min-width:50.0625rem){.bar{display:grid;min-block-size:4.5rem;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}.bar h1{min-inline-size:0;max-inline-size:100%;justify-self:start}.controls{justify-self:end}.bar img{max-inline-size:100%}}
 @media(max-width:23.75rem){.header{padding-inline:.75rem}.bar{gap:.35rem}.bar h1{min-inline-size:0;max-inline-size:4.75rem}.controls{gap:.25rem}.bar img{max-inline-size:4.75rem}.close{inline-size:2.35rem;block-size:2.35rem}.bar:has(.close){flex-wrap:wrap}.bar:has(.close) .controls{margin-inline-start:auto}}

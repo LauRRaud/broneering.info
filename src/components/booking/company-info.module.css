@@ -1,4 +1,4 @@
-.trigger{display:flex;align-items:center;justify-content:center;gap:0;max-inline-size:32rem;padding:0 .75rem;border:0;border-radius:999px;background:transparent;color:var(--mutedText,var(--text));font-size:1.125rem;line-height:1.4;cursor:pointer}
+.trigger{display:flex;align-items:center;justify-content:center;gap:0;max-inline-size:32rem;padding:0 .75rem;border:0;border-radius:999px;background:transparent;color:var(--mutedText,var(--text));font-size:1.25rem;line-height:1.4;cursor:pointer}
 .trigger svg{flex:none;color:var(--navigation,var(--heading))}
 .icon{position:relative;display:grid;place-items:center;flex:none;inline-size:2.75rem;block-size:2.75rem}
 .icon::before{content:'';position:absolute;inset:.25rem;border:1px solid transparent;border-radius:50%;background:transparent;pointer-events:none}
@@ -14,5 +14,6 @@
 .details dd{margin:0;overflow-wrap:anywhere}
 .map{display:block;inline-size:fit-content;margin-block-start:.35rem}
 .description{border-block-start:1px solid var(--cardBorder,var(--border));padding-block-start:1.25rem;margin:1.5rem 0 0;white-space:pre-wrap;font-size:1rem;line-height:1.6;color:var(--text)}
+@media(min-width:50.0625rem){.trigger{position:relative;min-block-size:2.75rem;padding-inline:2.75rem}.icon{position:absolute;inset-inline-end:0}}
 @media(max-width:50rem){.trigger{inline-size:2.75rem;min-inline-size:2.75rem;block-size:2.75rem;padding:0}.address{display:none}}
 @media(max-width:30rem){.dialog{padding:1.5rem}.details>div{grid-template-columns:1fr;gap:.1rem}.dialog h2{font-size:2.15rem}}
