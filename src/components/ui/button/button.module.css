@@ -1,6 +1,7 @@
-.root {background:var(--button,ButtonFace);color:var(--buttonText,ButtonText);border:1px solid var(--border,ButtonText);}
-.root[aria-pressed='true'] {background:var(--selected,Highlight);color:var(--selectedText,HighlightText);text-decoration:underline;}
-.root:focus-visible {outline:2px solid var(--border,CanvasText);outline-offset:3px;}
-.primary{border-color:var(--selected);border-radius:.6rem;background:var(--selected);color:var(--selectedText);font-family:var(--booking-display-font,Georgia,serif);font-weight:500;cursor:pointer;transition:filter .18s}
-.primary:hover:not(:disabled){filter:brightness(1.1)}
-.primary:disabled{opacity:.55;cursor:wait}
+/* Consumer classes override these defaults regardless of production CSS chunk order. */
+button:where(.root) {background:var(--button,ButtonFace);color:var(--buttonText,ButtonText);border:1px solid var(--border,ButtonText);}
+button:where(.root[aria-pressed='true']) {background:var(--selected,Highlight);color:var(--selectedText,HighlightText);text-decoration:underline;}
+button:where(.root):focus-visible {outline:2px solid var(--border,CanvasText);outline-offset:3px;}
+button:where(.primary){border-color:var(--selected);border-radius:.6rem;background:var(--selected);color:var(--selectedText);font-family:var(--booking-display-font,Georgia,serif);font-weight:500;cursor:pointer;transition:filter .18s}
+button:where(.primary:hover:not(:disabled)){filter:brightness(1.1)}
+button:where(.primary:disabled){opacity:.55;cursor:wait}
