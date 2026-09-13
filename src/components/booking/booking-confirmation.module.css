@@ -8,6 +8,7 @@
 .field input{inline-size:100%;border:1px solid var(--border);padding:.75rem .85rem;min-block-size:3.2rem;border-radius:.6rem;background:var(--surface);color:var(--text);font-size:1.125rem;transition:border-color .18s,box-shadow .18s}
 .field input::placeholder{color:var(--mutedText,var(--text));opacity:1}
 .field input[aria-invalid='true']{outline:2px solid var(--heading);outline-offset:2px}
+.fieldErrorDescription{position:absolute;inline-size:1px;block-size:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .required{color:var(--icons,var(--heading))}
 .help{font-size:1.0625rem;color:var(--mutedText,var(--text));line-height:1.5;margin:.7rem 0 1rem}
 .reminders{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:.65rem;align-self:end}

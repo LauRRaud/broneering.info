@@ -9,7 +9,7 @@ let root:Root,container:HTMLDivElement;
 const offer:Offer={serviceId:'service',staffId:'staff',staffName:'Mari',start:'2026-09-19T09:00:00Z',end:'2026-09-19T09:30:00Z',price:2500,duration:30};
 const catalog:Catalog={tenant:{name:'Salong',slug:'salong',address:'Tallinn',timezone:'Europe/Tallinn',description:'',bookingTerms:'Salongi tingimused\nTeine rida',cancellationHours:24,rulesVersion:1,demo:true,reminderMinutes:1440},services:[{id:'service',name:'Teenus',description:'',category:'',priceFrom:2500,durationFrom:30}],staff:[{id:'staff',name:'Mari',title:'',serviceIds:['service']}],today:'2026-09-12',maxDate:'2026-10-12'};
 afterEach(async()=>{if(root)await act(async()=>root.unmount());container?.remove();vi.restoreAllMocks();vi.unstubAllGlobals();});
-async function render(){
+async function render(challengeSiteKey?:string){
  Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});vi.spyOn(Date,'now').mockReturnValue(Date.parse('2026-09-12T10:00:00Z'));
  vi.stubGlobal('fetch',vi.fn(async(input:RequestInfo|URL,init?:RequestInit)=>{
   if(init?.method==='POST')throw new TypeError('Response lost');
@@ -19,7 +19,7 @@ async function render(){
  Object.defineProperty(HTMLDialogElement.prototype,'showModal',{configurable:true,value:function(this:HTMLDialogElement){this.open=true;}});
  Object.defineProperty(HTMLDialogElement.prototype,'close',{configurable:true,value:function(this:HTMLDialogElement){this.open=false;}});
  container=document.createElement('div');document.body.append(container);root=createRoot(container);
- await act(async()=>root.render(createElement(BookingFlow,{catalog})));
+ await act(async()=>root.render(createElement(BookingFlow,{catalog,challengeSiteKey})));
  await act(async()=>[...container.querySelectorAll('button')].find(button=>button.getAttribute('aria-label')==='Teenus')!.click());
  await act(async()=>[...container.querySelectorAll('button')].find(button=>button.getAttribute('aria-label')==='Mari')!.click());
  await act(async()=>container.querySelector<HTMLButtonElement>('[aria-label="Vabad ajad"] [role="tabpanel"] button')!.click());
@@ -27,6 +27,28 @@ async function render(){
   const input=container.querySelector<HTMLInputElement>('#'+id)!;Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value')!.set!.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));
  });
 }
+it('focuses invalid fields in order without an error summary, even before the bot check completes',async()=>{
+ await render('test-site-key');
+ const change=async(id:string,value:string)=>act(async()=>{
+  const input=container.querySelector<HTMLInputElement>('#'+id)!;Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value')!.set!.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));
+ });
+ const submit=async()=>act(async()=>container.querySelector('form')!.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+ await change('name','');await change('email','');await submit();
+ expect(document.activeElement?.id).toBe('name');
+ expect(container.querySelector('#name')!.getAttribute('aria-invalid')).toBe('true');
+ expect(container.querySelector('#email')!.getAttribute('aria-invalid')).toBe('true');
+ expect(container.querySelector('[role="alert"]')).toBeNull();
+ expect(container.textContent).not.toContain('Kontrolli esiletõstetud välju.');
+ expect(container.querySelector('#name-error')!.className).toContain('fieldErrorDescription');
+ await act(async()=>container.querySelector<HTMLButtonElement>('button[type="submit"]')!.focus());await submit();
+ expect(document.activeElement?.id).toBe('name');
+ await change('name','Mari');await submit();expect(document.activeElement?.id).toBe('email');
+ expect(container.querySelector('#name')!.getAttribute('aria-invalid')).toBe('false');
+ await change('email','invalid');await submit();expect(document.activeElement?.id).toBe('email');
+ expect(container.querySelector('[role="alert"]')).toBeNull();
+ expect(vi.mocked(fetch).mock.calls.some(call=>call[1]?.method==='POST')).toBe(false);
+});
+
 it('opens company terms without submitting or losing input and sends reminder opt-in in an immutable retry',async()=>{
  await render();
  const checkbox=container.querySelector<HTMLInputElement>('[name="emailReminder"]')!;

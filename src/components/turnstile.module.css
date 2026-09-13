@@ -1,0 +1,1 @@
+.challenge{position:fixed;inset-inline-end:max(.5rem,env(safe-area-inset-right));inset-block-end:calc(5.5rem + env(safe-area-inset-bottom));z-index:40;max-inline-size:calc(100vw - 1rem)}

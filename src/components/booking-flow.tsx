@@ -328,9 +328,9 @@ function dateTimeLabel(value: string, timezone: string) {
     event.preventDefault();
     if(designPreview)return;
     if (submitLockRef.current || catalogLoading || !offer || !service) return;
-    if(challengeSiteKey&&!challengeToken){setSubmitState(state=>state==='uncertain'?'uncertain':'error');setSubmitError(t('Palun kinnita, et sa ei ole robot.'));return;}
     const phone=form.phone.trim()==='+372'?'':form.phone.trim();
-    if(submitState !== 'uncertain'){const errors=contactErrors({...form,phone},smsReminder&&catalog.tenant.demo&&canRequestReminder(offer.start,catalog.tenant.reminderMinutes));setFieldErrors(errors);if(Object.keys(errors).length){setValidationAttempt(value=>value+1);return;}}
+    if(submitState !== 'uncertain'){const errors=contactErrors({...form,phone},smsReminder&&catalog.tenant.demo&&canRequestReminder(offer.start,catalog.tenant.reminderMinutes));setFieldErrors(errors);if(Object.keys(errors).length){setSubmitState('idle');setSubmitError('');setValidationAttempt(value=>value+1);return;}}
+    if(challengeSiteKey&&!challengeToken){setSubmitState(state=>state==='uncertain'?'uncertain':'error');setSubmitError(t('Palun kinnita, et sa ei ole robot.'));return;}
     submitLockRef.current = true;
     setSubmitState("submitting");
     setSubmitError("");
@@ -488,13 +488,12 @@ function dateTimeLabel(value: string, timezone: string) {
         {nextDayMessage&&<p role="status">{t(nextDayMessage)}</p>}
         {availability==='ready'&&<OfferSelection key={date} offers={offers} timezone={catalog.tenant.timezone} showStaff={!staffId} selected={offer} disabled={bookingLocked} onSelect={chooseOffer}/>}
       </TimePicker>}
-      {step==='details'&&offer&&service&&<BookingConfirmation tenant={catalog.tenant} service={service} offer={offer} form={form} errors={fieldErrors} locked={bookingLocked} state={submitState} error={submitError} preview={designPreview} emailReminder={emailReminder} onReminder={setEmailReminder} smsReminder={smsReminder} onSmsReminder={setSmsReminder} onField={updateField} onSubmit={submitBooking} canEditStaff={!catalog.selectedStaffId&&eligibleStaff.length>0} onEdit={target=>{if(!bookingLocked)setStep(target);}}>
-        {challengeSiteKey&&<Turnstile siteKey={challengeSiteKey} onToken={setChallengeToken} resetSignal={challengeReset} label={t('Botikontroll')}/>}
-      </BookingConfirmation>}
+      {step==='details'&&offer&&service&&<BookingConfirmation tenant={catalog.tenant} service={service} offer={offer} form={form} errors={fieldErrors} locked={bookingLocked} state={submitState} error={submitError} preview={designPreview} emailReminder={emailReminder} onReminder={setEmailReminder} smsReminder={smsReminder} onSmsReminder={setSmsReminder} onField={updateField} onSubmit={submitBooking} canEditStaff={!catalog.selectedStaffId&&eligibleStaff.length>0} onEdit={target=>{if(!bookingLocked)setStep(target);}}/>}
       </div>
     </section>}
     </div>
     <footer className={flowStyles.footer} data-fade={footerFade||undefined}><span aria-hidden="true"/>{!result?<BookingProgress current={stepIndex(step)} labels={visibleSteps.map(item=>item.label)} completed={visibleSteps.map(item=>stepCompleted(item.id))} selectable={visibleSteps.map(item=>stepSelectable(item.id))} canGoBack={canGoBack} disabled={bookingLocked} onBack={goBack} onSelect={goToStep}/>:<span/>}<a className={flowStyles.brand} href="https://ajasta.ee" target="_blank" rel="noopener noreferrer" aria-label={t('Ajasta broneerimistarkvara')}><Icon name="clock" size={25}/>Ajasta.ee</a></footer>
+    {!result&&step==='details'&&offer&&service&&challengeSiteKey&&<Turnstile siteKey={challengeSiteKey} onToken={setChallengeToken} resetSignal={challengeReset} label={t('Botikontroll')}/>}
   </main>;
 }
 
