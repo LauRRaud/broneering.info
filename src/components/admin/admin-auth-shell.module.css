@@ -1,18 +1,25 @@
-.page{min-height:100dvh;padding:clamp(1.25rem,3vw,3rem);background:var(--background);color:var(--text);font-family:var(--font-manrope),system-ui,sans-serif;outline:none}
-.page>header{display:flex;align-items:center;justify-content:space-between}
-.layout{width:min(68rem,100%);margin:clamp(4rem,10vh,8rem) auto 2rem;display:grid;grid-template-columns:minmax(0,1fr) minmax(20rem,27rem);gap:clamp(3rem,9vw,9rem);align-items:center}
-.intro h1{max-width:9ch;margin:.25rem 0 1.25rem;color:var(--heading);font-family:var(--font-cormorant),Georgia,serif;font-size:clamp(3.5rem,7vw,6.7rem);font-weight:400;line-height:.86;letter-spacing:-.055em}
-.intro>p:not(.eyebrow){max-width:34rem;color:var(--mutedText);font-size:1.05rem;line-height:1.7}
-.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:.72rem;font-weight:700;color:var(--link)}
-.line{display:block;width:5rem;height:1px;margin-top:2.5rem;background:var(--border)}
-.card{padding:clamp(1.5rem,4vw,2.75rem);border:1px solid var(--cardBorder);border-radius:1.35rem;background:var(--surface);box-shadow:0 24px 70px rgb(53 39 27 / .08)}
-.card h2{margin:0 0 1.5rem;color:var(--heading);font-family:var(--font-cormorant),Georgia,serif;font-size:2.1rem;font-weight:500}
+.page{box-sizing:border-box;min-height:100dvh;padding:1.5rem clamp(1rem,4vw,4rem);background:var(--background);color:var(--text);font-family:var(--font-manrope),system-ui,sans-serif;outline:none}
+.page>header{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.layout{width:min(27rem,100%);margin:clamp(2rem,5vh,4rem) auto 2rem;display:grid;gap:1.5rem}
+.intro{text-align:center}
+.intro h1{margin:.65rem 0 .85rem;color:var(--heading);font-family:var(--font-cormorant),Georgia,serif;font-size:clamp(2.4rem,5vw,3.2rem);font-weight:500;line-height:1.05;letter-spacing:-.035em;text-wrap:balance}
+.intro>p:not(.eyebrow){margin:0;color:var(--mutedText);font-size:.875rem;line-height:1.65}
+.eyebrow{margin:0;text-transform:uppercase;letter-spacing:.14em;font-size:.65rem;font-weight:700;color:var(--link)}
+.line{display:none}
+.card{padding:1.5rem;border:1px solid var(--cardBorder);border-radius:1.1rem;background:var(--surface)}
+.card h2{margin:0 0 1.2rem;color:var(--heading);font-family:var(--font-cormorant),Georgia,serif;font-size:1.8rem;font-weight:500}
 .card form{display:grid;gap:1rem}
-.card form p{display:grid;gap:.45rem;margin:0}
-.card label{font-size:.8rem;font-weight:700}
-.card input{width:100%;min-height:3.1rem;border:1px solid var(--cardBorder);border-radius:.65rem;padding:.7rem .85rem;background:var(--background);color:var(--text)}
-.card button{min-height:3rem;border:1px solid var(--selected);border-radius:.65rem;padding:.7rem 1rem;background:var(--selected);color:var(--selectedText);font-weight:700;cursor:pointer}
-.card>p button{width:100%;border-color:transparent;background:transparent;color:var(--link);font-weight:600}
+.card form p{display:grid;gap:.4rem;margin:0}
+.card form br{display:none}
+.card label{font-size:.8rem;font-weight:600}
+.card input{box-sizing:border-box;width:100%;min-height:2.9rem;border:1px solid var(--cardBorder);border-radius:.6rem;padding:.65rem .8rem;background:var(--background);color:var(--text);font:inherit}
+.card button{min-height:2.9rem;border:1px solid var(--selected);border-radius:.6rem;padding:.65rem 1rem;background:var(--selected);color:var(--selectedText);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
+.card section>p{margin:1rem 0 0;color:var(--mutedText);font-size:.8rem;line-height:1.6}
+.card section>p:has(button){margin-top:.75rem}
+.card section>p button{width:100%;border-color:var(--cardBorder);background:transparent;color:var(--text);font-weight:500}
+.card button:hover{filter:brightness(.96)}
+.card button:disabled{opacity:.55;cursor:not-allowed}
+.card :is(input,button,a):focus-visible{outline:2px solid var(--selected);outline-offset:3px}
 .card a{color:var(--link)}
-.footer{position:fixed;right:2rem;bottom:1rem;color:var(--mutedText);font-family:var(--font-cormorant),Georgia,serif;font-size:1.25rem}
-@media(max-width:760px){.layout{grid-template-columns:1fr;margin-top:3.5rem;gap:2.5rem}.intro h1{font-size:4rem}.intro>p:not(.eyebrow){font-size:.96rem}.card{padding:1.4rem}.footer{position:static;text-align:right;margin-top:3rem}}
+
+@media(max-width:480px){.page{padding:1rem}.layout{margin-top:2rem;gap:1.25rem}.card{padding:1.25rem}.intro h1{font-size:2.5rem}}

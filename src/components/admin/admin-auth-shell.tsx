@@ -15,6 +15,5 @@ export default function AdminAuthShell({eyebrow,title,description,children}:{eye
       </section>
       <section className={styles.card}>{children}</section>
     </div>
-    <p className={styles.footer}>ajasta.ee</p>
   </main>;
 }

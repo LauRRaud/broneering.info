@@ -430,7 +430,6 @@ export default function AdminApp({ invitationToken = "", resetToken = "", authEr
 
   if (!state?.user) return (
     <ThemeSurface theme={marketingTheme}><AdminAuthShell eyebrow={t("Teenusepakkuja haldus")} title={t("Tere tulemast tagasi.")} description={t("Logi sisse, et hallata broneeringuid, kliente, teenuseid ja oma meeskonna tööpäeva.")}>
-      <GuideLink t={t} newTab/>
       {message && <p role="alert">{t(message)}</p>}
       {stateError && <p role="alert">{stateError}</p>}
       {verificationEmail && <section><h2>{t("E-posti kinnitamine")}</h2><p>{t("Kinnituskiri on seotud aadressiga ")}{verificationEmail}.</p>{!mailAvailable && <p>{t("E-kirjade saatmine ei ole seadistatud, seega uut kinnituskirja praegu saata ei saa.")}</p>}<button type="button" onClick={() => void resendVerification(verificationEmail)} disabled={!!busy || !mailAvailable}>{t("Saada kinnituskiri uuesti")}</button></section>}
