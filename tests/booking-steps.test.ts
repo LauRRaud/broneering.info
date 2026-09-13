@@ -41,7 +41,7 @@ it('shows one choice step at a time and retains contacts and choices when going 
  await act(async()=>container.querySelector<HTMLButtonElement>('[aria-label="Vabad ajad"] [role="tabpanel"] button')!.click());
  expect(title()).toBe('Kinnita broneering');
  expect(container.querySelector('[aria-label="Vabad ajad"]')).toBeNull();
- expect(container.querySelector('dialog')?.textContent).toContain('Tingimused enne kinnitamist');
+ expect([...container.querySelectorAll('#booking-form dialog')].some(dialog=>dialog.textContent?.includes('Tingimused enne kinnitamist'))).toBe(true);
  await act(async()=>{const input=container.querySelector<HTMLInputElement>('#name')!;Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value')!.set!.call(input,'Test Kasutaja');input.dispatchEvent(new Event('input',{bubbles:true}));});
  await click('Tagasi');
  await act(async()=>container.querySelector<HTMLButtonElement>('[aria-label="Vabad ajad"] [role="tabpanel"] button')!.click());
@@ -104,9 +104,9 @@ it('keeps the month grid and day offers together and refreshes offers only when 
 
 it('shows worker information only in the worker step and keeps it separate from selection',async()=>{
  await render({...catalog,staff:[{...catalog.staff[0],publicPhone:'+372 5555 0101'},catalog.staff[1]]});
- expect(container.querySelector('[aria-label^="Töötaja "][aria-haspopup="dialog"]')).toBeNull();
- await click('Juuksed');expect(container.querySelector('[aria-label^="Töötaja "][aria-haspopup="dialog"]')).toBeNull();
- await click('Lõikus');const toggle=container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Anna info"]')!;
+ expect(container.querySelector('[aria-label^="Töötaja "][aria-expanded]')).toBeNull();
+ await click('Juuksed');expect(container.querySelector('[aria-label^="Töötaja "][aria-expanded]')).toBeNull();
+ await click('Lõikus');const toggle=container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Anna telefon"]')!;
  expect(container.querySelector('a[href^="tel:"]')).toBeNull();
  await act(async()=>toggle.click());
  expect(container.querySelector('a[href^="tel:"]')?.getAttribute('href')).toBe('tel:+37255550101');

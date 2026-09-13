@@ -28,7 +28,9 @@ import OfferSelection from '@/components/booking/offer-selection';
 import Icon from '@/components/ui/icon/icon';
 import flowStyles from './booking/booking-flow.module.css';
 import StaffCard from '@/components/booking/staff-card';
+import Avatar from '@/components/ui/avatar/avatar';
 import BookingHeader from '@/components/booking/booking-header';
+import {useScrollFade} from '@/components/booking/use-scroll-fade';
 import {CategorySelection,descendSingleCategory,ServiceSelection,serviceCategories,firstBookingStep,initialCategoryPath,servicesAtPath,servicePath} from '@/components/booking/service-selection';
 
 type Step = "category" | "service" | "staff" | "time" | "details";
@@ -122,6 +124,8 @@ function dateTimeLabel(value: string, timezone: string) {
   const payloadRef = useRef("");
   const submitLockRef = useRef(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const stageRef=useRef<HTMLDivElement>(null);
+  const footerFade=useScrollFade(stageRef,step==='service'&&!result,step+categoryPath.join('/'));
   const headingFocusFrame = useRef<number | null>(null);
   const nextDayAbort = useRef<AbortController | null>(null);
 
@@ -193,7 +197,14 @@ function dateTimeLabel(value: string, timezone: string) {
 
   useEffect(() => {
     if(headingFocusFrame.current!==null)window.cancelAnimationFrame(headingFocusFrame.current);
-    const frame = window.requestAnimationFrame(() => {headingFocusFrame.current=null;headingRef.current?.focus();});
+    const frame = window.requestAnimationFrame(() => {
+      headingFocusFrame.current=null;
+      const heading=headingRef.current;
+      if(!heading)return;
+      const embedded=!!heading.closest('[data-booking-embed]');
+      heading.focus({preventScroll:!embedded});
+      if(!embedded&&window.scrollY>0)window.scrollTo({top:0,left:window.scrollX,behavior:'instant'});
+    });
     headingFocusFrame.current=frame;
     return () => {window.cancelAnimationFrame(frame);if(headingFocusFrame.current===frame)headingFocusFrame.current=null;};
   }, [result, step, categoryPath]);
@@ -460,12 +471,12 @@ function dateTimeLabel(value: string, timezone: string) {
     {result?<BookingSuccess result={result} tenant={catalog.tenant} name={form.name} serviceName={service?.name} onRestart={restart} headingRef={headingRef}/>:<section aria-labelledby="booking-title">
       <div className={flowStyles.intro}><Heading as="h2" className={flowStyles.title} id="booking-title" ref={headingRef} tabIndex={-1}>{titles[step]}</Heading></div>
       {(step==='category'||step==='service'||step==='staff')&&submitError&&<p className={flowStyles.notice} role="alert">{t(submitError)}</p>}
-      <div className={flowStyles.stage} key={step+categoryPath.join('/')}>
+      <div className={flowStyles.stage} ref={stageRef} key={step+categoryPath.join('/')}>
       {step==='category'&&<CategorySelection categories={categories} selected={service?servicePath(service)[categoryPath.length]??null:null} disabled={bookingLocked} onSelect={chooseCategory}/>}
       {(step==='service'||(step==='category'&&categoryServices.length>0))&&<ServiceSelection services={categoryServices} selected={serviceId} disabled={bookingLocked} exactPrice={!!catalog.selectedStaffId||catalog.staff.filter(item=>categoryServices.some(service=>item.serviceIds.includes(service.id))).length===1} search={serviceSearch} onSearch={setServiceSearch} onSelect={chooseService}/>}
       {step==='staff'&&<ul className={flowStyles.staffList} aria-label={t('Töötajad')}>
-        {eligibleStaff.map(item=><li key={item.id}><StaffCard staff={item} serviceId={serviceId} showPrice={new Set(eligibleStaff.map(person=>{const detail=person.serviceDetails?.find(value=>value.serviceId===serviceId);return detail?detail.price+':'+detail.duration:'';})).size>1} selected={staffChosen&&staffId===item.id} disabled={bookingLocked} onSelect={()=>chooseStaff(item)}/></li>)}
-        {eligibleStaff.length>1&&<li><Button className={flowStyles.any} type="button" disabled={bookingLocked} onClick={()=>chooseStaff(null)} aria-label={t('Eelistus puudub')} aria-pressed={staffChosen&&staffId===''}><span className={flowStyles.anyAvatar} aria-hidden="true">?</span><strong>{t('Eelistus puudub')}</strong></Button></li>}
+        {eligibleStaff.map(item=><li key={item.id}><StaffCard companyPhone={catalog.tenant.contactPhone} staff={item} serviceId={serviceId} showPrice={new Set(eligibleStaff.map(person=>{const detail=person.serviceDetails?.find(value=>value.serviceId===serviceId);return detail?detail.price+':'+detail.duration:'';})).size>1} selected={staffChosen&&staffId===item.id} disabled={bookingLocked} onSelect={()=>chooseStaff(item)}/></li>)}
+        {eligibleStaff.length>1&&<li><Button className={flowStyles.any} type="button" disabled={bookingLocked} onClick={()=>chooseStaff(null)} aria-label={t('Eelistus puudub')} aria-pressed={staffChosen&&staffId===''}><span className={flowStyles.anyAvatar}><Avatar name="?"/></span><strong>{t('Eelistus puudub')}</strong></Button></li>}
         {!eligibleStaff.length&&<li>{t('Sellele teenusele ei ole sobivaid töötajaid.')}</li>}
       </ul>}
       {step==='time'&&<TimePicker key={serviceId+':'+staffId} date={date} min={catalog.today} max={catalog.maxDate} disabled={bookingLocked} onChange={chooseDate} serviceId={serviceId} staffId={staffId} endpoint={endpoint('availability')}>
@@ -482,7 +493,7 @@ function dateTimeLabel(value: string, timezone: string) {
       </div>
     </section>}
     </div>
-    <footer className={flowStyles.footer}><span aria-hidden="true"/>{!result?<BookingProgress current={stepIndex(step)} labels={visibleSteps.map(item=>item.label)} completed={visibleSteps.map(item=>stepCompleted(item.id))} selectable={visibleSteps.map(item=>stepSelectable(item.id))} canGoBack={canGoBack} disabled={bookingLocked} onBack={goBack} onSelect={goToStep}/>:<span/>}<a className={flowStyles.brand} href="https://ajasta.ee" target="_blank" rel="noopener noreferrer" aria-label={t('Ajasta broneerimistarkvara')}><Icon name="clock" size={25}/>Ajasta.ee</a></footer>
+    <footer className={flowStyles.footer} data-fade={footerFade||undefined}><span aria-hidden="true"/>{!result?<BookingProgress current={stepIndex(step)} labels={visibleSteps.map(item=>item.label)} completed={visibleSteps.map(item=>stepCompleted(item.id))} selectable={visibleSteps.map(item=>stepSelectable(item.id))} canGoBack={canGoBack} disabled={bookingLocked} onBack={goBack} onSelect={goToStep}/>:<span/>}<a className={flowStyles.brand} href="https://ajasta.ee" target="_blank" rel="noopener noreferrer" aria-label={t('Ajasta broneerimistarkvara')}><Icon name="clock" size={25}/>Ajasta.ee</a></footer>
   </main>;
 }
 

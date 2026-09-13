@@ -8,7 +8,7 @@ export default function BookingProgress({current,labels,completed,selectable,can
     {canGoBack&&<><Button className={styles.back} type="button" aria-label={t('Tagasi')} disabled={disabled} onClick={onBack}><Icon name="chevron" size={22}/></Button><span className={styles.divider} aria-hidden="true"/></>}
     <ol className={styles.steps}>{labels.map((label,index)=>{
       const isCurrent=index===current,canSelect=selectable[index]&&!isCurrent;
-      const content=<><span className={styles.marker} aria-hidden="true"/><span className={styles.current} aria-hidden="true">{label}</span><span className={styles.sr}>{label}</span></>;
+      const content=<><span className={styles.marker} aria-hidden="true">{completed[index]&&!isCurrent&&<Icon name="check" size={22} strokeWidth={2}/>}</span><span className={styles.current} aria-hidden="true">{label}</span><span className={styles.sr}>{label}</span></>;
       return <li key={index} aria-current={isCurrent?'step':undefined} data-complete={completed[index]} data-selectable={canSelect}>
         {canSelect?<Button className={styles.stepControl} type="button" aria-label={t('Mine sammu {step}',{step:label})} disabled={disabled} onClick={()=>onSelect(index)}>{content}</Button>:<span className={styles.stepControl}>{content}</span>}
         {!isCurrent&&<span className={styles.tooltip} aria-hidden="true">{label}</span>}

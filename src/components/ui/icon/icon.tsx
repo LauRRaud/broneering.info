@@ -6,8 +6,9 @@ export const iconPaths={
   monitor:'M3 4h18v13H3V4ZM8 21h8m-4-4v4',sun:'M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5',moon:'M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z',contrast:'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM12 3v18m0-4h7m-7-5h9m-9-5h7',
   arrowLeft:'M19 12H5m7-7-7 7 7 7',chevron:'m9 5 7 7-7 7',close:'m6 6 12 12M18 6 6 18',check:'m5 12 4 4L19 6',
   clock:'M12 8v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',
-  info:'M12 11v6M12 7h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',infoMark:'M12 10v7M12 6.5h.01',
+  info:'M17.1 4a2.15 2.15 0 1 1-4.3 0 2.15 2.15 0 0 1 4.3 0ZM10.2 8.7l5.6-.9-3.4 11.1c-.2.7-.1 1 .3 1 .7 0 1.5-.6 2.4-1.6l.8.7c-1.5 2.1-3.4 3.2-5.3 3.2-2.3 0-3.1-1.2-2.4-3.4l2.5-8.1-2.6.6-.2-1.2Z',infoMark:'M12 10v7M12 6.5h.01',
   person:'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M5 21v-3a7 7 0 0 1 14 0v3',
+  phone:'M8 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-4l-5-2-2 2a14 14 0 0 1-6-6l2-2-2-5Z',
   people:'M14 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0M4 21v-3a7 7 0 0 1 14 0v3M18 4a3 3 0 0 1 0 6m2 4a6 6 0 0 1 3 5v2',
   pin:'M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0ZM15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0',
   calendar:'M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2ZM7 3v4m10-4v4M3 11h18',
@@ -23,5 +24,5 @@ export const iconPaths={
 export type IconName=keyof typeof iconPaths;
 export default function Icon({name,size=24,...props}:SVGProps<SVGSVGElement>&{name:IconName;size?:number}){
   const category=['scissors','lotus','lashes','hand'].includes(name);
-  return <svg width={size} height={size} viewBox={category?"0 0 64 64":"0 0 24 24"} fill="none" stroke="currentColor" strokeWidth={category?1.7:1.35} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" {...props}><path d={iconPaths[name]} transform={name==='hand'?'rotate(25 32 32)':undefined}/></svg>;
+  return <svg width={size} height={size} viewBox={category?"0 0 64 64":"0 0 24 24"} fill="none" stroke="currentColor" strokeWidth={category?1.7:1.35} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" {...props}><path d={iconPaths[name]} fill={name==='info'||name==='phone'?'currentColor':undefined} stroke={name==='info'||name==='phone'?'none':undefined} transform={name==='hand'?'rotate(25 32 32)':undefined}/></svg>;
 }

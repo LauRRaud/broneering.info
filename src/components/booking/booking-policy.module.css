@@ -1,0 +1,9 @@
+.toggle{position:relative;display:grid;place-items:center;flex:none;inline-size:2.75rem;min-inline-size:2.75rem;block-size:2.75rem;min-block-size:2.75rem;padding:0;border:0;background:transparent;border-radius:50%;color:var(--icons,var(--heading));cursor:pointer}
+.toggle::before{content:'';position:absolute;inset:.25rem;border:1px solid transparent;border-radius:50%;pointer-events:none}
+.toggle svg{position:relative}
+.toggle:hover::before,.toggle[aria-expanded='true']::before{border-color:var(--cardBorder,var(--border));background:var(--surface)}
+.dialog{inline-size:32rem;padding:2rem;border:1px solid var(--cardBorder,var(--border));border-radius:1.25rem;text-align:start}
+.dialog h2{margin:0 2.5rem 1rem 0;font-family:var(--booking-display-font,Georgia,serif);font-weight:400;font-size:2rem;line-height:1.2;color:var(--heading)}
+.dialog p{margin:0;font-size:1.0625rem;font-weight:400;line-height:1.6;color:var(--text)}
+.close{position:absolute;inset-block-start:1rem;inset-inline-end:1rem;display:grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;padding:0;border:1px solid var(--cardBorder,var(--border));border-radius:50%;background:var(--surface);color:var(--navigation,var(--heading));cursor:pointer}
+@media(max-width:30rem){.dialog{padding:1.5rem}.dialog h2{font-size:1.8rem}}

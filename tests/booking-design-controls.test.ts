@@ -49,8 +49,15 @@ it('groups real duration variants without changing their identifiers or hiding d
  await render(createElement(ServiceSelection,{services:[base,{...base,id:'two',name:'Massaaž, 1,5 h',durationFrom:90,priceFrom:6000},{...base,id:'three',name:'Massaaž, 2 h',durationFrom:120,priceFrom:7500}],selected:'',disabled:false,exactPrice:true,search:'',onSearch:vi.fn(),onSelect:choose}));
  expect(container.querySelectorAll('h3')).toHaveLength(1);
  expect(container.querySelectorAll('button[aria-pressed]')).toHaveLength(3);
+ for(const button of container.querySelectorAll('button[aria-pressed]'))expect(button.textContent?.match(/\d+(?:,\d+)? h/g)).toHaveLength(1);
  await act(async()=>container.querySelector<HTMLButtonElement>('button[aria-label="Massaaž, 1,5 h"]')!.click());
  expect(choose.mock.calls[0][0].id).toBe('two');
  await act(async()=>container.querySelector<HTMLButtonElement>('button[aria-label="Massaaž, 2 h"]')!.click());
  expect(choose.mock.calls[1][0].id).toBe('three');
+ await act(async()=>root.render(createElement(ServiceSelection,{services:[base],selected:'',disabled:false,exactPrice:true,search:'',onSearch:vi.fn(),onSelect:choose})));
+ const single=container.querySelector<HTMLButtonElement>('button[aria-label="Massaaž, 1 h"]')!;
+ expect(single.textContent?.match(/1 h/g)).toHaveLength(1);
+ expect(single.textContent).toContain('Massaaž');
+ await act(async()=>single.click());
+ expect(choose.mock.calls[2][0].id).toBe('one');
 });

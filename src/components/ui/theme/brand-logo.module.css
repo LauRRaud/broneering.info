@@ -1,4 +1,9 @@
-.logo {display:block;max-inline-size:14rem;}
+.logo {display:block;max-inline-size:var(--brand-logo-max-width,14rem);}
 .logo img {max-inline-size:100%;max-block-size:7rem;object-fit:contain;}
 .light {display:var(--light-logo-display);}
 .dark {display:var(--dark-logo-display);}
+.image{--logo-treatment:0;position:relative;display:block;inline-size:fit-content;max-inline-size:100%;}
+.image[data-transparent='true']{--logo-treatment:max(var(--logo-needs-monochrome,0),var(--logo-force-monochrome,0));}
+.image img{display:block;opacity:calc(1 - var(--logo-treatment));}
+.silhouette{position:absolute;inset:0;background:var(--heading);mask-size:100% 100%;mask-repeat:no-repeat;opacity:var(--logo-treatment);pointer-events:none;}
+@media(forced-colors:active){.silhouette{forced-color-adjust:none;}}

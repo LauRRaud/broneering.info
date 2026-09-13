@@ -447,6 +447,7 @@
   "Muudatuse põhjus": "Reason for change",
   "Muudatuse teavitus salvestatakse saatmise järjekorda.": "The change notification will be queued for delivery.",
   "Muudatuste ajalugu": "Change history",
+  "Muutmine ja tühistamine": "Changes and cancellation",
   "Muutmine ja tühistamine on lubatud kuni": "Changes and cancellation are allowed until",
   "Muutmine ja tühistamine: vähemalt": "Changes and cancellation: at least",
   "Muutmise ja tühistamise tähtaeg (tundi)": "Change and cancellation notice (hours)",
@@ -1475,5 +1476,13 @@
   "SMS-meeldetuletused ei ole selles ettevõttes veel kasutusel.": "SMS reminders are not yet available for this business.",
   "SMS-meeldetuletuseks on vaja telefoninumbrit koos riigikoodiga.": "SMS reminders require a phone number with a country code.",
   "Sulge broneerimisaken": "Close the booking window",
-  "Saad valida kaasasolevate veebifontide ja seadme fontide vahel. Veebifondid laaditakse meie serverist.": "Choose bundled web fonts or device fonts. Web fonts are served from our own server."
+  "Saad valida kaasasolevate veebifontide ja seadme fontide vahel. Veebifondid laaditakse meie serverist.": "Choose bundled web fonts or device fonts. Web fonts are served from our own server.",
+  "Vaata kõiki vabu aegu": "See all available times",
+  "Küüned": "Nails",
+  "Töötaja {name} telefon": "{name}’s phone number",
+  "Ettevõtte telefon": "Business phone",
+  "Ettevõtte info": "Business information",
+  "Vaata kaardil": "View on map",
+  "Meeldetuletus e-postiga": "Email reminder",
+  "Meeldetuletus SMS-iga": "SMS reminder"
 }

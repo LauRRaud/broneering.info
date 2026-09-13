@@ -1,11 +1,11 @@
-.header{padding:.45rem clamp(1.25rem,5vw,5rem);border-block-end:1px solid color-mix(in srgb,var(--cardBorder,var(--border)) 65%,var(--background))}
+.header{--brand-logo-max-width:17rem;padding:.45rem clamp(1.25rem,5vw,5rem);border-block-end:1px solid color-mix(in srgb,var(--cardBorder,var(--border)) 65%,var(--background))}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;min-block-size:3.75rem;max-inline-size:104rem;margin-inline:auto}
 .bar h1{font-family:var(--booking-display-font);font-size:clamp(1.6rem,3vw,2.7rem);font-weight:500;line-height:1;letter-spacing:.1em;margin:0}
-.bar img{display:block;max-block-size:3.85rem;max-inline-size:17rem;object-fit:contain}
-@media(min-width:50.0625rem) and (max-height:59.375rem){.header{padding-block:.3rem}.bar{min-block-size:3.35rem}.bar img{max-block-size:3.4rem;max-inline-size:15.5rem}}
+.bar img{display:block;max-block-size:4.5rem;max-inline-size:17rem;object-fit:contain}
+@media(min-width:50.0625rem) and (max-height:59.375rem){.header{padding-block:.3rem}.bar{min-block-size:3.35rem}.bar img{max-block-size:4.5rem;max-inline-size:17rem}}
 @media(max-width:30rem){.header{padding:.45rem 1rem}.bar{gap:.7rem}.bar img{max-inline-size:8.5rem;max-block-size:2.7rem}.bar h1{font-size:1.3rem}}
 
-.controls{display:flex;gap:.65rem;align-items:center}
+.controls{display:flex;flex:none;white-space:nowrap;gap:.65rem;align-items:center}
 .close{display:grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;padding:0;background:transparent;color:var(--navigation,var(--heading));border:1px solid var(--cardBorder,var(--border));border-radius:50%;cursor:pointer}
 .close:hover{background:color-mix(in srgb,var(--selected) 6%,var(--surface))}
-@media(max-width:23.75rem){.controls{gap:.25rem}.bar img{max-inline-size:6rem}.close{inline-size:2.35rem;block-size:2.35rem}}
+@media(max-width:23.75rem){.header{padding-inline:.75rem}.bar{gap:.35rem}.bar h1{min-inline-size:0;max-inline-size:4.75rem}.controls{gap:.25rem}.bar img{max-inline-size:4.75rem}.close{inline-size:2.35rem;block-size:2.35rem}.bar:has(.close){flex-wrap:wrap}.bar:has(.close) .controls{margin-inline-start:auto}}

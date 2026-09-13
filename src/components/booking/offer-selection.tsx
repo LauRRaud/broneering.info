@@ -14,7 +14,7 @@ export default function OfferSelection({offers,timezone,showStaff,selected,disab
   const group=offers.filter(item=>offerPeriod(item.start,timezone)===period);
   const clock=(start:string)=>new Intl.DateTimeFormat(localeTags[locale],{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:timezone}).format(new Date(start));
   const money=(price:number)=>new Intl.NumberFormat(localeTags[locale],{style:'currency',currency:'EUR',maximumFractionDigits:price%100?2:0}).format(price/100);
-  return <div aria-label={t('Vabad ajad')}>
+  return <div className={styles.root} aria-label={t('Vabad ajad')}>
     <div ref={tabs} role="tablist" aria-label={t('Päevaosa')} className={styles.tabs}>{periods.map((value,index)=><button key={value} id={id+'-'+index} role="tab" type="button" aria-selected={period===value} aria-controls={id+'-panel'} tabIndex={period===value?0:-1} disabled={disabled} onClick={()=>setPeriod(value)} onKeyDown={event=>{
       if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
       event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?2:(index+(event.key==='ArrowRight'?1:-1)+3)%3;setPeriod(periods[next]);tabs.current?.querySelectorAll<HTMLButtonElement>('button')[next]?.focus();

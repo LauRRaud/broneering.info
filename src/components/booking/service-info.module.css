@@ -1,5 +1,5 @@
-.toggle{display:grid;place-items:center;inline-size:2.35rem;min-inline-size:2.35rem;block-size:2.35rem;min-block-size:2.35rem;padding:0;border:0;border-radius:50%;background:transparent;color:var(--icons,var(--heading));line-height:1;cursor:pointer}
-.toggle:hover{background:color-mix(in srgb,var(--selected) 8%,var(--surface))}
+.toggle{display:grid;place-items:center;inline-size:2.35rem;min-inline-size:2.35rem;block-size:2.35rem;min-block-size:2.35rem;padding:0;border:1px solid transparent;border-radius:50%;background:transparent;color:var(--icons,var(--heading));line-height:1;cursor:pointer}
+.toggle:hover,.toggle[aria-expanded='true']{border-color:var(--cardBorder,var(--border));background:var(--surface)}
 .dialog{position:relative;border-radius:1.1rem;border-color:var(--cardBorder,var(--border));padding:2rem;text-align:start}
 .close{position:absolute;z-index:1;inset-block-start:1rem;inset-inline-end:1rem;display:grid;place-items:center;inline-size:2.65rem;min-inline-size:2.65rem;block-size:2.65rem;min-block-size:2.65rem;padding:0;border:1px solid var(--cardBorder,var(--border));border-radius:50%;background:color-mix(in srgb,var(--surface) 90%,transparent);color:var(--icons,var(--heading));cursor:pointer}
 .close:hover{background:color-mix(in srgb,var(--icons,var(--heading)) 7%,var(--surface))}

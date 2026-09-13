@@ -4,6 +4,8 @@ import {useI18n} from '@/components/i18n-provider';
 import {localeNames,localeTags} from '@/lib/locales';
 import {localizedService} from '@/lib/service-translation-contracts';
 import ServiceInfo from './service-info';
+import {categoryPresentation} from './category-presentation';
+import CategoryIllustration from './category-illustration';
 import styles from './service-selection.module.css';
 
 export function servicePath(service:Service):string[]{return service.categoryPath?.length?service.categoryPath:[service.category];}
@@ -25,19 +27,21 @@ export function orderedCategories(categories:string[]){
 // Display related services together while retaining each real service identifier.
 function servicePresentation(service:Service){
   const named=service.name.match(/^(.*?)\s+—\s+(.+)$/);
-  if(named)return {name:named[1].trim(),variant:named[2].trim()};
+  if(named)return {name:named[1].trim(),variant:named[2].trim(),durationVariant:false};
   const match=service.name.match(/^(.*?),\s*(\d+(?:[.,]\d+)?)\s*(h|min|ч|мин)\s*$/i);
-  if(!match)return {name:service.name,variant:service.name};
+  if(!match)return {name:service.name,variant:service.name,durationVariant:false};
   const unit=match[3].toLowerCase(),minutes=Number(match[2].replace(',','.'))*(unit==='h'||unit==='ч'?60:1);
-  return Math.abs(minutes-service.durationFrom)<.01?{name:match[1].trim(),variant:`${match[2]} ${match[3]}`}:{name:service.name,variant:service.name};
+  return Math.abs(minutes-service.durationFrom)<.01?{name:match[1].trim(),variant:`${match[2]} ${match[3]}`,durationVariant:true}:{name:service.name,variant:service.name,durationVariant:false};
 }
 export function serviceVariantName(service:Service){return servicePresentation(service).name;}
 export function CategorySelection({categories,selected,disabled,onSelect}:{categories:string[];selected:string|null;disabled:boolean;onSelect:(category:string)=>void}){
   const {t}=useI18n();
   return <ul className={styles.categories} aria-label={t('Teenusegrupid')}>{orderedCategories(categories).map(category=>{
     const label=category?t(category):t('Muud teenused');
+    const presentation=categoryPresentation(category);
     return <li key={category}><Button className={styles.category} type="button" aria-label={label} disabled={disabled} aria-pressed={selected===category} onClick={()=>onSelect(category)}>
-      <strong>{label}</strong>
+      <span className={styles.categoryArt}><CategoryIllustration name={presentation.icon}/></span>
+      <span className={styles.categoryCopy}><strong>{category.trim().toLocaleLowerCase('et')==='küünehooldus'?t('Küüned'):label}</strong>{presentation.description&&<span className={styles.categoryDescription}>{t(presentation.description)}</span>}</span>
     </Button></li>;
   })}</ul>;
 }
@@ -55,8 +59,9 @@ export function ServiceSelection({services,selected,disabled,exactPrice,search,o
         <ul className={styles.variants}>{items.sort((a,b)=>b.durationFrom-a.durationFrom||a.name.localeCompare(b.name,locale)).map(item=>{
           const notice=item.translationMissing?t('Tõlge pole veel kinnitatud. Algteksti keel: {language}',{language:localeNames[item.contentLanguage]}):undefined;
           const showInfo=servicePath(item)[0]?.trim().toLocaleLowerCase('et')!=='juuksur';
+          const presentation=servicePresentation(item),durationInName=multiple&&presentation.durationVariant;
           return <li key={item.id} className={styles.variantRow}><Button className={styles.variant} aria-label={item.name} lang={item.contentLanguage} type="button" disabled={disabled} aria-pressed={selected===item.id} onClick={()=>onSelect(item)}>
-            <span className={styles.variantName}>{multiple?servicePresentation(item).variant:item.name}</span><span className={styles.variantMeta}>{exactPrice||item.durationFrom===item.durationTo?'':t('Alates ')}{duration(item.durationFrom)} · {exactPrice||item.priceFrom===item.priceTo?'':t('alates ')}{money(item.priceFrom)}</span>
+            <span className={styles.variantName}>{multiple?presentation.variant:presentation.durationVariant?presentation.name:item.name}</span><span className={styles.variantMeta}>{!durationInName&&<span className={styles.duration}>{exactPrice||item.durationFrom===item.durationTo?'':t('Alates ')}{duration(item.durationFrom)}</span>}<strong>{exactPrice||item.priceFrom===item.priceTo?'':t('alates ')}{money(item.priceFrom)}</strong></span>
           </Button>{showInfo&&<ServiceInfo name={item.name} description={item.description} language={item.contentLanguage} translationNotice={notice}/>}</li>;
         })}</ul>
       </li>;

@@ -7,5 +7,5 @@ export function canRequestReminder(start:string,minutes?:number|null){
 }
 export default function BookingReminder({checked,onChange,disabled,channel='email'}:{checked:boolean;onChange:(value:boolean)=>void;disabled:boolean;channel?:'email'|'sms'}){
   const {t}=useI18n();
-  return <p><label className={styles.label}><input type="checkbox" name={channel+'Reminder'} checked={checked} onChange={event=>onChange(event.target.checked)} disabled={disabled}/><span>{t(channel==='sms'?'Soovin meeldetuletust SMS-iga':'Soovin meeldetuletust e-postiga')}</span></label></p>;
+  return <p><label className={styles.label}><input type="checkbox" name={channel+'Reminder'} aria-label={t(channel==='sms'?'Soovin meeldetuletust SMS-iga':'Soovin meeldetuletust e-postiga')} checked={checked} onChange={event=>onChange(event.target.checked)} disabled={disabled}/><span>{t(channel==='sms'?'Meeldetuletus SMS-iga':'Meeldetuletus e-postiga')}</span></label></p>;
 }

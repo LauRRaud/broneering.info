@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import {afterEach,expect,it} from 'vitest';
+import {afterEach,expect,it,vi} from 'vitest';
 import {act,createElement} from 'react';
 import {createRoot,type Root} from 'react-dom/client';
 import BrandIdentity from '../src/components/ui/theme/brand-identity';
@@ -11,7 +11,7 @@ async function render(theme:PublicTheme){
  if(!container){container=document.createElement('div');document.body.append(container);root=createRoot(container);}
  await act(async()=>root.render(createElement(ThemeSurface,{theme,children:createElement(BrandIdentity,{name:'Ilutegu'})})));
 }
-afterEach(async()=>{if(root)await act(async()=>root.unmount());container?.remove();container=undefined!;});
+afterEach(async()=>{if(root)await act(async()=>root.unmount());container?.remove();container=undefined!;vi.restoreAllMocks();});
 it('shows only the company name when chosen, even if logos are stored',async()=>{
  await render({config:{...defaultTheme,brandDisplay:'name'},lightLogo:'/logo.png'});
  expect(container.querySelector('h1')?.textContent).toBe('Ilutegu');expect(container.querySelector('img')).toBeNull();
@@ -34,4 +34,14 @@ it('uses a visible name without a logo and accepts legacy theme configurations',
  expect(container.querySelector('h1 > span')?.className).toBe('');
  const {brandDisplay,...legacy}=defaultTheme;
  await render({config:legacy,lightLogo:'/old.png'});expect(container.querySelector('img')).not.toBeNull();
+});
+it('checks a logo already loaded before hydration and rescues only the unreadable variant',async()=>{
+ vi.spyOn(HTMLImageElement.prototype,'complete','get').mockReturnValue(true);
+ vi.spyOn(HTMLImageElement.prototype,'naturalWidth','get').mockReturnValue(2);
+ vi.spyOn(HTMLImageElement.prototype,'naturalHeight','get').mockReturnValue(1);
+ vi.spyOn(HTMLCanvasElement.prototype,'getContext').mockReturnValue({drawImage:vi.fn(),getImageData:()=>({data:new Uint8ClampedArray([0,0,0,0,0,0,0,255])})} as never);
+ await render({config:{...defaultTheme,brandDisplay:'logo'},lightLogo:'/black-logo.png'});
+ expect(container.querySelectorAll('[data-transparent="true"]')).toHaveLength(2);
+ expect(container.querySelectorAll('[data-monochrome="true"]')).toHaveLength(1);
+ expect(container.querySelector('[data-monochrome="true"] img')?.getAttribute('src')).toBe('/black-logo.png');
 });

@@ -19,37 +19,19 @@
 .legend i{inline-size:.6rem;block-size:.6rem;border-radius:50%;background:color-mix(in srgb,var(--text) 8%,var(--calendar))}
 .legend .selected{background:var(--selected)}
 .legend .today{background:transparent;border:1px solid var(--navigation,var(--heading))}
-.large .navigation{margin-block-end:1.8rem}
-.large .navigation h3{font-size:clamp(1.8rem,2.8vw,2.35rem)}
-.large .navigation button{inline-size:3.1rem;block-size:3.1rem}
-.large .grid{border-spacing:0 .58rem}
-.large .grid th{font-size:.84rem;padding-block-end:.8rem}
-.large .day{inline-size:3.15rem;block-size:3.15rem;font-size:1.1rem}
-.large .legend{gap:.8rem 1.4rem;margin-block-start:1.65rem;padding-block-start:1.15rem;font-size:.76rem}
-.large .legend i{inline-size:.7rem;block-size:.7rem}
-@media(max-width:360px){.day{inline-size:2.3rem;block-size:2.5rem}.navigation{gap:.25rem}}
-@media(min-width:681px) and (max-height:950px){
-  .navigation{margin-block-end:.85rem}
-  .navigation button{inline-size:2.4rem;block-size:2.4rem;padding:.55rem}
-  .grid{border-spacing:0 .2rem}
-  .grid th{padding-block-end:.35rem}
-  .day{inline-size:2.35rem;block-size:2.35rem}
-  .legend{margin-block-start:.7rem;padding-block-start:.65rem}
-  .large .navigation{margin-block-end:1rem}
-  .large .navigation button{inline-size:3rem;block-size:3rem;padding:.65rem}
-  .large .grid{border-spacing:0 .3rem}
-  .large .grid th{font-size:.9rem;padding-block-end:.5rem}
-  .large .day{inline-size:3.05rem;block-size:3.05rem;font-size:1.15rem}
-  .large .legend{margin-block-start:.9rem;padding-block-start:.75rem;font-size:.8rem}
-}
-@media(min-width:1101px) and (max-height:950px){
-  .large .navigation{margin-block-end:.75rem}
-  .large .navigation h3{font-size:clamp(1.55rem,2vw,1.9rem)}
-  .large .navigation button{inline-size:2.65rem;block-size:2.65rem;padding:.55rem}
-  .large .grid{border-spacing:0 .2rem}
-  .large .grid th{font-size:.8rem;padding-block-end:.35rem}
-  .large .day{inline-size:2.55rem;block-size:2.55rem;font-size:1rem}
-  .large .legend{gap:.65rem 1rem;margin-block-start:.65rem;padding-block-start:.6rem;font-size:.72rem}
-  .large .legend i{inline-size:.65rem;block-size:.65rem}
-}
+.large .navigation{margin-block-end:.5rem}
+.large .navigation h3{font-size:1.85rem}
+.large .navigation button{inline-size:2.75rem;block-size:2.75rem;padding:.45rem;border-radius:.65rem}
+.large .navigation button svg{inline-size:1.5rem;block-size:1.5rem;stroke-width:1.75}
+.large .grid{border-spacing:0 .05rem}
+.large .grid th{font-size:1rem;padding-block-end:.2rem}
+.large .day{inline-size:2.75rem;block-size:2.75rem;border-radius:.65rem;font-size:1.15rem;transition:background .18s,box-shadow .18s}
+.large .day[aria-pressed=true]{box-shadow:0 3px 8px color-mix(in srgb,var(--selected) 15%,transparent)}
+.large .day.empty:not(:disabled):not([aria-pressed=true]){background:transparent;color:color-mix(in srgb,var(--mutedText,var(--text)) 70%,var(--calendar))}
+.large .legend{gap:.5rem .85rem;margin-block-start:.4rem;padding-block-start:.5rem;font-size:.9375rem}
+.large .legend i{inline-size:.75rem;block-size:.75rem;border-radius:.2rem;flex:none}
+@media(max-width:30rem){.large .navigation h3{font-size:1.7rem}.large .day{inline-size:2.5rem;block-size:2.65rem;font-size:1.125rem}.large .legend{gap:.5rem .75rem;font-size:.9375rem}}
+@media(max-width:360px){.day{inline-size:2.3rem;block-size:2.5rem}.navigation{gap:.25rem}.large .day{inline-size:2.1rem;block-size:2.4rem}.large .navigation h3{font-size:1.5rem}}
+@media(min-width:681px) and (max-height:950px){.root:not(.large) .navigation{margin-block-end:.85rem}.root:not(.large) .navigation button{inline-size:2.4rem;block-size:2.4rem;padding:.55rem}.root:not(.large) .grid{border-spacing:0 .2rem}.root:not(.large) .grid th{padding-block-end:.35rem}.root:not(.large) .day{inline-size:2.35rem;block-size:2.35rem}.root:not(.large) .legend{margin-block-start:.7rem;padding-block-start:.65rem}}
+@media(prefers-reduced-motion:reduce){.large .day{transition:none}}
 @media(forced-colors:active){.day[aria-pressed=true]{forced-color-adjust:none;background:Highlight;color:HighlightText;border-color:Highlight}}

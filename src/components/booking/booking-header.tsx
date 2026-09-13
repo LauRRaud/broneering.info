@@ -5,7 +5,8 @@ import BrandIdentity from '@/components/ui/theme/brand-identity';
 import type {Catalog} from '@/lib/contracts';
 import styles from './booking-header.module.css';
 import BookingPreferences from './booking-preferences';
+import CompanyInfo from './company-info';
 export default function BookingHeader({tenant}: {tenant: Catalog['tenant']}) {
   const close=useEmbedClose(),{t}=useI18n();
-  return <header className={styles.header}><div className={styles.bar}><BrandIdentity name={tenant.name}/><div className={styles.controls}><BookingPreferences/>{close&&<button className={styles.close} type="button" onClick={close} aria-label={t('Sulge broneerimisaken')}><Icon name="close" size={21}/></button>}</div></div></header>;
+  return <header className={styles.header}><div className={styles.bar}><BrandIdentity name={tenant.name}/><CompanyInfo tenant={tenant}/><div className={styles.controls}><BookingPreferences/>{close&&<button className={styles.close} type="button" onClick={close} aria-label={t('Sulge broneerimisaken')}><Icon name="close" size={21}/></button>}</div></div></header>;
 }

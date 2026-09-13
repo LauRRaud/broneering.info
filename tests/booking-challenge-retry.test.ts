@@ -28,6 +28,7 @@ it('refreshes rejected challenges while retrying the same possibly committed boo
   try{
     await act(async()=>root.render(createElement(BookingFlow,{catalog,challengeSiteKey:'test'})));
     await act(async()=>button('Test service').click());
+    await act(async()=>button('Test worker').click());
     await act(async()=>container.querySelector<HTMLButtonElement>('[aria-label="Vabad ajad"] [role="tabpanel"] button')!.click());
     await act(async()=>finishScriptLoad());
     await act(async()=>button('Solve challenge').click());

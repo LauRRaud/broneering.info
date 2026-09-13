@@ -1,1 +1,1 @@
-.root {color:var(--link,LinkText);}
+.root {color:var(--link,LinkText);text-underline-offset:.32em;text-decoration-thickness:1px;text-decoration-skip-ink:none;}

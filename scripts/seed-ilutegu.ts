@@ -3,6 +3,9 @@ import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {iluteguDemoServices,iluteguDemoNotice} from './data/ilutegu-demo';
 import {iluteguDemoTranslations} from './data/ilutegu-demo-translations';
+import {iluteguDemoStaffBios} from './data/ilutegu-demo-staff';
+import {iluteguDemoCompany as company} from './data/ilutegu-demo-company';
+import {iluteguDemoPhones} from './data/ilutegu-demo-phones';
 
 const descriptions:Record<string,string>=JSON.parse(readFileSync(new URL('../src/content/ilutegu-demo-descriptions.json',import.meta.url),'utf8'));
 const demoStaff=[
@@ -33,9 +36,9 @@ async function main(){
   const staff=new Map<string,string>();
   for(const worker of demoStaff){
    const staffId=id(tenant,`staff:${worker.key}`);
-   const saved=await client.query(`INSERT INTO staff(id,tenant_id,name,title) VALUES($1,$2,$3,$4)
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name,title=EXCLUDED.title,active=true,online=true,version=staff.version+1
-    WHERE staff.tenant_id=EXCLUDED.tenant_id RETURNING id`,[staffId,tenant,worker.name,worker.title]);
+   const saved=await client.query(`INSERT INTO staff(id,tenant_id,name,title,bio,public_phone) VALUES($1,$2,$3,$4,$5,$6)
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name,title=EXCLUDED.title,public_phone=CASE WHEN EXCLUDED.public_phone<>'' THEN EXCLUDED.public_phone ELSE staff.public_phone END,bio=CASE WHEN btrim(staff.bio)='' THEN EXCLUDED.bio ELSE staff.bio END,active=true,online=true,version=staff.version+1
+    WHERE staff.tenant_id=EXCLUDED.tenant_id RETURNING id`,[staffId,tenant,worker.name,worker.title,iluteguDemoStaffBios[worker.name],iluteguDemoPhones[worker.name]??'']);
    if(!saved.rowCount)throw new Error(`Could not configure demo worker ${worker.name}`);
    staff.set(worker.key,staffId);
    await client.query('DELETE FROM weekly_hours WHERE tenant_id=$1 AND staff_id=$2',[tenant,staffId]);
@@ -75,7 +78,7 @@ async function main(){
   await client.query('UPDATE service_groups SET active=false,version=version+1 WHERE tenant_id=$1 AND active AND NOT(id=ANY($2::uuid[]))',[tenant,[...groups.values()]]);
   // Keep historic services and their booking references; replace only the visible demo catalogue.
   const hidden=await client.query('UPDATE services SET online=false,version=version+1 WHERE tenant_id=$1 AND online AND NOT(id=ANY($2::uuid[]))',[tenant,ids]);
-  await client.query("UPDATE tenants SET address='Tabasalu',description=$2,booking_terms=$2 WHERE id=$1",[tenant,iluteguDemoNotice]);
+  await client.query('UPDATE tenants SET address=$2,description=$3,contact_phone=$4,contact_email=$5,booking_terms=$6 WHERE id=$1',[tenant,company.address,company.description,company.phone,company.email,iluteguDemoNotice]);
   const count=(await client.query('SELECT count(*)::int n FROM services WHERE tenant_id=$1 AND online AND active',[tenant])).rows[0].n;
   if(count!==iluteguDemoServices.length)throw new Error('Unexpected demo catalogue count');
   const translationCount=(await client.query("SELECT count(*)::int n FROM service_translations tr JOIN services s ON s.tenant_id=tr.tenant_id AND s.id=tr.service_id WHERE tr.tenant_id=$1 AND s.online AND s.active AND tr.status='published' AND tr.published_source_version=s.content_version AND tr.language IN ('en','ru')",[tenant])).rows[0].n;

@@ -13,5 +13,6 @@ output/
 .playwright-cli/
 backups/
 .private/
+.tmp/
 __pycache__/
 *.pyc

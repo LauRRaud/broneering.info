@@ -447,6 +447,7 @@
   "Muudatuse põhjus": "Причина изменения",
   "Muudatuse teavitus salvestatakse saatmise järjekorda.": "Уведомление об изменении будет поставлено в очередь отправки.",
   "Muudatuste ajalugu": "История изменений",
+  "Muutmine ja tühistamine": "Изменение и отмена",
   "Muutmine ja tühistamine on lubatud kuni": "Изменение и отмена разрешены до",
   "Muutmine ja tühistamine: vähemalt": "Изменение и отмена: не менее чем за",
   "Muutmise ja tühistamise tähtaeg (tundi)": "Срок изменения и отмены (часы)",
@@ -1475,5 +1476,13 @@
   "SMS-meeldetuletused ei ole selles ettevõttes veel kasutusel.": "SMS-напоминания пока недоступны в этой компании.",
   "SMS-meeldetuletuseks on vaja telefoninumbrit koos riigikoodiga.": "Для SMS-напоминаний нужен номер телефона с кодом страны.",
   "Sulge broneerimisaken": "Закрыть окно записи",
-  "Saad valida kaasasolevate veebifontide ja seadme fontide vahel. Veebifondid laaditakse meie serverist.": "Выберите встроенные веб-шрифты или шрифты устройства. Веб-шрифты загружаются с нашего сервера."
+  "Saad valida kaasasolevate veebifontide ja seadme fontide vahel. Veebifondid laaditakse meie serverist.": "Выберите встроенные веб-шрифты или шрифты устройства. Веб-шрифты загружаются с нашего сервера.",
+  "Vaata kõiki vabu aegu": "Посмотреть всё доступное время",
+  "Küüned": "Ногти",
+  "Töötaja {name} telefon": "Телефон сотрудника {name}",
+  "Ettevõtte telefon": "Телефон компании",
+  "Ettevõtte info": "Информация о компании",
+  "Vaata kaardil": "Посмотреть на карте",
+  "Meeldetuletus e-postiga": "Напомнить по почте",
+  "Meeldetuletus SMS-iga": "Напомнить по SMS"
 }

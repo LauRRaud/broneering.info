@@ -447,6 +447,7 @@
   "Muudatuse põhjus": "Muudatuse põhjus",
   "Muudatuse teavitus salvestatakse saatmise järjekorda.": "Muudatuse teavitus salvestatakse saatmise järjekorda.",
   "Muudatuste ajalugu": "Muudatuste ajalugu",
+  "Muutmine ja tühistamine": "Muutmine ja tühistamine",
   "Muutmine ja tühistamine on lubatud kuni": "Muutmine ja tühistamine on lubatud kuni",
   "Muutmine ja tühistamine: vähemalt": "Muutmine ja tühistamine: vähemalt",
   "Muutmise ja tühistamise tähtaeg (tundi)": "Muutmise ja tühistamise tähtaeg (tundi)",
@@ -1475,5 +1476,13 @@
   "SMS-meeldetuletused ei ole selles ettevõttes veel kasutusel.": "SMS-meeldetuletused ei ole selles ettevõttes veel kasutusel.",
   "SMS-meeldetuletuseks on vaja telefoninumbrit koos riigikoodiga.": "SMS-meeldetuletuseks on vaja telefoninumbrit koos riigikoodiga.",
   "Sulge broneerimisaken": "Sulge broneerimisaken",
-  "Saad valida kaasasolevate veebifontide ja seadme fontide vahel. Veebifondid laaditakse meie serverist.": "Saad valida kaasasolevate veebifontide ja seadme fontide vahel. Veebifondid laaditakse meie serverist."
+  "Saad valida kaasasolevate veebifontide ja seadme fontide vahel. Veebifondid laaditakse meie serverist.": "Saad valida kaasasolevate veebifontide ja seadme fontide vahel. Veebifondid laaditakse meie serverist.",
+  "Vaata kõiki vabu aegu": "Vaata kõiki vabu aegu",
+  "Küüned": "Küüned",
+  "Töötaja {name} telefon": "Töötaja {name} telefon",
+  "Ettevõtte telefon": "Ettevõtte telefon",
+  "Ettevõtte info": "Ettevõtte info",
+  "Vaata kaardil": "Vaata kaardil",
+  "Meeldetuletus e-postiga": "Meeldetuletus e-postiga",
+  "Meeldetuletus SMS-iga": "Meeldetuletus SMS-iga"
 }

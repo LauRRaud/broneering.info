@@ -1,4 +1,5 @@
 .theme {
+  --logo-force-monochrome:0;
   --icons:var(--light-icons); --navigation:var(--light-navigation); --cardBorder:var(--light-cardBorder); --mutedText:var(--light-mutedText);
   --background:var(--light-background); --surface:var(--light-surface); --text:var(--light-text); --heading:var(--light-heading); --link:var(--light-link); --border:var(--light-border);
   --button:var(--light-button); --buttonText:var(--light-buttonText); --calendar:var(--light-calendar); --calendarText:var(--light-calendarText); --selected:var(--light-selected); --selectedText:var(--light-selectedText);
@@ -19,10 +20,12 @@
   }
 }
 .theme[data-theme-contrast='high'] {
+  --logo-force-monochrome:1;
   --icons:#ffffff; --navigation:#ffff00; --cardBorder:#ffffff; --mutedText:#ffffff;
   --background:#000000; --surface:#000000; --text:#ffffff; --heading:#ffffff; --link:#ffff00; --border:#ffffff; --button:#ffffff; --buttonText:#000000;
   --calendar:#000000; --calendarText:#ffffff; --selected:#ffff00; --selectedText:#000000; --light-logo-display:none; --dark-logo-display:block; color-scheme:dark;
 }
 @media (forced-colors:active) {
+  .theme[data-theme-mode][data-theme-contrast]{--logo-force-monochrome:1;}
   .theme[data-theme-mode][data-theme-contrast] {--icons:CanvasText; --navigation:ButtonText; --cardBorder:ButtonText; --mutedText:CanvasText; --background:Canvas; --surface:Canvas; --text:CanvasText; --heading:CanvasText; --link:LinkText; --border:ButtonText; --button:ButtonFace; --buttonText:ButtonText; --calendar:Canvas; --calendarText:CanvasText; --selected:Highlight; --selectedText:HighlightText;}
 }

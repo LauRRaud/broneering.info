@@ -8,4 +8,4 @@
 .reference{font-size:.8rem;letter-spacing:.04em}
 .actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:1.2rem;font-size:.85rem}
 .actions button{display:flex;gap:.5rem;align-items:center;padding:.8rem 1rem;background:var(--selected);color:var(--selectedText);border-radius:.5rem;cursor:pointer}
-.restart{border:0;background:transparent;color:var(--link);text-decoration:underline;padding:1rem;cursor:pointer}
+.restart{border:0;background:transparent;color:var(--link);text-decoration:underline;text-underline-offset:.32em;text-decoration-thickness:1px;text-decoration-skip-ink:none;padding:1rem;cursor:pointer}

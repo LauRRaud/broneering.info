@@ -32,7 +32,7 @@ it('opens company terms without submitting or losing input and sends reminder op
  const checkbox=container.querySelector<HTMLInputElement>('[name="emailReminder"]')!;
  expect(checkbox.checked).toBe(false);
  await act(async()=>checkbox.click());
- const link=container.querySelector<HTMLButtonElement>('[aria-haspopup="dialog"]')!,dialog=container.querySelector('dialog')!;
+ const link=[...container.querySelectorAll<HTMLButtonElement>('#booking-form [aria-haspopup="dialog"]')].find(button=>button.textContent==='broneerimistingimustega')!,dialog=document.getElementById(link.getAttribute('aria-controls')!) as HTMLDialogElement;
  expect(dialog.open).toBe(false);await act(async()=>link.click());expect(dialog.open).toBe(true);
  expect(dialog.textContent).toContain('Salongi tingimused');expect(dialog.textContent).toContain('Salong');
  expect(vi.mocked(fetch).mock.calls.some(call=>call[1]?.method==='POST')).toBe(false);
@@ -50,6 +50,22 @@ it('sends an explicit reminder opt-out when the checkbox is untouched',async()=>
  expect(JSON.parse(String(request[1]?.body))).toMatchObject({emailReminder:false});
  expect(canRequestReminder('2026-09-12T11:00:00Z',1440)).toBe(false);
  expect(canRequestReminder(offer.start,null)).toBe(false);
+});
+
+it('reveals cancellation notice on demand without submitting or losing contact details',async()=>{
+ await render();
+ const trigger=container.querySelector<HTMLButtonElement>('button[aria-label="Muutmine ja tühistamine"]')!;
+ const dialog=document.getElementById(trigger.getAttribute('aria-controls')!) as HTMLDialogElement;
+ expect(container.textContent).not.toContain('Palume muutmisest või tühistamisest');
+ await act(async()=>trigger.click());
+ expect(dialog.open).toBe(true);
+ expect(dialog.textContent).toContain('vähemalt 24 tundi ette.');
+ expect(vi.mocked(fetch).mock.calls.some(call=>call[1]?.method==='POST')).toBe(false);
+ await act(async()=>dialog.dispatchEvent(new Event('cancel',{cancelable:true})));
+ expect(dialog.open).toBe(false);
+ expect(document.activeElement).toBe(trigger);
+ expect(container.querySelector<HTMLInputElement>('#name')!.value).toBe('Test Customer');
+ expect(container.textContent).not.toContain('Palume muutmisest või tühistamisest');
 });
 
 it('requires an international phone for the demo SMS choice and preserves it on a retry',async()=>{

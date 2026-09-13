@@ -10,7 +10,9 @@ import Input from '@/components/ui/input/input';
 import Icon,{type IconName} from '@/components/ui/icon/icon';
 import TextLink from '@/components/ui/text-link/text-link';
 import BookingTerms from './booking-terms';
+import BookingPolicy from './booking-policy';
 import BookingReminder,{canRequestReminder} from './booking-reminder';
+import {bookingAddress} from './booking-address';
 import styles from './booking-confirmation.module.css';
 type Fields={name:string;email:string;phone:string};
 type Props={tenant:Catalog['tenant'];service:Service;offer:Offer;form:Fields;errors:ContactErrors;locked:boolean;state:'idle'|'submitting'|'uncertain'|'error';error:string;preview:boolean;smsReminder:boolean;onSmsReminder:(value:boolean)=>void;emailReminder:boolean;onReminder:(value:boolean)=>void;onField:(field:keyof Fields,value:string)=>void;onSubmit:(event:FormEvent<HTMLFormElement>)=>void;onEdit:(step:'service'|'staff'|'time')=>void;canEditStaff:boolean;children?:ReactNode};
@@ -21,12 +23,12 @@ export default function BookingConfirmation({tenant,service,offer,form,errors,lo
   const needsPhone=smsReminder&&tenant.demo&&reminderAvailable;
   const time=(date:string)=>new Intl.DateTimeFormat(localeTags[locale],{timeZone:tenant.timezone,hour:'2-digit',minute:'2-digit'}).format(new Date(date));
   const date=new Intl.DateTimeFormat(localeTags[locale],{timeZone:tenant.timezone,day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date(offer.start));
-  const rows:Array<{icon:IconName;label:string;value:ReactNode;nowrap?:boolean}>=[
-    {icon:'spark',label:t('Teenus'),value:<span lang={translated.contentLanguage}>{translated.name}</span>},
-    {icon:'store',label:t('Ettevõte'),value:tenant.name},{icon:'pin',label:t('Asukoht'),value:tenant.address},
+  const rows:Array<{icon?:IconName;label:string;value:ReactNode;nowrap?:boolean;address?:boolean}>=[
+    {label:t('Teenus'),value:<span lang={translated.contentLanguage}>{translated.name}</span>},
+    {icon:'store',label:t('Ettevõte'),value:tenant.name},{icon:'pin',label:t('Asukoht'),value:bookingAddress(tenant.address),nowrap:true,address:true},
     {icon:'person',label:t('Töötaja'),value:offer.staffName},{icon:'calendar',label:t('Kuupäev'),value:date,nowrap:true},
-    {icon:'clock',label:t('Kellaaeg'),value:time(offer.start)+' – '+time(offer.end)},
-    {icon:'clock',label:t('Kestus'),value:offer.duration+' '+t('min')},
+    {icon:'clock',label:t('Kellaaeg'),value:time(offer.start)+' – '+time(offer.end),nowrap:true},
+    {icon:'clock',label:t('Kestus'),value:offer.duration+' '+t('min'),nowrap:true},
     {icon:'tag',label:t('Hind'),value:new Intl.NumberFormat(localeTags[locale],{style:'currency',currency:'EUR',maximumFractionDigits:offer.price%100?2:0}).format(offer.price/100)},
   ];
   return <form id="booking-form" className={styles.layout} noValidate onSubmit={onSubmit}>
@@ -41,11 +43,10 @@ export default function BookingConfirmation({tenant,service,offer,form,errors,lo
       {children}
     </section>
     <div className={styles.right}>
-      <aside className={styles.summary} aria-label={t('Broneeringu kokkuvõte')}><div className={styles.summaryTitle}><h3>{t('Kokkuvõte')}</h3><Button className={styles.edit} type="button" disabled={locked} aria-expanded={editing} onClick={()=>setEditing(!editing)}><Icon name="edit" size={17}/>{t('Muuda')}</Button></div>
+      <aside className={styles.summary} aria-label={t('Broneeringu kokkuvõte')}><div className={styles.summaryTitle}><h3>{t('Kokkuvõte')}</h3><div className={styles.summaryControls}><BookingPolicy cancellationHours={tenant.cancellationHours}/><Button className={styles.edit} type="button" disabled={locked} aria-label={t('Muuda')} aria-expanded={editing} onClick={()=>setEditing(!editing)}><Icon name="edit" size={17}/><span>{t('Muuda')}</span></Button></div></div>
         {editing&&<div className={styles.editOptions}>{(['service',...(canEditStaff?['staff'] as const:[]),'time'] as const).map(step=><Button type="button" key={step} disabled={locked} onClick={()=>onEdit(step)}>{t({service:'Muuda teenust',staff:'Muuda töötajat',time:'Muuda aega'}[step])}</Button>)}</div>}
         {translated.translationMissing&&<p className={styles.help}>{t('Tõlge pole veel kinnitatud. Algteksti keel: {language}',{language:localeNames[translated.contentLanguage]})}</p>}
-        <dl className={styles.rows}>{rows.map(row=><div key={row.label}><dt><Icon name={row.icon} size={20}/>{row.label}</dt><dd className={row.nowrap?styles.nowrap:undefined}>{row.value}</dd></div>)}</dl>
-        <p className={styles.policy}><Icon name="info" size={20}/><span>{t('Palume muutmisest või tühistamisest ettevõttele teada anda vähemalt ')}{tenant.cancellationHours} {t('tundi ette.')}</span></p>
+        <dl className={styles.rows}>{rows.map(row=><div key={row.label} data-address={row.address||undefined}><dt>{row.icon&&<Icon name={row.icon} size={23}/ >}{row.label}</dt><dd className={row.nowrap?styles.nowrap:undefined}>{row.value}</dd></div>)}</dl>
       </aside>
       <div className={styles.actions}>
         {state==='uncertain'&&<p role="alert" className={styles.error}><strong>{t('Kontrollime kinnituse tulemust.')}</strong> {t(error)} {t('Kinnitus loetakse õnnestunuks alles serveri vastuse järel.')}</p>}
