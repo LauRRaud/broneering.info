@@ -1,4 +1,4 @@
-.header{--brand-logo-max-width:17rem;padding:.45rem clamp(1.25rem,5vw,5rem);position:relative;z-index:5;background:transparent;border-block-end:var(--ui-border-width,1px) solid var(--glass-edge,var(--cardBorder,var(--border)));box-shadow:var(--glass-header-shadow,none)}
+.header{--brand-logo-max-width:17rem;padding:.45rem clamp(1.25rem,5vw,5rem);position:relative;z-index:5;background:transparent;border-block-end:var(--ui-border-width,1px) solid var(--glass-edge,var(--cardBorder,var(--border)));box-shadow:0 7px 16px -12px rgb(42 31 22 / .18),0 14px 24px -19px rgb(42 31 22 / .14)}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;min-block-size:3.75rem;max-inline-size:104rem;margin-inline:auto}
 .bar h1{font-family:var(--booking-display-font);font-size:clamp(1.6rem,3vw,2.7rem);font-weight:500;line-height:1;letter-spacing:.1em;margin:0}
 .bar img{display:block;max-block-size:4.5rem;max-inline-size:17rem;object-fit:contain}
