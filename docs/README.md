@@ -51,6 +51,4 @@ Hooldaja, asendaja, kontaktkanal, toeajad ja rikkele reageerimise vastutus on **
 
 Arenduspeatükkides olevad vanad testiarvud ja seisukirjeldused käivad oma kuupäeva kohta. Praeguse tegemata töö ulatus tuleb võtta uuemast kuupäevastatud protokollist ja allesjäänud tööde registrist.
 
-- [Kujunduse, primitiivide ja komponentide failikorraldus](FRONTEND-STRUCTURE.md)
-- [Halduse struktuuri lähteplaan: põhimenüü, töövaated ja konto/ettevõtte/platvormi eraldamine](ADMIN-STRUCTURE-PLAN.md) — dokumenteeritud suund; kujundus ja teostus on ootel.
 - [Ajasta veebilehe HTTPS-i ja avalehe suunamise paigaldus](DEPLOYMENT-AJASTA-2026-09-12.md)

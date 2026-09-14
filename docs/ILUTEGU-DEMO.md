@@ -51,6 +51,6 @@ Kohalik paigaldus ja tagasipööratav korduskontroll läbisid: 34 teenust, 4 akt
 
 ## Päriskliendi käivitamine
 
-Ilutegu pärisbroneerimisleht luuakse eraldi ettevõtte/seadistuse vastuvõtuga. Enne seda tuleb kinnitada teenuste kestused, tööjärgsed puhvrid, tegelikud töötajad ja nende teenused, graafikud, broneerimistingimused ning logo/värvid. Demo ei muutu automaatselt päriskliendi kalendriks. [Kujundusseadete nõuded](THEME-SETTINGS-REQUIREMENTS.md).
+Ilutegu pärisbroneerimisleht luuakse eraldi ettevõtte/seadistuse vastuvõtuga. Enne seda tuleb kinnitada teenuste kestused, tööjärgsed puhvrid, tegelikud töötajad ja nende teenused, graafikud, broneerimistingimused ning logo/värvid. Demo ei muutu automaatselt päriskliendi kalendriks.
 
 Ilutegu demos ei ole alamkategooriaid. Juuksuri-, massaaži-, ripsme- ja küünehooldusteenused asuvad otse vastava põhikategooria all.

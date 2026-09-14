@@ -13,7 +13,6 @@ Kohalik kontroll:
 - 1280 × 720 töölauavaade ning 707 × 698 kitsas vaade kontrolliti päris brauseris;
 - avalehe, halduse ja Ilutegu demo brauserikonsoolis ei olnud vigu;
 - sünteetilised prooviettevõtted, kasutajad, sessioonid ja broneeringud eemaldati pärast kontrolli;
-- kujunduse võrdlus ja parandusring on failis [`design-qa.md`](../design-qa.md), tulemusega `passed`.
 
 ## Serveripaigaldus
 

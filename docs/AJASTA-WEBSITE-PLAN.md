@@ -4,7 +4,7 @@
 
 ## Teostus
 
-Olemasolev Reacti, Next.js-i ja TypeScripti rakendus teenindab ka Ajasta veebilehte. Eraldi [AjastaHome komponendis](../src/components/marketing/ajasta-home.tsx) on praegu pealkiri, lühikirjeldus, arendusteade, kaks demo- ja halduse link. Visuaalset stiilikihti ei ole; ligipääsetavuse baasreeglid säilivad. [Komponentide ja stiilide korraldus](FRONTEND-STRUCTURE.md) kehtib avalikule veebile, broneerimisele ja haldusele.
+Olemasolev Reacti, Next.js-i ja TypeScripti rakendus teenindab ka Ajasta veebilehte. Eraldi [AjastaHome komponendis](../src/components/marketing/ajasta-home.tsx) paikneb avalehe sisu. Komponentide tehnilised piirid ja ligipääsetavuse baasreeglid säilivad.
 
 | Aadress | Käitumine |
 | --- | --- |

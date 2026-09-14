@@ -28,4 +28,4 @@ Projektifaili ja sertifikaadi hook'i eelmised koopiad asuvad serveris `/srv/bron
 
 Veebiversiooni tagasipöördeks märgenda `broneeringinfo-web:before-ajasta-20260912` uuesti `broneeringinfo-web:latest` ning käivita projektikataloogis `sudo docker compose --env-file .env.server -f compose.server.yaml up -d --no-deps --no-build web`. Kui taastad Ajastat mittetundva veebiversiooni, eemalda esmalt põhidomeeni suunamine. Andmebaasi skeemi tagasipööret see muudatus ei vaja. Teiste saitide Nginxi faile ei muudeta.
 
-Lõplik veebisisu, omaniku kujundus ning iseseisev kasutajavastuvõtt jäävad [Ajasta veebiplaani](AJASTA-WEBSITE-PLAN.md). Failide ja stiilide korraldus on [kujundusarhitektuuri juhendis](FRONTEND-STRUCTURE.md).
+Lõplik veebisisu ja iseseisev kasutajavastuvõtt jäävad [Ajasta veebiplaani](AJASTA-WEBSITE-PLAN.md).

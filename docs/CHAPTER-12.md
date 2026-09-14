@@ -38,4 +38,4 @@ Automaattõlge kasutab serveripoolset OpenAI Responses API ühendust, strukturee
 
 ## Ilutegu kujundusseadete täpsustus 12.09.2026
 
-[Ettevõtte kujundusseadete nõuded](THEME-SETTINGS-REQUIREMENTS.md): logo, täpne bränditoon, avaliku kalendri toonid, valikulised kategooriavisuaalid ning mustandi eelvaade ja avaldamine. Seadistused on ettevõtte halduses; külastaja näeb avaldatud tulemust. See täpsustab ootel redaktori ulatust, mitte ei märgi seda valmis.
+Ettevõtte kujundusseaded hõlmavad logo, bränditooni, avaliku kalendri toone ning mustandi eelvaadet ja avaldamist. Seadistused on ettevõtte halduses; külastaja näeb avaldatud tulemust.

@@ -2,7 +2,7 @@
 
 **Ajasta tehniline kasutuselevõtt läbis:** [12.09 protokoll](DEPLOYMENT-AJASTA-2026-09-12.md). Lihtne avaleht, HTTPS ja ainult põhidomeeni avalehe suunamine töötavad; kujundus ja lõplik veebisisu on ootel.
 
-**12.09.2026 hilisemad täpsustused:** [serverirestardi kontroll](RESTART-2026-09-12.md) läbis: neli konteinerit terved, samad püsiköited/pildid, 3 ettevõtte ja 3 broneeringu loendused säilisid, HTTPS ning avalikud API-d töötavad. G08 väline taastamine jääb avatuks. Toote nimi on **Ajasta**; [avalik veebileht ja ajasta.ee domeenikava](AJASTA-WEBSITE-PLAN.md) on tegemata töö G04/O-01/O-08 all. Omanik kinnitas lihtsa Ajasta avalehe ja ainult põhidomeeni avalehe suunamise; kujunduse teeb omanik. [Komponentide ja stiilide korraldus](FRONTEND-STRUCTURE.md).
+**12.09.2026 hilisemad täpsustused:** [serverirestardi kontroll](RESTART-2026-09-12.md) läbis: neli konteinerit terved, samad püsiköited/pildid, 3 ettevõtte ja 3 broneeringu loendused säilisid, HTTPS ning avalikud API-d töötavad. G08 väline taastamine jääb avatuks. Toote nimi on **Ajasta**; [avalik veebileht ja ajasta.ee domeenikava](AJASTA-WEBSITE-PLAN.md) on tegemata töö G04/O-01/O-08 all. Omanik kinnitas lihtsa Ajasta avalehe ja ainult põhidomeeni avalehe suunamise.
 
 **Koond 12.09.2026:** [V1 allesjäänud tööd ja otsused](REMAINING-WORK.md) sisaldab kõiki D-/O-otsuseid, G01–G09 täpset avatud ulatust ning algse plaani ptk 27–30 võrdlust. [Juhendite sisukord](README.md) näitab olemasolevaid juhiseid ja puuduva kasutajavastuvõtu piire.
 

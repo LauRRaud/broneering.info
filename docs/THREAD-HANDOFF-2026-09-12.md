@@ -43,7 +43,7 @@ Kasutaja palus pika vestluse järel jätkata uues ülesandes. Uut funktsiooni po
 - `ui/month-calendar/` sisaldab primitiivi ja UTC kuupäevaarvutust; `booking/time-picker` kompositsiooni ja kuu päringut.
 - Avaliku ning mõlema admin-eelvaate availability API toetab `month=1`. `monthAvailability` kasutab sama pakkumiste mootorit (kestused, puhvrid, graafik, erandid, broneeringud), kuni 31 päeva. Päeva otsing lõpeb esimese pakkumise juures. Piiratud päringusagedus, olemasolevad ligipääsureeglid.
 - Päeva valik ja lõplik kinnitus kontrollivad saadavust uuesti. Kuu ülevaate tõrge ei blokeeri päeva valikut. Hilinenud vastused jäetakse kõrvale.
-- 49 seotud testi läbisid selle muudatuse järel. Brauseris kontrollitud 320/390 px, arvuti paigutus, klaviatuur ja forced-colors. Forced-colors valiku loetavus parandati lokaalses kalendri CSS-is. `docs/BOOKING-STEPS.md` uuendatud.
+- 49 seotud testi läbisid selle muudatuse järel. Brauseris kontrollitud 320/390 px, arvuti paigutus, klaviatuur ja forced-colors. Forced-colors valiku loetavus parandati lokaalses kalendri CSS-is.
 
 ### Viimane samm, meeldetuletus ja tingimused
 
@@ -65,7 +65,7 @@ Kasutaja palus pika vestluse järel jätkata uues ülesandes. Uut funktsiooni po
 - Haldus → „Broneerimislehe kujundus” → „Ettevõtte tähis päises” → „Näita päises”: Ettevõtte nimi / Logo.
 - `ThemeConfig.brandDisplay` on valikuline `name|logo`, salvestub olemasolevasse JSON-i, eraldi migratsiooni ei vajanud. Uue teema vaikevalik `name`; vanem väljapuudumisega teema kasutab olemasolevat logo või nime.
 - `ui/theme/brand-identity` hoiab h1 nime ekraanilugejale alles ka logo korral; visuaalselt nime ei korrata logo kõrval. `brand-logo` näitab ühe variandi vea korral nime, uus logo-URL proovib uuesti laadida. Nime valik ei kustuta logosid.
-- Päis ja halduse näidise eelvaade kasutavad sama identiteedikomponenti. CSS-failid eraldi, globals ei kasvanud. Juhend ja `docs/THEME-SETTINGS-REQUIREMENTS.md` uuendatud.
+- Päis ja halduse näidise eelvaade kasutavad sama identiteedikomponenti. CSS-failid on eraldi ja globaalne stiilifail ei kasvanud.
 - Kasutaja lisatud ILUTEGU logo kuvatõmmis oli näide soovitud võimalusest; seda ei laaditud automaatselt ettevõtte logoks.
 
 ## Viimane kontrollitud seis
@@ -79,7 +79,6 @@ Kasutaja palus pika vestluse järel jätkata uues ülesandes. Uut funktsiooni po
 ## Hilisem täpsustus: halduse struktuuri plaan
 
 - Jätkuvestluses arendati välja halduse põhisuund **Broneeringud · Kliendid · Teenused · Meeskond · Seaded**, eraldi kasutajakonto ja Ajasta platvormihalduse kontekstiga.
-- Täielik lähteplaan, olemasoleva teostuse piirangud ja veel lahtised kujundusotsused on failis [ADMIN-STRUCTURE-PLAN.md](ADMIN-STRUCTURE-PLAN.md).
 - Kasutaja palus ainult plaani kirja panna: **kujundust veel ei tee**. Plaani salvestamine ei tähenda uue halduse teostust ega luba alustada maketti või serveripaigaldust.
 
 ## Broneerimissammude kujundus — hilisem 12.09.2026 seis

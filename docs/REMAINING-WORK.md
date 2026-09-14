@@ -72,7 +72,7 @@ Siinne „kehtiv” tähendab plaani nõuet või dokumenteeritud hilisemat omani
 | D-12 | Edukas kinnitus järgneb serveri kontrollile/salvestusele, salongi heakskiitu ei oodata | Ptk 24 AT-11–16 ning G03 taastumisvoog |
 | D-13 | Broneerimine kontota, muutmine/tühistamine turvalise lingiga | Ptk 10 ja G03; tegelik kirja kohaletoimetamine G05, lingi poliitika O-10 |
 | D-14 | Töötaja kattuvat hõivamist ei luba ka administraator | Ptk 24 ning ptk 26 konkurentsitõend |
-| D-15 | Piiratud kujundusseaded, ühine loogika ja üldpaigutus | Logo-, värvi- ja fondiredaktor, režiimid, mustand/eelvaade/avaldamine/taastamine on kohalikult teostatud; vt THEME-SETTINGS-REQUIREMENTS.md. G04 lõplik disain ja kasutajavastuvõtt ootel |
+| D-15 | Piiratud kujundusseaded, ühine loogika ja üldpaigutus | Logo-, värvi- ja fondiredaktor, režiimid, mustand/eelvaade/avaldamine/taastamine on teostatud. G04 kasutajavastuvõtt on ootel |
 | D-16 | Oma kalender, FullCalendar Premium ja kohustuslikud tasulised pilvekomponendid väljas | Ptk 11 ning G06 tehniline tõend; kasutatavus G03 |
 | D-17 | Ettevõttele kasutusõigus, mitte serverikood, edasimüügiõigus või repo ligipääs | Ptk 20; kasutustingimused ja üleandmine G01 |
 | D-18 | Absoluutset kopeerimatust ega üldise idee ainuõigust ei lubata | Ptk 20; õiguste ja litsentside piirid G01 |

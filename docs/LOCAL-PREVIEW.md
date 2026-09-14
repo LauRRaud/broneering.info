@@ -36,4 +36,4 @@ Omaniku toodud ülesehituse võrdlus: [SmartBroni juhendid](https://smartbron.ee
 
 Töötaja foto saab nüüd kohalikult üles laadida või valida telefonikaamerast; [teostus ja kontrollid](STAFF-PHOTOS.md). Serveris on jätkuvalt varasem HTTPS-aadressi väli, kuni kohalik muudatus on üle vaadatud ja avaldatud.
 
-Kujundusredaktor on nüüd samuti kohalikult teostatud: [kasutamine, arhitektuur ja piirid](THEME-SETTINGS-REQUIREMENTS.md). Migratsioonid 050–051 lisavad logo- ja versioonitoe. Serverisse neid muudatusi ei avaldatud.
+Kujundusredaktor on kohalikult teostatud. Migratsioonid 050–051 lisavad logo- ja versioonitoe. Serverisse neid muudatusi selle protokolli ajal ei avaldatud.
