@@ -1,5 +1,5 @@
 'use client';
-import {useEffect,useState,type ReactNode} from 'react';
+import {useEffect,useRef,useState,type ReactNode} from 'react';
 import {useI18n} from '@/components/i18n-provider';
 import {localeTags} from '@/lib/locales';
 import {localizedFetch as fetch} from '@/lib/client-fetch';
@@ -12,6 +12,7 @@ import styles from './time-picker.module.css';
 export default function TimePicker({date,min,max,disabled,onChange,serviceId,staffId,endpoint,children}:{date:string;min:string;max:string;disabled:boolean;onChange:(date:string)=>void;serviceId:string;staffId:string;endpoint:string;children:ReactNode}){
   const {t,locale}=useI18n(),[month,setMonth]=useState(date.slice(0,7)),[retry,setRetry]=useState(0);
   const [result,setResult]=useState<{key:string;days?:Record<string,boolean>;error?:boolean}>();
+  const initialDayResolved=useRef(false);
   const params=new URLSearchParams({serviceId,date:`${month}-01`,month:'1'});if(staffId)params.set('staffId',staffId);
   const url=`${endpoint}${endpoint.includes('?')?'&':'?'}${params}`,key=`${url}:${retry}`;
   useEffect(()=>setMonth(date.slice(0,7)),[date]);
@@ -25,6 +26,20 @@ export default function TimePicker({date,min,max,disabled,onChange,serviceId,sta
     return()=>controller.abort();
   },[key,url]);
   const current=result?.key===key?result:undefined;
+  useEffect(()=>{
+    if(!current?.days||initialDayResolved.current)return;
+    initialDayResolved.current=true;
+    if(current.days[date]!==false)return;
+    const next=Object.entries(current.days).sort(([left],[right])=>left.localeCompare(right)).find(([day,available])=>day>date&&available)?.[0];
+    if(next){onChange(next);return;}
+    const controller=new AbortController(),nextParams=new URLSearchParams({serviceId,date,next:'1'});
+    if(staffId)nextParams.set('staffId',staffId);
+    fetch(`${endpoint}${endpoint.includes('?')?'&':'?'}${nextParams}`,{signal:controller.signal,cache:'no-store'}).then(async response=>{
+      const body=await response.json() as {date?:string|null};
+      if(response.ok&&typeof body.date==='string'&&!controller.signal.aborted)onChange(body.date);
+    }).catch(()=>{});
+    return()=>controller.abort();
+  },[current?.days,date,endpoint,onChange,serviceId,staffId]);
   return <CalendarSurface className={styles.root}><div className={styles.layout}>
     <div className={styles.calendar} aria-busy={!current}>
       <MonthCalendar value={date} month={month} min={min} max={max} today={min} locale={localeTags[locale]} disabled={disabled} days={current?.days} size="large" onChange={onChange} onMonthChange={setMonth} labels={{previous:t('Eelmine kuu'),next:t('Järgmine kuu'),empty:t('Vabu aegu pole'),help:t('Liigu nooleklahvidega, vali Enteriga.'),selected:t('Valitud päev'),today:t('Täna')}}/>

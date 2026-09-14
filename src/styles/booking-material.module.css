@@ -166,8 +166,8 @@
   --glass-transition: background-color .24s ease, box-shadow .28s ease, border-color .24s ease, color .2s ease;
   --glass-shadow: 0 14px 34px -16px rgb(42 31 22 / .25);
   --glass-hover-shadow: 0 18px 40px -17px rgb(42 31 22 / .30);
-  --glass-active-shadow: 0 3px 7px -2px rgb(42 31 22 / .20), 0 10px 18px -7px rgb(42 31 22 / .30);
-  --glass-control-hover-shadow: 0 3px 7px -2px rgb(42 31 22 / .22), 0 11px 20px -7px rgb(42 31 22 / .32);
+  --glass-active-shadow: 0 2px 4px -2px rgb(42 31 22 / .16), 0 7px 12px -6px rgb(42 31 22 / .26);
+  --glass-control-hover-shadow: 0 3px 6px -2px rgb(42 31 22 / .18), 0 10px 18px -7px rgb(42 31 22 / .28);
   --glass-selection-mark: color-mix(in srgb, var(--text) 48%, transparent);
   --glass-card-transition: var(--glass-transition);
   --glass-choice: var(--glass-active);

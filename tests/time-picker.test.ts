@@ -5,6 +5,15 @@ import {createRoot,type Root} from 'react-dom/client';
 import TimePicker from '../src/components/booking/time-picker';
 let root:Root,container:HTMLDivElement;
 afterEach(async()=>{if(root)await act(async()=>root.unmount());container?.remove();vi.unstubAllGlobals();});
+it('opens on the first available day when today has no free times',async()=>{
+ Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});
+ vi.stubGlobal('fetch',vi.fn().mockResolvedValue(Response.json({days:{'2026-09-15':false,'2026-09-16':true}})));
+ container=document.createElement('div');document.body.append(container);root=createRoot(container);
+ const onChange=vi.fn();
+ await act(async()=>root.render(createElement(TimePicker,{date:'2026-09-15',min:'2026-09-15',max:'2026-11-15',disabled:false,onChange,serviceId:'service',staffId:'worker',endpoint:'/api/availability',children:'Päeva ajad'})));
+ await act(async()=>{await Promise.resolve();});
+ expect(onChange).toHaveBeenCalledWith('2026-09-16');
+});
 it('discards late month responses and still allows day selection after a month load error',async()=>{
  Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});
  const calls:Array<{url:string;signal:AbortSignal;resolve:(value:Response)=>void}>=[];
