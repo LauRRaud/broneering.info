@@ -6,8 +6,10 @@ COPY scripts/licenses.ts ./scripts/licenses.ts
 RUN mkdir -p docs && npm run licenses && cp docs/THIRD-PARTY-NOTICES.txt /app/THIRD-PARTY-NOTICES.txt
 
 FROM dependencies AS migration
+COPY src ./src
 COPY scripts ./scripts
 COPY db ./db
+COPY tsconfig.json ./
 CMD ["node", "--import", "tsx", "scripts/migrate.ts"]
 
 FROM dependencies AS builder
