@@ -1,4 +1,4 @@
-.root{display:inline-flex;align-items:center;justify-content:center;min-block-size:3.25rem;background:var(--button);color:var(--buttonText);padding:.85rem 1.55rem;border:1px solid var(--button);border-radius:.4rem;font-size:.95rem;font-weight:600;text-decoration:none;transition:filter .2s,background-color .2s,color .2s}
+.root{display:inline-flex;align-items:center;justify-content:center;min-block-size:3.25rem;background:var(--button);color:var(--buttonText);padding:.85rem 1.55rem;border:var(--ui-border-width,1px) solid var(--button);border-radius:.4rem;font-size:.95rem;font-weight:600;text-decoration:none;transition:filter .2s,background-color .2s,color .2s}
 .root:hover{filter:brightness(1.12)}
 .root:focus-visible{outline:2px solid var(--border);outline-offset:4px}
 .secondary{background:transparent;color:var(--link);border-color:var(--border)}

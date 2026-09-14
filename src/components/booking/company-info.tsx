@@ -22,7 +22,7 @@ export default function CompanyInfo({tenant}:{tenant:Catalog['tenant']}){
       <Button className={styles.close} type="button" autoFocus aria-label={t('Sulge')} onClick={close}><Icon name="close" size={24}/></Button>
       <h2 id={id+'-title'}>{tenant.name}</h2>
       <dl className={styles.details}>
-        {address&&<div><dt>{t('Aadress')}</dt><dd>{address}<TextLink className={styles.map} href={'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(address)} target="_blank" rel="noopener noreferrer">{t('Vaata kaardil')}</TextLink></dd></div>}
+        {address&&<div className={styles.addressRow}><dt>{t('Aadress')}</dt><dd>{address}<TextLink className={styles.map} href={'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(address)} target="_blank" rel="noopener noreferrer">{t('Vaata kaardil')}</TextLink></dd></div>}
         {phone&&<div><dt>{t('Telefon')}</dt><dd><TextLink href={phone}>{tenant.contactPhone}</TextLink></dd></div>}
         {email&&<div><dt>{t('E-post')}</dt><dd><TextLink href={'mailto:'+email}>{email}</TextLink></dd></div>}
       </dl>

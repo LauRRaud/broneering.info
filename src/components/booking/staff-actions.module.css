@@ -1,0 +1,14 @@
+.root{position:relative}
+.trigger{display:grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;padding:0;border:var(--glass-border-width,1px) solid var(--glass-control-border,var(--cardBorder,var(--border)));border-radius:50%;background:var(--glass-control,var(--surface));box-shadow:var(--glass-active-shadow,none);color:var(--navigation,var(--heading));-webkit-backdrop-filter:var(--glass-control-blur,none);backdrop-filter:var(--glass-control-blur,none);cursor:pointer;transition:background .18s,box-shadow .18s}
+.trigger:hover,.trigger[aria-expanded='true']{background:var(--glass-hover,var(--surface));box-shadow:var(--glass-control-hover-shadow,var(--glass-active-shadow,none))}
+.trigger:focus-visible{outline:2px solid var(--navigation);outline-offset:3px}
+.menu{position:absolute;z-index:10;inset-block-start:calc(100% + .5rem);inset-inline-start:calc(50% - .5rem);inline-size:14rem;max-inline-size:calc(100vw - 1rem);padding:.4rem;border:var(--glass-border-width,1px) solid var(--glass-control-border,var(--cardBorder,var(--border)));border-radius:1rem;background:var(--glass-hover,var(--surface));box-shadow:var(--glass-hover-shadow,0 12px 28px rgb(0 0 0 / .16));-webkit-backdrop-filter:var(--glass-dialog-blur,none);backdrop-filter:var(--glass-dialog-blur,none);text-align:start}
+.item{display:flex;align-items:center;gap:.65rem;inline-size:100%;min-block-size:3rem;padding:.5rem .6rem;border:0;border-radius:.65rem;background:transparent;color:var(--text);text-decoration:none;text-align:start;font-family:inherit;font-size:.95rem;line-height:1.35;cursor:pointer}
+.item+.item{margin-block-start:.25rem}
+.item:hover,.item:focus-visible{background:var(--glass-hover,var(--surface));color:var(--heading)}
+.item:focus-visible{outline:2px solid var(--navigation);outline-offset:-2px}
+.icon{display:grid;place-items:center;inline-size:2rem;block-size:2rem;flex:none;color:var(--icons,var(--heading));border-radius:50%;background:color-mix(in srgb,var(--icons,var(--heading)) 8%,transparent)}
+.number{color:var(--text);font-size:inherit;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+@media(prefers-reduced-motion:reduce){.trigger{transition:none}}
+
+.trigger,.close{transition:var(--glass-transition,background-color .24s ease)}

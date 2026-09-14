@@ -1,10 +1,10 @@
 .root{max-inline-size:1440px;margin-inline:auto;padding:4.5rem clamp(1.25rem,4.5vw,5rem);scroll-margin-block-start:2rem}
 .title{font-family:var(--theme-heading-font);font-size:clamp(2.6rem,3.7vw,3.8rem);line-height:1.1;font-weight:500;letter-spacing:-.035em;text-align:center;margin:0 0 3rem;color:var(--heading)}
 .list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.feature{padding-inline:2.75rem;border-inline-start:1px solid var(--cardBorder)}
+.feature{padding-inline:2.75rem;border-inline-start:var(--ui-border-width,1px) solid var(--cardBorder)}
 .feature:first-child{padding-inline-start:0;border:0}.feature:last-child{padding-inline-end:0}
 .number{flex:none;font-family:var(--theme-heading-font);font-size:1.25rem;line-height:1;color:var(--link);letter-spacing:0;font-variant-numeric:tabular-nums}
 .subtitle{display:flex;align-items:baseline;gap:.7rem;font-family:var(--theme-heading-font);font-size:1.9rem;font-weight:500;line-height:1.15;letter-spacing:-.025em;margin:0 0 .8rem;color:var(--heading)}
 .description{font-size:.92rem;line-height:1.8;color:var(--mutedText);margin:0;max-inline-size:24rem}
 @media(max-width:800px){.root{padding-block:3.5rem}.feature{padding-inline:1.4rem}.subtitle{font-size:1.6rem}.description{font-size:.85rem}.title{margin-block-end:2.4rem}}
-@media(max-width:600px){.root{padding:3rem 1.5rem}.title{text-align:start;font-size:2.7rem;max-inline-size:25rem}.list{grid-template-columns:1fr;gap:1.6rem}.feature,.feature:first-child,.feature:last-child{padding:0 0 1.5rem;border:0;border-block-end:1px solid var(--cardBorder)}.feature:last-child{padding-block-end:0;border:0}.subtitle{font-size:1.85rem}.description{font-size:.92rem;max-inline-size:100%}}
+@media(max-width:600px){.root{padding:3rem 1.5rem}.title{text-align:start;font-size:2.7rem;max-inline-size:25rem}.list{grid-template-columns:1fr;gap:1.6rem}.feature,.feature:first-child,.feature:last-child{padding:0 0 1.5rem;border:0;border-block-end:var(--ui-border-width,1px) solid var(--cardBorder)}.feature:last-child{padding-block-end:0;border:0}.subtitle{font-size:1.85rem}.description{font-size:.92rem;max-inline-size:100%}}

@@ -1,17 +1,17 @@
-.calendar{max-width:100%;max-height:calc(100dvh - 15rem);overflow:auto;border:1px solid var(--cardBorder);border-radius:.85rem;background:var(--surface);scrollbar-color:var(--border) transparent}
+.calendar{max-width:100%;max-height:calc(100dvh - 15rem);overflow:auto;border:var(--ui-border-width,1px) solid var(--cardBorder);border-radius:.85rem;background:var(--surface);scrollbar-color:var(--border) transparent}
 .grid{display:grid;min-width:max-content}
-.heading{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:.7rem;height:5rem;padding:.75rem 1rem;border-bottom:1px solid var(--cardBorder);background:var(--surface);box-sizing:border-box}
+.heading{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:.7rem;height:5rem;padding:.75rem 1rem;border-bottom:var(--ui-border-width,1px) solid var(--cardBorder);background:var(--surface);box-sizing:border-box}
 .heading strong{display:block;color:var(--heading);font-size:.9rem}
 .heading small{display:block;margin-top:.2rem;color:var(--mutedText);font-size:.68rem}
-.heading button{margin-left:auto;width:1.8rem;height:1.8rem;border:1px solid var(--cardBorder);border-radius:50%;background:transparent;color:var(--link);font-size:1.15rem;cursor:pointer}
+.heading button{margin-left:auto;width:1.8rem;height:1.8rem;border:var(--ui-border-width,1px) solid var(--cardBorder);border-radius:50%;background:transparent;color:var(--link);font-size:1.15rem;cursor:pointer}
 .avatar{display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:50%;background:color-mix(in srgb,var(--selected) 10%,var(--surface));color:var(--heading);font-family:var(--font-cormorant),Georgia,serif;font-size:1.3rem}
 .timeRail{position:sticky;left:0;z-index:4;background:var(--surface)}
 .times{height:1440px;position:relative;background:var(--surface)}
 .times span{position:absolute;right:.65rem;transform:translateY(-.55em);color:var(--mutedText);font-size:.68rem;font-variant-numeric:tabular-nums}
-.column{height:1440px;position:relative;border-left:1px solid var(--cardBorder);background:repeating-linear-gradient(to bottom,var(--surface) 0,var(--surface) 59px,var(--cardBorder) 60px)}
+.column{height:1440px;position:relative;border-left:var(--ui-border-width,1px) solid var(--cardBorder);background:repeating-linear-gradient(to bottom,var(--surface) 0,var(--surface) 59px,var(--cardBorder) 60px)}
 .closed{position:absolute;top:.35rem;left:.45rem;color:var(--mutedText);font-size:.62rem;opacity:.65}
-.working{position:absolute;inset-inline:0;border-top:1px dashed color-mix(in srgb,var(--border) 45%,transparent);border-bottom:1px dashed color-mix(in srgb,var(--border) 45%,transparent);background:color-mix(in srgb,var(--calendar) 72%,transparent);box-sizing:border-box;color:transparent;font-size:0}
-.booking{position:absolute;left:3%;width:94%;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:.12rem;overflow:hidden;border:1px solid color-mix(in srgb,var(--cardBorder) 72%,transparent);border-radius:.42rem;padding:.36rem .55rem;background:color-mix(in srgb,var(--selected) 7%,var(--surface));color:var(--text);text-align:left;box-shadow:0 2px 8px rgb(52 39 28 / .05);cursor:pointer}
+.working{position:absolute;inset-inline:0;border-top:var(--ui-border-width,1px) dashed color-mix(in srgb,var(--border) 45%,transparent);border-bottom:var(--ui-border-width,1px) dashed color-mix(in srgb,var(--border) 45%,transparent);background:color-mix(in srgb,var(--calendar) 72%,transparent);box-sizing:border-box;color:transparent;font-size:0}
+.booking{position:absolute;left:3%;width:94%;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:.12rem;overflow:hidden;border:var(--ui-border-width,1px) solid color-mix(in srgb,var(--cardBorder) 72%,transparent);border-radius:.42rem;padding:.36rem .55rem;background:color-mix(in srgb,var(--selected) 7%,var(--surface));color:var(--text);text-align:left;box-shadow:0 2px 8px rgb(52 39 28 / .05);cursor:pointer}
 .booking small{font-size:.66rem;color:var(--mutedText);font-variant-numeric:tabular-nums}
 .booking strong{color:var(--heading);font-size:.78rem;line-height:1.15}
 .booking span{font-size:.68rem;color:var(--mutedText);white-space:nowrap;text-overflow:ellipsis;overflow:hidden;max-width:100%}

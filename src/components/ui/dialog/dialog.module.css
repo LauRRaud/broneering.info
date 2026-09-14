@@ -1,2 +1,2 @@
-.root {inline-size:36rem;max-inline-size:calc(100% - 2rem);max-block-size:calc(100dvh - 2rem);overflow:auto;background:var(--surface,Canvas);color:var(--text,CanvasText);border:1px solid var(--border,CanvasText);padding:1rem;}
-.root::backdrop {background:rgb(0 0 0 / .45);}
+.root {inline-size:36rem;max-inline-size:calc(100% - 2rem);max-block-size:calc(100dvh - 2rem);overflow:auto;background:var(--glass-dialog,var(--surface,Canvas));-webkit-backdrop-filter:var(--glass-dialog-blur,none);backdrop-filter:var(--glass-dialog-blur,none);box-shadow:var(--glass-dock-shadow,none);color:var(--text,CanvasText);border:var(--ui-border-width,1px) solid var(--glass-dialog-border,var(--border,CanvasText));padding:1rem;}
+.root::backdrop {background:var(--glass-backdrop,rgb(0 0 0 / .45));backdrop-filter:var(--glass-backdrop-blur,none);}

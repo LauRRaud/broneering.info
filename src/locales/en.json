@@ -8,6 +8,8 @@
   "Valitud päeva ajad": "Times for the selected day",
   "Töötaja {name} info": "Information about {name}",
   "Info": "Info",
+  "Töötaja {name} valikud": "Options for {name}",
+  "Helista ettevõttele": "Call the company",
   "Mine sammu {step}": "Go to the {step} step",
   ", aegub": ", expires",
   ": sel päeval vabu aegu pole.": ": no available times on this day.",
@@ -1344,6 +1346,8 @@
   "Kõrge kontrast": "High contrast",
   "Laadi kujundus uuesti": "Reload theme",
   "Lehe taust": "Page background",
+  "Tausta kesktoon": "Background middle tone",
+  "Tausta servatoon": "Background edge tone",
   "Lingid": "Links",
   "Logo eelvaade": "Logo preview",
   "Logo ei ole avaldatud.": "Logo is not published.",
@@ -1534,5 +1538,10 @@
   "Sul on kutse või konto? Ava haldus": "Have an invitation or account? Open administration",
   "Aega selleks, mis loeb.": "Time for what matters.",
   "Abi ja ligipääs": "Help and access",
-  "Tagasi üles": "Back to top"
+  "Tagasi üles": "Back to top",
+  "Profiil": "Profile",
+  "Töötaja {name} profiil": "Staff profile: {name}",
+  "Kursori täide": "Cursor fill",
+  "Kursori täide nupul": "Cursor hover fill",
+  "Kursori kontuur": "Cursor outline"
 }

@@ -1,5 +1,6 @@
 'use client';
 import {useI18n} from '@/components/i18n-provider';
+import Icon from '@/components/ui/icon/icon';
 import styles from './booking-reminder.module.css';
 
 export function canRequestReminder(start:string,minutes?:number|null){
@@ -7,5 +8,5 @@ export function canRequestReminder(start:string,minutes?:number|null){
 }
 export default function BookingReminder({checked,onChange,disabled,channel='email'}:{checked:boolean;onChange:(value:boolean)=>void;disabled:boolean;channel?:'email'|'sms'}){
   const {t}=useI18n();
-  return <p><label className={styles.label}><input type="checkbox" name={channel+'Reminder'} aria-label={t(channel==='sms'?'Soovin meeldetuletust SMS-iga':'Soovin meeldetuletust e-postiga')} checked={checked} onChange={event=>onChange(event.target.checked)} disabled={disabled}/><span>{t(channel==='sms'?'Meeldetuletus SMS-iga':'Meeldetuletus e-postiga')}</span></label></p>;
+  return <p><label className={styles.label}><span className={styles.checkbox}><input type="checkbox" name={channel+'Reminder'} aria-label={t(channel==='sms'?'Soovin meeldetuletust SMS-iga':'Soovin meeldetuletust e-postiga')} checked={checked} onChange={event=>onChange(event.target.checked)} disabled={disabled}/><Icon name="check" size={16}/></span><span>{t(channel==='sms'?'Meeldetuletus SMS-iga':'Meeldetuletus e-postiga')}</span></label></p>;
 }

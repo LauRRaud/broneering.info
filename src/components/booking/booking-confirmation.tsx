@@ -27,7 +27,6 @@ export default function BookingConfirmation({tenant,service,offer,form,errors,lo
     {icon:'person',label:t('Töötaja'),value:offer.staffName},{icon:'calendar',label:t('Kuupäev'),value:date,nowrap:true},
     {icon:'clock',label:t('Kellaaeg'),value:time(offer.start)+' – '+time(offer.end),nowrap:true},
     {icon:'clock',label:t('Kestus'),value:offer.duration+' '+t('min'),nowrap:true},
-    {icon:'tag',label:t('Hind'),value:new Intl.NumberFormat(localeTags[locale],{style:'currency',currency:'EUR',maximumFractionDigits:offer.price%100?2:0}).format(offer.price/100)},
   ];
   return <form id="booking-form" className={styles.layout} noValidate onSubmit={onSubmit}>
     <section className={styles.contact} aria-label={t('Sinu andmed')}>
@@ -47,7 +46,7 @@ export default function BookingConfirmation({tenant,service,offer,form,errors,lo
       <div className={styles.actions}>
         {state==='uncertain'&&<p role="alert" className={styles.error}><strong>{t('Kontrollime kinnituse tulemust.')}</strong> {t(error)} {t('Kinnitus loetakse õnnestunuks alles serveri vastuse järel.')}</p>}
         {state==='error'&&<p role="alert" className={styles.error}><strong>{t('Broneeringut ei saanud kinnitada.')}</strong> {t(error)} {t('Kontrolli andmeid ja proovi uuesti.')}</p>}
-        <div className={styles.actionRow}><BookingTerms company={tenant.name} terms={tenant.bookingTerms}/><div className={styles.confirmGroup}>
+        <div className={styles.actionRow}><BookingTerms company={tenant.name} terms={tenant.bookingTerms}/><dl className={styles.price}><dt>{t('Hind')}</dt><dd>{new Intl.NumberFormat(localeTags[locale],{style:'currency',currency:'EUR',maximumFractionDigits:offer.price%100?2:0}).format(offer.price/100)}</dd></dl><div className={styles.confirmGroup}>
           <Button className={styles.confirm} variant="primary" type="submit" disabled={preview||state==='submitting'||(locked&&state!=='uncertain')}>{state==='submitting'?t('Kinnitame…'):state==='uncertain'?t('Proovi uuesti'):t('Kinnita broneering')}</Button>
         </div></div>
       </div>

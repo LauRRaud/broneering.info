@@ -3,15 +3,17 @@ import type {ThemeConfig} from '../../src/lib/theme-contracts';
 export const iluteguDemoTheme:ThemeConfig={
   brandDisplay:'logo',font:'modern',headingFont:'editorial',
   light:{
-    background:'#F8F6F2',surface:'#FFFDFA',text:'#453C35',heading:'#332B25',
-    link:'#805039',border:'#958477',button:'#FFFDFA',buttonText:'#453C35',
-    calendar:'#FFFDFA',calendarText:'#453C35',selected:'#493A31',selectedText:'#FFFFFF',
-    icons:'#985B40',navigation:'#654939',cardBorder:'#E4DCD2',mutedText:'#786A5F',
+    background:'#F7EDDE',backgroundMid:'#EADBC3',backgroundEdge:'#D5C2A6',
+    surface:'#FFFCF6',text:'#181512',heading:'#181512',
+    link:'#45413B',border:'#6A655E',button:'#FFFCF6',buttonText:'#181512',
+    calendar:'#FFFCF6',calendarText:'#181512',selected:'#45413B',selectedText:'#FFFCF6',
+    icons:'#5C554D',navigation:'#45413B',cardBorder:'#D5C2A6',mutedText:'#56514B',
   },
   dark:{
-    background:'#1C1B19',surface:'#26231F',text:'#E8E2D9',heading:'#F5EFE5',
-    link:'#D9B897',border:'#9E9080',button:'#26231F',buttonText:'#E8E2D9',
-    calendar:'#26231F',calendarText:'#E8E2D9',selected:'#D9C2A6',selectedText:'#29241E',
-    icons:'#D2A783',navigation:'#D9C2A6',cardBorder:'#484037',mutedText:'#BDB4A7',
+    background:'#191410',backgroundMid:'#100D0A',backgroundEdge:'#090807',
+    surface:'#3A393C',text:'#F5EFE5',heading:'#F5EFE5',
+    link:'#E2C39E',border:'#A9957B',button:'#323134',buttonText:'#F5EFE5',
+    calendar:'#3A393C',calendarText:'#F5EFE5',selected:'#D1B692',selectedText:'#191410',
+    icons:'#D1B692',navigation:'#E2C39E',cardBorder:'#68615A',mutedText:'#BDB8B1',
   },
 };

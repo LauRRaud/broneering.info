@@ -39,6 +39,6 @@ export default function MonthCalendar({value,month,min,max,today,locale,disabled
       <tbody>{Array.from({length:count/7},(_,row)=><tr key={row}>{cells.slice(row*7,row*7+7).map(date=><td key={date} aria-selected={date===value}>{date.startsWith(month)&&<Button type="button" data-date={date} tabIndex={date===active?0:-1} aria-label={`${format(date,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}${days?.[date]===false?`. ${labels.empty}`:''}`} aria-current={date===today?'date':undefined} aria-pressed={date===value} disabled={disabled||date<min||date>max} className={`${styles.day} ${days?.[date]===false?styles.empty:''}`} onFocus={()=>setFocused(date)} onKeyDown={event=>navigate(event,date)} onClick={()=>onChange(date)}>{Number(date.slice(8))}</Button>}</td>)}</tr>)}</tbody>
     </table>
     <p id={`${id}-help`} className={styles.help}>{labels.help}</p>
-    {labels.selected&&<div className={styles.legend}><span><i className={styles.selected}/>{labels.selected}</span><span><i className={styles.today}/>{labels.today}</span><span><i/>{labels.empty}</span></div>}
+    {labels.selected&&<div className={styles.legend}><span><i className={styles.selected}/>{labels.selected}</span><span><i className={styles.today}/>{labels.today}</span><span><i className={styles.unavailable}/>{labels.empty}</span></div>}
   </div>;
 }

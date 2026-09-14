@@ -20,7 +20,7 @@ it('reveals a callable number on demand without selecting the employee; preserve
  expect(container.querySelector('a')).toBeNull();
  await act(async()=>container.querySelector('img')!.dispatchEvent(new Event('error')));
  expect(container.querySelector('[aria-hidden="true"]')?.textContent).toBe('Õ');
- const toggle=container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Õie Kask telefon"]')!;
+ const toggle=container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Õie Kask valikud"]')!;
  expect(toggle.getAttribute('aria-label')).toContain(staff.name);
  expect(toggle.getAttribute('aria-expanded')).toBe('false');
  await act(async()=>toggle.click());
@@ -33,15 +33,18 @@ it('reveals a callable number on demand without selecting the employee; preserve
  await act(async()=>toggle.click());
  expect(container.querySelector('a')).toBeNull();
  await act(async()=>root.render(createElement(StaffCard,{staff:{...staff,publicPhone:''},onSelect})));
- expect(container.querySelector('[aria-label="Töötaja Õie Kask telefon"]')).toBeNull();
+ await act(async()=>toggle.click());
+ expect(container.querySelector('a[href^="tel:"]')).toBeNull();
+ expect(container.querySelector('[role="menuitem"]')?.textContent).toContain('Profiil');
+ await act(async()=>toggle.click());
  await act(async()=>root.render(createElement(StaffCard,{staff:{...staff,publicPhone:'invalid'},companyPhone:'+372 5555 0202',onSelect})));
- const fallback=container.querySelector<HTMLButtonElement>('[aria-label="Ettevõtte telefon"]')!;
- expect(fallback.getAttribute('aria-label')).toBe('Ettevõtte telefon');
+ const fallback=container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Õie Kask valikud"]')!;
  await act(async()=>fallback.click());
- expect(container.querySelector('a')?.textContent).toBe('+372 5555 0202');
+ expect(container.querySelector('a')?.textContent).toContain('+372 5555 0202');
+ expect(container.querySelector('a')?.textContent).not.toContain('Helista ettevõttele');
  expect(container.textContent).not.toContain(staff.bio);
  expect(container.querySelector('a')?.getAttribute('href')).toBe('tel:+37255550202');
- await act(async()=>fallback.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true})));
+ await act(async()=>container.querySelector('[role="menu"]')!.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true})));
  expect(container.querySelector('a')).toBeNull();
  expect(document.activeElement).toBe(fallback);
  expect(onSelect).not.toHaveBeenCalled();
@@ -54,16 +57,37 @@ it('supports Unicode names and accepts only plain phone numbers',()=>{
  expect(publicPhoneHref(' +372 (5555) 0101 ')).toBe('tel:+37255550101');
  for(const value of ['', 'tel:+37255550101','javascript:alert(1)','123','+37255550101,123','*123#'])expect(publicPhoneHref(value)).toBeNull();
 });
-it('opens the corner introduction separately from selecting or calling a worker',async()=>{
+it('opens the introduction from the actions menu without selecting or calling a worker',async()=>{
  Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});
  container=document.createElement('div');document.body.append(container);root=createRoot(container);
  const onSelect=vi.fn(),staff={id:'test',name:'Anette',title:'Ripsmetehnik',bio:'Rahulik ja täpne.',serviceIds:[],publicPhone:'+372 5555 0101'};
  await act(async()=>root.render(createElement(StaffCard,{staff,onSelect})));
- const trigger=container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Anette info"]')!,dialog=container.querySelector('dialog')!;
+ const trigger=container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Anette valikud"]')!,dialog=container.querySelector('dialog')!;
  expect(container.textContent).not.toContain(staff.bio);
  await act(async()=>trigger.click());
+ await act(async()=>container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Anette profiil"]')!.click());
  expect(dialog.open).toBe(true);expect(dialog.textContent).toContain(staff.bio);expect(dialog.textContent).toContain(staff.title);
  expect(container.querySelector('a[href^="tel:"]')).toBeNull();expect(onSelect).not.toHaveBeenCalled();
  await act(async()=>dialog.dispatchEvent(new Event('cancel',{cancelable:true})));
  expect(dialog.open).toBe(false);expect(document.activeElement).toBe(trigger);
+});
+
+it('supports keyboard navigation, outside dismissal and hides an empty actions menu',async()=>{
+ Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});
+ container=document.createElement('div');document.body.append(container);root=createRoot(container);
+ const staff={id:'test',name:'Anette',title:'',bio:'Tutvustus',serviceIds:[],publicPhone:'+372 5555 0101'};
+ const onSelect=vi.fn();
+ await act(async()=>root.render(createElement(StaffCard,{staff,onSelect})));
+ const trigger=container.querySelector<HTMLButtonElement>('[aria-haspopup="menu"]')!;
+ await act(async()=>trigger.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowUp',bubbles:true,cancelable:true})));
+ expect(document.activeElement?.getAttribute('href')).toBe('tel:+37255550101');
+ await act(async()=>document.activeElement!.dispatchEvent(new KeyboardEvent('keydown',{key:'Home',bubbles:true,cancelable:true})));
+ expect(document.activeElement?.getAttribute('aria-haspopup')).toBe('dialog');
+ await act(async()=>document.activeElement!.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true})));
+ expect(document.activeElement?.getAttribute('href')).toBe('tel:+37255550101');
+ await act(async()=>document.body.dispatchEvent(new Event('pointerdown',{bubbles:true})));
+ expect(container.querySelector('[role="menu"]')).toBeNull();
+ expect(onSelect).not.toHaveBeenCalled();
+ await act(async()=>root.render(createElement(StaffCard,{staff:{...staff,bio:'',publicPhone:'invalid'},onSelect})));
+ expect(container.querySelector('[aria-haspopup="menu"]')).toBeNull();
 });

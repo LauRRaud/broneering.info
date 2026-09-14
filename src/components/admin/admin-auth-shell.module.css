@@ -6,14 +6,14 @@
 .intro>p:not(.eyebrow){margin:0;color:var(--mutedText);font-size:.875rem;line-height:1.65}
 .eyebrow{margin:0;text-transform:uppercase;letter-spacing:.14em;font-size:.65rem;font-weight:700;color:var(--link)}
 .line{display:none}
-.card{padding:1.5rem;border:1px solid var(--cardBorder);border-radius:1.1rem;background:var(--surface)}
+.card{padding:1.5rem;border:var(--ui-border-width,1px) solid var(--cardBorder);border-radius:1.1rem;background:var(--surface)}
 .card h2{margin:0 0 1.2rem;color:var(--heading);font-family:var(--font-cormorant),Georgia,serif;font-size:1.8rem;font-weight:500}
 .card form{display:grid;gap:1rem}
 .card form p{display:grid;gap:.4rem;margin:0}
 .card form br{display:none}
 .card label{font-size:.8rem;font-weight:600}
-.card input{box-sizing:border-box;width:100%;min-height:2.9rem;border:1px solid var(--cardBorder);border-radius:.6rem;padding:.65rem .8rem;background:var(--background);color:var(--text);font:inherit}
-.card button{min-height:2.9rem;border:1px solid var(--selected);border-radius:.6rem;padding:.65rem 1rem;background:var(--selected);color:var(--selectedText);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
+.card input{box-sizing:border-box;width:100%;min-height:2.9rem;border:var(--ui-border-width,1px) solid var(--cardBorder);border-radius:.6rem;padding:.65rem .8rem;background:var(--background);color:var(--text);font:inherit}
+.card button{min-height:2.9rem;border:var(--ui-border-width,1px) solid var(--selected);border-radius:.6rem;padding:.65rem 1rem;background:var(--selected);color:var(--selectedText);font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
 .card section>p{margin:1rem 0 0;color:var(--mutedText);font-size:.8rem;line-height:1.6}
 .card section>p:has(button){margin-top:.75rem}
 .card section>p button{width:100%;border-color:var(--cardBorder);background:transparent;color:var(--text);font-weight:500}

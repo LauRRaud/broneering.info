@@ -1,0 +1,6 @@
+const hex=/^#[0-9a-fA-F]{6}$/;
+export function cursorImage(fill:string,outline:string){
+  const safeFill=hex.test(fill)?fill:'#f1e8d9',safeOutline=hex.test(outline)?outline:'#a59b8e';
+  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M5.35 5.7 Q5 4 6.4 5 L23.4 16.9 Q25 18 23.05 18.2 L15.75 18.93 Q15 19 14.62 19.68 L10.9 26.38 Q10 28 9.62 26.18 Z" fill="'+safeFill+'" stroke="'+safeOutline+'" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  return 'url("data:image/svg+xml,'+encodeURIComponent(svg)+'") 5 4';
+}

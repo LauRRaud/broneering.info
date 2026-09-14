@@ -27,6 +27,8 @@ import BookingSuccess from '@/components/booking/booking-success';
 import OfferSelection from '@/components/booking/offer-selection';
 import Icon from '@/components/ui/icon/icon';
 import flowStyles from './booking/booking-flow.module.css';
+import material from '@/styles/booking-material.module.css';
+import cursorStyles from '@/components/ui/cursor/cursor.module.css';
 import StaffCard from '@/components/booking/staff-card';
 import Avatar from '@/components/ui/avatar/avatar';
 import BookingHeader from '@/components/booking/booking-header';
@@ -464,7 +466,7 @@ function dateTimeLabel(value: string, timezone: string) {
 
   const titles={category:t('Vali kategooria'),service:t('Vali teenus'),staff:t('Vali spetsialist'),time:t('Vali aeg'),details:t('Kinnita broneering')};
   const restart=()=>{setResult(null);setStep(firstBookingStep(catalog));setCategoryPath(initialCategoryPath(catalog));setServiceSearch('');setServiceId('');setStaffId('');setStaffChosen(false);setOffer(null);setForm({name:'',email:'',phone:'+372 '});setEmailReminder(false);setSmsReminder(false);keyRef.current='';payloadRef.current='';};
-  return <main className={flowStyles.root} id="main-content" tabIndex={-1} data-live-language data-booking-flow>
+  return <main className={`${flowStyles.root} ${cursorStyles.surface}`} id="main-content" tabIndex={-1} data-live-language data-booking-flow>
     <BookingHeader tenant={catalog.tenant}/>
     {designPreview&&<p className={flowStyles.notice} role="status">{t('Kujunduse eelvaade — broneeringu kinnitamine on välja lülitatud.')}</p>}
     {catalog.selectedStaffId&&!result&&<p className={flowStyles.linked}>{t('Broneerid töötajale ')}{catalog.staff.find(item=>item.id===catalog.selectedStaffId)?.name}. <Button type="button" disabled={bookingLocked} onClick={changeLinkedStaff}>{catalogLoading?t('Laadime töötajaid…'):t('Muuda töötajat')}</Button></p>}
@@ -492,9 +494,10 @@ function dateTimeLabel(value: string, timezone: string) {
       </div>
     </section>}
     </div>
-    <footer className={flowStyles.footer} data-fade={footerFade||undefined}><span aria-hidden="true"/>{!result?<BookingProgress current={stepIndex(step)} labels={visibleSteps.map(item=>item.label)} completed={visibleSteps.map(item=>stepCompleted(item.id))} selectable={visibleSteps.map(item=>stepSelectable(item.id))} canGoBack={canGoBack} disabled={bookingLocked} onBack={goBack} onSelect={goToStep}/>:<span/>}<a className={flowStyles.brand} href="https://ajasta.ee" target="_blank" rel="noopener noreferrer" aria-label={t('Ajasta broneerimistarkvara')}><Icon name="clock" size={25}/>Ajasta.ee</a></footer>
+    <footer className={flowStyles.brandFooter}><a className={flowStyles.brand} href="https://ajasta.ee" target="_blank" rel="noopener noreferrer" aria-label={t('Ajasta broneerimistarkvara')}><Icon name="clock" size={25}/>Ajasta.ee</a></footer>
+    {!result&&<div className={flowStyles.footer} data-fade={footerFade||undefined}><BookingProgress current={stepIndex(step)} labels={visibleSteps.map(item=>item.label)} completed={visibleSteps.map(item=>stepCompleted(item.id))} selectable={visibleSteps.map(item=>stepSelectable(item.id))} canGoBack={canGoBack} disabled={bookingLocked} onBack={goBack} onSelect={goToStep}/></div>}
     {!result&&step==='details'&&offer&&service&&challengeSiteKey&&<Turnstile siteKey={challengeSiteKey} onToken={setChallengeToken} resetSignal={challengeReset} label={t('Botikontroll')}/>}
   </main>;
 }
 
-export default function BookingFlow(props:Parameters<typeof BookingFlowContent>[0]){return <ThemeSurface theme={props.catalog.theme}><BookingFlowContent {...props}/></ThemeSurface>;}
+export default function BookingFlow(props:Parameters<typeof BookingFlowContent>[0]){return <ThemeSurface theme={props.catalog.theme} className={material.glass}><BookingFlowContent {...props}/></ThemeSurface>;}

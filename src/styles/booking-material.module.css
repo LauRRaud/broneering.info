@@ -1,0 +1,214 @@
+/* Booking surfaces opt into these materials. Tenant colour/font choices remain authoritative. */
+.glass {
+  --glass-backdrop:color-mix(in srgb,var(--backgroundEdge,var(--background)) 30%,transparent);
+  --glass-backdrop-blur:blur(5px);
+  --glass-dialog: var(--surface);
+  --glass-dialog-blur: none;
+  --glass-surface: var(--surface);
+  --glass-calendar: var(--calendar);
+  --glass-control: var(--surface);
+  --glass-hover: color-mix(in srgb, var(--surface) 94%, var(--selected));
+  --glass-dock: color-mix(in srgb, var(--surface) 90%, var(--text));
+  --glass-active: var(--surface);
+  --glass-edge: color-mix(in srgb, var(--cardBorder) 65%, var(--surface));
+  --glass-border-width: var(--ui-border-width,1px);
+  --glass-row-shadow: 0 6px 18px -12px rgb(42 31 22 / .20);
+  --glass-row-hover-shadow: 0 10px 24px -14px rgb(42 31 22 / .26);
+  --glass-selection-shadow: inset 0 0 0 1px var(--selected), var(--glass-shadow);
+  --glass-control-blur: none;
+  --glass-blur: none;
+  --glass-light: rgb(255 255 255 / .48);
+  --glass-sheen: linear-gradient(135deg, color-mix(in srgb, var(--glass-light) 45%, transparent), transparent 55%);
+  --glass-shadow: inset 0 1px 0 var(--glass-light), 0 10px 14px -9px rgb(15 20 28 / .09), 0 24px 32px -24px rgb(15 20 28 / .14);
+  --glass-hover-shadow: inset 0 1px 0 var(--glass-light), 0 12px 18px -10px rgb(15 20 28 / .14), 0 28px 38px -26px rgb(15 20 28 / .18);
+  --glass-dock-shadow: inset 0 1px 0 var(--glass-light), 0 10px 14px -9px rgb(0 0 0 / .22), 0 16px 16px -14px rgb(0 0 0 / .18), 0 22px 26px -20px rgb(0 0 0 / .2);
+  --glass-active-shadow: inset 0 0 0 1px var(--glass-light), 0 2px 6px -2px rgb(0 0 0 / .16);
+  --glass-primary: var(--selected);
+  --glass-primary-shadow: inset 0 1px 0 rgb(255 255 255 / .2), 0 5px 10px -6px rgb(0 0 0 / .45);
+  --glass-page: radial-gradient(ellipse at 8% 30%, color-mix(in srgb, var(--selected) 10%, transparent), transparent 60%), radial-gradient(ellipse at 90% 80%, color-mix(in srgb, var(--icons) 8%, transparent), transparent 55%);
+  --glass-header-shadow: inset 0 -1px 0 var(--glass-light), 0 8px 16px -14px rgb(0 0 0 / .28);
+  --glass-hover-lift: translateY(-2px);
+  --glass-heading-weight: 600;
+  --glass-heading-tracking: .01em;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    --glass-dialog: color-mix(in srgb, var(--surface) 44%, transparent);
+    --glass-dialog-blur: blur(18px);
+    --glass-surface: var(--glass-sheen), color-mix(in srgb, var(--surface) 44%, transparent);
+    --glass-calendar: var(--glass-sheen), color-mix(in srgb, var(--calendar) 52%, transparent);
+    --glass-control: var(--glass-sheen), color-mix(in srgb, var(--surface) 32%, transparent);
+    --glass-hover: var(--glass-sheen), color-mix(in srgb, var(--surface) 62%, transparent);
+    --glass-dock: var(--glass-sheen), color-mix(in srgb, color-mix(in srgb, var(--surface) 90%, var(--text)) 52%, transparent);
+    --glass-active: var(--glass-sheen), color-mix(in srgb, var(--surface) 46%, transparent);
+    --glass-primary: linear-gradient(135deg, rgb(255 255 255 / .06), transparent 60%), color-mix(in srgb, var(--selected) 94%, transparent);
+    --glass-control-blur: blur(6px) saturate(1.08);
+    --glass-blur: blur(14px) saturate(1.12);
+  }
+}
+
+
+.glass:where([data-theme-mode='light']) {
+    --glass-edge: rgb(255 255 255 / .24);
+    --glass-shadow: 0 0 0 1px rgb(255 255 255 / .24), 0 18px 44px rgb(75 52 28 / .14);
+    --glass-hover-shadow: 0 0 0 1px rgb(255 255 255 / .44), 0 18px 44px rgb(75 52 28 / .18);
+    --glass-dock-shadow: 0 0 0 1px rgb(255 255 255 / .24), 0 10px 14px -9px rgb(75 52 28 / .30), 0 16px 16px -14px rgb(42 31 22 / .26), 0 22px 26px -20px rgb(75 52 28 / .24);
+    --glass-active-shadow: 0 0 0 1px rgb(255 255 255 / .18), 0 1px 2px rgb(75 52 28 / .12), 0 6px 12px rgb(75 52 28 / .14);
+    --glass-control-hover-shadow: 0 0 0 1px rgb(255 255 255 / .44), 0 2px 4px rgb(75 52 28 / .12), 0 8px 16px rgb(75 52 28 / .18);
+    --glass-header-shadow: 0 10px 14px -9px rgb(75 52 28 / .30), 0 16px 16px -14px rgb(42 31 22 / .26);
+    --glass-primary-shadow: inset 0 1px 0 rgb(255 255 255 / .2), 0 6px 12px rgb(75 52 28 / .14);
+    --glass-page: radial-gradient(90% 76% at 50% 46%, transparent 52%, rgb(20 12 5 / .14) 100%), radial-gradient(120% 90% at 50% 30%, var(--background) 0%, var(--backgroundMid) 55%, var(--backgroundEdge) 100%);
+}
+@media (prefers-color-scheme: light) {
+  .glass:where([data-theme-mode='system']) {
+    --glass-edge: rgb(255 255 255 / .24);
+    --glass-shadow: 0 0 0 1px rgb(255 255 255 / .24), 0 18px 44px rgb(75 52 28 / .14);
+    --glass-hover-shadow: 0 0 0 1px rgb(255 255 255 / .44), 0 18px 44px rgb(75 52 28 / .18);
+    --glass-dock-shadow: 0 0 0 1px rgb(255 255 255 / .24), 0 10px 14px -9px rgb(75 52 28 / .30), 0 16px 16px -14px rgb(42 31 22 / .26), 0 22px 26px -20px rgb(75 52 28 / .24);
+    --glass-active-shadow: 0 0 0 1px rgb(255 255 255 / .18), 0 1px 2px rgb(75 52 28 / .12), 0 6px 12px rgb(75 52 28 / .14);
+    --glass-control-hover-shadow: 0 0 0 1px rgb(255 255 255 / .44), 0 2px 4px rgb(75 52 28 / .12), 0 8px 16px rgb(75 52 28 / .18);
+    --glass-header-shadow: 0 10px 14px -9px rgb(75 52 28 / .30), 0 16px 16px -14px rgb(42 31 22 / .26);
+    --glass-primary-shadow: inset 0 1px 0 rgb(255 255 255 / .2), 0 6px 12px rgb(75 52 28 / .14);
+    --glass-page: radial-gradient(90% 76% at 50% 46%, transparent 52%, rgb(20 12 5 / .14) 100%), radial-gradient(120% 90% at 50% 30%, var(--background) 0%, var(--backgroundMid) 55%, var(--backgroundEdge) 100%);
+  }
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+.glass:where([data-theme-mode='light']) {
+    --glass-surface: color-mix(in srgb, var(--surface) 30%, transparent);
+    --glass-calendar: color-mix(in srgb, var(--calendar) 30%, transparent);
+    --glass-dock: color-mix(in srgb, var(--surface) 30%, transparent);
+    --glass-active: color-mix(in srgb, var(--surface) 38%, transparent);
+    --glass-hover: color-mix(in srgb, var(--surface) 38%, transparent);
+    --glass-control: color-mix(in srgb, var(--button) 22%, transparent);
+    --glass-control-hover: color-mix(in srgb, var(--button) 34%, transparent);
+    --glass-blur: blur(5px) saturate(1.08);
+    --glass-control-blur: blur(10px);
+}
+@media (prefers-color-scheme: light) {
+  .glass:where([data-theme-mode='system']) {
+    --glass-surface: color-mix(in srgb, var(--surface) 30%, transparent);
+    --glass-calendar: color-mix(in srgb, var(--calendar) 30%, transparent);
+    --glass-dock: color-mix(in srgb, var(--surface) 30%, transparent);
+    --glass-active: color-mix(in srgb, var(--surface) 38%, transparent);
+    --glass-hover: color-mix(in srgb, var(--surface) 38%, transparent);
+    --glass-control: color-mix(in srgb, var(--button) 22%, transparent);
+    --glass-control-hover: color-mix(in srgb, var(--button) 34%, transparent);
+    --glass-blur: blur(5px) saturate(1.08);
+    --glass-control-blur: blur(10px);
+  }
+}
+}
+
+.glass:where([data-theme-mode='dark']) {
+    --glass-light: rgb(255 255 255 / .14);
+    --glass-edge: rgb(255 255 255 / .14);
+    --glass-shadow: 0 0 0 1px rgb(255 255 255 / .14), 0 16px 40px rgb(0 0 0 / .24);
+    --glass-hover-shadow: 0 0 0 1px rgb(255 255 255 / .14), 0 16px 40px rgb(0 0 0 / .24);
+    --glass-dock-shadow: 0 0 0 1px rgb(255 255 255 / .14), 0 10px 14px -9px rgb(0 0 0 / .34), 0 16px 16px -14px rgb(0 0 0 / .30), 0 22px 26px -20px rgb(0 0 0 / .28);
+    --glass-active-shadow: 0 0 0 1px rgb(255 255 255 / .10);
+    --glass-control-hover-shadow: 0 0 0 1px rgb(255 255 255 / .14);
+    --glass-primary-shadow: inset 0 1px 0 rgb(255 255 255 / .14);
+    --glass-header-shadow: 0 10px 14px -9px rgb(0 0 0 / .34), 0 16px 16px -14px rgb(0 0 0 / .30);
+    --glass-page: radial-gradient(90% 76% at 50% 46%, transparent 46%, rgb(0 0 0 / .50) 100%), radial-gradient(120% 90% at 50% 30%, var(--background) 0%, var(--backgroundMid) 55%, var(--backgroundEdge) 100%);
+}
+@media (prefers-color-scheme: dark) {
+  .glass:where([data-theme-mode='system']) {
+    --glass-light: rgb(255 255 255 / .14);
+    --glass-edge: rgb(255 255 255 / .14);
+    --glass-shadow: 0 0 0 1px rgb(255 255 255 / .14), 0 16px 40px rgb(0 0 0 / .24);
+    --glass-hover-shadow: 0 0 0 1px rgb(255 255 255 / .14), 0 16px 40px rgb(0 0 0 / .24);
+    --glass-dock-shadow: 0 0 0 1px rgb(255 255 255 / .14), 0 10px 14px -9px rgb(0 0 0 / .34), 0 16px 16px -14px rgb(0 0 0 / .30), 0 22px 26px -20px rgb(0 0 0 / .28);
+    --glass-active-shadow: 0 0 0 1px rgb(255 255 255 / .10);
+    --glass-control-hover-shadow: 0 0 0 1px rgb(255 255 255 / .14);
+    --glass-primary-shadow: inset 0 1px 0 rgb(255 255 255 / .14);
+    --glass-header-shadow: 0 10px 14px -9px rgb(0 0 0 / .34), 0 16px 16px -14px rgb(0 0 0 / .30);
+    --glass-page: radial-gradient(90% 76% at 50% 46%, transparent 46%, rgb(0 0 0 / .50) 100%), radial-gradient(120% 90% at 50% 30%, var(--background) 0%, var(--backgroundMid) 55%, var(--backgroundEdge) 100%);
+  }
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+.glass:where([data-theme-mode='dark']) {
+    --glass-surface: color-mix(in srgb, var(--surface) 40%, transparent);
+    --glass-calendar: color-mix(in srgb, var(--calendar) 40%, transparent);
+    --glass-dock: color-mix(in srgb, var(--surface) 40%, transparent);
+    --glass-active: rgb(from var(--surface) calc(r + 14) calc(g + 14) calc(b + 14) / .50);
+    --glass-hover: rgb(from var(--surface) calc(r + 14) calc(g + 14) calc(b + 14) / .50);
+    --glass-control: color-mix(in srgb, var(--button) 26%, transparent);
+    --glass-control-hover: rgb(from var(--button) calc(r + 16) calc(g + 16) calc(b + 16) / .38);
+    --glass-blur: blur(10px);
+    --glass-dock-blur: blur(5px) saturate(1.08);
+    --glass-control-blur: blur(10px);
+}
+@media (prefers-color-scheme: dark) {
+  .glass:where([data-theme-mode='system']) {
+    --glass-surface: color-mix(in srgb, var(--surface) 40%, transparent);
+    --glass-calendar: color-mix(in srgb, var(--calendar) 40%, transparent);
+    --glass-dock: color-mix(in srgb, var(--surface) 40%, transparent);
+    --glass-active: rgb(from var(--surface) calc(r + 14) calc(g + 14) calc(b + 14) / .50);
+    --glass-hover: rgb(from var(--surface) calc(r + 14) calc(g + 14) calc(b + 14) / .50);
+    --glass-control: color-mix(in srgb, var(--button) 26%, transparent);
+    --glass-control-hover: rgb(from var(--button) calc(r + 16) calc(g + 16) calc(b + 16) / .38);
+    --glass-blur: blur(10px);
+    --glass-dock-blur: blur(5px) saturate(1.08);
+    --glass-control-blur: blur(10px);
+  }
+}
+}
+
+/* Shared interactive states: glass fill stays translucent; hover adds no outline. */
+.glass {
+  --glass-active-text: var(--heading);
+  --glass-control-border: transparent;
+  --glass-dialog-border: transparent;
+  --glass-autofill: color-mix(in srgb, var(--surface) 25%, var(--backgroundMid,var(--background)));
+  --glass-transition: background-color .24s ease, box-shadow .28s ease, border-color .24s ease, color .2s ease;
+  --glass-shadow: 0 12px 32px -18px rgb(0 0 0 / .18);
+  --glass-hover-shadow: 0 16px 36px -18px rgb(0 0 0 / .23);
+  --glass-active-shadow: 0 2px 4px -2px rgb(42 31 22 / .16), 0 7px 12px -6px rgb(42 31 22 / .26);
+  --glass-control-hover-shadow: 0 3px 6px -2px rgb(42 31 22 / .18), 0 10px 18px -7px rgb(42 31 22 / .28);
+  --glass-selection-mark: color-mix(in srgb, var(--text) 48%, transparent);
+  --glass-card-transition: var(--glass-transition);
+  --glass-choice: var(--glass-active);
+  --glass-choice-text: var(--heading);
+  --glass-primary-hover: var(--glass-control-hover);
+  --glass-choice-border: var(--glass-edge);
+  --glass-choice-shadow: var(--glass-shadow);
+  --glass-selection-shadow: var(--glass-choice-shadow);
+  --glass-primary: var(--glass-active);
+  --glass-primary-text: var(--heading);
+  --glass-primary-border: var(--glass-control-border);
+  --glass-primary-shadow: var(--glass-active-shadow);
+  --glass-input-focus-shadow: none;
+  --glass-field-border:color-mix(in srgb,var(--border) 18%,transparent);
+  --glass-field-shadow:inset 0 1px 3px rgb(42 31 22 / .08), 0 2px 5px -3px rgb(42 31 22 / .12);
+  --glass-field-focus:color-mix(in srgb,var(--border) 40%,transparent);
+  --glass-hover-lift: none;
+}
+
+/* Keep opaque, unambiguous controls in accessibility modes and without blur support. */
+.glass[data-theme-contrast='high'] {
+  --glass-control-border: var(--border); --glass-dialog-border: var(--border); --glass-autofill: var(--surface); --glass-border-width: 2px; --glass-selection-shadow: none; --glass-hover-lift: none;
+  --glass-stage-duration: 0s; --glass-stage-fill: none; --glass-card-transition: none;
+  --glass-surface: var(--surface); --glass-calendar: var(--calendar); --glass-control: var(--surface);
+  --glass-hover: var(--surface); --glass-control-hover: var(--surface); --glass-control-hover-shadow: none; --glass-dock: var(--surface); --glass-active: var(--selected);
+  --glass-active-text: var(--selectedText); --glass-edge: var(--border); --glass-dialog: var(--surface); --glass-dialog-blur: none; --glass-backdrop-blur:none; --glass-field-shadow:none; --glass-blur: none; --glass-dock-blur: none; --glass-control-blur: none;
+  --glass-row-shadow: none; --glass-row-hover-shadow: none; --glass-shadow: none; --glass-hover-shadow: none; --glass-dock-shadow: none; --glass-active-shadow: none;
+  --glass-primary-hover: var(--selected); --glass-selection-mark: var(--selected); --glass-primary: var(--selected); --glass-primary-text: var(--selectedText); --glass-primary-border: var(--selected); --glass-primary-shadow: none; --glass-choice: var(--surface); --glass-choice-border: var(--selected); --glass-choice-shadow: inset 0 -3px 0 var(--selected); --glass-field-border: var(--border); --glass-field-focus: var(--selected); --glass-page: none; --glass-header-shadow: none;
+}
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .glass {
+    --glass-control-border: var(--border); --glass-dialog-border: var(--border); --glass-autofill: var(--surface);
+    --glass-surface: var(--surface); --glass-calendar: var(--calendar); --glass-control: var(--surface);
+    --glass-hover: var(--surface); --glass-control-hover: var(--surface); --glass-control-hover-shadow: none; --glass-dock: var(--surface); --glass-active: var(--selected);
+    --glass-active-text: var(--selectedText); --glass-edge: var(--border); --glass-dialog: var(--surface); --glass-dialog-blur: none; --glass-backdrop-blur:none; --glass-field-shadow:none; --glass-blur: none; --glass-dock-blur: none; --glass-control-blur: none;
+    --glass-row-shadow: none; --glass-row-hover-shadow: none; --glass-shadow: none; --glass-hover-shadow: none; --glass-dock-shadow: none; --glass-active-shadow: none;
+    --glass-primary-hover: var(--selected); --glass-selection-mark: var(--selected); --glass-primary: var(--selected); --glass-primary-text: var(--selectedText); --glass-primary-border: var(--selected); --glass-primary-shadow: none; --glass-choice: var(--surface); --glass-choice-border: var(--selected); --glass-choice-shadow: inset 0 -3px 0 var(--selected); --glass-field-border: var(--border); --glass-field-focus: var(--selected); --glass-page: none; --glass-header-shadow: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) { .glass { --glass-hover-lift: none; --glass-transition: none; } }
+
+@media (forced-colors: active) {
+  .glass { --glass-border-width: 2px; --glass-selection-shadow: none; --glass-hover-lift: none; --glass-stage-duration: 0s; --glass-stage-fill: none; --glass-card-transition: none; }
+}

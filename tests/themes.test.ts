@@ -4,7 +4,7 @@ import pg from 'pg';
 import sharp from 'sharp';
 import {themeState,changeTheme,changeThemeLogo,themeLogo,publishedTheme,normalizeLogo,themePreviewTenant} from '../src/lib/themes';
 import {catalogFor,availableOffers} from '../src/lib/availability';
-import {defaultTheme,contrastIssues,contrastRatio,type ThemeState} from '../src/lib/theme-contracts';
+import {defaultTheme,contrastIssues,contrastRatio,resolvedPalette,type ThemeState} from '../src/lib/theme-contracts';
 import {withTenant} from '../src/lib/db';
 import type {Actor} from '../src/lib/access';
 const db=new pg.Client({connectionString:process.env.MIGRATION_DATABASE_URL});
@@ -110,4 +110,18 @@ it('publishes independent icon, navigation and typography settings while accepti
  const state=await publish(await draft(config));
  expect(state.published!.config).toMatchObject(config);
  expect(contrastIssues({...config,light:{...config.light,icons:'#FFFFFE'}})).toContainEqual(expect.objectContaining({foreground:'icons'}));
+});
+
+it('preserves optional gradient stops through publication and rejects unreadable gradient edges',async()=>{
+  expect(resolvedPalette(defaultTheme.light).backgroundMid).toBe(defaultTheme.light.background);
+  expect(resolvedPalette(defaultTheme.light).backgroundEdge).toBe(defaultTheme.light.background);
+  const config=structuredClone(defaultTheme);
+  config.light.backgroundMid='#FFF8EE';config.light.backgroundEdge='#FFF2DD';config.light.border='#665544';
+  const state=await publish(await draft(config));
+  expect(state.published!.config.light.backgroundEdge).toBe('#FFF2DD');
+  expect((await withTenant(id,c=>publishedTheme(c,id))).config.light.backgroundMid).toBe('#FFF8EE');
+  config.light.backgroundEdge=config.light.text;
+  expect(contrastIssues(config)).toContainEqual(expect.objectContaining({foreground:'text',background:'backgroundEdge',ratio:1}));
+  await expect(publish(await draft(config))).rejects.toMatchObject({code:'THEME_CONTRAST'});
+  await expect(draft({...config,light:{...config.light,backgroundMid:'red;display:none'}})).rejects.toMatchObject({code:'INVALID_THEME'});
 });

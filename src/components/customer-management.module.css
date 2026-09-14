@@ -5,7 +5,7 @@
 .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(21rem,100%),1fr));gap:.65rem;list-style:none;margin:0 0 1rem;padding:0}
 .list button{display:grid;width:100%;min-height:4rem;padding:.85rem 1rem!important;border-radius:.75rem!important;text-align:left;line-height:1.45}
 .list button:hover{border-color:var(--selected);background:color-mix(in srgb,var(--selected) 4%,var(--surface))}
-.export{display:inline-flex;align-items:center;min-height:2.7rem;border:1px solid var(--cardBorder);border-radius:.65rem;padding:.55rem .8rem;color:var(--text)!important;text-decoration:none;background:var(--surface)}
+.export{display:inline-flex;align-items:center;min-height:2.7rem;border:var(--ui-border-width,1px) solid var(--cardBorder);border-radius:.65rem;padding:.55rem .8rem;color:var(--text)!important;text-decoration:none;background:var(--surface)}
 .export:hover{border-color:var(--selected)}
 .pagination{display:flex;align-items:center;gap:.55rem;margin-top:1.25rem;color:var(--mutedText)}
 @media(max-width:620px){.search{grid-template-columns:1fr!important}.search button{width:100%}}

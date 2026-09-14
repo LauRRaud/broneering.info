@@ -1,4 +1,4 @@
-.header{--brand-logo-max-width:17rem;padding:.45rem clamp(1.25rem,5vw,5rem);border-block-end:1px solid color-mix(in srgb,var(--cardBorder,var(--border)) 65%,var(--background))}
+.header{--brand-logo-max-width:17rem;padding:.45rem clamp(1.25rem,5vw,5rem);position:relative;z-index:5;background:transparent;border-block-end:var(--ui-border-width,1px) solid var(--glass-edge,var(--cardBorder,var(--border)));box-shadow:var(--glass-header-shadow,none)}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;min-block-size:3.75rem;max-inline-size:104rem;margin-inline:auto}
 .bar h1{font-family:var(--booking-display-font);font-size:clamp(1.6rem,3vw,2.7rem);font-weight:500;line-height:1;letter-spacing:.1em;margin:0}
 .bar img{display:block;max-block-size:4.5rem;max-inline-size:17rem;object-fit:contain}
@@ -6,7 +6,15 @@
 @media(max-width:30rem){.header{padding:.45rem 1rem}.bar{gap:.7rem}.bar img{max-inline-size:8.5rem;max-block-size:2.7rem}.bar h1{font-size:1.3rem}}
 
 .controls{display:flex;flex:none;white-space:nowrap;gap:.65rem;align-items:center}
-.close{display:grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;padding:0;background:transparent;color:var(--navigation,var(--heading));border:1px solid var(--cardBorder,var(--border));border-radius:50%;cursor:pointer}
+.close{display:grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;padding:0;background:transparent;color:var(--navigation,var(--heading));border:var(--ui-border-width,1px) solid var(--cardBorder,var(--border));border-radius:50%;cursor:pointer}
 .close:hover{background:color-mix(in srgb,var(--selected) 6%,var(--surface))}
 @media(min-width:50.0625rem){.bar{display:grid;min-block-size:4.5rem;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}.bar h1{min-inline-size:0;max-inline-size:100%;justify-self:start}.controls{justify-self:end}.bar img{max-inline-size:100%}}
 @media(max-width:23.75rem){.header{padding-inline:.75rem}.bar{gap:.35rem}.bar h1{min-inline-size:0;max-inline-size:4.75rem}.controls{gap:.25rem}.bar img{max-inline-size:4.75rem}.close{inline-size:2.35rem;block-size:2.35rem}.bar:has(.close){flex-wrap:wrap}.bar:has(.close) .controls{margin-inline-start:auto}}
+
+/* Blur the backing layer so child popovers can sample the page behind the header. */
+.header::before{content:'';position:absolute;z-index:-1;inset:0;pointer-events:none;background:var(--glass-surface,var(--background));-webkit-backdrop-filter:var(--glass-dock-blur,var(--glass-blur,none));backdrop-filter:var(--glass-dock-blur,var(--glass-blur,none))}
+
+.company{min-inline-size:0}
+@media(max-width:50rem){.bar{justify-content:flex-start;gap:.65rem}.company{margin-inline-start:auto;flex:none}.controls{gap:.4rem}}
+@media(max-width:30rem){.bar img{max-inline-size:6.5rem}.bar{gap:.4rem}.header{padding-inline:.75rem}}
+@media(max-width:23.75rem){.bar img{max-inline-size:4.75rem}}

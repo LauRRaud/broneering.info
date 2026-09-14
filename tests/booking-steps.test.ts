@@ -106,7 +106,7 @@ it('shows worker information only in the worker step and keeps it separate from 
  await render({...catalog,staff:[{...catalog.staff[0],publicPhone:'+372 5555 0101'},catalog.staff[1]]});
  expect(container.querySelector('[aria-label^="Töötaja "][aria-expanded]')).toBeNull();
  await click('Juuksed');expect(container.querySelector('[aria-label^="Töötaja "][aria-expanded]')).toBeNull();
- await click('Lõikus');const toggle=container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Anna telefon"]')!;
+ await click('Lõikus');const toggle=container.querySelector<HTMLButtonElement>('[aria-label="Töötaja Anna valikud"]')!;
  expect(container.querySelector('a[href^="tel:"]')).toBeNull();
  await act(async()=>toggle.click());
  expect(container.querySelector('a[href^="tel:"]')?.getAttribute('href')).toBe('tel:+37255550101');

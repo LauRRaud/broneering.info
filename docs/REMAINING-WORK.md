@@ -1,5 +1,7 @@
 # V1 allesjäänud tööd ja otsused
 
+**14.09.2026 kujunduse lisatõend:** [broneerimisvaate klaasikujunduse kohalik katse](DESIGN-GLASS-2026-09-14.md): klaaspinnad, varjud, neutraalne demopalett ja tüpograafia viimistlus; 32/32 sihitud testi ning build läbisid. Omaniku kujundusvastuvõtt ja selle katse serverisse avaldamine on ootel; G04 jääb avatuks.
+
 Seis **12.09.2026**. Koostaja: Codex. See register ühendab algse plaani otsused ja peatükkide 27–30 nõuded värskete tehniliste tõenditega. **V1 tervikvastuvõtt on avatud.** Kinnitatud ärivalik, teostatud funktsioon, piiritletud tehniline katse ja omaniku vastuvõtt on eri staatused.
 
 Võrdluse lähteversioon on `c1b0d4dbf5d38b5f2b28ee1ef5156752a5d821a5`; kohalik tööpuu oli alustamisel puhas. Algallikas on projekti juurkausta `Broneerimisplatvorm_arendusplaan_v1_0.docx`, versioon 1.0, 06.09.2026, SHA-256 `327f393d10da62d84fc76db4c684014698fca88cfe0837cd29894109dabcc3a0`. [Võrdluses kasutatud nõuete tekst](audits/remaining-work-20260912/source-requirements.json) säilitab D- ja O-registri ning peatükid 27–30. Algdokumenti ei muudetud.

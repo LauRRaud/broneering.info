@@ -8,6 +8,8 @@
   "Valitud päeva ajad": "Valitud päeva ajad",
   "Töötaja {name} info": "Töötaja {name} info",
   "Info": "Info",
+  "Töötaja {name} valikud": "Töötaja {name} valikud",
+  "Helista ettevõttele": "Helista ettevõttele",
   "Mine sammu {step}": "Mine sammu „{step}”",
   ", aegub": ", aegub",
   ": sel päeval vabu aegu pole.": ": sel päeval vabu aegu pole.",
@@ -1344,6 +1346,8 @@
   "Kõrge kontrast": "Kõrge kontrast",
   "Laadi kujundus uuesti": "Laadi kujundus uuesti",
   "Lehe taust": "Lehe taust",
+  "Tausta kesktoon": "Tausta kesktoon",
+  "Tausta servatoon": "Tausta servatoon",
   "Lingid": "Lingid",
   "Logo eelvaade": "Logo eelvaade",
   "Logo ei ole avaldatud.": "Logo ei ole avaldatud.",
@@ -1534,5 +1538,10 @@
   "Sul on kutse või konto? Ava haldus": "Sul on kutse või konto? Ava haldus",
   "Aega selleks, mis loeb.": "Aega selleks, mis loeb.",
   "Abi ja ligipääs": "Abi ja ligipääs",
-  "Tagasi üles": "Tagasi üles"
+  "Tagasi üles": "Tagasi üles",
+  "Profiil": "Profiil",
+  "Töötaja {name} profiil": "Töötaja {name} profiil",
+  "Kursori täide": "Kursori täide",
+  "Kursori täide nupul": "Kursori täide nupul",
+  "Kursori kontuur": "Kursori kontuur"
 }

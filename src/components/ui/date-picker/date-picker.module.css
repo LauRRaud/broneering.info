@@ -1,8 +1,8 @@
 .root{position:relative;min-width:0}
-.trigger{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;min-height:3rem;border:1px solid var(--cardBorder);border-radius:.62rem;padding:.55rem .8rem;background:var(--surface);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
-.trigger:hover,.trigger[aria-expanded=true]{border-color:color-mix(in srgb,var(--selected) 60%,var(--cardBorder));background:color-mix(in srgb,var(--selected) 4%,var(--surface))}
+.trigger{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;min-height:3rem;border:var(--ui-border-width,1px) solid var(--cardBorder);border-radius:.62rem;padding:.55rem .8rem;background:var(--glass-control,var(--surface));color:var(--text);font:inherit;font-weight:700;cursor:pointer}
+.trigger:hover,.trigger[aria-expanded=true]{border-color:color-mix(in srgb,var(--selected) 60%,var(--cardBorder));background:var(--glass-control-hover,color-mix(in srgb,var(--selected) 4%,var(--surface)))}
 .trigger:focus-visible{outline:0;border-color:var(--selected);box-shadow:0 0 0 3px color-mix(in srgb,var(--selected) 16%,transparent)}
 .trigger:disabled{cursor:not-allowed;opacity:.55}
 .trigger svg{color:var(--icons,var(--heading));flex:none}
-.panel{position:absolute;z-index:45;inset-inline-start:0;inset-block-start:calc(100% + .55rem);width:min(22rem,calc(100vw - 2rem));border:1px solid var(--cardBorder);border-radius:1rem;padding:1rem;background:var(--calendar);box-shadow:0 24px 60px color-mix(in srgb,var(--text) 16%,transparent)}
+.panel{position:absolute;z-index:45;inset-inline-start:0;inset-block-start:calc(100% + .55rem);width:min(22rem,calc(100vw - 2rem));border:var(--ui-border-width,1px) solid var(--cardBorder);border-radius:1rem;padding:1rem;background:var(--glass-dialog,var(--calendar));-webkit-backdrop-filter:var(--glass-dialog-blur,none);backdrop-filter:var(--glass-dialog-blur,none);box-shadow:var(--glass-dock-shadow,0 24px 60px color-mix(in srgb,var(--text) 16%,transparent))}
 @media(max-width:420px){.panel{inset-inline-start:-.25rem;width:min(21rem,calc(100vw - 1.25rem));padding:.75rem}}

@@ -8,6 +8,8 @@
   "Valitud päeva ajad": "Время на выбранный день",
   "Töötaja {name} info": "Информация о сотруднике {name}",
   "Info": "Инфо",
+  "Töötaja {name} valikud": "Действия для сотрудника {name}",
+  "Helista ettevõttele": "Позвонить в компанию",
   "Mine sammu {step}": "Перейти к шагу «{step}»",
   ", aegub": ", действует до",
   ": sel päeval vabu aegu pole.": ": в этот день нет свободного времени.",
@@ -1344,6 +1346,8 @@
   "Kõrge kontrast": "Высокая контрастность",
   "Laadi kujundus uuesti": "Загрузить оформление заново",
   "Lehe taust": "Фон страницы",
+  "Tausta kesktoon": "Средний оттенок фона",
+  "Tausta servatoon": "Оттенок краёв фона",
   "Lingid": "Ссылки",
   "Logo eelvaade": "Предпросмотр логотипа",
   "Logo ei ole avaldatud.": "Логотип не опубликован.",
@@ -1534,5 +1538,10 @@
   "Sul on kutse või konto? Ava haldus": "Есть приглашение или аккаунт? Откройте управление",
   "Aega selleks, mis loeb.": "Время для важного.",
   "Abi ja ligipääs": "Помощь и доступ",
-  "Tagasi üles": "Наверх"
+  "Tagasi üles": "Наверх",
+  "Profiil": "Профиль",
+  "Töötaja {name} profiil": "Профиль сотрудника {name}",
+  "Kursori täide": "Цвет курсора",
+  "Kursori täide nupul": "Цвет курсора при наведении",
+  "Kursori kontuur": "Контур курсора"
 }

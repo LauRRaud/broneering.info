@@ -1,0 +1,18 @@
+/* Native cursor assets keep the hotspot precise without a trailing animation. */
+@media (hover: hover) and (pointer: fine) {
+  .surface {
+    --cursor-rest: var(--theme-cursor-rest,auto);
+    --cursor-action: var(--theme-cursor-action,pointer);
+    cursor: var(--cursor-rest);
+  }
+  .surface :is(a[href], button, [role='button'], [role='tab'], [role='checkbox'], [role='radio'], summary):not(:disabled):not([aria-disabled='true']) {
+    cursor: var(--cursor-action);
+  }
+  .surface :is(input, textarea, [contenteditable='true'], [contenteditable='true'] *) { cursor: auto; }
+  .surface input:is([type='checkbox'], [type='radio']):not(:disabled) { cursor: var(--cursor-action); }
+  .surface select { cursor: auto; }
+  [data-theme-contrast='high'] .surface { --cursor-rest: auto; --cursor-action: pointer; }
+}
+@media (forced-colors: active) {
+  .surface { --cursor-rest: auto; --cursor-action: pointer; }
+}
