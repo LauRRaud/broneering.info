@@ -3,7 +3,8 @@
 .label span{white-space:nowrap}
 .label input{inline-size:1.25rem;block-size:1.25rem;margin:0;flex-shrink:0;appearance:none;display:grid;place-content:center;border:1.5px solid color-mix(in srgb,var(--border) 60%,transparent);border-radius:.3rem;background:transparent;color:var(--heading)}
 
-.label:hover{background:var(--glass-control-hover,var(--surface))}
+.label:hover:not(:has(input:disabled)){background:var(--glass-control-hover,var(--surface))}
+.label:has(input:disabled){opacity:.6;cursor:default}
 .label:has(input:focus-visible){outline:2px solid var(--navigation,var(--border));outline-offset:3px}
 
 .label,.label input{transition:var(--glass-transition,background-color .24s ease)}

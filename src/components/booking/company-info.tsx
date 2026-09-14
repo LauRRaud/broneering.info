@@ -17,7 +17,7 @@ export default function CompanyInfo({tenant}:{tenant:Catalog['tenant']}){
   if(!address&&!phone&&!email&&!tenant.description.trim())return null;
   const close=()=>{setOpen(false);trigger.current?.focus();};
   return <>
-    <Button ref={trigger} className={styles.trigger} type="button" aria-label={t('Ettevõtte info')} aria-haspopup="dialog" aria-controls={id} aria-expanded={open} onClick={()=>setOpen(true)}><span className={styles.address}>{bookingAddress(address)||t('Ettevõtte info')}</span><span className={styles.icon}><Icon name="info" size={24}/></span></Button>
+    <Button ref={trigger} className={styles.trigger} type="button" aria-label={t('Ettevõtte info')} aria-haspopup="dialog" aria-controls={id} aria-expanded={open} onClick={()=>setOpen(true)}><span className={styles.address}>{bookingAddress(address)||t('Ettevõtte info')}</span><span className={styles.icon}><Icon name="info" size={18}/></span></Button>
     <Dialog ref={dialog} id={id} className={styles.dialog} aria-labelledby={id+'-title'} onCancel={event=>{event.preventDefault();close();}} onClose={()=>setOpen(false)}>{open&&<>
       <Button className={styles.close} type="button" autoFocus aria-label={t('Sulge')} onClick={close}><Icon name="close" size={24}/></Button>
       <h2 id={id+'-title'}>{tenant.name}</h2>

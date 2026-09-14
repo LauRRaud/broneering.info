@@ -1,9 +1,9 @@
-.root{display:flex;flex-direction:column;min-block-size:0}
-.tabs{display:flex;flex:none;gap:.25rem;padding:.25rem;margin:0 0 .85rem;border:var(--glass-border-width,1px) solid var(--glass-edge,var(--cardBorder,var(--border)));background:color-mix(in srgb,var(--surface) 25%,var(--backgroundMid,var(--background)));box-shadow:inset 0 1px 2px rgb(0 0 0 / .04);border-radius:.7rem}
+.root{display:flex;flex:1;flex-direction:column;min-block-size:0}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:none;gap:.6rem;padding:.25rem var(--glass-control-shadow-space,.75rem) .5rem;margin:0 0 .1rem;border:0;scrollbar-width:thin;background:var(--cardBorder,var(--border));box-shadow:none;border-radius:.65rem}
 .tabs button{flex:1;min-inline-size:0;min-block-size:2.7rem;border:var(--ui-border-width,1px) solid transparent;background:transparent;border-radius:.5rem;color:var(--mutedText,var(--calendarText));font-size:1rem;cursor:pointer;transition:background .18s}
 .tabs button[aria-selected=true]{background:var(--glass-active,var(--calendar));border-color:var(--glass-edge,var(--cardBorder,var(--border)));color:var(--glass-active-text,var(--heading));box-shadow:var(--glass-active-shadow,none);font-weight:600}
 .tabs button:focus-visible{outline:2px solid var(--border);outline-offset:2px}
-.panel{min-block-size:0;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--cardBorder,var(--border)) transparent;overscroll-behavior:contain;padding:2px 2px 12px}
+.panel{min-block-size:0;overflow:visible;scrollbar-width:thin;scrollbar-color:var(--cardBorder,var(--border)) transparent;overscroll-behavior:contain;padding:var(--glass-control-shadow-space,.75rem)}
 .times,.detailed{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));list-style:none;margin:0;padding:0;gap:.6rem}
 .offer{inline-size:100%;min-block-size:2.85rem;padding:.55rem .4rem;border:var(--glass-border-width,1px) solid var(--glass-control-border,var(--border));border-radius:.6rem;background:var(--glass-control,var(--calendar));box-shadow:var(--glass-active-shadow,none);color:var(--calendarText);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;cursor:pointer;transition:border-color .18s,background .18s,box-shadow .2s}
 .offer strong{font-size:1.125rem;font-weight:600;font-variant-numeric:tabular-nums}
@@ -15,7 +15,8 @@
 .offer[aria-pressed=true] span,.offer[aria-pressed=true] small{color:inherit}
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;min-block-size:10rem;text-align:center;color:var(--mutedText,var(--text));font-size:.95rem}
 .empty svg{color:var(--icons,var(--heading))}
-@media(max-width:25rem){.times,.detailed{gap:.4rem}.detailed{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:25rem){.tabs,.times,.detailed{gap:.4rem}.detailed{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.offer,.tabs button{transition:none}}
+@container(min-width:46rem){.panel{overflow:auto;scrollbar-gutter:stable}.tabs{overflow:hidden;scrollbar-gutter:stable}}
 
 .offer,.tabs button{transition:var(--glass-transition,background-color .24s ease)}

@@ -9,8 +9,8 @@ let root:Root,container:HTMLDivElement;
 const offer:Offer={serviceId:'service',staffId:'staff',staffName:'Mari',start:'2026-09-19T09:00:00Z',end:'2026-09-19T09:30:00Z',price:2500,duration:30};
 const catalog:Catalog={tenant:{name:'Salong',slug:'salong',address:'Tallinn',timezone:'Europe/Tallinn',description:'',bookingTerms:'Salongi tingimused\nTeine rida',cancellationHours:24,rulesVersion:1,demo:true,reminderMinutes:1440},services:[{id:'service',name:'Teenus',description:'',category:'',priceFrom:2500,durationFrom:30}],staff:[{id:'staff',name:'Mari',title:'',serviceIds:['service']}],today:'2026-09-12',maxDate:'2026-10-12'};
 afterEach(async()=>{if(root)await act(async()=>root.unmount());container?.remove();vi.restoreAllMocks();vi.unstubAllGlobals();});
-async function render(challengeSiteKey?:string){
- Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});vi.spyOn(Date,'now').mockReturnValue(Date.parse('2026-09-12T10:00:00Z'));
+async function render(challengeSiteKey?:string,now='2026-09-12T10:00:00Z'){
+ Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});vi.spyOn(Date,'now').mockReturnValue(Date.parse(now));
  vi.stubGlobal('fetch',vi.fn(async(input:RequestInfo|URL,init?:RequestInit)=>{
   if(init?.method==='POST')throw new TypeError('Response lost');
   return Response.json(String(input).includes('month=1')?{days:{}}:{offers:[offer]});
@@ -27,6 +27,17 @@ async function render(challengeSiteKey?:string){
   const input=container.querySelector<HTMLInputElement>('#'+id)!;Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value')!.set!.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));
  });
 }
+it('keeps both reminder choices visible but disabled after the reminder deadline',async()=>{
+ await render(undefined,'2026-09-18T12:00:00Z');
+ for(const channel of ['email','sms']){
+  const checkbox=container.querySelector<HTMLInputElement>(`[name="${channel}Reminder"]`)!;
+  expect(checkbox).not.toBeNull();expect(checkbox.disabled).toBe(true);expect(checkbox.checked).toBe(false);
+ }
+ expect(container.textContent).toContain('Selle aja meeldetuletuse saatmise hetk on möödas');
+ await act(async()=>container.querySelector('form')!.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+ const request=vi.mocked(fetch).mock.calls.find(call=>call[1]?.method==='POST')!;
+ expect(JSON.parse(String(request[1]?.body))).toMatchObject({emailReminder:false,smsReminder:false});
+});
 it('focuses invalid fields in order without an error summary, even before the bot check completes',async()=>{
  await render('test-site-key');
  const change=async(id:string,value:string)=>act(async()=>{

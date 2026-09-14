@@ -43,7 +43,7 @@ export default function TimePicker({date,min,max,disabled,onChange,serviceId,sta
   return <CalendarSurface className={styles.root}><div className={styles.layout}>
     <div className={styles.calendar} aria-busy={!current}>
       <MonthCalendar value={date} month={month} min={min} max={max} today={min} locale={localeTags[locale]} disabled={disabled} days={current?.days} size="large" onChange={onChange} onMonthChange={setMonth} labels={{previous:t('Eelmine kuu'),next:t('Järgmine kuu'),empty:t('Vabu aegu pole'),help:t('Liigu nooleklahvidega, vali Enteriga.'),selected:t('Valitud päev'),today:t('Täna')}}/>
-      <p className={styles.loadingStatus} role="status">{!current?t('Kontrollime kuu vabu päevi…'):'\u00a0'}</p>
+      <p className={styles.loadingStatus} role="status">{!current?t('Kontrollime kuu vabu päevi…'):''}</p>
       {current?.error&&<p role="status">{t('Kuu ülevaadet ei saanud laadida. Kuupäeva valides saad selle päeva aegu kontrollida.')} <Button type="button" onClick={()=>setRetry(value=>value+1)} disabled={disabled}>{t('Proovi uuesti')}</Button></p>}
     </div>
     <section aria-label={t('Valitud päeva ajad')} className={styles.times}>

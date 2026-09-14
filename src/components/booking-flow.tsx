@@ -25,14 +25,12 @@ import BookingProgress from '@/components/booking/booking-progress';
 import BookingConfirmation from '@/components/booking/booking-confirmation';
 import BookingSuccess from '@/components/booking/booking-success';
 import OfferSelection from '@/components/booking/offer-selection';
-import Icon from '@/components/ui/icon/icon';
 import flowStyles from './booking/booking-flow.module.css';
 import material from '@/styles/booking-material.module.css';
 import cursorStyles from '@/components/ui/cursor/cursor.module.css';
 import StaffCard from '@/components/booking/staff-card';
 import Avatar from '@/components/ui/avatar/avatar';
 import BookingHeader from '@/components/booking/booking-header';
-import {useScrollFade} from '@/components/booking/use-scroll-fade';
 import {CategorySelection,descendSingleCategory,ServiceSelection,serviceCategories,firstBookingStep,initialCategoryPath,servicesAtPath,servicePath} from '@/components/booking/service-selection';
 
 type Step = "category" | "service" | "staff" | "time" | "details";
@@ -127,7 +125,6 @@ function dateTimeLabel(value: string, timezone: string) {
   const submitLockRef = useRef(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const stageRef=useRef<HTMLDivElement>(null);
-  const footerFade=useScrollFade(stageRef,step==='service'&&!result,step+categoryPath.join('/'));
   const headingFocusFrame = useRef<number | null>(null);
   const nextDayAbort = useRef<AbortController | null>(null);
 
@@ -494,8 +491,8 @@ function dateTimeLabel(value: string, timezone: string) {
       </div>
     </section>}
     </div>
-    <footer className={flowStyles.brandFooter}><a className={flowStyles.brand} href="https://ajasta.ee" target="_blank" rel="noopener noreferrer" aria-label={t('Ajasta broneerimistarkvara')}><Icon name="clock" size={25}/>Ajasta.ee</a></footer>
-    {!result&&<div className={flowStyles.footer} data-fade={footerFade||undefined}><BookingProgress current={stepIndex(step)} labels={visibleSteps.map(item=>item.label)} completed={visibleSteps.map(item=>stepCompleted(item.id))} selectable={visibleSteps.map(item=>stepSelectable(item.id))} canGoBack={canGoBack} disabled={bookingLocked} onBack={goBack} onSelect={goToStep}/></div>}
+    <footer className={flowStyles.brandFooter}><a className={flowStyles.brand} href="https://ajasta.ee" target="_blank" rel="noopener noreferrer" aria-label={t('Ajasta broneerimistarkvara')}><img src="/Logo/ajasta-logo.svg" alt=""/></a></footer>
+    {!result&&<div className={flowStyles.footer}><BookingProgress current={stepIndex(step)} labels={visibleSteps.map(item=>item.label)} completed={visibleSteps.map(item=>stepCompleted(item.id))} selectable={visibleSteps.map(item=>stepSelectable(item.id))} canGoBack={canGoBack} disabled={bookingLocked} onBack={goBack} onSelect={goToStep}/></div>}
     {!result&&step==='details'&&offer&&service&&challengeSiteKey&&<Turnstile siteKey={challengeSiteKey} onToken={setChallengeToken} resetSignal={challengeReset} label={t('Botikontroll')}/>}
   </main>;
 }
